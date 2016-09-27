@@ -1,0 +1,5 @@
+@media screen and (max-width: 360px) {
+	#titulo h1{			
+	    font-size: 1.92em !important;		   
+	}
+}
