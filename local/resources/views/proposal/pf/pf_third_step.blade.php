@@ -1,4 +1,14 @@
+{{ $proposal[0]->proposal_type_guarantee }}
+@if($proposal[0]->proposal_type_guarantee == "Fiador")
+<script>
 
+   
+    document.getElementById("guarantor").style.display ="block";    
+    console.log('fiador 3');
+
+</script>
+
+@endif
 <div class="col-md-12">
     <label class="pull-left label_titulo">Anexar documentos</label> 	  						
 </div>
@@ -125,12 +135,21 @@
                 <input type="text" name="guarantor_email" id="guarantor_email"  value="{{$proposal[0]->guarantor_email}}"  class="form-control">
             </div>
             <div id="info_not_fiador1" class="col-md-12 alert alert-success form-group">
-                <div class="col-md-6">				
-                    <input type="radio" name="proposal_guarantor_type" id="cadastrar_fiador"  value="cadastrar_fiador">
+                <div class="col-md-6">	
+                    @if($proposal[0]->proposal_guarantor_type == "cadastrar_fiador")
+                        <input type="radio" name="proposal_guarantor_type" id="cadastrar_fiador" checked="" value="cadastrar_fiador">
+                    @else
+                        <input type="radio" name="proposal_guarantor_type" id="cadastrar_fiador"  value="cadastrar_fiador">
+                    @endif   
                     <label class="control-label">Eu vou cadastrá-lo</label>
                 </div>
                 <div class="col-md-6">				
-                    <input type="radio" name="proposal_guarantor_type" id="enviar_fiador"  value="enviar_fiador">
+                    
+                    @if($proposal[0]->proposal_guarantor_type == "enviar_fiador")
+                        <input type="radio" name="proposal_guarantor_type" id="enviar_fiador"  checked="" value="enviar_fiador">
+                    @else
+                        <input type="radio" name="proposal_guarantor_type" id="enviar_fiador"  value="enviar_fiador">
+                    @endif  
                     <label class="control-label">Solicitar para ele se cadastrar</label>
                 </div>
             </div>

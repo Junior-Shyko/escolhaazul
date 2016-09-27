@@ -1,3 +1,10 @@
+<style>
+  option.separator {
+    margin-top:8px;
+    border-top:1px solid #666;
+    padding:0;
+}
+</style>
 <div class="col-md-12">
     <div class="col-md-12">
         <label class="pull-left label_titulo">Dados da locação</label>  
@@ -9,8 +16,8 @@
     </div>
     <div class="col-md-3">
         <label class="control-label">Tipo do imóvel</label>                 
-        <select  class="selectpicker" data-live-search="true" name="proposal_type_immobile" value="{{$proposals->proposal_type_immobile}}">
-            {{(!empty($proposals->proposal_type_immobile) ?  $proposals->proposal_type_immobile  : '<option value=""selected> -- Selecione -- </option> <option value="" class="divider"></option>')}}
+        <select  class="form-control" data-live-search="true" name="proposal_type_immobile" value="{{$proposals->proposal_type_immobile}}">
+            {{(!empty($proposals->proposal_type_immobile) ?  $proposals->proposal_type_immobile  : '<option value=""selected> -- Selecione -- </option> <option value="" class="separator"></option>')}}
             <option data-tokens="">Apartamento</option>
             <option data-tokens="">Casa</option>
             <option data-tokens="">Kitinet</option>
@@ -28,7 +35,7 @@
                 $atend = DB::table('users')->where('id' , $proposals->proposal_id_user)->get();
               ?>
               <option value="{{$atend[0]->id}}">{{$atend[0]->name}}</option>
-              <option value="" class="divider"></option>
+              <option value="" class="separator"></option>
             @else
               <option value="0">--Selecione--</option>
             @endif
@@ -62,8 +69,12 @@
     <div class="col-md-3">
         <label class="control-label" for="inputSuccess1">Tipo de garantia*</label>
         <select  class="form-control" name="proposal_type_guarantee" id="tipo_garantia">
-          
-            <option>{{(!empty($proposals->proposal_type_guarantee) ? $proposals->proposal_type_guarantee : ' -- Selecione --')}}</option>  
+          @if(!empty($proposals->proposal_type_guarantee))
+             <option>{{ $proposals->proposal_type_guarantee }}</option>
+             <option value=""  class="divider"></option>
+             @else
+              <option>--Selecione --</option>
+             @endif      
             <option value="Fiador">Fiador</option>
             <option value="Caução (em título)">Caução (em título)</option>
             <option value="Outras">Outras</option>

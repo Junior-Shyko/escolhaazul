@@ -8,9 +8,12 @@ $(document).ready(function(){
 	$("#modal_reload").hide();
 	$("#fiador_ec").hide();
 
-	
-	
-	
+	if($("#tipo_garantia").val() == "Fiador"){
+		$("#guarantor").show();
+	}else{
+		$("#guarantor").hide();
+	}
+		
 	 $('[data-toggle="tooltip"]').tooltip();
 	  $('[data-toggle="popover"]').popover({
 	  	placement : 'top',

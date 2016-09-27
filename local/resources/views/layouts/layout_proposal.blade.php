@@ -29,8 +29,7 @@
         <link rel="stylesheet" href="{{url('public/css/ladda.min.css')}}" />
         <link rel="stylesheet" href="{{ url('public/plugins/js-ui/jquery-ui.css') }}">
         <link rel="stylesheet" href="{{ url('public/plugins/js-ui/jquery-ui.css') }}">
-        {{-- SELLECT CSS --}}
-        <link rel="stylesheet" href="{{url('public/css/bootstrap-select.min.css')}}" />
+
         <script src="{{url('public/js/jquery-1.7.js')}}"></script> 
         {{-- PARA USO DOS UPLOADS --}}
         <script type="text/javascript" src="{{url('public/js/fileinput/fileinput.min.js')}}"></script>
@@ -56,7 +55,7 @@
                          }
                     }
             //GLOBALIZANDO URL
-             var project_survey = '/beta';
+             var project_survey = '/escolhaazul';
              domin  =  window.location.protocol + "//" + window.location.hostname;
              var domain_complet = domin + project_survey; 
              var url = window.location.origin;
@@ -174,7 +173,7 @@
         <!-- PARA MASCARAR OS CAMPOS COM BOOTSTRAP -->
         <script type="text/javascript" src="{{url('public/js/jasny-bootstrap.min.js')}}"></script>
         <!-- Latest compiled and minified JavaScript -->
-        <script src="{{url('public/js/bootstrap-select.min.js')}}"></script>
+
         <script type="text/javascript">
             $(document).ready(function() {
                 $('.cep').cep();
