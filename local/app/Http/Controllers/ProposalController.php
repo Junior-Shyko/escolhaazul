@@ -418,58 +418,55 @@ class ProposalController extends Controller
     public function upload_files(Request $request )
     {
         //created in 2016-09-15 12:40 by Junior Oliveira
-       // $user = 
-        //return view('email.email_proponent');
-        if($request->ajax())
+    //PERFIL DA PROPOSATA PARA SER ADICIONADO NA TABELA DE ARQUIVOS
+     switch ($request['type_proposal']) {
+          case 'proposta-pf':
+              $type_profile = 'Inquilino';
+              $campo = "proposal_id";
+              break;
+          case 'proposta-pj':
+              $type_profile = 'Jurídico';
+              $campo = "legal_id";
+              break;
+          case 'cadastro-pf':
+              $type_profile = 'Fiador';
+              $campo = "guarantor_id";
+              break;
+           case 'cadastro-pj':
+              $type_profile = 'Fiador';
+              $campo = "guarantor_legal_id";
+              break;          
+          default:
+              $type_profile = 'Inquilino';
+              $campo = "proposal_id";
+              break;
+      }
+
+       if(isset($_FILES))
         {
-            if(isset($_FILES))
-            {
-                switch ($request['type_proposal']) {
-                    case 'proposta-pf':
-                        $type_profile = 'Inquilino';
-                        $campo = "proposal_id";
-                        break;
-                    case 'proposta-pj':
-                        $type_profile = 'Jurídico';
-                        $campo = "legal_id";
-                        break;
-                    case 'cadastro-pf':
-                        $type_profile = 'Fiador';
-                        $campo = "guarantor_id";
-                        break;
-                     case 'cadastro-pj':
-                        $type_profile = 'Fiador';
-                        $campo = "guarantor_legal_id";
-                        break;          
-                    default:
-                        $type_profile = 'Inquilino';
-                        $campo = "proposal_id";
-                        break;
-                }
+        $id_proposal = $request[$campo];
+         $tot_array = count($_FILES["img_photo"]["name"]);
+         
+           for ($i=0; $i < $tot_array; $i++) { 
 
-                $id_proposal = $request[$campo];
-                $tot_array = count($_FILES["img_photo"]["name"]);
-                for ($i=0; $i < $tot_array; $i++) { 
+              $tmp_name = $_FILES["img_photo"]["tmp_name"][$i];
+              $name =  time(). '_'. $_FILES["img_photo"]["name"][$i];
+              //echo "arquivo ".$cont." - ".$name."<br>";
+              $uploadFile = 'public/img/upload/'. basename($name);   
 
-                    $tmp_name = $_FILES["img_photo"]["tmp_name"][$i];
-                    $name =  time(). '_'. $_FILES["img_photo"]["name"][$i];
-                    //echo "arquivo ".$cont." - ".$name."<br>";
-                    $uploadFile = 'public/img/upload/'. basename($name);   
+              move_uploaded_file($tmp_name, $uploadFile);
 
-                    move_uploaded_file($tmp_name, $uploadFile);
-
-                    //CADASTRANDO NO BANCO
-                    $files_ambience =   DB::table('files')->insert([
-                        'files_name' => $name, 
-                        'files_id_proposal' => $id_proposal ,
-                        'files_date' => Carbon::now() ,
-                        'files_profile' => $type_profile 
-                       
-                    ]); 
-
-                    return response()->json(['message' => 'sucess']);
-                }
-            }
+              //CADASTRANDO NO BANCO
+              $files_ambience =   DB::table('files')->insert([
+                  'files_name' => $name, 
+                  'files_id_proposal' => $id_proposal ,
+                  'files_date' => Carbon::now() ,
+                  'files_profile' => $type_profile 
+                 
+              ]); 
+              
+          }
+          return $tot_array;
         }
     }
     /*

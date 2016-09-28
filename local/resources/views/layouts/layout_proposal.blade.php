@@ -130,7 +130,7 @@
             </div>
         </div>
         @yield('content')
-        @include('modal.modal_proposal')
+        {{-- @include('modal.modal_proposal') --}}
         @include('modal.modal_load')
         <div class="modal fade bs-example-modal-sm" tabindex="-1" id="modal_load" role="dialog">
             <div class="modal-dialog modal-sm" role="document">
