@@ -4,6 +4,7 @@ $(document).ready(function() {
 
 	var rota = domain_complet;
 	
+	//DADOS DA PRIMEIRA ETAPA, PARTINDO PARA SEGUNDA
 	$("#secound_step_pj").click(function(event) {
 		/* Act on the event */
 		form_pj_one = $("#form_one_pj").serialize();
@@ -20,6 +21,38 @@ $(document).ready(function() {
 	        {
 	          $.each( data, function( key, value ) {
 	                console.log(value[0]); 
+	            });
+	            
+	        }
+		})
+		.done(function() {
+			console.log("success");
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
+		
+	});
+
+	$("#end_step_pj").click(function(event) {
+		/* Act on the event */
+		form_pj_two = $("#form_two_pj").serialize();
+
+		$.ajax({
+			url: domain_complet+'/pj/update',
+			type: 'POST',
+			dataType: 'JSON',
+			data: form_pj_two,
+			success:function(response){
+				console.log('sucesso-pj-segunda-etapa');
+			},
+			error   : function (data ) 
+	        {
+	          $.each( data, function( key, value ) {
+	                console.log(value[key]); 
 	            });
 	            
 	        }

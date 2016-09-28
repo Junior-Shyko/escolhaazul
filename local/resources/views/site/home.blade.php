@@ -6,7 +6,7 @@
         <div id="tf-home" class="text-center">
         <div class="">
                 <a class="navbar-brand" href="http://espindola.imb.br/"  target="_blank">
-                <img src="{{url('public/img/espi_logo.png')}}" class="xs-espindola" alt="Logo Espindola">
+                <img src="{{url('public/img/nova_logo.png')}}" class="xs-espindola" alt="Logo Espindola" width="189" height="100">
                 </a>
          </div>
             <div class="">

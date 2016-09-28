@@ -31,15 +31,12 @@ class LegalController extends Controller
 			    $request['legal_location_other_rent']      		= Function_generic::moeda($request['legal_location_other_rent']);
 
 			    //CONFIGURANDO AS DATAS
-				if(!empty($request['legal_location_data_constitution'])){
-				    $request['legal_location_data_constitution']    = Carbon::createFromFormat('d/m/Y', $request['legal_location_data_constitution']);
-				}
-				if(!empty($request['legal_location_representative_date_brith'])){
-				    $request['legal_location_representative_date_brith']    = Carbon::createFromFormat('d/m/Y', $request['legal_location_representative_date_brith']);
-				}
-				if(!empty($request['legal_location_representative_date_brith2'])){
-				    $request['legal_location_representative_date_brith2']    = Carbon::createFromFormat('d/m/Y', $request['legal_location_representative_date_brith2']);
-				}
+                $request['legal_location_data_constitution'] = Function_generic::DataBRtoMySQL($request['legal_location_data_constitution']);
+
+                $request['legal_location_representative_date_brith'] = Function_generic::DataBRtoMySQL($request['legal_location_representative_date_brith']);
+
+                $request['legal_location_representative_date_brith2'] = Function_generic::DataBRtoMySQL($request['legal_location_representative_date_brith2']);
+                
 			     
 			    $input = $request->all();
 	            //RETIRANDO OS INDICES DO ARRAY PARA NÃO SER REGISTRADO NA TABELA VISTORIA

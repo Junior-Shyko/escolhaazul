@@ -18,17 +18,11 @@
 			<h3 class="numero_proposta">Nº {{$proposal[0]->legal_id}} </h3>
 		</div>
   <div class="col-md-12">
-	<div class="col-md-2 pull-right box">
-	<img src="{{url('public/img/logo_pequena.png')}}" width="150">
-	<label>
-		A aprovação da sua proposta irá depender da quantidade de informações aqui fornecidas. 
-		</label>
-	</div>
-	
+
 			<!-- Tab panes -->
 			<div class="tab-content">
 
-			  <div class="tab-pane active container box col-md-10"  id="login">
+			  <div class="tab-pane active container box col-md-12"  id="login">
 			  	@foreach($proposal as $proposals)
 		            <form action="" method="" id="form_one_pj">
 		                @include('proposal.pj.pj_first_step')
@@ -39,7 +33,7 @@
 	            @endforeach
 				
 			  </div><!-- fim content-->
-			  <div class="tab-pane container col-md-10" id="create_user"><br>
+			  <div class="tab-pane container col-md-12" id="create_user"><br>
 			  	<!-- INCLUSAO -->
 			  	@foreach($proposal as $proposals)
 		            <form action="" method="" id="form_two_pj">
