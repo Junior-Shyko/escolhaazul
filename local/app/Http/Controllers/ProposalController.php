@@ -240,10 +240,12 @@ class ProposalController extends Controller
 
                 //return response()->json(['message' => 'success']);
                if(!empty($user)){
-                 Mail::send('email.proposal_id_user', ['user' => $user, 'proposal' => $proposal], function ($m) use ($user, $proposal) {
+                $caminho = "espindolaimobiliaria.com.br/escolhaazul";
+                 Mail::send('email.email_administrator', ['user' => $user, 'proposal' => $proposal , 'caminho' => $caminho], function ($m) use ($user, $proposal, $caminho) {
                    
-                     $m->to($user[0]->email, $user[0]->name)->subject('Nova Proposta Pessoa Física');
+                     $m->to($user[0]->email, $user[0]->name)->subject('NOVA PROPOSTA LOCAÇÃO PESSOA FÍSICA');
                      $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
+                     $m->cc("fabiano@espindola.imb.br", 'Equipe Espindola');
                 });
                }
 

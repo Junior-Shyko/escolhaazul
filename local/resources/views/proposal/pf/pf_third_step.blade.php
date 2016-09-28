@@ -1,14 +1,4 @@
-{{ $proposal[0]->proposal_type_guarantee }}
-@if($proposal[0]->proposal_type_guarantee == "Fiador")
-<script>
 
-   
-    document.getElementById("guarantor").style.display ="block";    
-    console.log('fiador 3');
-
-</script>
-
-@endif
 <div class="col-md-12">
     <label class="pull-left label_titulo">Anexar documentos</label> 	  						
 </div>

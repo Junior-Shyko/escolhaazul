@@ -34,13 +34,13 @@
               <?php
                 $atend = DB::table('users')->where('id' , $proposals->proposal_id_user)->get();
               ?>
-              <option value="{{$atend[0]->id}}">{{$atend[0]->name}}</option>
+              <option value="{{$atend[0]->id}}">{{$atend[0]->nick}}</option>
               <option value="" class="separator"></option>
             @else
               <option value="0">--Selecione--</option>
             @endif
             @foreach ($user as $users)
-              <option value="{{$users->id}}" >{{$users->name}}</option>           
+              <option value="{{$users->id}}" >{{$users->nick}}</option>           
             @endforeach
         </select>
     </div>
