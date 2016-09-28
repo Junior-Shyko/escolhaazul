@@ -856,12 +856,12 @@ nav#footer p{
 	font-family: Tahoma, Geneva, sans-serif;
 	padding: 5px;
 	float: left;
-	text-align: center;
+	/*text-align: center;*/
 }
 .container_list span{
     font-size: 8pt;
     float: left;
-    margin-left: 17px;
+    /*margin-left: 17px;*/
     font-weight: lighter;
     color: black;
 }

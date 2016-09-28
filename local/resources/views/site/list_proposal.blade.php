@@ -110,8 +110,8 @@
                                         </span>
                                         </p>
                                         @elseif(!empty($proposals->date_cadastre))
-                                        <p>Proposta: {{$proposals->proposal_id}} <small>(Pendente)</small>
-                                            <span>Proposta enviada em: {{ (empty($proposals->date_cadastre)) ? 'Pendente' : date("d/m/Y" , strtotime($proposals->date_cadastre)) }} <br> Status: </span>
+                                        <p>Proposta: {{$proposals->proposal_id}} <small>({{$proposals->proposal_status}})</small>
+                                            <span>Proposta enviada em: {{ (empty($proposals->date_cadastre)) ? 'Pendente' : date("d/m/Y" , strtotime($proposals->date_cadastre)) }} </span>
                                         </p>
                                         @endif
                                     </div>
