@@ -230,7 +230,7 @@ class ProposalController extends Controller
                 $request['proposal_rent_other'] = $outras_rendas;
                 $request['proposal_status'] = "Incompleto";
 
-                $input = $request->except('_token', 'etapa', 'primeira_pf', 'segunda_pf','terceiraW_pf','compoeRenda_conjuge', 'third_step' , 'type_proposal');
+                $input = $request->except('_token', 'etapa', 'primeira_pf', 'segunda_pf','terceira_pf','compoeRenda_conjuge', 'third_step' , 'type_proposal');
              
                 Proposal::where('proposal_id', $id)->update($input);
                 //PESQUISANDO O USUARIO PARA ENVIAR E-MAIL
@@ -444,7 +444,8 @@ class ProposalController extends Controller
 
        if(isset($_FILES))
         {
-        $id_proposal = $request[$campo];
+        $id_proposal = $request['proposal_id'];
+        
          $tot_array = count($_FILES["img_photo"]["name"]);
          
            for ($i=0; $i < $tot_array; $i++) { 
@@ -466,7 +467,7 @@ class ProposalController extends Controller
               ]); 
               
           }
-          return $tot_array;
+          return response()->json(['message' => 'success']);
         }
     }
     /*

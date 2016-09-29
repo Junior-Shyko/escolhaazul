@@ -62,7 +62,7 @@ function verify_guarantor(){
 		$("#primeiro_fiador").focus();
 	}
 	if($("#guarantor_email").val() == ""){
-		alert('Informe o Nome do Fiador');		
+		alert('Informe o E-mail do Fiador');		
 		$("#guarantor_email").css("border", "1px solid red");
 		$("#guarantor_email").focus();
 	}

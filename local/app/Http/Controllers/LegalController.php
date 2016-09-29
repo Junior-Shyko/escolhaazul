@@ -68,23 +68,15 @@ class LegalController extends Controller
 			
             }elseif(array_key_exists("terceira_pj", $request->all()))
             {
-                $request['legal_reference_banking_account'] = Function_generic::moeda($request['legal_reference_banking_account']);
-                $request['legal_reference_banking_limit1']  = Function_generic::moeda($request['legal_reference_banking_limit1']);
-                $request['legal_reference_banking_limit2']  = Function_generic::moeda($request['legal_reference_banking_limit2']);
-                $request['legal_reference_banking_app1']    = Function_generic::moeda($request['legal_reference_banking_app1']);
-                $request['legal_reference_banking_app2']    = Function_generic::moeda($request['legal_reference_banking_app2']);
-                $request['legal_reference_bens_value']      = Function_generic::moeda($request['legal_reference_bens_value']);
-                $request['legal_reference_bens_value2']     = Function_generic::moeda($request['legal_reference_bens_value2']);
-                $request['legal_reference_vehicle_value']   = Function_generic::moeda($request['legal_reference_vehicle_value']);
-                $request['legal_reference_vehicle_value2']  = Function_generic::moeda($request['legal_reference_vehicle_value2']);
+                $id = $request['legal_id'];
+                $request['legal_status']    = "Nova";
                 $request['legal_location_complete'] = Carbon::now();
+                
                 $input = $request->all();
+                $input = $request->except('_token','terceira_pf','compoeRenda_conjuge' , 'type_proposal');
 
-                //RETIRANDO OS INDICES DO ARRAY PARA NÃO SER REGISTRADO NA TABELA VISTORIA
-                $input = $request->except('_token', 'terceira_pj');
-                legal::where('legal_id', $id)->update($input); 
-                $proposta_legal = Legal::find($id);
-                return response()->json($proposta_legal);
+                Legal::where('legal_id', $id)->update($input); 
+                $proposal = Legal::find($id); 
             }
     	}
     }

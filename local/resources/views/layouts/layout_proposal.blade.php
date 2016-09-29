@@ -107,6 +107,28 @@
                  $('#modal_reload').modal('hide');      
             
              });
+
+            $('#upload_ajax_pj').die('click').live('change', function()      { 
+            
+               $('#modal_reload').modal('show');
+               
+               $("#form_upload_pj").ajaxForm({ 
+                 url: domain_complet+'/upload-files', 
+                 type: 'POST',
+                 dataType: 'json',
+                 success: function(data){
+            
+                  console.log('upload-com-sucesso');
+                   
+                  $('#modal_reload').modal('hide');
+
+                 },
+                 error:function(){ 
+                   console.log('Erro');
+                 } }).submit();  
+                 $('#modal_reload').modal('hide');      
+            
+             });
         </script>
     </head>
     <body>

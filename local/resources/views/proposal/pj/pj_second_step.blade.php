@@ -463,7 +463,7 @@
 <div id="referencia_imoveis">	
 	<div class="col-md-3 ">
 		<label class="control-label" for="cep-bens">CEP</label>
-		<input type="text" name="legal_reference_bens_cep" id="cep-bens" class="cep4 form-control" value="{{$proposals->legal_reference_bens_cep}}>
+		<input type="text" name="legal_reference_bens_cep" id="cep-bens" class="cep4 form-control" value="{{$proposals->legal_reference_bens_cep}}">
 	</div>
 	<div class="col-md-4 ">
 		<label class="control-label">Endereço</label>

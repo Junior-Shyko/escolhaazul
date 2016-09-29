@@ -211,7 +211,7 @@
             <h2>Alguém mais além de você vai alugar esse imóvel? <small class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="Se for alugar o imóvel com outra pessoa, informe abaixo o locatário adicional, pois a análise cadastral será feita em conjunto"> </small></h2>
         </div>
         <a class="btn loc_info btn-lg" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        Adicionar
+        Adicionar Locatário
         </a>
         <div class="collapse" id="collapseExample">
             <div class="panel panel-default">
@@ -296,7 +296,8 @@
     <div class="col-md-12 form-group">
         <label class="pull-left label_titulo">Termos e condições</label> 							
     </div>
-    <div class="col-md-12"><p>Declaro que são verdadeiras as informações prestadas nesta proposta, sob as penas da legislação brasileira, observando os 
+    <div class="col-md-12">
+        <p>Declaro que são verdadeiras as informações prestadas nesta proposta, sob as penas da legislação brasileira, observando os 
         artigos 171 e 299 do Código Penal. Ademais, as referências informadas por mim estão autorizadas a trocar informações a meu respeito.     
     </p>
     <p>Estou ciente de que o envio desta proposta não vincula a locação, visto que a imobiliária respeitará a prioridade na 
@@ -305,7 +306,8 @@
     <p>
         Concordo em pagar uma caução no valor de <strong>R$100,00 (cem reais)</strong>, a qual será devolvida pela imobiliária após a 
         assinatura do contrato de locação ou se desaprovada a referida proposta. No entanto, caso desista da locação ou se as informações aqui fornecidas não forem verdadeiras, a quantia permanecerá na imobiliária para cobrir as despesas do locador com os serviços administrativos prestados para esta aferição. No mesmo sentido, se o locador desistir após a aprovação integral desta proposta e liberação do contrato, será devolvido o valor recebido, mais o equivalente. Em ambos os casos não haverá direito a indenização adicional.
-    </p></div>
+    </p>
+    </div>
     <div class="col-md-6 form-group">
         <input type='checkbox' id="acordo"  style="  height: 15px;  padding: 20px; width: 15px;"/>
         <label class="control-label">Ciente e de acordo.</label>  

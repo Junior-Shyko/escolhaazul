@@ -152,32 +152,32 @@ function validaCampos(){
 		return false;
 	}*/
 
-	if(document.getElementById("proposal_reference").value.length < 3){
-		alert('Por favor, preencha o campo de Endereço ou código do Imóvel');
-		document.getElementById("proposal_reference").focus();
-		$('#proposal_reference').css("border", "1px solid red");
-		return false;
-	}else if(document.getElementById("proposal_name").value.length < 3){
-		alert('Preencha o campo do seu Nome Completo');
-		document.getElementById("proposal_name").focus();
-		$('#proposal_name').css("border", "1px solid red");
-	return false;
-	}else if(document.getElementById("cpf").value.length < 3){
-		alert('Preencha o campo do seu CPF');
-		document.getElementById("cpf").focus();
-		$('#cpf').css("border", "1px solid red");
-	return false;
-	}else if(document.getElementById("proposal_filiation").value.length < 3){
-		alert('Preencha o campo de Filiação');
-		document.getElementById("proposal_filiation").focus();
-		$('#proposal_filiation').css("border", "1px solid red");
-	return false;
-	}else if(document.getElementById("email_proponente").value.length < 3){
-		alert('Preencha o campo de E-mail');
-		document.getElementById("email_proponente").focus();
-		$('#email_proponente').css("border", "1px solid red");
-	return false;
-	};
+	// if(document.getElementById("proposal_reference").value.length < 3){
+	// 	alert('Por favor, preencha o campo de Endereço ou código do Imóvel');
+	// 	document.getElementById("proposal_reference").focus();
+	// 	$('#proposal_reference').css("border", "1px solid red");
+	// 	return false;
+	// }else if(document.getElementById("proposal_name").value.length < 3){
+	// 	alert('Preencha o campo do seu Nome Completo');
+	// 	document.getElementById("proposal_name").focus();
+	// 	$('#proposal_name').css("border", "1px solid red");
+	// return false;
+	// }else if(document.getElementById("cpf").value.length < 3){
+	// 	alert('Preencha o campo do seu CPF');
+	// 	document.getElementById("cpf").focus();
+	// 	$('#cpf').css("border", "1px solid red");
+	// return false;
+	// }else if(document.getElementById("proposal_filiation").value.length < 3){
+	// 	alert('Preencha o campo de Filiação');
+	// 	document.getElementById("proposal_filiation").focus();
+	// 	$('#proposal_filiation').css("border", "1px solid red");
+	// return false;
+	// }else if(document.getElementById("email_proponente").value.length < 3){
+	// 	alert('Preencha o campo de E-mail');
+	// 	document.getElementById("email_proponente").focus();
+	// 	$('#email_proponente').css("border", "1px solid red");
+	// return false;
+	// };
       
 }
 

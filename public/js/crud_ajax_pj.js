@@ -4,7 +4,6 @@ $(document).ready(function() {
 
 	var rota = domain_complet;
 	
-	//DADOS DA PRIMEIRA ETAPA, PARTINDO PARA SEGUNDA
 	$("#secound_step_pj").click(function(event) {
 		/* Act on the event */
 		form_pj_one = $("#form_one_pj").serialize();
@@ -37,22 +36,23 @@ $(document).ready(function() {
 		
 	});
 
+	//ENVIANDO OS DADOS DA SEGUNDA ETAPA (2 FORMULARIO)
 	$("#end_step_pj").click(function(event) {
-		/* Act on the event */
-		form_pj_two = $("#form_two_pj").serialize();
+		/* CRIADO EM 2016-09-26 BY JUNIOR OLIVEIRA */
+		form_two_pj = $("#form_two_pj").serialize();
 
 		$.ajax({
-			url: domain_complet+'/pj/update',
+			url: rota+'/pj/update',
 			type: 'POST',
 			dataType: 'JSON',
-			data: form_pj_two,
+			data: form_two_pj,
 			success:function(response){
-				console.log('sucesso-pj-segunda-etapa');
+				console.log('sucesso');
 			},
 			error   : function (data ) 
 	        {
 	          $.each( data, function( key, value ) {
-	                console.log(value[key]); 
+	                console.log(value[0]); 
 	            });
 	            
 	        }
@@ -66,51 +66,65 @@ $(document).ready(function() {
 		.always(function() {
 			console.log("complete");
 		});
-		
 	});
+
+function verify_guarantor(){
+
+	if($("#legal_guarantor_cpf_cnpj").val() == ""){
+		alert('Informe o tipo de Fiador');		
+		$("#legal_guarantor_cpf_cnpj").css("border", "1px solid red");
+		$("#legal_guarantor_cpf_cnpj").focus();
+	}
+	if($("#legal_guarantor_name").val() == ""){
+		alert('Informe o Nome do Fiador');		
+		$("#legal_guarantor_name").css("border", "1px solid red");
+		$("#legal_guarantor_name").focus();
+	}
+	if($("#legal_guarantor_email").val() == ""){
+		alert('Informe o e-mail do Fiador');		
+		$("#legal_guarantor_email").css("border", "1px solid red");
+		$("#legal_guarantor_email").focus();
+	}
+	
+}	
 
 	$("#final_proposta_pj").click(function(event) {
 		/* INSERINDO OS VALORES DA SEGUNDA ETAPA */
-		$("#modal_reload").modal('show');
+		//$("#modal_reload").modal('show');
 
-		dados_end_step = {
-			legal_guarantor_cpf_cnpj : $("#legal_guarantor_cpf_cnpj").val(),
-			legal_guarantor_name : $("#legal_guarantor_name").val(),
-			legal_guarantor_relation : $("#legal_guarantor_relation").val(),
-			legal_guarantor_email : $("#legal_guarantor_email").val(),
-			legal_guarantor_type : $("#legal_guarantor_type").val(),
-			legal_guarantor_type : $("#legal_guarantor_type").val(),
-			legal_guarantor_cpf_cnpj2 : $("#legal_guarantor_cpf_cnpj2").val(),
-			legal_guarantor_name2 : $("#legal_guarantor_name2").val(),
-			legal_guarantor_relation2 : $("#legal_guarantor_relation2").val(),
-			legal_guarantor_email2 : $("#legal_guarantor_email2").val(),
-			legal_guarantor_type2 : $("#legal_guarantor_type2").val(),
-			legal_guarantor_type2 : $("#legal_guarantor_type2").val(),
-			legal_occupant_cpf : $("#legal_occupant_cpf").val(),
-			legal_occupant_name : $("#legal_occupant_name").val(),
-			legal_occupant_email : $("#legal_occupant_email").val(),
-			legal_occupant_type : $("#legal_occupant_type").val(),
-			legal_occupant_cpf2 : $("#legal_occupant_cpf2").val(),
-			legal_occupant_name2 : $("#legal_occupant_name2").val(),
-			legal_occupant_type2 : $("#legal_occupant_type2").val(),
-			legal_occupant_type2 : $("#legal_occupant_type2").val(),
-			_token : $("#token_pj_thrid").val(),
-			legal_id : $("#id_legal").val(),
-			terceira_pj : $("#terceira_pj").val()
+		if($("#tipo_garantia").val() == "Fiador"){ 
+			verify_guarantor();
+			var type_guarantor1 = $('input[type=radio][name=legal_guarantor_type]:checked').attr('id');
+			var type_guarantor2 = $('input[type=radio][name=legal_guarantor_type2]:checked').attr('id');
+			
+			if (type_guarantor1 == null)		
+			{
+				alert('Informe como será a forma que o Fiador receberá a notificação');
+				$("#info_not_fiador1").removeClass('alert-success');
+				$("#info_not_fiador1").addClass('alert-danger');
+				
+			}else{
+				$("#info_not_fiador1").removeClass('alert-danger');
+				$("#info_not_fiador1").addClass('alert-success');
+			}
+			}else{
 
-		};
+				$('#modal_reload').modal('show');
 
+			}
+
+		form_tree_pj = $("#form_tree_pj").serialize();
 		$.ajax({
 			url: rota+'/pj/update',
 			type: 'POST',
 			dataType: 'JSON',
-			data: dados_end_step,
+			data: form_tree_pj,
 			success:function(response){
 				console.log('sucesso');
-				setTimeout(function() {
-					$('#modal_reload').fadeOut('fast');
-				}, 5000);
-				location.href= rota+"pj/sucesso-proposta/tipo/pj/email/"+response.legal_location_email;
+				// setTimeout(function() {
+				// 	$('#modal_reload').fadeOut('fast');
+				// }, 5000);
+				//location.href= rota+"pj/sucesso-proposta/tipo/pj/email/"+response.legal_location_email;
 			},
 			error   : function (data ) 
 	        {
