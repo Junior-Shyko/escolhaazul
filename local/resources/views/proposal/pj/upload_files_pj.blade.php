@@ -34,8 +34,8 @@
                 <form action="{{ url('/pj/upload') }}" method="POST" enctype="multpart/form-data" id="form_upload_pj">
                     <input id="upload_ajax_pj" name="img_photo[]" type="file" multiple class="file-loading" required="" >
                     <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-                   {{ Form::text('proposal_id' , $proposal[0]->legal_id) }}
-                   {{ Form::text('type_proposal' , $type) }}
+                   {{ Form::hidden('proposal_id' , $proposal[0]->legal_id) }}
+                   {{ Form::hidden('type_proposal' , $type) }}
                 </form> 
             <script>
                 $("#upload_ajax_pj").fileinput({
