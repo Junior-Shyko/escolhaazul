@@ -55,7 +55,7 @@
                          }
                     }
             //GLOBALIZANDO URL
-             var project_survey = '/beta';
+             var project_survey = '/escolhaazul';
              domin  =  window.location.protocol + "//" + window.location.hostname;
              var domain_complet = domin + project_survey; 
              var url = window.location.origin;

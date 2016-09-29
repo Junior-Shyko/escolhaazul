@@ -3,8 +3,6 @@
 <?php 
 	$var = $proposal->proposal_name;
 	$nome = explode(" ", $var);
-
-
 ?>
 <p><b>Prezado(a) {{ $nome[0] }}</b>,</p><br/>
 
@@ -15,7 +13,7 @@
 	 <p>O próximo passo é cadastrar ou aguardar o cadastro das seguintes pessoas:</p>
 
 @if (!empty($proposal->guarantor_email))
-	 <strong>{{ $proposal->proposal_guarantor_name }}</strong> - FIADOR(A)	
+	 <strong>{{ $proposal->proposal_guarantor_name}}</strong> - FIADOR(A)	
 	 	{{-- VERIFICANDO SE FOI PARA SER CADASTRADO OU FOI ENVIADO PARA O FIADOR --}}
 	 	@if($proposal->proposal_guarantor_type == "cadastrar_fiador")
 	 		{{-- VERIFICANDO SE É PARA CADASTRAR PARA ENVIAR O LINK DE DE PF OU PJ --}}

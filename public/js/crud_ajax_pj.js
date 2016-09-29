@@ -107,11 +107,12 @@ function verify_guarantor(){
 				$("#info_not_fiador1").removeClass('alert-danger');
 				$("#info_not_fiador1").addClass('alert-success');
 			}
-			}else{
+
+		}else{
 
 				$('#modal_reload').modal('show');
 
-			}
+		}
 
 		form_tree_pj = $("#form_tree_pj").serialize();
 		$.ajax({
@@ -119,12 +120,12 @@ function verify_guarantor(){
 			type: 'POST',
 			dataType: 'JSON',
 			data: form_tree_pj,
-			success:function(response){
+			success:function(data){
 				console.log('sucesso');
 				// setTimeout(function() {
 				// 	$('#modal_reload').fadeOut('fast');
 				// }, 5000);
-				//location.href= rota+"pj/sucesso-proposta/tipo/pj/email/"+response.legal_location_email;
+				location.href= domain_complet+"pj/sucesso-proposta/tipo/pj/email/"+data.legal_location_email;
 			},
 			error   : function (data ) 
 	        {

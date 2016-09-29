@@ -44,20 +44,26 @@ class LegalController extends Controller
 	            legal::where('legal_id', $id)->update($input); 
                 
                 return response()->json(['mensagem' => 'success']);
-			    // $request['legal_reference_charge_value_quota']	= Function::moeda($request['legal_reference_charge_value_quota']);
-			    // $request['legal_reference_charge_value_quota2']	= Function::moeda($request['legal_reference_charge_value_quota2']);
+			    
 			    
 			}elseif(array_key_exists("segunda_pj", $request->all()))
 			{
-				$request['legal_reference_banking_account']	= Function_generic::moeda($request['legal_reference_banking_account']);
-				$request['legal_reference_banking_limit1']  = Function_generic::moeda($request['legal_reference_banking_limit1']);
-			    $request['legal_reference_banking_limit2']  = Function_generic::moeda($request['legal_reference_banking_limit2']);
-			    $request['legal_reference_banking_app1']    = Function_generic::moeda($request['legal_reference_banking_app1']);
-			    $request['legal_reference_banking_app2']    = Function_generic::moeda($request['legal_reference_banking_app2']);
-			    $request['legal_reference_bens_value']      = Function_generic::moeda($request['legal_reference_bens_value']);
-			    $request['legal_reference_bens_value2']     = Function_generic::moeda($request['legal_reference_bens_value2']);
-			    $request['legal_reference_vehicle_value']   = Function_generic::moeda($request['legal_reference_vehicle_value']);
-			    $request['legal_reference_vehicle_value2']  = Function_generic::moeda($request['legal_reference_vehicle_value2']);
+				$request['legal_reference_banking_account']	    = Function_generic::moeda($request['legal_reference_banking_account']);
+				$request['legal_reference_banking_limit1']      = Function_generic::moeda($request['legal_reference_banking_limit1']);
+			    $request['legal_reference_banking_limit2']      = Function_generic::moeda($request['legal_reference_banking_limit2']);
+			    $request['legal_reference_banking_app1']        = Function_generic::moeda($request['legal_reference_banking_app1']);
+			    $request['legal_reference_banking_app2']        = Function_generic::moeda($request['legal_reference_banking_app2']);
+			    $request['legal_reference_bens_value']          = Function_generic::moeda($request['legal_reference_bens_value']);
+			    $request['legal_reference_bens_value2']         = Function_generic::moeda($request['legal_reference_bens_value2']);
+			    $request['legal_reference_vehicle_value']       = Function_generic::moeda($request['legal_reference_vehicle_value']);
+			    $request['legal_reference_vehicle_value2']      = Function_generic::moeda($request['legal_reference_vehicle_value2']);
+                $request['legal_reference_charge_value_quota']  = Function_generic::moeda($request['legal_reference_charge_value_quota']);
+                $request['legal_reference_charge_value_quota2'] = Function_generic::moeda($request['legal_reference_charge_value_quota2']);
+
+                $request['legal_reference_charge_begin_contract']= Function_generic::DataBRtoMySQL($request['legal_reference_charge_begin_contract']);
+                $request['legal_reference_charge_begin_contract2']= Function_generic::DataBRtoMySQL($request['legal_reference_charge_begin_contract2']);
+                
+                
 
 			    $input = $request->all();
 	            //RETIRANDO OS INDICES DO ARRAY PARA NÃO SER REGISTRADO NA TABELA VISTORIA
@@ -77,6 +83,7 @@ class LegalController extends Controller
 
                 Legal::where('legal_id', $id)->update($input); 
                 $proposal = Legal::find($id); 
+                return response()->json($proposal);
             }
     	}
     }

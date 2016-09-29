@@ -335,7 +335,8 @@ class ProposalController extends Controller
                if(!$request['proposal_occupant_type'] == null){
                      if($request['proposal_occupant_type'] == "Enviar_locatario2"){
                         $nome_fiador = $proposal->proposal_occupant_name2;
-                        Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador], function ($m) use ( $proposal, $nome_fiador ) {                   
+                        Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador], function ($m) use ( $proposal, $nome_fiador ) {     @
+                                        
                             $m->to($proposal->proposal_occupant_email2, $proposal->proposal_occupant_name2)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
                             $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
                         });
@@ -344,8 +345,20 @@ class ProposalController extends Controller
                }
                 
                 $caminho = "espindolaimobiliaria.com.br/escolhaazul/";
-                Mail::send('email.email_proponent', [ 'proposal' => $proposal, 'caminho' => $caminho], function ($m) use ($proposal) {                 
-                     $m->to($proposal->proposal_email, $proposal->proposal_email)->subject('PROPOSTA ENVIADO COM SUCESSO');
+                $type = "Pessoa Física";
+                Mail::send('email.email_proponent', [ 'proposal' => $proposal, 'caminho' => $caminho, 'type' => $type], function ($m) use ($proposal, $caminho, $type) {  if($type == "Pessoa Física")
+                    {
+                      $prefixo = "proposal";
+                      $email = $proposal->proposal_email;
+                      $nome = $proposal->proposal_name;
+                    }   
+                    elseif($type == "Pessoa Jurídica")
+                    {
+                      $prefixo = "legal"; 
+                      $email = $proposal->legal_location_email;
+                      $nome = $proposal->legal_location_name_corporation;
+                    }       
+                     $m->to($email, $nome)->subject('PROPOSTA ENVIADO COM SUCESSO');
                      $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
                 });
 

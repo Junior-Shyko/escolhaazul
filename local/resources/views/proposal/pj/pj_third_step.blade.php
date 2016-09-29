@@ -13,13 +13,14 @@
             </div>
             <div class="col-md-4 form-group">
                 <label class="control-label" for="inputSuccess1">Nome</label>
-                <input type="text" name="legal_guarantor_name" id="legal_guarantor_name" value="{{ $proposals->legal_guarantor_name }}" class="form-control">
+                <input type="text" name="legal_guarantor_name" id="legal_guarantor_name" value="{{ $proposals->legal_guarantor_name }}" class="form-control" 
+                value="{{ $proposals->legal_guarantor_name }}">
             </div>
             <div class="col-md-4">
                 <label class="">Relação entre fiador e proponente</label>
                 <select name="legal_guarantor_relation" id="legal_guarantor_relation" class="selectpicker show-tick form-control">
                     <optgroup label="Pessoa Física" data-max-options="2">
-                        <option value=""selected>--Selecione--</option>
+                        <option value="Não informado" selected>--Selecione--</option>
                     <optgroup label="Pessoa Física" data-max-options="2">
                         <option value="Amigo">Amigo</option>
                         <option value="Conhecido">Conhecido</option>
@@ -36,7 +37,7 @@
             </div>
             <div class="col-md-8 form-group">
                 <label class="control-label">E-mail</label>
-                <input type="text" name="legal_guarantor_email" id="legal_guarantor_email" class="form-control">
+                <input type="text" name="legal_guarantor_email" id="legal_guarantor_email" class="form-control" value="{{ $proposals->legal_guarantor_email }}" value="{{ $proposals->legal_guarantor_name }}">
             </div>
             <div class="col-md-12 alert alert-info form-group" id="info_not_fiador1">
                 <div class="col-md-6">
@@ -77,7 +78,7 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label class="control-label" for="inputSuccess1">Nome</label>
-                        <input type="text" name="legal_guarantor_name2" id="legal_guarantor_name2" class="form-control">
+                        <input type="text" name="legal_guarantor_name2" id="legal_guarantor_name2" class="form-control" value="{{ $proposals->legal_guarantor_name2 }}">
                     </div>
                     <div class="col-md-4">
                         <small class="form-group control-label">Relação entre fiador e proponente</small>
@@ -100,7 +101,7 @@
                     </div>
                     <div class="col-md-8 form-group">
                         <label class="control-label">E-mail</label>
-                        <input type="text" name="legal_guarantor_email2" id="legal_guarantor_email2" class="form-control">
+                        <input type="text" name="legal_guarantor_email2" id="legal_guarantor_email2" class="form-control" value="{{ $proposals->legal_guarantor_email2 }}">
                     </div>
                     <div class="col-md-12 alert alert-info form-group">
                         <div class="col-md-6">
@@ -139,11 +140,11 @@
                 </div>
                 <div class="col-md-4">
                     <label class="control-label">Nome</label>
-                    <input type="text" name="legal_occupant_name" id="legal_occupant_name" class="form-control">
+                    <input type="text" name="legal_occupant_name" id="legal_occupant_name" class="form-control" value="{{ $proposals->legal_occupant_name }}">
                 </div>
                 <div class="col-md-5 form-group">
                     <label class="control-label">E-mail</label>
-                    <input type="email" name="legal_occupant_email" id="legal_occupant_email" class="form-control">
+                    <input type="email" name="legal_occupant_email" id="legal_occupant_email" class="form-control" value="{{ $proposals->legal_occupant_email }}">
                 </div>
                 <div class="col-md-12 alert alert-success">
                     <div class="col-md-6">
@@ -176,11 +177,11 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="control-label">Nome</label>
-                                    <input type="text" name="legal_occupant_name2" id="legal_occupant_name2" class="form-control">
+                                    <input type="text" name="legal_occupant_name2" id="legal_occupant_name2" class="form-control" value="{{ $proposals->legal_occupant_name2 }}">
                                 </div>
                                 <div class="col-md-5">
                                     <label class="control-label">E-mail</label>
-                                    <input type="email" name="legal_occupant_email2" class="form-control">
+                                    <input type="email" name="legal_occupant_email2" class="form-control" value="{{ $proposals->legal_occupant_email2 }}">
                                 </div>
                                 <div class="col-md-12 alert alert-success">
                                     <div class="col-md-6">

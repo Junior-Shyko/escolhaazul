@@ -119,7 +119,7 @@ $('#final_proposta').click(function(event) {
 			data: dados_third,
 			success: function(data){
 				$('#modal_reload').modal('hide');
-				location.href = domain_complet+'/beta/proposta-concluida/?msg=sucesso-proposta&email='+data.proposal_email;				
+				//location.href = domain_complet+'/proposta-concluida/?msg=sucesso-proposta&email='+data.proposal_email;				
 			}
 		})
 		.done(function() {
