@@ -113,7 +113,7 @@
                $('#modal_reload').modal('show');
                
                $("#form_upload_pj").ajaxForm({ 
-                 url: domain_complet+'/upload-files', 
+                 url: domain_complet+'/upload-files',
                  type: 'POST',
                  dataType: 'json',
                  success: function(data){
