@@ -18,18 +18,18 @@
 	</div>
 	<div class="col-md-2 ">
 		<label class="control-label" >Ano</label>
-		<input type="text" name="proposal_vehicle_year" class="form-control" value="{{$proposals->proposal_vehicle_year}}">
+		<input type="text" name="proposal_vehicle_year" maxlength="4" class="form-control" value="{{$proposals->proposal_vehicle_year}}">
 	</div>
 	
 	<div class="col-md-3 ">
 		<label class="control-label">Placa</label>
-		<input type="text" name="proposal_vehicle_plaque" class="form-control" value="{{$proposals->proposal_vehicle_plaque}}">
+		<input type="text" name="proposal_vehicle_plaque"  maxlength="10" class="form-control" value="{{$proposals->proposal_vehicle_plaque}}">
 	</div>
 	
 	<div class="col-md-3 ">
 		<label class="control-label">Financiado?</label>					
         <select name="proposal_vehicle_finance" class="selectpicker show-tick form-control">
-          <option value=""selected>--Selecione--</option>	
+          <option value="">{{(!empty($proposals->proposal_vehicle_finance) ? $proposals->proposal_vehicle_finance : ' -- Selecione --')}}</option>	
           <option value="Sim" >Sim</option>
           <option value="Não" >Não</option>
         
@@ -66,18 +66,18 @@
 				</div>
 				<div class="col-md-2 ">
 					<label class="control-label" >Ano</label>
-					<input type="text" name="proposal_vehicle_year2" class="form-control" value="{{$proposals->proposal_vehicle_year2}}">
+					<input type="text" name="proposal_vehicle_year2" class="form-control" maxlength="4" value="{{$proposals->proposal_vehicle_year2}}">
 				</div>
 				
 				<div class="col-md-3 ">
 					<label class="control-label">Placa</label>
-					<input type="text" name="proposal_vehicle_plaque2" class="form-control" value="{{$proposals->proposal_vehicle_plaque2}}">
+					<input type="text" name="proposal_vehicle_plaque2" class="form-control" maxlength="10" value="{{$proposals->proposal_vehicle_plaque2}}">
 				</div>
 				
 				<div class="col-md-3 ">
 					<label class="control-label">Financiado?</label>					
 			        <select name="proposal_vehicle_finance2" class="selectpicker show-tick form-control">
-			          <option value=""selected>--Selecione--</option>	
+			          <option value="">{{(!empty($proposals->proposal_vehicle_finance) ? $proposals->proposal_vehicle_finance : ' -- Selecione --')}}</option>	
 			          <option value="Sim" >Sim</option>
 			          <option value="Não" >Não</option>
 			        

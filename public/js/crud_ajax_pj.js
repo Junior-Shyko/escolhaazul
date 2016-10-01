@@ -89,6 +89,7 @@ function verify_guarantor(){
 }	
 
 	$("#final_proposta_pj").click(function(event) {
+		console.log(domain_complet);
 		/* INSERINDO OS VALORES DA SEGUNDA ETAPA */
 		//$("#modal_reload").modal('show');
 
@@ -113,7 +114,7 @@ function verify_guarantor(){
 				$('#modal_reload').modal('show');
 
 		}
-
+		$('#modal_reload').modal('show');
 		form_tree_pj = $("#form_tree_pj").serialize();
 		$.ajax({
 			url: rota+'/pj/update',
@@ -125,10 +126,12 @@ function verify_guarantor(){
 				// setTimeout(function() {
 				// 	$('#modal_reload').fadeOut('fast');
 				// }, 5000);
-				location.href= domain_complet+"pj/sucesso-proposta/tipo/pj/email/"+data.legal_location_email;
+				location.href = domain_complet+"/escolhaazul/proposta-concluida/?msg=sucesso-proposta&email="+data.legal_location_email;
+
 			},
 			error   : function (data ) 
 	        {
+	        	$('#modal_reload').modal('hide');
 	          $.each( data, function( key, value ) {
 	                console.log(value[0]); 
 	            });

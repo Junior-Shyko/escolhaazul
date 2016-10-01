@@ -102,7 +102,7 @@
     
     <div class="col-md-3 ">
         <label class="control-label" for="inputSuccess1">CNPJ</label>
-        <input type="text" name="proposal_commercial_cpf" id="proposal_commercial_cpf" data-mask="99.999.999-9999/99" class="form-control" value="{{$proposals->proposal_commercial_cpf}}">
+        <input type="text" name="proposal_commercial_cpf" id="proposal_commercial_cpf" data-mask="99.999.999-9999/99" class="form-control" value="{{$proposals->proposal_commercial_cpf}}" maxlength="14">
     </div>
     
     <div class="col-md-3 form-group">
@@ -134,7 +134,7 @@
                 
                 <div class="col-md-3 ">
                     <label class="control-label" for="inputSuccess1">CNPJ</label>
-                    <input type="text" name="proposal_commercial_cpf2" id="proposal_commercial_cpf2" data-mask="99.999.999-9999/99" class="form-control" value="{{$proposals->proposal_commercial_cpf2}}">
+                    <input type="text" name="proposal_commercial_cpf2" id="proposal_commercial_cpf2" data-mask="99.999.999-9999/99" class="form-control" value="{{$proposals->proposal_commercial_cpf2}}" maxlength="20">
                 </div>
                             
                 <div class="col-md-3 ">
@@ -175,14 +175,14 @@
     
     <div class="col-md-3 ">
         <label class="control-label" for="inputSuccess1">CPF</label>
-        <input type="text" name="proposal_person_cpf1" id="proposal_person_cpf1" class="form-control" value="{{$proposals->proposal_person_cpf1}}">
+        <input type="text" name="proposal_person_cpf1" id="proposal_person_cpf1" class="form-control" value="{{$proposals->proposal_person_cpf1}}" maxlength="14">
     </div>
     <div class="col-md-4">
         <label class="control-label">Qual a relação?</label>                    
         <select name="proposal_person_relation1" id="proposal_person_relation1" class="selectpicker show-tick form-control">
           <option value=""selected>--Selecione--</option>   
           <option value="Amigo">Amigo</option>
-          <option value="colega de trabalho">Conhecido</option> 
+          <option value="Profissional">Profissional</option> 
           <option value="Parente">Parente</option>
           <option value="Outros">Outros</option> 
         </select>        
@@ -218,14 +218,14 @@
                 
                 <div class="col-md-3 ">
                     <label class="control-label" for="inputSuccess1">CPF</label>
-                    <input type="text" name="proposal_person_cpf2" id="proposal_person_cpf2" class="form-control" value="{{$proposals->proposal_person_cpf2}}" onBlur="javascript:validaCPF(this);">
+                    <input type="text" name="proposal_person_cpf2" id="proposal_person_cpf2" class="form-control" value="{{$proposals->proposal_person_cpf2}}" maxlength="14">
                 </div>
                 <div class="col-md-4">
                     <label class="control-label">Qual a relação?</label>                    
                     <select name="proposal_person_relation2" id="proposal_person_relation2" class="selectpicker show-tick form-control">
                       <option value="" selected>--Selecione--</option>  
                       <option value="Amigo">Amigo</option>
-                       <option value="colega de trabalho">Conhecido</option> 
+                       <option value="Profissional">Profissional</option>
                         <option value="Parente">Parente</option>
                         <option value="Outros">Outros</option> 
                     </select>        
@@ -268,11 +268,11 @@
     
     <div class="col-md-3 ">
         <label class="control-label" >Agência</label>
-        <input type="text" name="proposal_banking_agency" id="proposal_banking_agency" class="form-control" value="{{$proposals->proposal_banking_agency}}">
+        <input type="text" name="proposal_banking_agency" id="proposal_banking_agency" class="form-control" value="{{$proposals->proposal_banking_agency}}" maxlength="12">
     </div>  
     <div class="col-md-3 ">
         <label class="control-label">Conta nº</label>
-        <input type="text" name="proposal_banking_current" id="proposal_banking_current" class="form-control" value="{{$proposals->proposal_banking_current}}">
+        <input type="text" name="proposal_banking_current" id="proposal_banking_current" class="form-control" value="{{$proposals->proposal_banking_current}}" maxlength="12">
     </div>
     <div class="col-md-6 ">
         <label class="control-label">Nome Gerente</label>
@@ -281,7 +281,7 @@
     
     <div class="col-md-3 ">
         <label class="control-label" >Telefone</label>
-        <input type="text" name="proposal_banking_name_phone" id="proposal_banking_name_phone" onKeyPress="MascaraTelefone(form_two.proposal_banking_name_phone);" maxlength="15"  onBlur="ValidaTelefone(form_two.proposal_banking_name_phone);"class="form-control" value="{{$proposals->proposal_banking_name_phone}}">
+        <input type="text" name="proposal_banking_name_phone" id="proposal_banking_name_phone" onKeyPress="MascaraTelefone(form_two.proposal_banking_name_phone);" maxlength="15"  onBlur="ValidaTelefone(form_two.proposal_banking_name_phone);" class="form-control" value="{{$proposals->proposal_banking_name_phone}}">
     </div>  
     <div class="col-md-3 ">
         <label class="control-label" >E-mail</label>
@@ -300,7 +300,8 @@
     <div class="col-md-3 ">
         <label class="control-label">Cartão de Crédito 01</label>                   
         <select name="proposal_banking_card_credit" id="proposal_banking_card_credit"  class="selectpicker show-tick form-control">
-          <option value="" selected>--Selecione--</option>  
+         <option>{{(!empty($proposals->proposal_banking_card_credit) ? $proposals->proposal_banking_card_credit : '--Selecione--')}}</option>
+          <option value="">--Selecione--</option>  
           <option value="MasterCard">MasterCard</option>
           <option value="Visa">Visa</option> 
           <option value="American Express">American Express</option> 
@@ -317,7 +318,8 @@
     <div class="col-md-3 ">
         <label class="control-label">Cartão de Crédito 02</label>                   
         <select name="proposal_banking_card_credit2" id="proposal_banking_card_credit2" class="selectpicker show-tick form-control">
-          <option value="" selected>--Selecione--</option>  
+         <option>{{(!empty($proposals->proposal_banking_card_credit2) ? $proposals->proposal_banking_card_credit2 : '--Selecione--')}}</option> 
+          <option value="">--Selecione--</option>  
           <option value="MasterCard">MasterCard</option>
           <option value="Visa">Visa</option> 
           <option value="American Express">American Express</option> 
@@ -339,7 +341,7 @@
     </div>
     <div class="col-md-3">
         <label class="control-label">1.Poupança/Aplicação(R$)</label>
-        <input type="text" name="proposal_banking_app" id="aplicacao1" class="form-control" value="{{$proposals->proposal_banking_app}}">
+        <input type="text" name="proposal_banking_app" id="aplicacao1" class="form-control" value="{{number_format($proposals->proposal_banking_app, 2, ',', ' ')}}">
     </div>
     <div class="col-md-5">
         <label class="control-label">Banco</label>
@@ -347,15 +349,15 @@
     </div>
     <div class="col-md-2 ">
         <label class="control-label">Agência</label>
-        <input type="text" name="proposal_banking_app_agency" id="proposal_banking_app_agency" class="form-control" value="{{$proposals->proposal_banking_app_agency}}">
+        <input type="text" name="proposal_banking_app_agency" id="proposal_banking_app_agency" class="form-control" value="{{$proposals->proposal_banking_app_agency}}" maxlength="12">
     </div>
     <div class="col-md-2 ">
         <label class="control-label">Conta. (nº)</label>
-        <input type="text" name="proposal_banking_app_ref"  id="proposal_banking_app_ref" class="form-control" value="{{$proposals->proposal_banking_app_ref}}">
+        <input type="text" name="proposal_banking_app_ref"  id="proposal_banking_app_ref" class="form-control" value="{{$proposals->proposal_banking_app_ref}}" maxlength="12">
     </div>
     <div class="col-md-3">
         <label class="control-label">2.Poupança/Aplicação(R$)</label>
-        <input type="text" name="proposal_banking_app2" id="aplicacao2" class="form-control" value="{{$proposals->proposal_banking_app2}}">
+        <input type="text" name="proposal_banking_app2" id="aplicacao2" class="form-control" value="{{number_format($proposals->proposal_banking_app2, 2, ',', ' ')}}">
     </div>
     <div class="col-md-5">
         <label class="control-label">Banco</label>
@@ -363,11 +365,11 @@
     </div>
     <div class="col-md-2 ">
         <label class="control-label">Agência</label>
-        <input type="text" name="proposal_banking_app_agency2"  id="proposal_banking_app_agency2" class="form-control" value="{{$proposals->proposal_banking_app_agency2}}">
+        <input type="text" name="proposal_banking_app_agency2"  id="proposal_banking_app_agency2" class="form-control" value="{{$proposals->proposal_banking_app_agency2}}" maxlength="12">
     </div>
     <div class="col-md-2 ">
         <label class="control-label">Conta. (nº)</label>
-        <input type="text" name="proposal_banking_app_ref2" id="proposal_banking_app_ref2" class="form-control" value="{{$proposals->proposal_name_immobile}}">
+        <input type="text" name="proposal_banking_app_ref2" id="proposal_banking_app_ref2" class="form-control" value="{{$proposals->proposal_banking_app_ref2}}" maxlength="12">
     </div>          
 </div>      
     <!--========FIM BANCÁRIAS============-->    

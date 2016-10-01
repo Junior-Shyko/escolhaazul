@@ -13,7 +13,7 @@
 <div id="referencia_imoveis">	
 	<div class="col-md-3 ">
 		<label class="control-label" for="cep-bens">CEP</label>
-		<input type="text" name="proposal_immobile_cep" id="cep-bens" class="cep4 form-control">
+		<input type="text" name="proposal_immobile_cep" id="cep-bens" value="{{$proposals->proposal_immobile_cep}}" class="cep4 form-control">
 	</div>
 	<div class="col-md-4 ">
 		<label class="control-label">Endereço</label>
@@ -53,14 +53,14 @@
 	<div class="col-md-2 ">
 		<label class="control-label">Financiado?</label>					
         <select name="proposal_immobile_finance" class="selectpicker show-tick form-control">
-          <option value="" selected>Selecione</option>
+          <option value="">{{(!empty($proposals->proposal_immobile_finance) ? $proposals->proposal_immobile_finance : ' -- Selecione --')}}</option>
           <option value="Sim">Sim</option>
           <option value="Não">Não</option>
         </select>	     
 	</div>
 	<div class="col-md-3 ">
 		<label class="control-label">Matrícula</label>
-		<input type="text" name="proposal_immobile_mat" class="form-control" value="{{$proposals->proposal_immobile_mat}}">
+		<input type="text" name="proposal_immobile_mat" maxlength="12" class="form-control" value="{{$proposals->proposal_immobile_mat}}">
 	</div>
 	<div class="col-md-3">
 		<label class="control-label">Cartório</label>
@@ -77,7 +77,7 @@
 		    <div id="collapseBens" class="panel-collapse collapse panel-body">
 		    	<div class="col-md-3 ">
 					<label class="control-label" for="cep-bens2">CEP</label>
-					<input type="text" name="proposal_immobile_cep2" id="cep-bens2" class="cep5 form-control">
+					<input type="text" name="proposal_immobile_cep2" id="cep-bens2" class="cep5 form-control" value="{{$proposals->proposal_immobile_cep2}}">
 				</div>
 				<div class="col-md-4 ">
 					<label class="control-label">Endereço</label>
@@ -117,14 +117,15 @@
 				<div class="col-md-2 ">
 					<label class="control-label">Financiado?</label>					
 			        <select name="proposal_immobile_finance2" class="selectpicker show-tick form-control">
-			           <option value="" selected>Selecione</option>
+			           
+			           <option value="">{{(!empty($proposals->proposal_immobile_finance2) ? $proposals->proposal_immobile_finance2 : ' -- Selecione --')}}</option>
 			          <option value="Sim">Sim</option>
 			          <option value="Não">Não</option>
 			        </select>	     
 				</div>
 				<div class="col-md-3 ">
 					<label class="control-label">Matrícula</label>
-					<input type="text" name="proposal_immobile_mat2" class="form-control" value="{{$proposals->proposal_immobile_mat2}}">
+					<input type="text" name="proposal_immobile_mat2" maxlength="12" class="form-control" value="{{$proposals->proposal_immobile_mat2}}">
 				</div>
 				<div class="col-md-3">
 					<label class="control-label">Cartório</label>

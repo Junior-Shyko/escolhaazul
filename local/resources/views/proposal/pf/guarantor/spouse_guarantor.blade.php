@@ -50,12 +50,14 @@
 			</div>
 			
 			<div class="col-md-3 form-group">
-				<label class="control-label" for="">Órgão expeditor</label>
-				<input type="text" name="guarantor_conjuge_organ_issuing" class="form-control">
+				<label class="control-label" for="">Órgão expediDor</label>
+		
+				 <input type="text" name="guarantor_conjuge_organ_issuing" class="form-control" maxlength="8" value="{{(empty($proposals->guarantor_conjuge_organ_issuing) ? "SSP-CE" : $proposals->guarantor_conjuge_organ_issuing)}}">
 			</div>
 			<div class="col-md-3 form-group">
 					<label class="control-label"  for="inputSuccess1">Nacionalidade</label>
-					<input type="text" name="guarantor_conjuge_nationality" class="form-control">
+
+					<input type="text" name="guarantor_conjuge_nationality"  value="{{empty($proposals->guarantor_conjuge_nationality) ? "Brasileiro" : $proposals->guarantor_conjuge_nationality}}" class="form-control">
 					
 				</div>
 				<div class="col-md-3 form-group">

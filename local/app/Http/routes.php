@@ -32,7 +32,7 @@ Route::get('email-inquilino-pf','ProposalController@proponente_pf');
 //CADASTRO DE FIADOR DE FORMA AVULSA
 Route::get('novo-fiador' , 'ProposalController@new_guarantor');
 //CADASTRO DE FIADOR PELO EMAIL (PROPONENTE)
-Route::get('cadastrar-fiador/{id}' , 'ProposalController@registering_guarantor');
+Route::get('cadastrar-fiador/{id}/tipo/{type}' , 'ProposalController@registering_guarantor');
 Route::post('update-fiador','ProposalController@guarantor_update');
 
 

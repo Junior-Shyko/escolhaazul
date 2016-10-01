@@ -116,10 +116,27 @@
   <div class="col-md-12">
       <label class="pull-left label_titulo">Dados pessoais proponente</label>                   
   </div>
-    <div class="col-md-10">
+    <div class="col-md-8">
       <label class="control-label">Nome completo*</label>
       <input type="text" name="proposal_name" id="proposal_name" value="{{$proposals->proposal_name}}"  class="form-control">
     </div>
+    <div class="col-md-4  form-group">
+    <label class="control-label" >Motivo da locação</label>
+    <select name="proposal_lease_reason" id="proposal_lease_reason" class="form-control">
+          <option>{{(!empty($proposals->proposal_lease_reason) ? $proposals->proposal_lease_reason : ' -- Selecione --')}}</option>
+          <option>Casamento</option>
+          <option>Independência</option>                
+          <option>Para terceiros</option>
+          <option>Próximo de familiares</option>
+          <option>Próximo a instituição de ensino</option>
+          <option>Próximo ao trabalho</option>
+          <option>Redução de custo</option>
+          <option>Transferência de empresa</option>
+          <option>Troca de imóvel</option>
+          <option>Venda de imóvel próprio</option>
+          <option>Outros</option>
+        </select> 
+    </div>  
 
     <div class="col-md-3 ">
       <label class="control-label">Sexo</label>         
@@ -139,8 +156,8 @@
     </div> 
     
     <div class="col-md-3 ">
-      <label class="control-label" for="inputSuccess1">Órgão expeditor</label>
-      <input type="text" name="proposal_organ_issuing" id="proposal_organ_issuing" class="form-control" maxlength="8" id="proposal_organ_issuing" value="{{$proposals->proposal_organ_issuing}}">
+      <label class="control-label" for="inputSuccess1">Órgão expedidor</label>
+      <input type="text" name="proposal_organ_issuing" id="proposal_organ_issuing" class="form-control" maxlength="8" id="proposal_organ_issuing" value="{{(empty($proposals->proposal_organ_issuing) ? "SSP-CE" : $proposals->proposal_organ_issuing)}}">
     </div>
     
     <div class="col-md-3 ">
@@ -149,7 +166,7 @@
     </div>
     <div class="col-md-3 ">
       <label class="control-label"  for="inputSuccess1">Nacionalidade</label>
-      <input type="text" name="proposal_nationality" id="proposal_nationality" value="{{$proposals->proposal_nationality}}" class="form-control">
+      <input type="text" name="proposal_nationality" id="proposal_nationality" value="{{empty($proposals->proposal_nationality) ? "Brasileiro" : $proposals->proposal_nationality}}" class="form-control">
     </div>
       
     <div class="col-md-3 ">
@@ -160,6 +177,7 @@
       <label class="control-label" for="inputSuccess1">UF</label>
       <select name="proposal_natural_uf" id="proposal_natural_uf" class="form-control"  data-live-search="true">
        <option value="">{{(!empty($proposals->proposal_natural_uf) ? $proposals->proposal_natural_uf : ' -- Selecione --')}}</option>
+            <option value="Não Informado">--Selecione--</option>
             @include('proposal.uf')
           </select> 
     </div>
@@ -262,6 +280,7 @@
       <label class="control-label" for="input-demo-uf">UF</label>
       <select name="proposal_state" id="proposal_state" class="form-control">
       <option value="">{{(!empty($proposals->proposal_state) ? $proposals->proposal_state : ' -- Selecione --')}}</option>
+       <option value="Não Informado">--Selecione--</option>
           @include('proposal.uf')
       </select>
     </div>
@@ -303,14 +322,14 @@
           <option>Venda de imóvel próprio</option>
           <option>Outros</option>
         </select> 
-</div>  
+    </div>  
 
 <div class="col-md-12 ">
   <label class="pull-left label_titulo">Dados profissionais</label> 
 </div>  
 <div class="col-md-5 ">
   <label class="control-label" for="inputSuccess1">Profissão</label>
-  <input type="text" name="proposal_function" value="{{$proposals->proposal_function}}" id="proposal_function" class="form-control">
+  <input type="text" name="proposal_profission" value="{{$proposals->proposal_profission}}" id="proposal_function" class="form-control">
 </div>    
 <div class="col-md-6 ">
   <label class="control-label" for="">Atividade (em caso de autônomo)</label>
@@ -322,7 +341,7 @@
 </div>    
 <div class="col-md-4 ">
   <label class="control-label" for="">CNPJ</label>          
-  <input type="text" name="proposal_cnpj" id="proposal_cnpj" data-mask="99.999.999-9999/99" onBlur="ValidarCNPJ(form_one.proposal_cnpj);" class="form-control" value="{{$proposals->proposal_business}}">  
+  <input type="text" name="proposal_cnpj" id="proposal_cnpj" data-mask="99.999.999-9999/99" onBlur="ValidarCNPJ(form_one.proposal_cnpj);" class="form-control" value="{{$proposals->proposal_cnpj}}">  
 </div>    
 <div class="col-md-3 ">
   <label class="control-label" for="inputSuccess1">Vínculo empregatício</label>
@@ -409,6 +428,7 @@
   <label class="control-label">UF</label>
   <select name="proposal_uf_business" id="estado2" class="selectpicker show-tick form-control">
     <option value="">{{(!empty($proposals->proposal_uf_business) ? $proposals->proposal_uf_business : ' -- Selecione --')}}</option>
+     <option value="Não Informado">--Selecione--</option>
       @include('proposal.uf')
     </select> 
 </div>

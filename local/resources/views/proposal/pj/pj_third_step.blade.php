@@ -3,6 +3,13 @@
     <div id="guarantor">
         <div class="col-md-12">
             <h2><label class="control-label label_titulo">Fiador</label></h2>
+            <div class="col-md-12 form-group">
+    <p>Informe neste campo quem será seu fiador e selecione quem você prefere que preencha o cadastro dele, você ou o próprio fiador. A pessoa selecionada receberá um e-mail com um link do formulário on-line completo para cadastrá-lo (dados pessoais, profissionais, cônjuge e bens). Caso não receba, disponibilizamos o link também na nossa página "<a href="https://espindola.helpshift.com/a/espindola-imobiliaria/" target="_blank">Perguntas Frequentes</a>".
+    <p> <strong>E se eu tiver mais de um fiador?</strong>       
+      
+    </p>
+    <p> Neste caso, basta selecionar o botão abaixo para fazer o pré-cadastro do segundo fiador da mesma forma que o primeiro, porém neste campo não deve ser cadastrado o cônjuge. Os dados do cônjuge do fiador somente serão solicitados posteriormente. </p>
+</div>
             <div class="col-md-3 form-group">
                 <label class="control-label">Tipo de Fiador</label>
                 <select name="legal_guarantor_cpf_cnpj" id="legal_guarantor_cpf_cnpj" class="selectpicker show-tick form-control">
@@ -21,18 +28,10 @@
                 <select name="legal_guarantor_relation" id="legal_guarantor_relation" class="selectpicker show-tick form-control">
                     <optgroup label="Pessoa Física" data-max-options="2">
                         <option value="Não informado" selected>--Selecione--</option>
-                    <optgroup label="Pessoa Física" data-max-options="2">
                         <option value="Amigo">Amigo</option>
-                        <option value="Conhecido">Conhecido</option>
+                        <option value="Conhecido">Trabalho</option>
                         <option value="Parente">Parente</option>
-                        <option value="Outros">Outros</option>
-                    </optgroup>
-                    <optgroup label="Pessoa Jurídica" data-max-options="2">
-                        <option value="Trabalha"selected>Trabalha</option>
-                        <option value="Diretor">Diretor</option>
-                        <option value="Setor Financeiro">Setor Financeiro</option>
-                        <option value="Outros">Outros</option>
-                    </optgroup>
+                        <option value="Outros">Outros</option>                   
                 </select>
             </div>
             <div class="col-md-8 form-group">
@@ -85,18 +84,10 @@
                         <select name="legal_guarantor_relation2" id="legal_guarantor_relation2" class="selectpicker show-tick form-control">
                             <optgroup label="Pessoa Física" data-max-options="2">
                                 <option value=""selected>--Selecione--</option>
-                            <optgroup label="Pessoa Física" data-max-options="2">
-                                <option value="Amigo">Amigo</option>
-                                <option value="Conhecido">Conhecido</option>
-                                <option value="Parente">Parente</option>
-                                <option value="Outros">Outros</option>
-                            </optgroup>
-                            <optgroup label="Pessoa Jurídica" data-max-options="2">
-                                <option value="Trabalha"selected>Trabalha</option>
-                                <option value="Diretor">Diretor</option>
-                                <option value="Setor Financeiro">Setor Financeiro</option>
-                                <option value="Outros">Outros</option>
-                            </optgroup>
+                            <option value="Amigo">Amigo</option>
+                        <option value="Conhecido">Trabalho</option>
+                        <option value="Parente">Parente</option>
+                        <option value="Outros">Outros</option>   
                         </select>
                     </div>
                     <div class="col-md-8 form-group">

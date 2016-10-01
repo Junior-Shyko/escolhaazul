@@ -45,7 +45,7 @@
                 @foreach($proposal as $proposals)
                 <form action="" method="" id="form_tree_pj">
                     @include('proposal.pj.pj_third_step')
-                    {{Form::hidden('segunda_pj' , 'segunda_pj')}}
+                    {{Form::hidden('terceira_pj' , 'terceira_pj')}}
                     <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
                     <input type="hidden" name="legal_id" id="legal_id" value="{{$proposals->legal_id}}">
                 </form>

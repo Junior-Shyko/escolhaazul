@@ -39,7 +39,7 @@ class ProposalController extends Controller
             {
                 $proposal = DB::table('proposal')->where('proposal_email', '=' ,$email)->orderBy('proposal_send' , 'asc')->paginate(4);
                 //PARA VERIFICAR O PDF
-                $resource_pdf = "http://localhost/ea_online/";
+                $resource_pdf = "http://espindolaimobiliaria.com.br/ea/";
                 return view('site.list_proposal', compact('type','name','email','phone', 'proposal' , 'resource_pdf' ));
             }//CASO NÃO.... VAI PARA UMA NOVA PROPOSTA
             elseif(empty($verify_proposal)){
@@ -240,13 +240,14 @@ class ProposalController extends Controller
 
                 //return response()->json(['message' => 'success']);
                if(!empty($user)){
-                $caminho = "espindolaimobiliaria.com.br/escolhaazul";
-                 Mail::send('email.email_administrator', ['user' => $user, 'proposal' => $proposal , 'caminho' => $caminho], function ($m) use ($user, $proposal, $caminho) {
+                $caminho = "http://espindolaimobiliaria.com.br/ea";
+            
+                //  Mail::send('email.email_administrator', ['user' => $user, 'proposal' => $proposal , 'caminho' => $caminho], function ($m) use ($user, $proposal, $caminho) {
                    
-                     $m->to($user[0]->email, $user[0]->name)->subject('NOVA PROPOSTA LOCAÇÃO PESSOA FÍSICA');
-                     $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
-                     $m->cc("fabiano@espindola.imb.br", 'Equipe Espindola');
-                });
+                //      $m->to($user[0]->email, $user[0]->name)->subject('NOVA PROPOSTA LOCAÇÃO PESSOA FÍSICA');
+                //      $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
+                //      $m->cc("fabiano@espindola.imb.br", 'Equipe Espindola');
+                // });
                }
 
                 return response()->json(['message' => 'success']);
@@ -344,7 +345,7 @@ class ProposalController extends Controller
                     }
                }
                 
-                $caminho = "espindolaimobiliaria.com.br/escolhaazul/";
+                 $caminho = "http://espindolaimobiliaria.com.br/ea";
                 $type = "Pessoa Física";
                 Mail::send('email.email_proponent', [ 'proposal' => $proposal, 'caminho' => $caminho, 'type' => $type], function ($m) use ($proposal, $caminho, $type) {  if($type == "Pessoa Física")
                     {
@@ -542,7 +543,7 @@ class ProposalController extends Controller
                 $guarantor = Guarantor::find($id); 
                 
                 //DISPARAR O E-MAIL PARA O FIADOR 
-                $caminho = "http://espindolaimobiliaria.com.br//escolhaazul/";
+                $caminho = "http://espindolaimobiliaria.com.br/ea";
 
                 Mail::send('email.sucesso_email_fiador', [ 'guarantor' => $guarantor, 'caminho' => $caminho], function ($m) use ($guarantor, $caminho){                 
                     $m->to($guarantor->guarantor_email, $guarantor->guarantor_name)->subject('CADASTRO ENVIADO COM SUCESSO');
@@ -553,17 +554,31 @@ class ProposalController extends Controller
         }
     }
 
-    public function registering_guarantor($id)
+    public function registering_guarantor($id, $type)
     {
         # CREATED IN 2016-09-26 17:40 BY JUNIOR OLIVEIRA
+        # UPDATED IN 2016-09-30 14:49
+      //O PARAMETRO TYPE É SÓ PARA DEFINIR A CONSULTA NO DB
         $id = base64_decode($id);
 
-        $guarantor = Guarantor::create([
-            'date_cadastre'=>Carbon::now()
-        ]);
+        // DEFINENDO O TIPO DE PROPOSATA PARA FAZER A CONSULTA
+        // $profile_guarantor * DEFINE SE É UM FIADOR DA UMA PESSOA FISICA OU JURÍDICA
+        if($type == "pf")
+        {
+          $proposal = Proposal::where('proposal_id' , '=' , $id)->get();
+          $profile_guarantor = "Fiador Pessoa Física";
+         
+        }elseif($type == "pj"){
 
-        $proposal = Proposal::where('proposal_id' , '=' , $id)->get();
-        
+          $proposal = Legal::where('legal_id' , '=' , $id)->get();
+          $profile_guarantor = "Fiador Pessoa Jurídica";
+
+        }        
+        //CRIANDO UM FIADOR PESSOA FÍSICA
+        $guarantor = Guarantor::create([
+          'date_cadastre'=>Carbon::now()
+        ]);   
+
         return view('proposal.pf.guarantor.index' , compact("guarantor" , "proposal"));
 
     }

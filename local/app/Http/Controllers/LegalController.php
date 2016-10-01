@@ -79,10 +79,60 @@ class LegalController extends Controller
                 $request['legal_location_complete'] = Carbon::now();
                 
                 $input = $request->all();
-                $input = $request->except('_token','terceira_pf','compoeRenda_conjuge' , 'type_proposal');
+                $input = $request->except('_token','terceira_pj','compoeRenda_conjuge' , 'type_proposal');
 
                 Legal::where('legal_id', $id)->update($input); 
                 $proposal = Legal::find($id); 
+                
+                if(!$request['legal_guarantor_type'] == null){
+                    //FIADOR PESSOA FÍSICA
+                    //VERIFICANDO SE É PESSOA FÍSICA OU PESSOA JURÍDICA
+                    if($request['legal_guarantor_cpf_cnpj'] == "Pessoa Física")
+                    {
+                        //VERIRICANDO SE FOI OPTADO PARA ENVIAR
+                        if($request['legal_guarantor_type'] == "enviar_fiador"){
+                            $nome_fiador = $proposal->legal_guarantor_name; 
+                            Mail::send('email.email_guarantor_pj', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador], function ($m) use ( $proposal, $nome_fiador ) {                   
+                                $m->to($proposal->legal_guarantor_email, $proposal->legal_guarantor_name)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
+                                $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
+                            });
+                        }
+                    }                    
+                }
+
+                 if(!$request['legal_guarantor_type2'] == null){
+                    //FIADOR PESSOA FÍSICA
+                    //VERIFICANDO SE É PESSOA FÍSICA OU PESSOA JURÍDICA
+                    if($request['legal_guarantor_cpf_cnpj2'] == "Pessoa Física")
+                    {
+                        //VERIRICANDO SE FOI OPTADO PARA ENVIAR
+                        if($request['legal_guarantor_type2'] == "enviar_fiador"){
+                            $nome_fiador = $proposal->legal_guarantor_name; 
+                            Mail::send('email.email_guarantor_pj', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador], function ($m) use ( $proposal, $nome_fiador ) {                   
+                                $m->to($proposal->legal_guarantor_email, $proposal->legal_guarantor_name)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
+                                $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
+                            });
+                        }
+                    }                    
+                }
+
+                $caminho = "espindolaimobiliaria.com.br/escolhaazul/";
+                $type = "Pessoa Jurídica";
+                Mail::send('email.email_proponent', [ 'proposal' => $proposal, 'caminho' => $caminho, 'type' => $type], function ($m) use ($proposal, $caminho, $type) {  if($type == "Pessoa Física")
+                    {
+                      $prefixo = "proposal";
+                      $email = $proposal->proposal_email;
+                      $nome = $proposal->proposal_name;
+                    }   
+                    elseif($type == "Pessoa Jurídica")
+                    {
+                      $prefixo = "legal"; 
+                      $email = $proposal->legal_location_email;
+                      $nome = $proposal->legal_location_name_corporation;
+                    }       
+                     $m->to($email, $nome)->subject('PROPOSTA ENVIADO COM SUCESSO');
+                     $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
+                });
                 return response()->json($proposal);
             }
     	}

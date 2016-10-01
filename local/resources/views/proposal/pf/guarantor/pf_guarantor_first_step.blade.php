@@ -12,8 +12,16 @@
         <label class="">
         Nº da proposta
         </label>
-        @if(isset($proposal))        
-            <input type="text" name="id_proposal"  class="form-control" disabled value="{{$proposal[0]->proposal_id}}">
+        @if(isset($proposal))
+           
+                @if(!empty($proposal[0]->proposal_id))       
+                    <input type="text" name="id_proposal"  class="form-control" disabled value="{{$proposal[0]->proposal_id}}">
+                    <input type="hidden" name="id_proposal"  class="form-control" value="{{$proposal[0]->proposal_id}}">
+                @elseif(!empty($proposal[0]->legal_id))
+                    <input type="text" name="id_proposal"  class="form-control" disabled value="{{$proposal[0]->legal_id}}">
+                    <input type="hidden" name="id_proposal"  class="form-control" value="{{$proposal[0]->legal_id}}">
+                @endif  
+                    
         @else
             <input type="text" name="id_proposal"  class="form-control" value="">
         @endif
@@ -24,7 +32,12 @@
         Nome do proponente <small class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="Informe o nome do Proponente que lhe indicou como Fiador/Locatário"> </small>
         </label>
         @if(isset($proposal))
-        <input type="text" name="guarantor_name_pretended"   id="nome_proponente" class="form-control" disabled value="{{$proposal[0]->proposal_name}}">
+            @if(!empty($proposal[0]->proposal_name))       
+                <input type="text" name="id_proposal"  class="form-control" disabled value="{{$proposal[0]->proposal_name}}">
+            @elseif(!empty($proposal[0]->legal_location_name_corporation))
+                <input type="text" name="id_proposal"  class="form-control" disabled value="{{$proposal[0]->legal_location_name_corporation}}">
+            @endif  
+        
         @else
             <input type="text" name="guarantor_name_pretended"  id="nome_proponente" class="form-control" value="">
         @endif
@@ -92,7 +105,16 @@
         </label>
        
         @if(isset($proposal))
-            <input type="text" name="guarantor_name" id="guarantor_name" value="{{$proposal[0]->proposal_guarantor_name}}" class="form-control">
+            
+            @if(!empty($proposal[0]->guarantor_name)) 
+
+                <input type="text" name="proposal_guarantor_name" id="guarantor_name" value="{{$proposal[0]->proposal_guarantor_name}}" class="form-control"> 
+
+            @elseif(!empty($proposal[0]->legal_guarantor_name))
+                <input type="text" name="guarantor_name" id="guarantor_name" value="{{$proposal[0]->legal_guarantor_name}}" class="form-control"> 
+               
+            @endif 
+
         @else
             <input type="text" name="guarantor_name" id="guarantor_name" value="" class="form-control">
         @endif
@@ -121,9 +143,10 @@
     </div>
     <div class="col-md-3 ">
         <label class="" for="inputSuccess1">
-        Órgão expeditor
+        Órgão expedidor
         </label>
-        <input type="text" name="guarantor_organ_issuing" class="form-control">
+
+        <input type="text" name="guarantor_organ_issuing" class="form-control" maxlength="8" id="proposal_organ_issuing" value="{{(empty($proposals->guarantor_organ_issuing) ? "SSP-CE" : $proposals->guarantor_organ_issuing)}}">
     </div>
     <div class="col-md-3 ">
         <label class="" for="inputSuccess1">
@@ -136,7 +159,8 @@
         <label class="" for="inputSuccess1">
         Nacionalidade
         </label>
-         <input type="text" name="guarantor_nationality" class="form-control">
+ 
+         <input type="text" name="guarantor_nationality"  value="{{empty($proposals->guarantor_nationality) ? "Brasileiro" : $proposals->guarantor_nationality}}" class="form-control">
        
     </div>
     <div class="col-md-3 ">
@@ -234,11 +258,15 @@
         <label class="">
         E-Mail*
         </label>
-         <?php if(isset($email_decry_fiador)){ ?>
-        	<input type="email" name="guarantor_email" id="guarantor_email" value="<?php echo $email_decry_fiador; ?>"  class="form-control">
-        <?php }else{
-        	echo '<input type="email" name="guarantor_email" id="guarantor_email"  class="form-control">';
-        }	?>
+         
+        @if(!empty($proposal[0]->guarantor_email)) 
+
+                <input type="email" name="guarantor_email" id="guarantor_email" value="{{$proposal[0]->guarantor_email}}" class="form-control"> 
+
+            @elseif(!empty($proposal[0]->legal_guarantor_email))
+                <input type="text" name="guarantor_name" id="guarantor_name" value="{{$proposal[0]->legal_guarantor_email}}" class="form-control"> 
+               
+            @endif 
     </div>
     <div class="col-md-9 ">
         <label class="" for="inputSuccess1">
