@@ -20,7 +20,7 @@
 	 	@if($proposal->proposal_guarantor_type == "cadastrar_fiador")
 	 		{{-- VERIFICANDO SE É PARA CADASTRAR PARA ENVIAR O LINK DE DE PF OU PJ --}}
 	 		@if($proposal->proposal_guarantor_cpf == "Pessoa Física")
-	 			<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->proposal_id) )}}"> Cadastrar </a>
+	 			<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->proposal_id).'/tipo/pf' )}}"> Cadastrar </a>
 	 		{{-- @else
 	 			<a href="{{url('cadastrar-fiador/pj/proposta-id/'.base64_encode($proposal->proposal_id) )}}"> Cadastrar </a> --}}
 	 		@endif
@@ -29,7 +29,7 @@
 
 	 		@if($proposal->proposal_guarantor_cpf == "Pessoa Física")
 	 			<small>Aguardando cadastro ( ou
-				<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->proposal_id) )}}"> Alterar </a>
+				<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->proposal_id).'/tipo/pf' )}}"> Alterar </a>
 				para você cadastrar)  </small> <br>
 	 		@else
 	 			<small>Aguardando cadastro ( ou

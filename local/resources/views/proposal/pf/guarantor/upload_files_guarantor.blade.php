@@ -31,7 +31,7 @@
                     <input id="upload_ajax" name="img_photo[]" type="file" multiple class="file" required="" >
                     <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
                    {{ Form::hidden('proposal_id' , $proposal[0]->guarantor_id) }}
-                   {{ Form::hidden('type_proposal' , $type) }}
+                   {{ Form::hidden('type_proposal' , (isset($type) ? $type : 'cadastro-pf')) }}
                    
                   
                     <script>

@@ -173,7 +173,7 @@ console.log(domain_complet);
 			data: form_guarantor_two,
 			success: function(data){
 			
-				location.href = domain_complet+'/beta/proposta-concluida/?msg=cadastro-com-sucesso&email='+data.guarantor_email;
+				location.href = domain_complet+'/escolhaazul/proposta-concluida/?msg=cadastro-com-sucesso&email='+data.guarantor_email;
 			},
 			error   : function (data ) 
 	        {

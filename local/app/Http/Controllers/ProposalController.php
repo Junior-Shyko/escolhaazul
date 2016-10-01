@@ -536,7 +536,7 @@ class ProposalController extends Controller
                 $request['guarantor_profile_proposal']= "Fiador Pessoa Física";
 				
                 $input = $request->all();
-                $input = $request->except('_token', 'guarantor_secound_pf');
+                $input = $request->except('_token', 'guarantor_secound_pf' , 'rendaConjugeFiador');
 
                 Guarantor::where('guarantor_id', $id)->update($input);
                     
@@ -563,15 +563,18 @@ class ProposalController extends Controller
 
         // DEFINENDO O TIPO DE PROPOSATA PARA FAZER A CONSULTA
         // $profile_guarantor * DEFINE SE É UM FIADOR DA UMA PESSOA FISICA OU JURÍDICA
+        
         if($type == "pf")
         {
           $proposal = Proposal::where('proposal_id' , '=' , $id)->get();
           $profile_guarantor = "Fiador Pessoa Física";
          
+         
         }elseif($type == "pj"){
 
           $proposal = Legal::where('legal_id' , '=' , $id)->get();
           $profile_guarantor = "Fiador Pessoa Jurídica";
+         
 
         }        
         //CRIANDO UM FIADOR PESSOA FÍSICA
@@ -579,7 +582,7 @@ class ProposalController extends Controller
           'date_cadastre'=>Carbon::now()
         ]);   
 
-        return view('proposal.pf.guarantor.index' , compact("guarantor" , "proposal"));
+        return view('proposal.pf.guarantor.index' , compact("guarantor" , "proposal" , "type"));
 
     }
 }
