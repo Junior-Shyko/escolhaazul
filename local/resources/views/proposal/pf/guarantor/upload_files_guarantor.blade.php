@@ -22,15 +22,11 @@
                         <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
                         <span>Aguarde...</span>
                     </div>
-                    <div class="form-group" id="sucesso_upload_ambiente">
-                        <div class="alert alert-success">
-                            <h5 >Arquivo(s) enviado com sucesso</h5>
-                        </div>
-                    </div>
+                   
                     <input id="upload_ajax_guarantor" name="img_photo[]" type="file" multiple class="file-loading" required="" >
-                    <input id="upload_ajax" name="img_photo[]" type="file" multiple class="file" required="" >
+               
                     <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-                   {{ Form::hidden('proposal_id' , $proposal[0]->guarantor_id) }}
+                   {{ Form::hidden('proposal_id' , $guarantor->guarantor_id) }}
                    {{ Form::hidden('type_proposal' , (isset($type) ? $type : 'cadastro-pf')) }}
                    
                   

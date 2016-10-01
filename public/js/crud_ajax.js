@@ -2,6 +2,7 @@ $(document).ready(function(){
 	var id_proposal = $('#proposal_id').val();
 	
 	var rota = domain_complet+'/update';
+	var rota_success = domain_complet+'/escolhaazul';
 	//var rota = window.location.origin + project_survey;
 		
 	//CLICK DA PRIMEIRA ETAPA PARA A SEGUNDA ETAPA
@@ -173,7 +174,7 @@ console.log(domain_complet);
 			data: form_guarantor_two,
 			success: function(data){
 			
-				location.href = domain_complet+'/escolhaazul/proposta-concluida/?msg=cadastro-com-sucesso&email='+data.guarantor_email;
+				location.href = rota_success+'/proposta-concluida/?msg=cadastro-com-sucesso&email='+data.guarantor_email;
 			},
 			error   : function (data ) 
 	        {

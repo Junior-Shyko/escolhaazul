@@ -37,7 +37,7 @@ class ProposalController extends Controller
             //SE NÃO FOR VAZIA, ENTRA NO IF E FAZ A PAGINAÇAO
             if(!empty($verify_proposal))
             {
-                $proposal = DB::table('proposal')->where('proposal_email', '=' ,$email)->orderBy('proposal_send' , 'asc')->paginate(4);
+                $proposal = DB::table('proposal')->where('proposal_email', '=' ,$email)->orderBy('proposal_send' , 'ASC')->paginate(4);
                 //PARA VERIFICAR O PDF
                 $resource_pdf = "http://espindolaimobiliaria.com.br/ea/";
                 return view('site.list_proposal', compact('type','name','email','phone', 'proposal' , 'resource_pdf' ));
