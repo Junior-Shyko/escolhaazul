@@ -92,7 +92,7 @@
 				</div>	
 				<div class="col-md-5 form-group">
 					<label class="control-label">E-mail</label>
-					<input type="email" name="guarantor_email_immobile" class="form-control">
+					<input type="email" name="guarantor_email_immobile2" class="form-control">
 				</div>
 	
 		    </div>
@@ -126,7 +126,7 @@
         <select name="guarantor_commercial_relation" class="selectpicker show-tick form-control">
           <option value=""selected>--Selecione--</option>	
           <option value="Amigo">Amigo</option>
-          <option value="Conhecido">Conhecido</option> 
+          <option value="Profissional">Profissional</option> 
           <option value="Parente">Parente</option>
           <option value="Outros">Outros</option>           
         </select>	     
@@ -209,7 +209,7 @@
         <select name="guarantor_person_relation1" class="selectpicker show-tick form-control">
 		  <option value=""selected>--Selecione--</option>	
           <option value="Amigo">Amigo</option>
-          <option value="Conhecido">Conhecido</option> 
+          <option value="Profissional">Profissional</option> 
           <option value="Parente">Parente</option>
           <option value="Outros">Outros</option>         
         </select>	     
@@ -376,7 +376,7 @@
 		<input type="text" name="guarantor_banking_app_agency" class="form-control">
 	</div>
 	<div class="col-md-2 form-group">
-		<label class="control-label">Ref. (nº)</label>
+		<label class="control-label">Conta (nº)</label>
 		<input type="text" name="guarantor_banking_app_ref"  class="form-control">
 	</div>
 	<div class="col-md-4 form-group">
@@ -392,7 +392,7 @@
 		<input type="text" name="guarantor_banking_app_agency2"  class="form-control">
 	</div>
 	<div class="col-md-2 form-group">
-		<label class="control-label">Ref. (nº)</label>
+		<label class="control-label">Conta (nº)</label>
 		<input type="text" name="guarantor_banking_app_ref2" class="form-control">
 	</div>			
 </div>		

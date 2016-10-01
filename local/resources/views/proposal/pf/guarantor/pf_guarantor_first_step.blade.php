@@ -106,9 +106,13 @@
        
         @if(isset($proposal))
             
-            @if(!empty($proposal[0]->guarantor_name)) 
+            @if(!empty($proposal[0]->proposal_guarantor_name)) 
 
-                <input type="text" name="proposal_guarantor_name" id="guarantor_name" value="{{$proposal[0]->proposal_guarantor_name}}" class="form-control"> 
+                <input type="text" name="guarantor_name" id="guarantor_name" value="{{$proposal[0]->proposal_guarantor_name}}" class="form-control"> 
+
+            @elseif(empty($proposal[0]->proposal_guarantor_name))
+
+                <input type="text" name="guarantor_name" id="guarantor_name" value="" class="form-control">
 
             @elseif(!empty($proposal[0]->legal_guarantor_name))
                 <input type="text" name="guarantor_name" id="guarantor_name" value="{{$proposal[0]->legal_guarantor_name}}" class="form-control"> 
@@ -258,23 +262,24 @@
         <label class="">
         E-Mail*
         </label>
-         
-        @if(!empty($proposal[0]->guarantor_email)) 
+        @if(isset($proposal))
+            @if(!empty($proposal[0]->guarantor_email)) 
 
                 <input type="email" name="guarantor_email" id="guarantor_email" value="{{$proposal[0]->guarantor_email}}" class="form-control"> 
+
+            @elseif(empty($proposal[0]->guarantor_email))
+
+                 <input type="email" name="guarantor_email" id="guarantor_email" value="" class="form-control"> 
+
 
             @elseif(!empty($proposal[0]->legal_guarantor_email))
                 <input type="text" name="guarantor_name" id="guarantor_name" value="{{$proposal[0]->legal_guarantor_email}}" class="form-control"> 
                
             @endif 
+        @endif 
+        
     </div>
-    <div class="col-md-9 ">
-        <label class="" for="inputSuccess1">
-        Filiação* (nome completo da mãe)
-        </label>
-        <input type="text" name="guarantor_filiacion" id="guarantor_filiacion" class="form-control"
-            placeholder="Nome Completo">
-    </div>
+    
     <!-- area residencial -->
     <div class="col-md-12">
         <div class="clear">
