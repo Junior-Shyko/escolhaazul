@@ -242,12 +242,12 @@ class ProposalController extends Controller
                if(!empty($user)){
                 $caminho = "http://espindolaimobiliaria.com.br/ea";
             
-                //  Mail::send('email.email_administrator', ['user' => $user, 'proposal' => $proposal , 'caminho' => $caminho], function ($m) use ($user, $proposal, $caminho) {
+                 Mail::send('email.email_administrator', ['user' => $user, 'proposal' => $proposal , 'caminho' => $caminho], function ($m) use ($user, $proposal, $caminho) {
                    
-                //      $m->to($user[0]->email, $user[0]->name)->subject('NOVA PROPOSTA LOCAÇÃO PESSOA FÍSICA');
-                //      $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
-                //      $m->cc("fabiano@espindola.imb.br", 'Equipe Espindola');
-                // });
+                     $m->to($user[0]->email, $user[0]->name)->subject('NOVA PROPOSTA LOCAÇÃO PESSOA FÍSICA');
+                     $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
+                     $m->cc("fabiano@espindola.imb.br", 'Equipe Espindola');
+                });
                }
 
                 return response()->json(['message' => 'success']);

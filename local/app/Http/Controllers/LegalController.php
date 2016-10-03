@@ -116,7 +116,7 @@ class LegalController extends Controller
                     }                    
                 }
 
-                $caminho = "espindolaimobiliaria.com.br/escolhaazul/";
+                $caminho = "espindolaimobiliaria.com.br/ea/";
                 $type = "Pessoa Jurídica";
                 Mail::send('email.email_proponent', [ 'proposal' => $proposal, 'caminho' => $caminho, 'type' => $type], function ($m) use ($proposal, $caminho, $type) {  if($type == "Pessoa Física")
                     {
