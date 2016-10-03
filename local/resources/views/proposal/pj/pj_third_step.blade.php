@@ -13,7 +13,10 @@
             <div class="col-md-3 form-group">
                 <label class="control-label">Tipo de Fiador</label>
                 <select name="legal_guarantor_cpf_cnpj" id="legal_guarantor_cpf_cnpj" class="selectpicker show-tick form-control">
-                    <option value=""selected>Selecione</option>
+                    @if(!empty($proposals->legal_guarantor_cpf_cnpj))
+                    <option selected="" >{{$proposals->legal_guarantor_cpf_cnpj}}</option>
+                    @endif
+                    <option value="">--Selecione--</option>
                     <option value="Pessoa Física">Pessoa Física</option>
                     <option value="Pessoa Jurídica">Pessoa Jurídica</option>
                 </select>
@@ -40,7 +43,7 @@
             </div>
             <div class="col-md-12 alert alert-info form-group" id="info_not_fiador1">
                 <div class="col-md-6">
-                    @if($proposal[0]->proposal_guarantor_type == "cadastrar_fiador")
+                    @if($proposal[0]->legal_guarantor_type == "cadastrar_fiador")
                         <input type="radio" name="legal_guarantor_type" id="cadastrar_fiador" value="cadastrar_fiador" checked="" >
                     @else
                         <input type="radio" name="legal_guarantor_type" id="cadastrar_fiador" value="cadastrar_fiador" >
@@ -49,7 +52,7 @@
                     <label class="control-label">Eu vou cadastrá-lo</label>
                 </div>
                 <div class="col-md-6">
-                    @if($proposal[0]->proposal_guarantor_type == "cadastrar_fiador")
+                    @if($proposal[0]->legal_guarantor_type == "cadastrar_fiador")
                         <input type="radio" name="legal_guarantor_type" id="enviar_fiador" value="enviar_fiador" checked=""> 
                     @else
                         <input type="radio" name="legal_guarantor_type" id="enviar_fiador" value="enviar_fiador">
@@ -161,7 +164,8 @@
                                 <div class="col-md-3 form-group">
                                     <label class="control-label">Tipo de Locatário</label>
                                     <select name="legal_occupant_cpf2" id="legal_occupant_cpf2" class="selectpicker show-tick form-control">
-                                        <option value=""selected>Selecione</option>
+
+                                        <option value="">Selecione</option>
                                         <option value="Pessoa Física">Pessoa Física</option>
                                         <option value="Pessoa Jurídica">Pessoa Jurídica</option>
                                     </select>

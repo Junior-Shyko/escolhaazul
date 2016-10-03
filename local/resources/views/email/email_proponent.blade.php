@@ -1,23 +1,34 @@
 @include('email.header_email')
 	
 <?php 
-	$var = $proposal->proposal_name;
-	$nome = explode(" ", $var);
-?>
-<p><b>Prezado(a) {{ $nome[0] }}</b>,</p><br/>
-
-	@if($type == "Pessoa Física")
+ 	if($type == "Pessoa Física")
+	{
+	 
+	  $nome = $proposal->proposal_name;
+	}   
+	elseif($type == "Pessoa Jurídica")
+	{
 	
-		<p>Parabéns, sua proposta foi enviada com sucesso para a Espíndola Imobiliária.
-		(Clique <a href="{{$caminho}}/?action=view-proposal&id={{base64_encode($proposal->proposal_id)}}"> aqui </a>
-		para visualizar sua proposta)</p>
+	  $nome = $proposal->legal_location_name_corporation;
+	}      
 
-		@if (!empty($proposal->guarantor_email))
+	$var = $nome;
+	$novo_nome = explode(" ", $var);
+?>
+tipo {{$type}}
+<p><b>Prezado(a) {{ $novo_nome[0] }}</b>,</p><br/>
+@if($type == "Pessoa Física")
+	<p>Parabéns, sua proposta foi enviada com sucesso para a Espíndola Imobiliária.
+		(Clique <a href="{{$caminho}}/?action=view-proposal&id={{base64_encode($proposal->proposal_id)}}"> aqui </a>
+		para visualizar sua proposta)
+	</p>
+
+	@if (!empty($proposal->guarantor_email))
 		<p>O próximo passo é cadastrar ou aguardar o cadastro das seguintes pessoas:</p>
 
 	 	<strong>{{ $proposal->proposal_guarantor_name}}</strong> - FIADOR(A)	
 	 	{{-- VERIFICANDO SE FOI PARA SER CADASTRADO OU FOI ENVIADO PARA O FIADOR --}}
-	 	@if($proposal->proposal_guarantor_type == "cadastrar_fiador")
+		@if($proposal->proposal_guarantor_type == "cadastrar_fiador")
 	 		{{-- VERIFICANDO SE É PARA CADASTRAR PARA ENVIAR O LINK DE DE PF OU PJ --}}
 	 		@if($proposal->proposal_guarantor_cpf == "Pessoa Física")
 	 			<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->proposal_id).'/tipo/pf' )}}"> Cadastrar </a>
@@ -35,79 +46,153 @@
 	 			<small>Aguardando cadastro ( ou
 				<a href="{{url('cadastrar-fiador/pj/proposta-id/'.base64_encode($proposal->proposal_id) )}}"> Alterar </a>
 				para você cadastrar)  </small> <br>
-	 		@endif
-
-			
+	 		@endif			
+	 	
 	 	@endif
 
-	 	<br>
-		@if (!empty($proposal->guarantor_email2))
-			<strong>{{ $proposal->proposal_guarantor_name2 }}</strong> - FIADOR(A)	
+	@endif {{-- FIM IF EMAIL FIADOR --}}
+
+
+	@if (!empty($proposal->guarantor_email2))
+		<p>O próximo passo é cadastrar ou aguardar o cadastro das seguintes pessoas:</p>
+
+	 	<strong>{{ $proposal->proposal_guarantor_name2}}</strong> - FIADOR(A)	
 	 	{{-- VERIFICANDO SE FOI PARA SER CADASTRADO OU FOI ENVIADO PARA O FIADOR --}}
-	 	@if($proposal->proposal_guarantor_type2 == "cadastrar_fiador2")
+		@if($proposal->proposal_guarantor_type2 == "cadastrar_fiador")
 	 		{{-- VERIFICANDO SE É PARA CADASTRAR PARA ENVIAR O LINK DE DE PF OU PJ --}}
 	 		@if($proposal->proposal_guarantor_cpf2 == "Pessoa Física")
-	 			<a href="{{url('cadastrar-fiador/pf/proposta-id/'.base64_encode($proposal->proposal_id) )}}"> Cadastrar </a>
-	 		@else
-	 			<a href="{{url('cadastrar-fiador/pj/proposta-id/'.base64_encode($proposal->proposal_id) )}}"> Cadastrar </a>
+	 			<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->proposal_id).'/tipo/pf' )}}"> Cadastrar </a>
+	 		{{-- @else
+	 			<a href="{{url('cadastrar-fiador/pj/proposta-id/'.base64_encode($proposal->proposal_id) )}}"> Cadastrar </a> --}}
 	 		@endif
 	 		
-	 	@elseif($proposal->proposal_guarantor_type2 == "enviar_fiador2")
+	 	@elseif($proposal->proposal_guarantor_type2 == "enviar_fiador")
 
 	 		@if($proposal->proposal_guarantor_cpf2 == "Pessoa Física")
 	 			<small>Aguardando cadastro ( ou
-				<a href="{{$caminho}}/?action=guarantor&id={{base64_encode($proposal->proposal_id)}}&nm={{$proposal->proposal_guarantor_name2}}&type=ZmlhZG9y&table=pj&proponent=physical"> alterar </a>
+				<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->proposal_id).'/tipo/pf' )}}"> Alterar </a>
 				para você cadastrar)  </small> <br>
 	 		@else
 	 			<small>Aguardando cadastro ( ou
-				<a href="{{$caminho}}/?action=guarantor&id={{base64_encode($proposal->proposal_id)}}&nm={{$proposal->proposal_guarantor_name2}}&type=ZmlhZG9y&table=pj&proponent=legal"> alterar </a>
+				<a href="{{url('cadastrar-fiador/pj/proposta-id/'.base64_encode($proposal->proposal_id) )}}"> Alterar </a>
+				para você cadastrar)  </small> <br>
+	 		@endif			
+	 	
+	 	@endif
+
+	@endif {{-- FIM IF EMAIL FIADOR 2 --}}
+
+@elseif($type == "Pessoa Jurídica")
+	
+	<p>Parabéns, sua proposta foi enviada com sucesso para a Espíndola Imobiliária.
+		(Clique <a href="{{$caminho}}/?action=view-legal&id={{base64_encode($proposal->legal_id)}}"> aqui </a>
+		para visualizar sua proposta)
+	</p>
+	@if (!empty($proposal->legal_guarantor_email))
+		<p>O próximo passo é cadastrar ou aguardar o cadastro das seguintes pessoas:</p>
+		<strong>{{ $proposal->legal_guarantor_name}}</strong> - FIADOR(A)	
+		 	{{-- VERIFICANDO SE FOI PARA SER CADASTRADO OU FOI ENVIADO PARA O FIADOR --}}
+		@if($proposal->legal_guarantor_type == "cadastrar_fiador")
+	 		{{-- VERIFICANDO SE É PARA CADASTRAR PARA ENVIAR O LINK DE DE PF OU PJ --}}
+	 		@if($proposal->legal_guarantor_cpf_cnpj == "Pessoa Física")
+	 			<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->legal_id).'/tipo/pj' )}}"> Cadastrar </a>
+	 		
+	 		@endif
+	 		
+		@elseif($proposal->legal_guarantor_type == "enviar_fiador")
+
+	 		@if($proposal->legal_guarantor_cpf_cnpj == "Pessoa Física")
+	 			<small>Aguardando cadastro ( ou
+				<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->legal_id).'/tipo/pj'  )}}"> Alterar </a>
+				para você cadastrar)  </small> <br>
+	 		@else
+	 			<small>Aguardando cadastro ( ou
+				<a href="#"> Alterar </a>
+				para você cadastrar)  </small> <br>
+	 		@endif				
+		 @endif
+
+	@endif
+
+	@if (!empty($proposal->legal_guarantor_email2))
+		
+	 	<strong>{{ $proposal->legal_guarantor_name2}}</strong> - FIADOR(A)	
+	 	{{-- VERIFICANDO SE FOI PARA SER CADASTRADO OU FOI ENVIADO PARA O FIADOR --}}
+	 	@if($proposal->legal_guarantor_type2 == "cadastrar_fiador2")
+	 		{{-- VERIFICANDO SE É PARA CADASTRAR PARA ENVIAR O LINK DE DE PF OU PJ --}}
+	 		@if($proposal->legal_guarantor_cpf_cnpj2 == "Pessoa Física")
+	 			<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->legal_id).'/tipo/pj' )}}"> Cadastrar </a>
+	 		
+	 		@endif
+	 		
+		@elseif($proposal->legal_guarantor_type2 == "enviar_fiador2")
+
+	 		@if($proposal->legal_guarantor_cpf_cnpj2 == "Pessoa Física")
+	 			<small>Aguardando cadastro ( ou
+				<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->legal_id).'/tipo/pj'  )}}"> Alterar </a>
+				para você cadastrar)  </small> <br>
+	 		@else
+	 			<small>Aguardando cadastro ( ou
+				<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->legal_id).'/tipo/pj'  )}}"> Alterar </a>
 				para você cadastrar)  </small> <br>
 	 		@endif
+	 	@endif				
+	@endif {{-- FIM EMAIL FIADOR 2 --}}
 
-			
-	 	@endif
-@endif
-	 
-@endif	
-
-	@elseif($type == "Pessoa Jurídica")
-		<p>Parabéns, sua proposta foi enviada com sucesso para a Espíndola Imobiliária.
-		(Clique <a href="{{$caminho}}/?action=view-legal&id={{base64_encode($proposal->legal_id)}}"> aqui </a>
-		para visualizar sua proposta)</p>
-
-		@if (!empty($proposal->legal_guarantor_email))
-			<p>O próximo passo é cadastrar ou aguardar o cadastro das seguintes pessoas:</p>
-
-		 	<strong>{{ $proposal->legal_guarantor_name}}</strong> - FIADOR(A)	
-		 	{{-- VERIFICANDO SE FOI PARA SER CADASTRADO OU FOI ENVIADO PARA O FIADOR --}}
-		 	@if($proposal->legal_guarantor_type == "cadastrar_fiador")
+	{{-- PRIMEIRO LOCATÁRIO SE EXISTIR --}}
+	@if (!empty($proposal->legal_occupant_email))
+		@if($proposal->legal_occupant_type == "Cadastrar_locatario")
 		 		{{-- VERIFICANDO SE É PARA CADASTRAR PARA ENVIAR O LINK DE DE PF OU PJ --}}
-		 		@if($proposal->legal_guarantor_cpf_cnpj == "Pessoa Física")
+		 		@if($proposal->legal_occupant_cpf == "Pessoa Física")
 		 			<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->legal_id).'/tipo/pj' )}}"> Cadastrar </a>
 		 		{{-- @else
 		 			<a href="{{url('cadastrar-fiador/pj/proposta-id/'.base64_encode($proposal->proposal_id) )}}"> Cadastrar </a> --}}
 		 		@endif
 		 		
-			@elseif($proposal->legal_guarantor_type == "enviar_fiador")
+		@elseif($proposal->legal_occupant_type == "Enviar_locatario")
 
-		 		@if($proposal->legal_guarantor_cpf_cnpj == "Pessoa Física")
+		 		@if($proposal->legal_occupant_cpf == "Pessoa Física")
 		 			<small>Aguardando cadastro ( ou
 					<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->legal_id).'/tipo/pj'  )}}"> Alterar </a>
 					para você cadastrar)  </small> <br>
 		 		@else
 		 			<small>Aguardando cadastro ( ou
-					<a href="#"> Alterar </a>
+					<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->legal_id).'/tipo/pj'  )}}"> Alterar </a>
 					para você cadastrar)  </small> <br>
-		 		@endif
-
-				
-		 @endif
-
+		 		@endif				
+		@endif
 	@endif
 
-	 	<br>
+	{{-- SEGUNDO LOCATÁRIO SE EXISTIR --}}
+	@if (!empty($proposal->legal_occupant_email2))
+		<strong>{{ $proposal->legal_occupant_name2}}</strong> - FIADOR(A)	
+	 	{{-- VERIFICANDO SE FOI PARA SER CADASTRADO OU FOI ENVIADO PARA O FIADOR --}}
+	 	@if($proposal->legal_occupant_type2 == "Cadastrar_locatario2")
+	 		{{-- VERIFICANDO SE É PARA CADASTRAR PARA ENVIAR O LINK DE DE PF OU PJ --}}
+	 		@if($proposal->legal_occupant_cpf2 == "Pessoa Física")
+	 			<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->legal_id).'/tipo/pj' )}}"> Cadastrar </a>
+	 		{{-- @else
+	 			<a href="{{url('cadastrar-fiador/pj/proposta-id/'.base64_encode($proposal->proposal_id) )}}"> Cadastrar </a> --}}
+	 		@endif
+	 		
+		@elseif($proposal->legal_occupant_type2 == "Enviar_locatario2")
+
+	 		@if($proposal->legal_occupant_cpf2 == "Pessoa Física")
+	 			<small>Aguardando cadastro ( ou
+				<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->legal_id).'/tipo/pj'  )}}"> Alterar </a>
+				para você cadastrar)  </small> <br>
+	 		@else
+	 			<small>Aguardando cadastro ( ou
+				<a href="{{url('cadastrar-fiador/'.base64_encode($proposal->legal_id).'/tipo/pj'  )}}"> Alterar </a>
+				para você cadastrar)  </small> <br>
+	 		@endif	
+	 					
+		@endif
+	@endif
+
+
 @endif
-	
+
 <br>
 	
 

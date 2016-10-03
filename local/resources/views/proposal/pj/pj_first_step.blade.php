@@ -4,7 +4,7 @@
         <label class="pull-left label_titulo">Dados da Locação</label> 	
         <p class="text-primary pull-right">Página 1 de 3</p>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-6">
         <label class="control-label" for="inputSuccess1">Endereço ou código do Imóvel*</label>
         <input type="text" name="legal_location_reference" required id="proposal_reference" class="form-control" value="{{$proposals->legal_location_reference}}" >
     </div>
@@ -24,13 +24,31 @@
             <option>Outros</option>
         </select>
     </div>
+     <div class="col-md-3">
+        <label  id="info-atendente" >Atendente Responsável</label>
+        <select class="form-control"  name="legal_id_user" >
+            @if($proposals->proposal_id_user <> 0)
+            <?php
+                $atend = DB::table('users')->where('id' , $proposals->proposal_id_user)->get();
+                ?>
+            <option value="{{$atend[0]->id}}">{{$atend[0]->nick}}</option>
+            <option value="" class="separator"></option>
+            @else
+            <option value="0">--Selecione--</option>
+            @endif
+            <option value="Não Informado">--Selecione--</option>
+            @foreach ($user as $users)
+            <option value="{{$users->id}}" >{{$users->nick}}</option>
+            @endforeach
+        </select>
+    </div>
     <div class="col-md-4">
         <label class="control-label" for="inputSuccess1">Finalidade</label>
         <select class="selectpicker show-tick form-control" name="legal_location_finality">
             @if(!empty($proposals->legal_location_finality))
             <option selected="" >{{$proposals->legal_location_finality}}</option>
             @endif
-            <option value=""> -- Selecione -- </option>
+            <option value="Não Informado">--Selecione--</option>
             <option>Residencial</option>
             <option>Comercial</option>
             <option>Temporada</option>

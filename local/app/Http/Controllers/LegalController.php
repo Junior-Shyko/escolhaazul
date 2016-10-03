@@ -42,7 +42,31 @@ class LegalController extends Controller
 	            //RETIRANDO OS INDICES DO ARRAY PARA NÃO SER REGISTRADO NA TABELA VISTORIA
 	            $input = $request->except('_token', 'primeira_pj');
 	            legal::where('legal_id', $id)->update($input); 
+
+                //PESQUISANDO O USUARIO PARA ENVIAR E-MAIL
+                $user = DB::table('users')->where('id', $id_user)->get();
+                // DISPARANDO PARA O USUÁRIO SE EXISTIR SE NÃO DISPARA PARA O EMAIL PADRÃO
+               if(!empty($user)){
+                $caminho = "http://espindolaimobiliaria.com.br/ea";
+            
+                Mail::send('email.email_administrator', ['user' => $user, 'proposal' => $proposal , 'caminho' => $caminho], function ($m) use ($user, $proposal, $caminho) {
+                   
+                     $m->to($user[0]->email, $user[0]->name)->subject('NOVA PROPOSTA LOCAÇÃO PESSOA FÍSICA');
+                     $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
+                     $m->cc("fabiano@espindola.imb.br", 'Equipe Espindola');
+                });
+
+               }else{
                 
+                $caminho = "http://espindolaimobiliaria.com.br/ea";
+            
+                Mail::send('email.email_administrator', ['proposal' => $proposal , 'caminho' => $caminho], function ($m) use ($proposal, $caminho) {
+                   
+                     $m->to('fabiano@espindola.imb.br','Equipe Espindola')->subject('NOVA PROPOSTA LOCAÇÃO PESSOA FÍSICA');
+                     $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
+                 
+                });
+               }
                 return response()->json(['mensagem' => 'success']);
 			    
 			    
@@ -63,8 +87,6 @@ class LegalController extends Controller
                 $request['legal_reference_charge_begin_contract']   = Function_generic::DataBRtoMySQL($request['legal_reference_charge_begin_contract']);
                 $request['legal_reference_charge_begin_contract2']  = Function_generic::DataBRtoMySQL($request['legal_reference_charge_begin_contract2']);
                 $request['legal_reference_banking_client_begin']    = Function_generic::DataBRtoMySQL($request['legal_reference_banking_client_begin']);
-                
-                
                 
 
 			    $input = $request->all();
@@ -93,8 +115,9 @@ class LegalController extends Controller
                     {
                         //VERIRICANDO SE FOI OPTADO PARA ENVIAR
                         if($request['legal_guarantor_type'] == "enviar_fiador"){
-                            $nome_fiador = $proposal->legal_guarantor_name; 
-                            Mail::send('email.email_guarantor_pj', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador], function ($m) use ( $proposal, $nome_fiador ) {                   
+                            $nome_fiador = $proposal->legal_guarantor_name;
+                            $type = "Pessao Jurídica"; 
+                            Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador , 'type' => $type], function ($m) use ( $proposal, $nome_fiador, $type ) {                   
                                 $m->to($proposal->legal_guarantor_email, $proposal->legal_guarantor_name)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
                                 $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
                             });
@@ -108,27 +131,60 @@ class LegalController extends Controller
                     if($request['legal_guarantor_cpf_cnpj2'] == "Pessoa Física")
                     {
                         //VERIRICANDO SE FOI OPTADO PARA ENVIAR
-                        if($request['legal_guarantor_type2'] == "enviar_fiador"){
+                        if($request['legal_guarantor_type2'] == "enviar_fiador2"){
                             $nome_fiador = $proposal->legal_guarantor_name; 
-                            Mail::send('email.email_guarantor_pj', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador], function ($m) use ( $proposal, $nome_fiador ) {                   
+                            $type = "Pessao Jurídica"; 
+                            Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador , 'type' => $type], function ($m) use ( $proposal, $nome_fiador, $type ) {                    
                                 $m->to($proposal->legal_guarantor_email, $proposal->legal_guarantor_name)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
                                 $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
                             });
                         }
                     }                    
                 }
-
+                // ENVIO PARA LOCATÁRIOS
+                 if(!$request['legal_occupant_type'] == null){
+                    //FIADOR PESSOA FÍSICA
+                    //VERIFICANDO SE É PESSOA FÍSICA OU PESSOA JURÍDICA
+                    if($request['legal_occupant_cpf'] == "Pessoa Física")
+                    {
+                        //VERIRICANDO SE FOI OPTADO PARA ENVIAR
+                        if($request['legal_occupant_type'] == "Enviar_locatario"){
+                            $nome_fiador = $proposal->legal_occupant_name; 
+                            $type = "Pessao Jurídica"; 
+                            Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador , 'type' => $type], function ($m) use ( $proposal, $nome_fiador, $type ) {                    
+                                $m->to($proposal->legal_occupant_email, $proposal->legal_occupant_name)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
+                                $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
+                            });
+                        }
+                    }                    
+                }
+                 if(!$request['legal_occupant_type2'] == null){
+                    //FIADOR PESSOA FÍSICA
+                    //VERIFICANDO SE É PESSOA FÍSICA OU PESSOA JURÍDICA
+                    if($request['legal_occupant_cpf2'] == "Pessoa Física")
+                    {
+                        //VERIRICANDO SE FOI OPTADO PARA ENVIAR
+                        if($request['legal_occupant_type2'] == "Enviar_locatario2"){
+                            $nome_fiador = $proposal->legal_occupant_name2; 
+                            $type = "Pessao Jurídica"; 
+                            Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador , 'type' => $type], function ($m) use ( $proposal, $nome_fiador, $type ) {                    
+                                $m->to($proposal->legal_occupant_email2, $proposal->legal_occupant_name2)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
+                                $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
+                            });
+                        }
+                    }                    
+                } // FIM - ENVIO PARA LOCATÁRIOS
                 $caminho = "espindolaimobiliaria.com.br/ea/";
                 $type = "Pessoa Jurídica";
-                Mail::send('email.email_proponent', [ 'proposal' => $proposal, 'caminho' => $caminho, 'type' => $type], function ($m) use ($proposal, $caminho, $type) {  if($type == "Pessoa Física")
+               
+                Mail::send('email.email_proponent', [ 'proposal' => $proposal, 'caminho' => $caminho, 'type' => $type], function ($m) use ($proposal, $caminho, $type) {  
+                    if($type == "Pessoa Física")
                     {
-                      $prefixo = "proposal";
                       $email = $proposal->proposal_email;
                       $nome = $proposal->proposal_name;
                     }   
                     elseif($type == "Pessoa Jurídica")
                     {
-                      $prefixo = "legal"; 
                       $email = $proposal->legal_location_email;
                       $nome = $proposal->legal_location_name_corporation;
                     }       

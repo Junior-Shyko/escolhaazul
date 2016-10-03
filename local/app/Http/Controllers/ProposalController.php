@@ -54,17 +54,17 @@ class ProposalController extends Controller
 
         }else{
 
-            $proposta_legal = Legal::create([
-                            'legal_location_name_corporation'=>$name,'legal_location_phone'=>$phone,
-                            'legal_location_email'=>$email,
-                            'legal_date_cadastre'=>Carbon::now()
-                        ]);
+            // $proposta_legal = Legal::create([
+            //                 'legal_location_name_corporation'=>$name,'legal_location_phone'=>$phone,
+            //                 'legal_location_email'=>$email,
+            //                 'legal_date_cadastre'=>Carbon::now()
+            //             ]);
             
-            if($proposta_legal)
+            // if($proposta_legal)
                
-                return redirect('nova-proposta/'.base64_encode($proposta_legal->legal_id).'/tipo/proposta-pj');
+            //     return redirect('nova-proposta/'.base64_encode($proposta_legal->legal_id).'/tipo/proposta-pj');
           
-            //return redirect('http://www.espindola.imb.br/paginaindisponivel');
+            return redirect('http://www.espindola.imb.br/paginaindisponivel');
 
         }       
 
@@ -242,15 +242,26 @@ class ProposalController extends Controller
                 //PESQUISANDO A PROPOSTA PARA ENVIAR E-MAIL
                 $proposal = Proposal::find($id);
 
-                //return response()->json(['message' => 'success']);
+               // DISPARANDO PARA O USUÁRIO SE EXISTIR SE NÃO DISPARA PARA O EMAIL PADRÃO
                if(!empty($user)){
                 $caminho = "http://espindolaimobiliaria.com.br/ea";
             
-                 Mail::send('email.email_administrator', ['user' => $user, 'proposal' => $proposal , 'caminho' => $caminho], function ($m) use ($user, $proposal, $caminho) {
+                Mail::send('email.email_administrator', ['user' => $user, 'proposal' => $proposal , 'caminho' => $caminho], function ($m) use ($user, $proposal, $caminho) {
                    
                      $m->to($user[0]->email, $user[0]->name)->subject('NOVA PROPOSTA LOCAÇÃO PESSOA FÍSICA');
                      $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
                      $m->cc("fabiano@espindola.imb.br", 'Equipe Espindola');
+                });
+
+               }else{
+
+                $caminho = "http://espindolaimobiliaria.com.br/ea";
+            
+                Mail::send('email.email_administrator', ['proposal' => $proposal , 'caminho' => $caminho], function ($m) use ($proposal, $caminho) {
+                   
+                     $m->to('fabiano@espindola.imb.br','Equipe Espindola')->subject('NOVA PROPOSTA LOCAÇÃO PESSOA FÍSICA');
+                     $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
+                 
                 });
                }
 
