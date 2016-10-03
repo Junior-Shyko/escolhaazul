@@ -48,6 +48,8 @@ class ProposalController extends Controller
                     'proposal_name'=>$name,'proposal_phone_cel1'=>$phone,'proposal_email'=>$email,'date_cadastre'=>Carbon::now(), 'proposal_status' =>  'Incompleto'
                     ]);  
                 return redirect('nova-proposta/'.base64_encode($proposta->proposal_id).'/tipo/proposta-pf'); 
+
+
             }  
 
         }else{
@@ -61,6 +63,8 @@ class ProposalController extends Controller
             if($proposta_legal)
                
                 return redirect('nova-proposta/'.base64_encode($proposta_legal->legal_id).'/tipo/proposta-pj');
+          
+            //return redirect('http://www.espindola.imb.br/paginaindisponivel');
 
         }       
 

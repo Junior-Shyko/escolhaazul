@@ -259,14 +259,14 @@
         </div>
         <div class="col-md-3 form-group">
             <label class="control-label" for="dtn">Data de nascimento</label>
-            <input type="text" name="legal_location_representative_date_brith" onKeyPress="MascaraData(form_one_pj.legal_location_representative_date_brith);" id="dtn_legal"  maxlength="10"  class="form-control" value="{{$proposals->legal_location_representative_date_brith}}">
+            <input type="text" name="legal_location_representative_date_brith1" onKeyPress="MascaraData(form_one_pj.legal_location_representative_date_brith);" id="dtn_legal"  maxlength="10"  class="form-control" value="{{$proposals->legal_location_representative_date_brith}}">
         </div>
         <div class="col-md-3 form-group">
             <label class="control-label" for="">Identidade</label>
             <input type="text" name="legal_location_representative_identity" id="identidade_legal_rep1"  class="form-control" value="{{$proposals->legal_location_representative_identity}}">
         </div>
         <div class="col-md-3 form-group">
-            <label class="control-label" for="">Órgão expeditor</label>
+            <label class="control-label" for="">Órgão expedidor</label>
             <input type="text" name="legal_location_representative_organ_issuer"  class="form-control" value="{{$proposals->legal_location_representative_organ_issuer}}">
         </div>
         <div class="col-md-3 form-group required-field-block">
@@ -282,7 +282,7 @@
         </div>
         <div class="col-md-3 form-group">
             <label class="control-label" for="inputSuccess1">Grau de Instrução</label>
-            <select name="" class="selectpicker show-tick form-control">
+            <select name="legal_location_representative_literacy1" class="selectpicker show-tick form-control">
                 <option value="Não Informado">--Selecione--</option>
                 <option value="Fundamental" >Fundamental</option>
                 <option value="Ensino Médio">Ensino Médio</option>
@@ -317,10 +317,7 @@
                 <option value="Viúvo">Viúvo</option>
             </select>
         </div>
-        <div class="col-md-6 form-group">
-            <label class="control-label" for="inputSuccess1">Filiação* (nome completo da mãe)</label>
-            <input type="text" name="legal_location_representative_filiation"   class="form-control" value="{{$proposals->legal_location_representative_filiation}}" placeholder="Nome Completo">
-        </div>
+        
         <div class="col-md-4">
             <label class="control-label">Telefone</label>
             <input type="text" name="legal_location_representative_phone_fixed" data-mask="(99) 9999-9999"  class="form-control" value="{{$proposals->legal_location_representative_phone_fixed}}">
@@ -434,7 +431,7 @@
         </div>
         <div class="col-md-3 form-group">
             <label class="control-label" for="inputSuccess1">Grau de Instrução</label>
-            <select name="" class="selectpicker show-tick form-control">
+            <select name="legal_location_representative_literacy2" class="selectpicker show-tick form-control">
                 <option value="Não Informado">--Selecione--</option>
                 <option value="Fundamental">Fundamental</option>
                 <option value="Ensino Médi">Ensino Médio</option>
@@ -468,10 +465,7 @@
                 <option value="Viúvo">Viúvo</option>
             </select>
         </div>
-        <div class="col-md-6 form-group">
-            <label class="control-label" for="inputSuccess1">Filiação* (nome completo da mãe)</label>
-            <input type="text" name="legal_location_representative_filiation2"   class="form-control" value="{{$proposals->legal_location_representative_filiation2}}" placeholder="Nome Completo">
-        </div>
+        
         <div class="col-md-4">
             <label class="control-label">Telefone</label>
             <input type="text" name="legal_location_representative_phone_fixed2" data-mask="(99) 9999-9999"   class="form-control" value="{{$proposals->legal_location_representative_phone_fixed2}}">

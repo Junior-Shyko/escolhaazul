@@ -60,8 +60,10 @@ class LegalController extends Controller
                 $request['legal_reference_charge_value_quota']  = Function_generic::moeda($request['legal_reference_charge_value_quota']);
                 $request['legal_reference_charge_value_quota2'] = Function_generic::moeda($request['legal_reference_charge_value_quota2']);
 
-                $request['legal_reference_charge_begin_contract']= Function_generic::DataBRtoMySQL($request['legal_reference_charge_begin_contract']);
-                $request['legal_reference_charge_begin_contract2']= Function_generic::DataBRtoMySQL($request['legal_reference_charge_begin_contract2']);
+                $request['legal_reference_charge_begin_contract']   = Function_generic::DataBRtoMySQL($request['legal_reference_charge_begin_contract']);
+                $request['legal_reference_charge_begin_contract2']  = Function_generic::DataBRtoMySQL($request['legal_reference_charge_begin_contract2']);
+                $request['legal_reference_banking_client_begin']    = Function_generic::DataBRtoMySQL($request['legal_reference_banking_client_begin']);
+                
                 
                 
 

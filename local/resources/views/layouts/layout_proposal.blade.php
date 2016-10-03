@@ -347,14 +347,13 @@
             $("#valor_parcela_onus").maskMoney({thousands:'.', decimal:',', affixesStay: true});
             $("#valor_parcela_onus2").maskMoney({thousands:'.', decimal:',', affixesStay: true});
             $("#bens_juridico_valor1").maskMoney({thousands:'.', decimal:',', affixesStay: true});
-            $("#bens_juridico_valor1").maskMoney({thousands:'.', decimal:',', affixesStay: true});    
+            $("#bens_juridico_valor2").maskMoney({thousands:'.', decimal:',', affixesStay: true});    
             $("#valor_veiculos").maskMoney({thousands:'.', decimal:',', affixesStay: true});
             $("#valor_veiculos2").maskMoney({thousands:'.', decimal:',', affixesStay: true});
             $("#capital_social").maskMoney({thousands:'.', decimal:',', affixesStay: true});
             $("#juridico_salario").maskMoney({thousands:'.', decimal:',', affixesStay: true});
             $("#juridico_outras_rendas").maskMoney({thousands:'.', decimal:',', affixesStay: true});
-            
-            
+            $("#juridico_credito_aprovado").maskMoney({thousands:'.', decimal:',', affixesStay: true});
             
         </script>
         <script type="text/javascript">

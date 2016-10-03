@@ -344,37 +344,37 @@
 			<hr />
 		</div>
 	</div>
-	<div class="col-md-5">
+	<div class="col-md-3">
 		<label class="control-label">1.Poupança/Aplicação(R$)</label>		
 		  <input type="text" name="legal_reference_banking_app1" id="juridico_app1"  class="form-control" value="{{$proposals->legal_reference_banking_app1}}">		
 	</div>
-	<div class="col-md-7">
+	<div class="col-md-4">
 		<label class="control-label">Banco</label>
 		<input type="text" name="legal_reference_banking_app_bank1"   class="form-control" value="{{$proposals->legal_reference_banking_app_bank1}}">
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-2">
 		<label class="control-label">Agência</label>
-		<input type="text" name="legal_reference_banking_app_agency1"  class="form-control" value="{{$proposals->legal_reference_banking_app_agency1}}">
+		<input type="text" name="legal_reference_banking_app_agency1"  class="form-control"  maxlength="12" value="{{$proposals->legal_reference_banking_app_agency1}}">
 	</div>
-	<div class="col-md-4">
-		<label class="control-label">Ref. (nº)</label>
-		<input type="text" name="legal_reference_banking_app_ref1"   class="form-control" value="{{$proposals->legal_reference_banking_app_ref1}}">
+	<div class="col-md-3">
+		<label class="control-label">Conta. (nº)</label>
+		<input type="text" name="legal_reference_banking_app_ref1"  maxlength="12"  class="form-control" value="{{$proposals->legal_reference_banking_app_ref1}}">
 	</div>
-	<div class="col-md-5">
+	<div class="col-md-3">
 		<label class="control-label">1.Poupança/Aplicação(R$)</label>
 		  <input type="text" name="legal_reference_banking_app2" id="juridico_app2"  class="form-control" value="{{$proposals->legal_reference_banking_app2}}">
 	</div>
-	<div class="col-md-7">
+	<div class="col-md-4">
 		<label class="control-label">Banco</label>
 		<input type="text" name="legal_reference_banking_app_bank2"   class="form-control" value="{{$proposals->legal_reference_banking_app_bank2}}">
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-2">
 		<label class="control-label">Agência</label>
-		<input type="text" name="legal_reference_banking_app_agency2"   class="form-control" value="{{$proposals->legal_reference_banking_app_agency2}}">
+		<input type="text" name="legal_reference_banking_app_agency2"  maxlength="12"   class="form-control" value="{{$proposals->legal_reference_banking_app_agency2}}">
 	</div>
-	<div class="col-md-4">
-		<label class="control-label">Ref. (nº)</label>
-		<input type="text" name="legal_reference_banking_app_ref2"  class="form-control" value="{{$proposals->legal_reference_banking_app_ref2}}">
+	<div class="col-md-3">
+		<label class="control-label">Conta (nº)</label>
+		<input type="text" name="legal_reference_banking_app_ref2"  maxlength="12"  class="form-control" value="{{$proposals->legal_reference_banking_app_ref2}}">
 	</div>			
 </div>		
 	<!--========FIM BANCÁRIAS============-->	
