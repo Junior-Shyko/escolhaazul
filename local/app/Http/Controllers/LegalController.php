@@ -37,12 +37,12 @@ class LegalController extends Controller
 
                 $request['legal_location_representative_date_brith2'] = Function_generic::DataBRtoMySQL($request['legal_location_representative_date_brith2']);
                 
-			     
+			    $id_user = $request['legal_id_user']; 
 			    $input = $request->all();
 	            //RETIRANDO OS INDICES DO ARRAY PARA NÃO SER REGISTRADO NA TABELA VISTORIA
 	            $input = $request->except('_token', 'primeira_pj');
 	            legal::where('legal_id', $id)->update($input); 
-
+                $proposal = Legal::find($id); 
                 //PESQUISANDO O USUARIO PARA ENVIAR E-MAIL
                 $user = DB::table('users')->where('id', $id_user)->get();
                 // DISPARANDO PARA O USUÁRIO SE EXISTIR SE NÃO DISPARA PARA O EMAIL PADRÃO

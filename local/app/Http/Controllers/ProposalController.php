@@ -54,17 +54,17 @@ class ProposalController extends Controller
 
         }else{
 
-            // $proposta_legal = Legal::create([
-            //                 'legal_location_name_corporation'=>$name,'legal_location_phone'=>$phone,
-            //                 'legal_location_email'=>$email,
-            //                 'legal_date_cadastre'=>Carbon::now()
-            //             ]);
+            $proposta_legal = Legal::create([
+                            'legal_location_name_corporation'=>$name,'legal_location_phone'=>$phone,
+                            'legal_location_email'=>$email,
+                            'legal_date_cadastre'=>Carbon::now()
+                        ]);
             
-            // if($proposta_legal)
+            if($proposta_legal)
                
-            //     return redirect('nova-proposta/'.base64_encode($proposta_legal->legal_id).'/tipo/proposta-pj');
+                return redirect('nova-proposta/'.base64_encode($proposta_legal->legal_id).'/tipo/proposta-pj');
           
-            return redirect('http://www.espindola.imb.br/paginaindisponivel');
+           // return redirect('http://www.espindola.imb.br/paginaindisponivel');
 
         }       
 
