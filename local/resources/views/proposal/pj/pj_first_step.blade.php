@@ -414,7 +414,7 @@
         </div>
         <div class="col-md-12 ">
             <label class="control-label" for="inputSuccess1">Nome Completo</label>
-            <input type="text" name="legal_location_representative_name2" id="proposal_filiation"  class="form-control" value="{{$proposals->legal_location_representative_name2}}">
+            <input type="text" name="legal_location_representative_name2" id=""  class="form-control" value="{{$proposals->legal_location_representative_name2}}">
         </div>
         <div class="col-md-3 form-group">
             <label class="control-label">Sexo</label>					
