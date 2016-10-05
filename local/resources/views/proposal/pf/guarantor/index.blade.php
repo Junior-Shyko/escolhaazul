@@ -1,7 +1,23 @@
 @extends('layouts.layout_proposal')
 @section('content')
+<script type="text/javascript">
+    $(function(){
+              var formObject = $('#form_guarantor_one');
+              formObject.data('original_serialized_form', formObject.serialize());
+             
+              $(':submit').click(function() {
+                window.onbeforeunload = null;
+              });
+             
+              window.onbeforeunload = function() {
+              if (formObject.data('original_serialized_form') !== formObject.serialize()) {
+                  return "As mudanças deste formulário não foram salvas. Saindo desta página, todas as mudanças serão perdidas.";
+               }
+              };
+           });
+</script>
 <div class="container">
-    <div class="col-md-8" style="background: ; height: 70px;">
+    <div class="col-md-8" style="height: 70px;">
       <div id="titulo"  class="titulo_proposta">
         <div class="col-md-6">
           <h1>Cadastro de Locação</h1>

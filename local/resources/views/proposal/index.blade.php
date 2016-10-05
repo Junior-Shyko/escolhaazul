@@ -4,7 +4,11 @@
     $(document).ready(function() {
         $("#modal_info").modal("show");
     });
+
+
 </script>
+
+
 <div class="container">
     <div class="col-md-8" style="background: ; height: 70px;">
         <div id="titulo" class="titulo_proposta">

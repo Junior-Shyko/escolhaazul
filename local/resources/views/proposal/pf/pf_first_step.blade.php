@@ -5,6 +5,7 @@
     padding:0;
     }
 </style>
+
 <div class="col-md-12">
     <div class="col-md-12">
         <label class="pull-left label_titulo">Dados da locação</label>  
