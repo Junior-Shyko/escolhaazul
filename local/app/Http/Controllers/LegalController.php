@@ -107,7 +107,7 @@ class LegalController extends Controller
 
                 Legal::where('legal_id', $id)->update($input); 
                 $proposal = Legal::find($id); 
-                
+               
                 if(!$request['legal_guarantor_type'] == null){
                     //FIADOR PESSOA FÍSICA
                     //VERIFICANDO SE É PESSOA FÍSICA OU PESSOA JURÍDICA
@@ -122,7 +122,22 @@ class LegalController extends Controller
                                 $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
                             });
                         }
-                    }                    
+
+                    }elseif($request['legal_guarantor_cpf_cnpj'] == "Pessoa Jurídica")
+                    {
+                        //VERIRICANDO SE FOI OPTADO PARA ENVIAR
+                        if($request['legal_guarantor_type'] == "enviar_fiador"){
+                            // return $request['legal_guarantor_type'];
+                            $nome_fiador = $proposal->legal_guarantor_name;
+                            $type = "Pessao Jurídica"; 
+                            Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador , 'type' => $type], function ($m) use ( $proposal, $nome_fiador, $type ) {                   
+                                $m->to($proposal->legal_guarantor_email, $proposal->legal_guarantor_name)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
+                                $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
+                            });
+                        }
+
+                    } 
+
                 }
 
                  if(!$request['legal_guarantor_type2'] == null){
@@ -132,14 +147,25 @@ class LegalController extends Controller
                     {
                         //VERIRICANDO SE FOI OPTADO PARA ENVIAR
                         if($request['legal_guarantor_type2'] == "enviar_fiador2"){
-                            $nome_fiador = $proposal->legal_guarantor_name; 
+                            $nome_fiador = $proposal->legal_guarantor_name2; 
                             $type = "Pessao Jurídica"; 
                             Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador , 'type' => $type], function ($m) use ( $proposal, $nome_fiador, $type ) {                    
-                                $m->to($proposal->legal_guarantor_email, $proposal->legal_guarantor_name)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
+                                $m->to($proposal->legal_guarantor_email2, $proposal->legal_guarantor_name2)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
                                 $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
                             });
                         }
-                    }                    
+                    }elseif($request['legal_guarantor_cpf_cnpj2'] == "Pessoa Jurídica")
+                    {
+                        //VERIRICANDO SE FOI OPTADO PARA ENVIAR
+                        if($request['legal_guarantor_type2'] == "enviar_fiador"){
+                            $nome_fiador = $proposal->legal_guarantor_name2;
+                            $type = "Pessao Jurídica"; 
+                            Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador , 'type' => $type], function ($m) use ( $proposal, $nome_fiador, $type ) {                   
+                                $m->to($proposal->legal_guarantor_email2, $proposal->legal_guarantor_name2)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
+                                $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
+                            });
+                        }
+                    }                      
                 }
                 // ENVIO PARA LOCATÁRIOS
                  if(!$request['legal_occupant_type'] == null){

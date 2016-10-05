@@ -341,7 +341,7 @@
     </div>
     <div class="col-md-3">
         <label class="control-label">1.Poupança/Aplicação(R$)</label>
-        <input type="text" name="proposal_banking_app" id="aplicacao1" class="form-control" value="{{number_format($proposals->proposal_banking_app, 2, ',', ' ')}}">
+        <input type="text" name="proposal_banking_app" id="aplicacao1" class="form-control" value="{{$proposals->proposal_banking_app}}">
     </div>
     <div class="col-md-5">
         <label class="control-label">Banco</label>
@@ -357,7 +357,7 @@
     </div>
     <div class="col-md-3">
         <label class="control-label">2.Poupança/Aplicação(R$)</label>
-        <input type="text" name="proposal_banking_app2" id="aplicacao2" class="form-control" value="{{number_format($proposals->proposal_banking_app2, 2, ',', ' ')}}">
+        <input type="text" name="proposal_banking_app2" id="aplicacao2" class="form-control" value="{{$proposals->proposal_banking_app2}}">
     </div>
     <div class="col-md-5">
         <label class="control-label">Banco</label>

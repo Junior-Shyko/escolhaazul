@@ -126,7 +126,7 @@ function verify_guarantor(){
 				// setTimeout(function() {
 				// 	$('#modal_reload').fadeOut('fast');
 				// }, 5000);
-				location.href = domain_complet+"/escolhaazul/proposta-concluida/?msg=sucesso-proposta&email="+data.legal_location_email;
+				//location.href = domain_complet+"/escolhaazul/proposta-concluida/?msg=sucesso-proposta&email="+data.legal_location_email;
 
 			},
 			error   : function (data ) 

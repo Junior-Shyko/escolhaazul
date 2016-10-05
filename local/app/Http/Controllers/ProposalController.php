@@ -44,12 +44,10 @@ class ProposalController extends Controller
             }//CASO NÃO.... VAI PARA UMA NOVA PROPOSTA
             elseif(empty($verify_proposal)){
 
-                 $proposta = Proposal::create([
+                $proposta = Proposal::create([
                     'proposal_name'=>$name,'proposal_phone_cel1'=>$phone,'proposal_email'=>$email,'date_cadastre'=>Carbon::now(), 'proposal_status' =>  'Incompleto'
                     ]);  
                 return redirect('nova-proposta/'.base64_encode($proposta->proposal_id).'/tipo/proposta-pf'); 
-
-
             }  
 
         }else{
@@ -318,9 +316,12 @@ class ProposalController extends Controller
                 //ENVIANDO PROPOSTA PARA O EMAIL COM A VARIAVEL $proposal  
                 //DISPAROS DE EMAILS               
                 if(!$request['proposal_guarantor_type'] == null){
+
                     if($request['proposal_guarantor_type'] == "enviar_fiador"){
                         $nome_fiador = $proposal->proposal_guarantor_name; 
-                        Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador], function ($m) use ( $proposal, $nome_fiador ) {                   
+                        $type = $request['proposal_guarantor_cpf'];
+
+                        Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador, 'type' => $type], function ($m) use ( $proposal, $nome_fiador, $type ) {                   
                             $m->to($proposal->guarantor_email, $proposal->proposal_guarantor_name)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
                             $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
                         });
@@ -328,6 +329,8 @@ class ProposalController extends Controller
                     }
                 }
                 if(!$request['proposal_guarantor_type2'] == null){
+                    $nome_fiador = $proposal->proposal_guarantor_name2; 
+                    $type = $request['proposal_guarantor_cpf2'];
                     if($request['proposal_guarantor_type2'] == "enviar_fiador2"){
                         $nome_fiador = $proposal->proposal_guarantor_name2;
                         Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador], function ($m) use ( $proposal, $nome_fiador ) {                   
@@ -339,6 +342,8 @@ class ProposalController extends Controller
                 }
 
                 if(!$request['proposal_occupant_type'] == null){
+                    $nome_fiador = $proposal->proposal_occupant_name; 
+                    $type = $request['proposal_occupant_cpf'];
                     if($request['proposal_occupant_type'] == "Enviar_locatario"){
                         $nome_fiador = $proposal->proposal_occupant_name;
                         Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador], function ($m) use ( $proposal, $nome_fiador ) {                   
@@ -349,6 +354,8 @@ class ProposalController extends Controller
                 }
                 
                if(!$request['proposal_occupant_type'] == null){
+                    $nome_fiador = $proposal->proposal_occupant_name2; 
+                    $type = $request['proposal_occupant_cpf2'];
                      if($request['proposal_occupant_type'] == "Enviar_locatario2"){
                         $nome_fiador = $proposal->proposal_occupant_name2;
                         Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador], function ($m) use ( $proposal, $nome_fiador ) {     @
