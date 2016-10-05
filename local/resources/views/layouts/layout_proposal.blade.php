@@ -34,7 +34,7 @@
         {{-- PARA USO DOS UPLOADS --}}
         <script type="text/javascript" src="{{url('public/js/fileinput/fileinput.min.js')}}"></script>
         <script type="text/javascript" src="{{url('public/js/fileinput/locales/pt-BR.js')}}"></script>
-        <script type="text/javascript" type="text/javascript">
+        <script type="text/javascript">
             $.ajaxSetup({
                   headers: {
                       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -129,6 +129,8 @@
                  $('#modal_reload').modal('hide');      
             
              });
+
+            
         </script>
     </head>
     <body>
