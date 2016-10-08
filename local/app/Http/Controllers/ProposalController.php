@@ -240,28 +240,8 @@ class ProposalController extends Controller
                 //PESQUISANDO A PROPOSTA PARA ENVIAR E-MAIL
                 $proposal = Proposal::find($id);
 
-               // DISPARANDO PARA O USUÁRIO SE EXISTIR SE NÃO DISPARA PARA O EMAIL PADRÃO
-               if(!empty($user)){
-                $caminho = "http://espindolaimobiliaria.com.br/ea";
-            
-                Mail::send('email.email_administrator', ['user' => $user, 'proposal' => $proposal , 'caminho' => $caminho], function ($m) use ($user, $proposal, $caminho) {
-                   
-                     $m->to($user[0]->email, $user[0]->name)->subject('NOVA PROPOSTA LOCAÇÃO PESSOA FÍSICA');
-                     $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
-                     $m->cc("fabiano@espindola.imb.br", 'Equipe Espindola');
-                });
-
-               }else{
-
-                $caminho = "http://espindolaimobiliaria.com.br/ea";
-            
-                Mail::send('email.email_administrator', ['proposal' => $proposal , 'caminho' => $caminho], function ($m) use ($proposal, $caminho) {
-                   
-                     $m->to('fabiano@espindola.imb.br','Equipe Espindola')->subject('NOVA PROPOSTA LOCAÇÃO PESSOA FÍSICA');
-                     $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
-                 
-                });
-               }
+                //ENVIO DE EMAIL PARA ADMINISTRADOR
+                Proposal::send_adm("proposal_pf" , $user , $proposal);
 
                 return response()->json(['message' => 'success']);
             }
@@ -384,6 +364,7 @@ class ProposalController extends Controller
                      $m->to($email, $nome)->subject('PROPOSTA ENVIADO COM SUCESSO');
                      $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
                 });
+
 
                 return response()->json($proposal);
 
@@ -571,6 +552,12 @@ class ProposalController extends Controller
                     $m->to($guarantor->guarantor_email, $guarantor->guarantor_name)->subject('CADASTRO ENVIADO COM SUCESSO');
                     $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
                 });  
+
+                Mail::send('email.email_adm_guarantor', [ 'guarantor' => $guarantor, 'caminho' => $caminho], function ($m) use ($guarantor, $caminho){                 
+                    $m->to($guarantor->guarantor_email, $guarantor->guarantor_name)->subject('CADASTRO ENVIADO COM SUCESSO');
+                    $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
+                }); 
+
                 return response()->json($guarantor);
 			}
         }

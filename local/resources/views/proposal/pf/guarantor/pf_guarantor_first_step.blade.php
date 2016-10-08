@@ -1,19 +1,4 @@
-<script type="text/javascript">
-    $(function(){
-              var formObject = $('#form_one');
-              formObject.data('original_serialized_form', formObject.serialize());
-             
-              $(':submit').click(function() {
-                window.onbeforeunload = null;
-              });
-             
-              window.onbeforeunload = function() {
-              if (formObject.data('original_serialized_form') !== formObject.serialize()) {
-                  return "As mudanças deste formulário não foram salvas. Saindo desta página, todas as mudanças serão perdidas.";
-               }
-              };
-           });
-</script>
+
 <div class="col-md-12 box" >
     <div class="col-md-12">
         <label class="pull-left label_titulo">
