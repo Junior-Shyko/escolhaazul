@@ -50,7 +50,7 @@
 			
 			<div class="col-md-3 form-group">
 				<label class="control-label" for="">Órgão expeditor</label>
-   			 <input type="text" name="proposal_conjuge_organ_issuing"  class="form-control" maxlength="8" value="{{(empty($proposals->proposal_conjuge_organ_issuing) ? "SSP-CE" : $proposals->proposal_conjuge_organ_issuing)}}">
+   			 <input type="text" name="proposal_conjuge_organ_issuing"  class="form-control" maxlength="8" value="{{(empty($proposals->proposal_conjuge_organ_issuing) ? "" : $proposals->proposal_conjuge_organ_issuing)}}">
 			</div>
 			
 			<div class="col-md-3 form-group">

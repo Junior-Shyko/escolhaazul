@@ -201,6 +201,11 @@
         <!-- Latest compiled and minified JavaScript -->
 
         <script type="text/javascript">
+            $(function () {
+                //PARA INFORMAÇÃO DE ALGO QUANDO PASSA O MOUSE POR CIMA DO ICONE
+                $('[data-toggle="tooltip"]').tooltip()
+
+            })
             $(document).ready(function() {
                 $('.cep').cep();
                   $('#input-demo-cep').blur(function(){

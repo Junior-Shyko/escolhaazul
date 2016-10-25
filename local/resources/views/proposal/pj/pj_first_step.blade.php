@@ -336,19 +336,19 @@
             </select>
         </div>
         
-        <div class="col-md-4">
+        <div class="col-md-3 form-group">
             <label class="control-label">Telefone</label>
             <input type="text" name="legal_location_representative_phone_fixed" data-mask="(99) 9999-9999"  class="form-control" value="{{$proposals->legal_location_representative_phone_fixed}}">
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3 form-group">
             <label class="control-label">Celular</label>
             <input type="text" name="legal_location_representative_mobile1" id="celular1" onkeyup="mascara( this, mtel );" maxlength="15"  class="form-control" value="{{$proposals->legal_location_representative_mobile1}}">
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3 form-group">
             <label class="control-label" >Celular</label>
             <input type="text" name="legal_location_representative_mobile2" id="celular2" onkeyup="mascara( this, mtel );" maxlength="15"  class="form-control" value="{{$proposals->legal_location_representative_mobile2}}">
         </div>
-        <div class="col-md-12">
+        <div class="col-md-9 form-group">
             <label class="control-label">E-Mail</label>
             <input type="text" name="legal_location_representative_email" id="telefone_residencial"  class="form-control" value="{{$proposals->legal_location_representative_email}}">
         </div>
@@ -484,19 +484,19 @@
             </select>
         </div>
         
-        <div class="col-md-4">
+        <div class="col-md-3 form-group">
             <label class="control-label">Telefone</label>
             <input type="text" name="legal_location_representative_phone_fixed2" data-mask="(99) 9999-9999"   class="form-control" value="{{$proposals->legal_location_representative_phone_fixed2}}">
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3 form-group">
             <label class="control-label">Celular</label>
             <input type="text" name="legal_location_representative_mobile12" id="celular1" onkeyup="mascara( this, mtel );" maxlength="15"  class="form-control" value="{{$proposals->legal_location_representative_mobile12}}">
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3 form-group">
             <label class="control-label" >Celular</label>
             <input type="text" name="legal_location_representative_mobile22" id="celular2" onkeyup="mascara( this, mtel );" maxlength="15"  class="form-control" value="{{$proposals->legal_location_representative_mobile22}}">
         </div>
-        <div class="col-md-12">
+        <div class="col-md-9 form-group">
             <label class="control-label">E-Mail</label>
             <input type="text" name="legal_location_representative_profission2"   class="form-control" value="{{$proposals->legal_location_representative_profission2}}">
         </div>

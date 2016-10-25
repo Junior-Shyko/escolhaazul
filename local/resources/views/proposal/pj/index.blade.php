@@ -53,7 +53,7 @@
                 {{-- UPLOAD DE ARQUIVOS --}}
                 @include('proposal.pj.upload_files_pj')               
             </div>
-            <div class="col-md-10 fundo_marron">
+            <div class="col-md-12 fundo_marron">
                 <!--<a href="#create_user" data-toggle="tab" onmousedown="valida()" class="btn btn-primary pull-right">Etapa 02</a>	-->
                 <ul class="nav nav-tabs" style="  margin-top: 10px;">
                     <li class="active"><a href="#login" data-toggle="tab"><i class="fa fa-pencil-square-o"></i>Etapa Inicial </a></li>
