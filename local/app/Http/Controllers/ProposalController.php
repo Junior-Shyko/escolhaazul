@@ -39,7 +39,7 @@ class ProposalController extends Controller
             {
                 $proposal = DB::table('proposal')->where('proposal_email', '=' ,$email)->orderBy('proposal_send' , 'ASC')->paginate(4);
                 //PARA VERIFICAR O PDF
-                $resource_pdf = "http://espindolaimobiliaria.com.br/ea/";
+                $resource_pdf = "http://".$_SERVER['SERVER_NAME'].'/ea/';
                 return view('site.list_proposal', compact('type','name','email','phone', 'proposal' , 'resource_pdf' ));
             }//CASO NÃO.... VAI PARA UMA NOVA PROPOSTA
             elseif(empty($verify_proposal)){

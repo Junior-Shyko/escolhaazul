@@ -51,36 +51,44 @@ $(document).ready(function(){
 	
 	});
 
+// FUNCAO PARA VERIFICAR SE A ESCOLHA DA GARANTIA FOI FIADOR
 function verify_guarantor(){
-	if($("#tipo_fiador1").val() == ""){
+
+	if($("#tipo_fiador1").val() == "" || $("#tipo_fiador1").val() == "Não Informado"  ){
 		alert('Informe o tipo de Fiador');		
 		$("#tipo_fiador1").css("border", "1px solid red");
 		$("#tipo_fiador1").focus();
+		$('#modal_reload').modal('hide');
+		return false;
 	}
 	if($("#primeiro_fiador").val() == ""){
 		alert('Informe o Nome do Fiador');		
 		$("#primeiro_fiador").css("border", "1px solid red");
 		$("#primeiro_fiador").focus();
+		$('#modal_reload').modal('hide');
+		return false;
 	}
 	if($("#guarantor_email").val() == ""){
 		alert('Informe o E-mail do Fiador');		
 		$("#guarantor_email").css("border", "1px solid red");
 		$("#guarantor_email").focus();
+		$('#modal_reload').modal('hide');
+		return false;
 	}
 	
 }
 
 $('#final_proposta').click(function(event) {
-	alert(type_guarantor1);
-	alert($("#tipo_fiador1").val());
+	
+	
 		/* Act on the event */
-console.log(domain_complet);
-		if($("#tipo_garantia").val() == "Fiador"){ 
+		
+		 if($("#tipo_garantia").val() == "Fiador"){ 
 			verify_guarantor();
 			var type_guarantor1 = $('input[type=radio][name=proposal_guarantor_type]:checked').attr('id');
 			var type_guarantor2 = $('input[type=radio][name=proposal_guarantor_type]:checked').attr('id');
 			
-			if (type_guarantor1 == null)		
+			if (type_guarantor1 == undefined)		
 			{
 				alert('Informe como será a forma que o Fiador receberá a notificação');
 				$("#info_not_fiador1").removeClass('alert-success');
@@ -90,13 +98,14 @@ console.log(domain_complet);
 				$("#info_not_fiador1").removeClass('alert-danger');
 				$("#info_not_fiador1").addClass('alert-success');
 			}
+		
 		}else if($("#tipo_garantia").val() != "Fiador"){
 
 			$('#modal_reload').modal('show');
 
 		}
 
-		$('#modal_reload').modal('show');
+		//$('#modal_reload').modal('show');
 
 		var rota = domain_complet+'/update';
 		type_guarantor_one = $('input[type=radio][name=proposal_guarantor_type]:checked').attr('id');
@@ -122,7 +131,7 @@ console.log(domain_complet);
 			data: dados_third,
 			success: function(data){
 				$('#modal_reload').modal('hide');
-				//location.href = domain_complet+'/escolhaazul/proposta-concluida/?msg=sucesso-proposta&email='+data.proposal_email;				
+				location.href = domain_complet+'/escolhaazul/proposta-concluida/?msg=sucesso-proposta&email='+data.proposal_email;				
 			}
 		})
 		.done(function() {

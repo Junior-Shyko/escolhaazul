@@ -154,8 +154,12 @@
                 <div id="collapseFiador2" class="panel-collapse collapse panel-body">
                     <div class="col-md-3 form-group">
                         <label class="control-label">Tipo de Fiador</label>
-                        <select name="proposal_guarantor_cpf2" id="tipo_fiador2" class="form-control" style="border: 1px solid red;">
-                            {{(!empty($proposal[0]->proposal_guarantor_cpf2) ?  $proposal[0]->proposal_guarantor_cpf2  : '<option value=""selected> -- Selecione -- </option>')}}
+                        <select name="proposal_guarantor_cpf2" id="proposal_guarantor_cpf2" class="form-control">
+                             @if(!empty($proposals->proposal_guarantor_cpf2))
+                            <option data-tokens="">{{$proposals->proposal_guarantor_cpf2}}</option>
+                            <option value="" class="separator"></option>
+                            @endif
+                            <option value="Não Informado">--Selecione--</option>                   
                             <option value="Pessoa Física">Pessoa Física</option>
                             <option value="Pessoa Jurídica">Pessoa Jurídica</option>
                         </select>
