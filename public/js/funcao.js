@@ -20,7 +20,7 @@ $(document).ready(function(){
 		$("#e_c").hide();
 	}
 		
-	 $('[data-toggle="tooltip"]').tooltip();
+	
 	  $('[data-toggle="popover"]').popover({
 	  	placement : 'top',
 	    html : true,
@@ -35,7 +35,6 @@ $(document).ready(function(){
  
 // quando o documento estiver pronto, faça.
 $(function(){
- 
     /*
         Keyup é um evento que é disparado sempre que o usuário tirou o dedo da tecla.
         Ou seja, não queremos fazer nada quando o usuário clica, somente quando ele solta

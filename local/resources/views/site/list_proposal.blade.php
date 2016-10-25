@@ -64,7 +64,7 @@
                                 @foreach($proposal as $proposals)
                                 <div class="col-md-12 col-xs-12">
                                     <div class="col-md-3 col-xs-12 icone_proposta ">
-                                        @if($proposals->proposal_send == 1)
+                                        @if($proposals->proposal_status  == "Concluída (Aprovada)" || $proposals->proposal_status  == " Em análise" || $proposals->proposal_status  == "Desistência" || $proposals->proposal_status  == "Concluída (Reprovada)")
                                         <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                         <a href="{{$resource_pdf.'/?action=view-proposal&id='.base64_encode($proposals->proposal_id)}}" target="_blank" title="Visualizar Proposta">
                                         <strong>Visualizar</strong>
@@ -74,13 +74,14 @@
                                         @endif
                                     </div>
                                     <div class="col-md-9">
-                                        @if($proposals->proposal_send == 0)
+                                        @if($proposals->proposal_status  == "Nova" || $proposals->proposal_status  == "Incompleto")
                                         <a href="{{ url('nova-proposta/'.base64_encode($proposals->proposal_id).'/tipo/'.$type_proposal) }}" class="continue-proposal">
-                                            <p>
-                                                Continuar Proposta:{{$proposals->proposal_id}} 
+                                            <p style="font-float: left;">
+                                                Continuar Proposta: {{$proposals->proposal_id}} 
                                         </a>
                                         <span>
-                                        <span>Enviada em: {{ (empty($proposals->date_cadastre)) ? 'Incompleta' : date("d/m/Y" , strtotime($proposals->date_cadastre)) }} ou <a href="#" data-toggle="modal" data-target="#modal_conf_delete_proposal_{{ $proposals->proposal_id }}" class="delete-proposal"> Excluir</a></span>
+                                        <span style="margin-right: 10px;" class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{"Status da proposta:". $proposals->proposal_status}}"></span>
+                                        <span> Enviada em: {{ (empty($proposals->date_cadastre)) ? 'Incompleta' : date("d/m/Y" , strtotime($proposals->date_cadastre)) }} ou <a href="#" data-toggle="modal" data-target="#modal_conf_delete_proposal_{{ $proposals->proposal_id }}" class="delete-proposal"> Excluir</a></span>
                                         <div class="modal fade" id="modal_conf_delete_proposal_{{ $proposals->proposal_id }}" tabindex="-1" role="dialog">
                                         <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -110,7 +111,23 @@
                                         </span>
                                         </p>
                                         @elseif(!empty($proposals->date_cadastre))
-                                        <p>Proposta: {{$proposals->proposal_id}} <small>({{(!empty($proposals->proposal_status) ? $proposals->proposal_status : "Nova")}})</small>
+                                            <?php 
+                                                //O STATUS FOU ABREVIADO DEVIDO AO LAYOUT QUE FICA QUEBRADO
+                                                //MAIS NO ICONE QUANDO PASSO O MOUSE TEM QUE ESTÁ COM O STATUS COMPLETO
+                                                if($proposals->proposal_status == "Concluída (Aprovada)"){
+                                                    $status = "Concluída - Apr.";
+                                                    $style = '10pt';
+
+                                                }elseif($proposals->proposal_status == "Concluída (Reprovada)"){
+                                                    $status = "Concluída - Rep.";
+                                                     $style = '10pt';
+                                                }else{
+                                                    $status = $proposals->proposal_status;
+                                                    $style = '';
+                                                }
+                                            ?>
+                                        <p>Proposta: {{$proposals->proposal_id}} </small> (<small style="font-size: {{$style}};">  {{ $status }} </small>)
+                                        <span style="margin-right: 10px;" class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{"Status da proposta:". $proposals->proposal_status}}"></span>
                                             <span>Proposta enviada em: {{ (empty($proposals->date_cadastre)) ? 'Pendente' : date("d/m/Y" , strtotime($proposals->date_cadastre)) }} </span>
                                         </p>
                                         @endif

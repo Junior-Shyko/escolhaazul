@@ -53,5 +53,12 @@
         <!-- Javascripts
             ================================================== -->
         <script type="text/javascript" src="{{url('public/js/main.js')}}"></script>
+        <script>
+            $(function () {
+                //PARA INFORMAÇÃO DE ALGO QUANDO PASSA O MOUSE POR CIMA DO ICONE
+                $('[data-toggle="tooltip"]').tooltip()
+
+            })
+        </script>
     </body>
 </html>
