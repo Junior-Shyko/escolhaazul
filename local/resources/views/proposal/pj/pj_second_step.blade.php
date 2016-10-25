@@ -384,7 +384,7 @@
 <div class="col-md-12">
 	<div class="col-md-4">
 		<label class="pull-left label_titulo">Dívidas e Ônus Reais </label> 
-		<label for="" class="pull-right"><i class="glyphicon glyphicon-info-sign label_titulo" data-toggle="tooltip" data-placement="top" title="Aluguéis Residenciais tem a vigência mínima de 30 Meses. O valor padrão pode ser alterado."> </i> </label>	
+		<label for="" class="pull-right"><i class="glyphicon glyphicon-info-sign label_titulo" data-toggle="tooltip" data-placement="top" title="Devem ser informadas neste campo, por exemplo, empréstimos, financiamentos,  saldo devedor de cheque especial, entre outros."> </i> </label>	
 		  					
 	</div>	
 	

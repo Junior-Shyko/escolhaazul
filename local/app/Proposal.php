@@ -2,6 +2,7 @@
 //ARQUIVO CRIADO EM 31/08/2016 AS 12:00 POR Junior Oliveira
 namespace EscolhaAzul;
 
+use Mail;
 use Illuminate\Database\Eloquent\Model;
 
 class Proposal extends Model

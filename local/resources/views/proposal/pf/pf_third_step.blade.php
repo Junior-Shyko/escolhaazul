@@ -29,7 +29,7 @@
                 <h5 >Arquivo(s) enviado com sucesso</h5> 
               </div>       
             </div>
-                <form action="{{ url('/upload') }}" method="POST" enctype="multpart/form-data" id="form_upload_files">
+                <form action="{{ url('/upload-files') }}" method="POST" enctype="multpart/form-data" id="form_upload_files">
                     <input id="upload_ajax" name="img_photo[]" type="file" multiple class="file" required="" >
                     <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
                    {{ Form::hidden('proposal_id' , $proposal[0]->proposal_id) }}
@@ -94,7 +94,12 @@
             <div class="col-md-3 form-group">
                 <label class="control-label">Tipo de Fiador</label>
                 <select name="proposal_guarantor_cpf" class="form-control" id="tipo_fiador1">
-                    {{(!empty($proposal[0]->proposal_guarantor_cpf) ? '<option value="">'.$proposal[0]->proposal_guarantor_cpf.'</option>'   :  '<option value="">-- Selecione--</option><option class="divider"></option>')}}
+                    
+                    @if(!empty($proposals->proposal_guarantor_cpf))
+                    <option data-tokens="">{{$proposals->proposal_guarantor_cpf}}</option>
+                    <option value="" class="separator"></option>
+                    @endif
+                    <option value="Não Informado">--Selecione--</option>
                     <option value="Pessoa Física">Pessoa Física</option>
                     <option value="Pessoa Jurídica">Pessoa Jurídica</option>
                 </select>

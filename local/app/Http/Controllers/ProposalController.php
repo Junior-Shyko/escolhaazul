@@ -405,7 +405,8 @@ class ProposalController extends Controller
 
                         $id_proposal = $request['id_proposal'];
                         $tot_array = count($_FILES["img_photo"]["name"]);
-                        for ($i=0; $i < $tot_array; $i++) { 
+
+                          for ($i=0; $i < $tot_array; $i++) { 
 
                                 $tmp_name = $_FILES["img_photo"]["tmp_name"][$i];
                                 $name =  time(). '_'. $_FILES["img_photo"]["name"][$i];
@@ -423,7 +424,7 @@ class ProposalController extends Controller
                                    
                                 ]); 
 
-                            }
+                          }
                         }
                  } 
             }
@@ -482,9 +483,10 @@ class ProposalController extends Controller
                   'files_profile' => $type_profile 
                  
               ]); 
+              dd($files_ambience);
               
           }
-          return response()->json(['message' => 'success']);
+         // return response()->json(['message' => 'success']);
         }
     }
     /*

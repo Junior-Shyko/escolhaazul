@@ -71,6 +71,8 @@ function verify_guarantor(){
 }
 
 $('#final_proposta').click(function(event) {
+	alert(type_guarantor1);
+	alert($("#tipo_fiador1").val());
 		/* Act on the event */
 console.log(domain_complet);
 		if($("#tipo_garantia").val() == "Fiador"){ 
@@ -120,7 +122,7 @@ console.log(domain_complet);
 			data: dados_third,
 			success: function(data){
 				$('#modal_reload').modal('hide');
-				location.href = domain_complet+'/escolhaazul/proposta-concluida/?msg=sucesso-proposta&email='+data.proposal_email;				
+				//location.href = domain_complet+'/escolhaazul/proposta-concluida/?msg=sucesso-proposta&email='+data.proposal_email;				
 			}
 		})
 		.done(function() {
