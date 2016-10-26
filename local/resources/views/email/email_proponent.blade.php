@@ -85,7 +85,7 @@
 
 	@if (!empty($proposal->proposal_occupant_email))
 		
-	 	<strong>{{ $proposal->proposal_guarantor_name2}}</strong> - FIADOR(A)	
+	 	<strong>{{ $proposal->proposal_occupant_name}}</strong> - FIADOR(A)	
 	 	{{-- VERIFICANDO SE FOI PARA SER CADASTRADO OU FOI ENVIADO PARA O FIADOR --}}
 		@if($proposal->proposal_occupant_type == "Cadastrar_locatario")
 	 		{{-- VERIFICANDO SE É PARA CADASTRAR PARA ENVIAR O LINK DE DE PF OU PJ --}}

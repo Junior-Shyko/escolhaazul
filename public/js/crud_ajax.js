@@ -135,7 +135,7 @@ $('#final_proposta').click(function(event) {
 			url: rota,
 			type: 'POST',
 			dataType: 'JSON',
-			data: form_segunda,
+			data: form_terceira,
 			success: function(data){
 				$('#modal_reload').modal('hide');
 				location.href = domain_complet+'/escolhaazul/proposta-concluida/?msg=sucesso-proposta&email='+data.proposal_email;				
