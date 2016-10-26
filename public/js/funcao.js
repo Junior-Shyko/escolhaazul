@@ -7,6 +7,8 @@ $(document).ready(function(){
 	$("#sucesso_upload_proposal").hide();	
 	$("#modal_reload").hide();
 	$("#fiador_ec").hide();
+	$("#sec_click").hide();
+	
 	//MOSTRADNO A DIV GUARANTOR SE O VALOR DO BANCO FOR FIADOR
 	if($("#tipo_garantia").val() == "Fiador"){
 		$("#guarantor").show();
@@ -31,6 +33,7 @@ $(document).ready(function(){
         $(this).parents(".popover").popover('hide');
     });
 	   // $("#guarantor").show();
+	   
 });
  
 // quando o documento estiver pronto, faça.

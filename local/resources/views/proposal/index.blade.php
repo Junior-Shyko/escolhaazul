@@ -24,6 +24,7 @@
     </div>
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active box container col-md-12" id="login">
+
             @foreach($proposal as $proposals)
             <form action="" method="" id="form_one">
                 @include('proposal.pf.pf_first_step')
@@ -34,6 +35,7 @@
             @endforeach
         </div>
         <div role="tabpanel" class="tab-pane box container col-md-12" id="create_user">
+
             @foreach($proposal as $proposals)
             <form action="" method="" id="form_two">
                 @include('proposal.pf.pf_second_step')
@@ -43,14 +45,19 @@
             </form>
             @endforeach
         </div>
-        <div role="tabpanel" class="tab-pane box container col-md-12" id="tree">
-               
-           
-                @include('proposal.pf.pf_third_step')
-               
-
+        <div role="tabpanel" class="tab-pane box  container col-md-12" id="tree">
+            @foreach($proposal as $proposals)
+                <form action="" method="" id="form_tree">
+                    @include('proposal.pf.pf_third_step')
+                    <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                    {{Form::hidden('terceira_pf' , 'terceira_pf')}}
+                    <input type="hidden" name="proposal_id" id="proposal_id" value="{{$proposal[0]->proposal_id}}">
+                </form>
+            @endforeach
+        
         </div>
-    </div>
+           
+
     <div class="col-md-12 fundo_marron">
         <!--<a href="#create_user" data-toggle="tab" onmousedown="valida()" class="btn btn-primary pull-right">Etapa 02</a>	-->
         <ul class="nav nav-tabs" role="tablist" style="margin-top: 10px;">

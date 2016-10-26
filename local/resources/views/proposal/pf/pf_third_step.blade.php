@@ -32,7 +32,7 @@
                 <form action="{{ url('/upload-files') }}" method="POST" enctype="multpart/form-data" id="form_upload_files">
                     <input id="upload_ajax" name="img_photo[]" type="file" multiple class="file" required="" >
                     <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-                   {{ Form::hidden('proposal_id' , $proposal[0]->proposal_id) }}
+                   {{ Form::hidden('proposal_id' , $proposals->proposal_id) }}
                    {{ Form::hidden('type_proposal' , $type) }}
                 </form>
             
@@ -95,8 +95,8 @@
                 <label class="control-label">Tipo de Fiador</label>
                 <select name="proposal_guarantor_cpf" class="form-control" id="tipo_fiador1">
                     
-                    @if(!empty($proposals->proposal_guarantor_cpf))
-                    <option data-tokens="">{{$proposals->proposal_guarantor_cpf}}</option>
+                    @if(!empty($proposalss->proposal_guarantor_cpf))
+                    <option data-tokens="">{{$proposalss->proposal_guarantor_cpf}}</option>
                     <option value="" class="separator"></option>
                     @endif
                     <option value="Não Informado">--Selecione--</option>
@@ -106,7 +106,7 @@
             </div>
             <div class="col-md-4 form-group">
                 <label class="control-label" for="inputSuccess1">Nome</label>
-                <input type="text" name="proposal_guarantor_name"  id="primeiro_fiador" value="{{$proposal[0]->proposal_guarantor_name}}"  class="form-control">
+                <input type="text" name="proposal_guarantor_name"  id="primeiro_fiador" value="{{$proposals->proposal_guarantor_name}}"  class="form-control">
             </div>
             <div class="col-md-4">
                 <label class="">Relação entre fiador e proponente</label>		
@@ -120,11 +120,11 @@
             </div>
             <div class="col-md-8 form-group">
                 <label class="control-label">E-mail</label>
-                <input type="text" name="guarantor_email" id="guarantor_email"  value="{{$proposal[0]->guarantor_email}}"  class="form-control">
+                <input type="text" name="guarantor_email" id="guarantor_email"  value="{{$proposals->guarantor_email}}"  class="form-control">
             </div>
             <div id="info_not_fiador1" class="col-md-12 alert alert-success form-group">
                 <div class="col-md-6">	
-                    @if($proposal[0]->proposal_guarantor_type == "cadastrar_fiador")
+                    @if($proposals->proposal_guarantor_type == "cadastrar_fiador")
                         <input type="radio" name="proposal_guarantor_type" id="cadastrar_fiador" checked="" value="cadastrar_fiador">
                     @else
                         <input type="radio" name="proposal_guarantor_type" id="cadastrar_fiador"  value="cadastrar_fiador">
@@ -133,7 +133,7 @@
                 </div>
                 <div class="col-md-6">				
                     
-                    @if($proposal[0]->proposal_guarantor_type == "enviar_fiador")
+                    @if($proposals->proposal_guarantor_type == "enviar_fiador")
                         <input type="radio" name="proposal_guarantor_type" id="enviar_fiador"  checked="" value="enviar_fiador">
                     @else
                         <input type="radio" name="proposal_guarantor_type" id="enviar_fiador"  value="enviar_fiador">
@@ -155,7 +155,7 @@
                     <div class="col-md-3 form-group">
                         <label class="control-label">Tipo de Fiador</label>
                         <select name="proposal_guarantor_cpf2" id="proposal_guarantor_cpf2" class="form-control">
-                             @if(!empty($proposals->proposal_guarantor_cpf2))
+                             @if(!empty($proposalss->proposal_guarantor_cpf2))
                             <option data-tokens="">{{$proposals->proposal_guarantor_cpf2}}</option>
                             <option value="" class="separator"></option>
                             @endif
@@ -166,7 +166,7 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label class="control-label" for="inputSuccess1">Nome</label>
-                        <input type="text" name="proposal_guarantor_name2"  id="proposal_guarantor_name2"  value="{{$proposal[0]->proposal_guarantor_name2}}" class="form-control">
+                        <input type="text" name="proposal_guarantor_name2"  id="proposal_guarantor_name2"  value="{{$proposals->proposal_guarantor_name2}}" class="form-control">
                     </div>
                     <div class="col-md-4">
                         <small class="form-group control-label">Relação entre fiador e proponente</small>		
@@ -180,7 +180,7 @@
                     </div>
                     <div class="col-md-8 form-group">
                         <label class="control-label">E-mail</label>
-                        <input type="text" name="guarantor_email2"  id="guarantor_email2"  value="{{$proposal[0]->guarantor_email2}}" class="form-control">
+                        <input type="text" name="guarantor_email2"  id="guarantor_email2"  value="{{$proposals->guarantor_email2}}" class="form-control">
                     </div>
                     <div class="col-md-12 alert alert-success form-group">
                         <div class="col-md-6">				
@@ -212,18 +212,18 @@
                 <div class="col-md-3">
                     <label class="control-label">Tipo de locatário</label>
                     <select name="proposal_occupant_cpf" id="proposal_occupant_cpf"  class="selectpicker show-tick form-control">
-                        {{(!empty($proposal[0]->proposal_occupant_cpf) ?  $proposal[0]->proposal_occupant_cpf  : '<option value=""selected> -- Selecione -- </option>')}}
+                        {{(!empty($proposals->proposal_occupant_cpf) ?  $proposals->proposal_occupant_cpf  : '<option value=""selected> -- Selecione -- </option>')}}
                         <option value="Pessoa Física">Pessoa Física</option>
                         <option value="Pessoa Jurídica">Pessoa Jurídica</option>
                     </select>
                 </div>
                 <div class="col-md-4">
                     <label class="control-label">Nome</label>
-                    <input type="text" name="proposal_occupant_name" id="proposal_occupant_name"  value="{{$proposal[0]->proposal_occupant_name}}"  class="form-control">
+                    <input type="text" name="proposal_occupant_name" id="proposal_occupant_name"  value="{{$proposals->proposal_occupant_name}}"  class="form-control">
                 </div>
                 <div class="col-md-5 form-group">
                     <label class="control-label">E-mail</label>
-                    <input type="email" name="proposal_occupant_email" id="proposal_occupant_email" value="{{$proposal[0]->proposal_occupant_email}}"  class="form-control">
+                    <input type="email" name="proposal_occupant_email" id="proposal_occupant_email" value="{{$proposals->proposal_occupant_email}}"  class="form-control">
                 </div>
                 <div class="col-md-12 alert alert-success">
                     <div class="col-md-6">				
@@ -249,18 +249,18 @@
                                 <div class="col-md-3 form-group">
                                     <label class="control-label">Tipo de locatário</label>
                                     <select name="proposal_occupant_cpf2" id="proposal_occupant_cpf2"  class="selectpicker show-tick form-control">
-                                        {{(!empty($proposal[0]->proposal_occupant_cpf2) ?  $proposal[0]->proposal_occupant_cpf2  : '<option value=""selected> -- Selecione -- </option>')}}
+                                        {{(!empty($proposals->proposal_occupant_cpf2) ?  $proposals->proposal_occupant_cpf2  : '<option value=""selected> -- Selecione -- </option>')}}
                                         <option value="Pessoa Física">Pessoa Física</option>
                                         <option value="Pessoa Jurídica">Pessoa Jurídica</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="control-label">Nome</label>
-                                    <input type="text" name="proposal_occupant_name2"  value="{{$proposal[0]->proposal_occupant_name2}}" id="proposal_occupant_name2"  class="form-control">
+                                    <input type="text" name="proposal_occupant_name2"  value="{{$proposals->proposal_occupant_name2}}" id="proposal_occupant_name2"  class="form-control">
                                 </div>
                                 <div class="col-md-5">
                                     <label class="control-label">E-mail</label>
-                                    <input type="email" name="proposal_occupant_email2" id="proposal_occupant_email2"  value="{{$proposal[0]->proposal_occupant_email2}}" class="form-control">
+                                    <input type="email" name="proposal_occupant_email2" id="proposal_occupant_email2"  value="{{$proposals->proposal_occupant_email2}}" class="form-control">
                                 </div>
                                 <div class="col-md-12 alert alert-success">
                                     <div class="col-md-6">				
@@ -318,7 +318,16 @@
        
        
         <section class="button-demo">
-            <input type="button" class="btn btn-lg btn-primary pull-right" value="Enviar Proposta" id="final_proposta" onclick="return validaTermos()" />
+       <div id="pri_click">
+           <input type="button" class="btn btn-lg btn-primary pull-right" value="Enviar Proposta" id="final_proposta" onclick="return validaTermos()" />
+       </div>
+        <div id="sec_click">
+           <button type="button" class="btn btn-lg btn-primary pull-right"/>
+           Enviando Proposta <i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>
+           </button> 
+       </div>
+            
+            {{-- <input type="button"  id="final_proposta" class="btn btn-primary btn-lg ladda-button pull-right" data-style="expand-right" data-size="l" onclick="return validaTermos()" value="Enviar Proposta" ><span class="ladda-label"></span> --}}
         </section>
     </div>
 </div>

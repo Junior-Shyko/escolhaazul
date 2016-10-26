@@ -67,6 +67,7 @@ function verify_guarantor(){
 		$("#primeiro_fiador").focus();
 		$('#modal_reload').modal('hide');
 		return false;
+		
 	}
 	if($("#guarantor_email").val() == ""){
 		alert('Informe o E-mail do Fiador');		
@@ -76,6 +77,7 @@ function verify_guarantor(){
 		return false;
 	}
 	
+	return "success";
 }
 
 $('#final_proposta').click(function(event) {
@@ -86,7 +88,7 @@ $('#final_proposta').click(function(event) {
 		 if($("#tipo_garantia").val() == "Fiador"){ 
 			verify_guarantor();
 			var type_guarantor1 = $('input[type=radio][name=proposal_guarantor_type]:checked').attr('id');
-			var type_guarantor2 = $('input[type=radio][name=proposal_guarantor_type]:checked').attr('id');
+			var type_guarantor2 = $('input[type=radio][name=proposal_guarantor_type2]:checked').attr('id');
 			
 			if (type_guarantor1 == undefined)		
 			{
@@ -110,25 +112,30 @@ $('#final_proposta').click(function(event) {
 		var rota = domain_complet+'/update';
 		type_guarantor_one = $('input[type=radio][name=proposal_guarantor_type]:checked').attr('id');
 
-		dados_third = {
-			proposal_guarantor_cpf : $('#tipo_fiador1').val(), proposal_guarantor_name : $('#primeiro_fiador').val(), 
-			proposal_guarantor_relation : $('#proposal_guarantor_relation').val(), guarantor_email : $('#guarantor_email').val(), 
-			proposal_guarantor_type : type_guarantor_one , proposal_guarantor_cpf2 : $('#proposal_guarantor_cpf2').val(), 
-			proposal_guarantor_name2 : $('#proposal_guarantor_name2').val(), proposal_guarantor_relation2 : $('#proposal_guarantor_relation2').val(), 
-			guarantor_email2 : $('#guarantor_email2').val(), proposal_guarantor_type2 : type_guarantor2, 
-			proposal_guarantor_type2 : $('#proposal_guarantor_type2').val(), proposal_occupant_cpf : $('#proposal_occupant_cpf').val(), 
-			proposal_occupant_name : $('#proposal_occupant_name').val(), proposal_occupant_email : $('#proposal_occupant_email').val(), 
-			proposal_occupant_type : $('#proposal_occupant_type').val(), proposal_occupant_type : $('#proposal_occupant_type').val(), 
-			proposal_occupant_cpf2 : $('#proposal_occupant_cpf2').val(), proposal_occupant_name2 : $('#proposal_occupant_name2').val(), 
-			proposal_occupant_email2 : $('#proposal_occupant_email2').val(), proposal_occupant_type2 : $('#proposal_occupant_type2').val(), 
-			proposal_occupant_type2 : $('#proposal_occupant_type2').val(), _token : $('#token').val(), terceira_pf : 'terceira_pf', proposal_id : id_proposal 
-		}		
-		
+		// dados_third = {
+		// 	proposal_guarantor_cpf : $('#tipo_fiador1').val(), proposal_guarantor_name : $('#primeiro_fiador').val(), 
+		// 	proposal_guarantor_relation : $('#proposal_guarantor_relation').val(), guarantor_email : $('#guarantor_email').val(), 
+		// 	proposal_guarantor_type : type_guarantor_one , proposal_guarantor_cpf2 : $('#proposal_guarantor_cpf2').val(), 
+		// 	proposal_guarantor_name2 : $('#proposal_guarantor_name2').val(), proposal_guarantor_relation2 : $('#proposal_guarantor_relation2').val(), 
+		// 	guarantor_email2 : $('#guarantor_email2').val(), proposal_guarantor_type2 : type_guarantor2, 
+		// 	proposal_guarantor_type2 : $('#proposal_guarantor_type2').val(), proposal_occupant_cpf : $('#proposal_occupant_cpf').val(), 
+		// 	proposal_occupant_name : $('#proposal_occupant_name').val(), proposal_occupant_email : $('#proposal_occupant_email').val(), 
+		// 	proposal_occupant_type : $('#proposal_occupant_type').val(), proposal_occupant_type : $('#proposal_occupant_type').val(), 
+		// 	proposal_occupant_cpf2 : $('#proposal_occupant_cpf2').val(), proposal_occupant_name2 : $('#proposal_occupant_name2').val(), 
+		// 	proposal_occupant_email2 : $('#proposal_occupant_email2').val(), proposal_occupant_type2 : $('#proposal_occupant_type2').val(), 
+		// 	proposal_occupant_type2 : $('#proposal_occupant_type2').val(), _token : $('#token').val(), terceira_pf : 'terceira_pf', proposal_id : id_proposal 
+		// }		
+		guarantor = verify_guarantor();
+		console.log("ver guarantor" + guarantor);
+		if(guarantor == "success"){
+			$("#pri_click").hide();
+			$("#sec_click").show();
+			form_terceira = $("#form_tree").serialize();	
 		$.ajax({
 			url: rota,
 			type: 'POST',
 			dataType: 'JSON',
-			data: dados_third,
+			data: form_segunda,
 			success: function(data){
 				$('#modal_reload').modal('hide');
 				location.href = domain_complet+'/escolhaazul/proposta-concluida/?msg=sucesso-proposta&email='+data.proposal_email;				
@@ -147,6 +154,7 @@ $('#final_proposta').click(function(event) {
 			$('#modal_reload').modal('hide');
 		});
 		
+		}
 	});
 
 	/*CRUD PARA PARTE DO FIADOR*/

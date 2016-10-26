@@ -64,7 +64,7 @@
                                 @foreach($proposal as $proposals)
                                 <div class="col-md-12 col-xs-12">
                                     <div class="col-md-3 col-xs-12 icone_proposta ">
-                                        @if($proposals->proposal_status  == "Concluída (Aprovada)" || $proposals->proposal_status  == " Em análise" || $proposals->proposal_status  == "Desistência" || $proposals->proposal_status  == "Concluída (Reprovada)")
+                                        @if($proposals->proposal_status  == "Concluída (Aprovada)" || $proposals->proposal_status  == "Em Análise" || $proposals->proposal_status  == "Desistência" || $proposals->proposal_status  == "Concluída (Reprovada)")
                                         <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                         <a href="{{$resource_pdf.'/?action=view-proposal&id='.base64_encode($proposals->proposal_id)}}" target="_blank" title="Visualizar Proposta">
                                         <strong>Visualizar</strong>
@@ -74,7 +74,7 @@
                                         @endif
                                     </div>
                                     <div class="col-md-9">
-                                        @if($proposals->proposal_status  == "Nova" || $proposals->proposal_status  == "Incompleto")
+                                        @if($proposals->proposal_status  == "Nova" || $proposals->proposal_status  == "Incompleta")
                                         <a href="{{ url('nova-proposta/'.base64_encode($proposals->proposal_id).'/tipo/'.$type_proposal) }}" class="continue-proposal">
                                             <p style="font-float: left;">
                                                 Continuar Proposta: {{$proposals->proposal_id}} 
