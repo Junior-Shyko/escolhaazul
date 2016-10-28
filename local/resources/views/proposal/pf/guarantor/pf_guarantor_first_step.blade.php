@@ -33,9 +33,9 @@
         </label>
         @if(isset($proposal))
             @if(!empty($proposal[0]->proposal_name))       
-                <input type="text" name="id_proposal"  class="form-control" disabled value="{{$proposal[0]->proposal_name}}">
+                <input type="text" name="guarantor_name_pretended"  class="form-control" disabled value="{{$proposal[0]->proposal_name}}">
             @elseif(!empty($proposal[0]->legal_location_name_corporation))
-                <input type="text" name="id_proposal"  class="form-control" disabled value="{{$proposal[0]->legal_location_name_corporation}}">
+                <input type="text" name="guarantor_name_pretended"  class="form-control" disabled value="{{$proposal[0]->legal_location_name_corporation}}">
             @endif  
         
         @else

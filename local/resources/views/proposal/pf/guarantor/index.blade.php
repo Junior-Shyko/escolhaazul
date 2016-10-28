@@ -2,19 +2,19 @@
 @section('content')
 <script type="text/javascript">
     $(function(){
-              var formObject = $('#form_guarantor_one');
-              formObject.data('original_serialized_form', formObject.serialize());
-             
-              $(':submit').click(function() {
-                window.onbeforeunload = null;
-              });
-             
-              window.onbeforeunload = function() {
-              if (formObject.data('original_serialized_form') !== formObject.serialize()) {
-                  return "As mudanças deste formulário não foram salvas. Saindo desta página, todas as mudanças serão perdidas.";
-               }
-              };
-           });
+        // var formObject = $('#form_guarantor_one');
+        // formObject.data('original_serialized_form', formObject.serialize());
+       
+        // $(':submit').click(function() {
+        //   window.onbeforeunload = null;
+        // });
+       
+        // window.onbeforeunload = function() {
+        // if (formObject.data('original_serialized_form') !== formObject.serialize()) {
+        //     return "As mudanças deste formulário não foram salvas. Saindo desta página, todas as mudanças serão perdidas.";
+        //  }
+        // };
+     });
 </script>
 <div class="container">
     <div class="col-md-8" style="height: 70px;">
@@ -59,6 +59,7 @@
             {{Form::hidden('_token' , csrf_token() , ['id' => 'token'])}}
             {{Form::hidden('guarantor_secound_pf' , 'guarantor_secound_pf')}}
             {{Form::hidden('guarantor_id' , $guarantor->guarantor_id )}}
+            {{Form::hidden('id_proposal' , $id) }}
           {{Form::close()}}
           
           {{ Form::open(array('url' => 'upload-files', 'id' => 'form_upload_guarantor' , 'enctype' => 'multpart/form-data'))  }}

@@ -230,7 +230,7 @@ class ProposalController extends Controller
                 $request['proposal_salary']             = Function_generic::moeda($request['proposal_salary']);
                 $outras_rendas         = Function_generic::moeda($request['proposal_rent_other']);
                 $request['proposal_rent_other'] = $outras_rendas;
-                $request['proposal_status'] = "Incompleto";
+                $request['proposal_status'] = "Incompleta";
 
                 $input = $request->except('_token', 'etapa', 'primeira_pf', 'segunda_pf','terceira_pf','compoeRenda_conjuge', 'third_step' , 'type_proposal');
              
@@ -262,7 +262,7 @@ class ProposalController extends Controller
                 $request['proposal_banking_limit2']     = Function_generic::moeda($request['proposal_banking_limit2']);
                 $request['proposal_banking_app']        = Function_generic::moeda($request['proposal_banking_app']);
                 $request['proposal_banking_app2']       = Function_generic::moeda($request['proposal_banking_app2']);
-                 $request['proposal_status']            = "Incompleto";
+                 $request['proposal_status']            = "Incompleta";
 
                 $input = $request->except('_token', 'etapa', 'primeira_pf', 'segunda_pf','terceiraW_pf','compoeRenda_conjuge', 'third_step' , 'type_proposal');
 
@@ -546,6 +546,7 @@ class ProposalController extends Controller
                 Guarantor::where('guarantor_id', $id)->update($input);
                     
                 $guarantor = Guarantor::find($id); 
+                $proposal = Proposal::find($request['id_proposal']);
                 
                 //DISPARAR O E-MAIL PARA O FIADOR 
                 $caminho = "http://espindolaimobiliaria.com.br/ea";
@@ -556,7 +557,12 @@ class ProposalController extends Controller
                 });  
 
                 Mail::send('email.email_adm_guarantor', [ 'guarantor' => $guarantor, 'caminho' => $caminho], function ($m) use ($guarantor, $caminho){                 
-                    $m->to($guarantor->guarantor_email, $guarantor->guarantor_name)->subject('CADASTRO ENVIADO COM SUCESSO');
+                    $m->to('fabiano@espindola.imb.br', 'Comercial Espíndola')->subject('NOVO CADASTRO DE LOCAÇÃO FIADOR / PESSOA FÍSICA');
+                    $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
+                }); 
+
+                Mail::send('email.email_feedback_proponent', [ 'proposal' => $proposal, 'caminho' => $caminho, 'guarantor' => $guarantor], function ($m) use ($proposal, $caminho, $guarantor){                 
+                    $m->to($proposal->proposal_email, $proposal->proposal_name)->subject('CADASTRO DO FIADOR/LOCATARIO ENVIADO COM SUCESSO');
                     $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
                 }); 
 
@@ -593,7 +599,7 @@ class ProposalController extends Controller
           'date_cadastre'=>Carbon::now()
         ]);   
 
-        return view('proposal.pf.guarantor.index' , compact("guarantor" , "proposal" , "type"));
+        return view('proposal.pf.guarantor.index' , compact("guarantor" , "proposal" , "type" , "id"));
 
     }
 }
