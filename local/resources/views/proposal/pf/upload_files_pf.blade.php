@@ -41,7 +41,7 @@
                         <script>
                             $("#upload_ajax").fileinput({
                                uploadUrl: domain_complet, // you must set a valid URL here else you will get an error
-                               showPreview : true,
+                               
                                showUpload: false,
                                uploadIcon: '<i class="glyphicon glyphicon-ok"></i> &nbsp;',
                                allowedFileExtensions : ['jpg', 'png', 'gif', 'pdf' , 'jpeg'],
@@ -49,14 +49,14 @@
                                maxFileSize: 20000000,
                                maxFilesNum: 20,
                                showZoom: false,
-                               showDrag: true,
+                               
                                removeLabel: 'Excluir Todos',
                                msgCancelled: 'Upload Cancelado',
                                msgInvalidFileExtension: 'Tipo inválido para o arquivo "{name}". Apenas "{} tipos" arquivos são suportados.',
                                msgLoading: 'Carregando o arquivo {index} de {files} arquivos ...',
                                msgProgress: 'Carregando o arquivo {index} {de arquivos} - {name} - {} por cento% concluída.',
                                msgSelected: '{n} arquivo(s) selecionado(s)',
-                               dropZoneTitle: 'Arraste e solte seus arquivos aqui',
+                               dropZoneTitle: 'Procure e adicione seus arquivos',
                                //MENSAGE DE QUANDO EXCEDER O LIMITE
                                msgSizeTooLarge: 'O Arquivo "{name}" ({size} KB) excedeu o limite máximo de megabites que é {maxSize} MB. Por favor, tente novamente!',
                                //maximo de arquivos para ser enviado
@@ -105,7 +105,7 @@
                 </div>
                 <section class="button-demo">
                     <div id="pri_click">
-                        <input type="button" class="btn btn-lg btn-primary pull-right" value="Enviar Proposta" id="final_proposta" onclick="return validaTermos()" />
+                        <input type="button" class="btn btn-lg btn-primary pull-right" value="Enviar Proposta" id="final_proposta" onmousedown="return validaTermos()" />
                     </div>
                     <div id="sec_click">
                         <button type="button" class="btn btn-lg btn-primary pull-right"/>

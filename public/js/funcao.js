@@ -33,7 +33,6 @@ $(document).ready(function(){
         $(this).parents(".popover").popover('hide');
     });
 	   // $("#guarantor").show();
-	   
 });
  
 // quando o documento estiver pronto, faça.

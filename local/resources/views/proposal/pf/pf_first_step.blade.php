@@ -275,14 +275,13 @@
     </div>
     <div class="col-md-3">
         <label class="control-label" for="input-demo-uf">UF</label>
-        <input type="text" name="proposal_state" id="uf_proponent" class="form-control">
-       {{--  <select name=""  class="form-control">
+        <select name="proposal_state" id="proposal_state" class="form-control">
             @if(!empty($proposals->proposal_state) )
             <option value="">{{$proposals->proposal_state }}</option>
             @endif
             <option value="Não Informado">--Selecione--</option>
             @include('proposal.uf')
-        </select> --}}
+        </select>
     </div>
     <div class="col-md-3 ">
         <label class="control-label" for="inputSuccess1">Tempo que reside</label>

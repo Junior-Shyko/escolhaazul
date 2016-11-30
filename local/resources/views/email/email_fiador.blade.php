@@ -3,7 +3,7 @@
 
 @if($type == "Pessoa Física")
 
-	<p><b>Prezado(a)  {{ $nome_fiador }}</b>,<br/>
+	<p><b>Prezado(a)  {{ $proposal->proposal_guarantor_name }}</b>,<br/>
 
 	<p>O(A) Sr(a). <strong> {{strtoupper($proposal->proposal_name)}} </strong> acabou de fazer uma proposta para a locação de um(a) {{strtoupper($proposal->proposal_type_immobile)}} na Espíndola Imobiliária e lhe indicou como <strong> FIADOR(A) </strong>.</p>
 	<p>Neste sentido, solicitamos que preencha o seu cadastro clicando
@@ -11,7 +11,7 @@
 
 @elseif($type == "Pessoa Jurídica")
 	
-	<p><b>Prezado(a)  {{ $nome_fiador }}</b>,<br/>
+	<p><b>Prezado(a)  {{ $proposal->proposal_guarantor_name }}</b>,<br/>
 
 	<p>O(A) Sr(a). <strong> {{strtoupper($proposal->proposal_name)}} </strong> acabou de fazer uma proposta para a locação de um(a) {{strtoupper($proposal->proposal_type_immobile)}} na Espíndola Imobiliária e lhe indicou como <strong> FIADOR(A) </strong>.</p>
 	<p>Neste sentido, solicitamos que preencha o seu cadastro clicando

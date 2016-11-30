@@ -67,7 +67,6 @@ function verify_guarantor(){
 		$("#primeiro_fiador").focus();
 		$('#modal_reload').modal('hide');
 		return false;
-		
 	}
 	if($("#guarantor_email").val() == ""){
 		alert('Informe o E-mail do Fiador');		
@@ -86,9 +85,10 @@ $('#final_proposta').click(function(event) {
 		/* Act on the event */
 		
 		 if($("#tipo_garantia").val() == "Fiador"){ 
-			verify_guarantor();
+			verif = verify_guarantor();
+			
 			var type_guarantor1 = $('input[type=radio][name=proposal_guarantor_type]:checked').attr('id');
-			var type_guarantor2 = $('input[type=radio][name=proposal_guarantor_type2]:checked').attr('id');
+			var type_guarantor2 = $('input[type=radio][name=proposal_guarantor_type]:checked').attr('id');
 			
 			if (type_guarantor1 == undefined)		
 			{
@@ -104,44 +104,46 @@ $('#final_proposta').click(function(event) {
 		}else if($("#tipo_garantia").val() != "Fiador"){
 
 			$('#modal_reload').modal('show');
+			$('#button-final-load').show();
+			
 
 		}
-
-		//$('#modal_reload').modal('show');
-
-		var rota = domain_complet+'/update';
-		type_guarantor_one = $('input[type=radio][name=proposal_guarantor_type]:checked').attr('id');
 
 		guarantor = verify_guarantor();
-		
 		if(guarantor == "success"){
 			$("#pri_click").hide();
-			$("#sec_click").show();
+			$('#sec_click').show();
 			form_terceira = $("#form_tree").serialize();	
-		$.ajax({
-			url: rota,
-			type: 'POST',
-			dataType: 'JSON',
-			data: form_terceira,
-			success: function(data){
+			console.log("dominio completo: "+domain_complet);
+			var rota = domain_complet+'/update';
+			var rota_dom = domain_complet;
+			type_guarantor_one = $('input[type=radio][name=proposal_guarantor_type]:checked').attr('id');
+			
+			$.ajax({
+				url: rota,
+				type: 'POST',
+				dataType: 'JSON',
+				data: form_terceira,
+				success: function(data){
+					
+					location.href = rota_dom+'/proposta-concluida?msg=sucesso-proposta&email='+data.proposal_email;				
+				}
+			})
+			.done(function() {
+				console.log("success");
 				$('#modal_reload').modal('hide');
-				location.href = domain_complet+'/escolhaazul/proposta-concluida/?msg=sucesso-proposta&email='+data.proposal_email;				
-			}
-		})
-		.done(function() {
-			console.log("success");
-			$('#modal_reload').modal('hide');
-		})
-		.fail(function() {
-			console.log("error");
-			$('#modal_reload').modal('hide');
-		})
-		.always(function() {
-			console.log("complete-etapa-final");
-			$('#modal_reload').modal('hide');
-		});
+			})
+			.fail(function() {
+				console.log("error");
+				$('#modal_reload').modal('hide');
+			})
+			.always(function() {
+				console.log("complete-etapa-final");
+				$('#modal_reload').modal('hide');
+			});
+		}	
 		
-		}
+		
 	});
 
 	/*CRUD PARA PARTE DO FIADOR*/

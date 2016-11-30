@@ -44,9 +44,9 @@ Route::group(['prefix' => 'pj'], function () {
 
 //ROTA DE MENSAGEM
 
-Route::get('desenvolvimento', function () {
-    return view('desenvolvimento');
-});
+// Route::get('email-user', function () {
+//     return view('email.proposal_id_user');
+// });
 Route::group(['middleware' => ['web']], function () {
 
 });

@@ -95,7 +95,7 @@ class ProposalController extends Controller
         if($type == "Pessoa Física"){
             
             $proposta = Proposal::create([
-                'proposal_name'=>$name,'proposal_phone_cel1'=>$phone,'proposal_email'=>$email,'date_cadastre'=>Carbon::now(), 'proposal_status' =>  'Incompleto'
+                'proposal_name'=>$name,'proposal_phone_cel1'=>$phone,'proposal_email'=>$email,'date_cadastre'=>Carbon::now(), 'proposal_status' =>  'Incompleta'
                 ]);
       
             if($proposta)
@@ -287,7 +287,7 @@ class ProposalController extends Controller
                 $cadastrar = $request['proposal_guarantor_cadastre'];
 
                 $input = $request->all();
-                $input = $request->except('_token', 'etapa', 'primeira_pf', 'segunda_pf','terceira_pf','compoeRenda_conjuge', 'third_step' , 'type_proposal' , 'proposal_guarantor_send' , 'proposal_guarantor_cadastre' , 'img_photo' , 'type');
+                $input = $request->except('_token', 'etapa', 'primeira_pf', 'segunda_pf','terceira_pf','compoeRenda_conjuge', 'third_step' , 'type_proposal' , 'proposal_guarantor_send' , 'proposal_guarantor_cadastre' , 'img_photo');
 
                 Proposal::where('proposal_id', $id)->update($input); 
                 $proposal = Proposal::find($id); 
@@ -300,7 +300,7 @@ class ProposalController extends Controller
                     if($request['proposal_guarantor_type'] == "enviar_fiador"){
                         $nome_fiador = $proposal->proposal_guarantor_name; 
                         $type = $request['proposal_guarantor_cpf'];
-                       // echo "Fiador 01: ".$type;
+
                         Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador, 'type' => $type], function ($m) use ( $proposal, $nome_fiador, $type ) {                   
                             $m->to($proposal->guarantor_email, $proposal->proposal_guarantor_name)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
                             $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
@@ -309,11 +309,11 @@ class ProposalController extends Controller
                     }
                 }
                 if(!$request['proposal_guarantor_type2'] == null){
-                   
+                    $nome_fiador = $proposal->proposal_guarantor_name2; 
+                    $type = $request['proposal_guarantor_cpf2'];
                     if($request['proposal_guarantor_type2'] == "enviar_fiador2"){
-                          $nome_fiador = $proposal->proposal_guarantor_name2; 
-                          $type = $request['proposal_guarantor_cpf2'];
-                        Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador, 'type' => $type], function ($m) use ( $proposal, $nome_fiador, $type ) {                    
+                        $nome_fiador = $proposal->proposal_guarantor_name2;
+                        Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador], function ($m) use ( $proposal, $nome_fiador ) {                   
                             $m->to($proposal->guarantor_email2, $proposal->proposal_guarantor_name2)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
                             $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
                         });
@@ -322,11 +322,11 @@ class ProposalController extends Controller
                 }
 
                 if(!$request['proposal_occupant_type'] == null){
-                    
+                    $nome_fiador = $proposal->proposal_occupant_name; 
+                    $type = $request['proposal_occupant_cpf'];
                     if($request['proposal_occupant_type'] == "Enviar_locatario"){
-                        $nome_fiador = $proposal->proposal_occupant_name; 
-                        $type = $request['proposal_occupant_cpf'];
-                        Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador, 'type' => $type], function ($m) use ( $proposal, $nome_fiador, $type ) {                     
+                        $nome_fiador = $proposal->proposal_occupant_name;
+                        Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador], function ($m) use ( $proposal, $nome_fiador ) {                   
                             $m->to($proposal->proposal_occupant_email, $proposal->proposal_occupant_name)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
                             $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
                         });
@@ -334,11 +334,11 @@ class ProposalController extends Controller
                 }
                 
                if(!$request['proposal_occupant_type'] == null){
-                   
+                    $nome_fiador = $proposal->proposal_occupant_name2; 
+                    $type = $request['proposal_occupant_cpf2'];
                      if($request['proposal_occupant_type'] == "Enviar_locatario2"){
-                        $nome_fiador = $proposal->proposal_occupant_name2; 
-                        $type = $request['proposal_occupant_cpf2'];
-                        Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador, 'type' => $type], function ($m) use ( $proposal, $nome_fiador, $type ) { 
+                        $nome_fiador = $proposal->proposal_occupant_name2;
+                        Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador], function ($m) use ( $proposal, $nome_fiador ) {     @
                                         
                             $m->to($proposal->proposal_occupant_email2, $proposal->proposal_occupant_name2)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
                             $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
@@ -462,6 +462,7 @@ class ProposalController extends Controller
 
        if(isset($_FILES))
         {
+         // dd($request->all());
         $id_proposal = $request['proposal_id'];
         
          $tot_array = count($_FILES["img_photo"]["name"]);
@@ -483,10 +484,10 @@ class ProposalController extends Controller
                   'files_profile' => $type_profile 
                  
               ]); 
-            
+             // dd($files_ambience);
               
           }
-         return response()->json(['message' => 'success']);
+         // return response()->json(['message' => 'success']);
         }
     }
     /*
@@ -546,7 +547,6 @@ class ProposalController extends Controller
                 Guarantor::where('guarantor_id', $id)->update($input);
                     
                 $guarantor = Guarantor::find($id); 
-                $proposal = Proposal::find($request['id_proposal']);
                 
                 //DISPARAR O E-MAIL PARA O FIADOR 
                 $caminho = "http://espindolaimobiliaria.com.br/ea";
@@ -557,12 +557,7 @@ class ProposalController extends Controller
                 });  
 
                 Mail::send('email.email_adm_guarantor', [ 'guarantor' => $guarantor, 'caminho' => $caminho], function ($m) use ($guarantor, $caminho){                 
-                    $m->to('fabiano@espindola.imb.br', 'Comercial Espíndola')->subject('NOVO CADASTRO DE LOCAÇÃO FIADOR / PESSOA FÍSICA');
-                    $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
-                }); 
-
-                Mail::send('email.email_feedback_proponent', [ 'proposal' => $proposal, 'caminho' => $caminho, 'guarantor' => $guarantor], function ($m) use ($proposal, $caminho, $guarantor){                 
-                    $m->to($proposal->proposal_email, $proposal->proposal_name)->subject('CADASTRO DO FIADOR/LOCATARIO ENVIADO COM SUCESSO');
+                    $m->to($guarantor->guarantor_email, $guarantor->guarantor_name)->subject('CADASTRO ENVIADO COM SUCESSO');
                     $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
                 }); 
 
@@ -599,7 +594,7 @@ class ProposalController extends Controller
           'date_cadastre'=>Carbon::now()
         ]);   
 
-        return view('proposal.pf.guarantor.index' , compact("guarantor" , "proposal" , "type" , "id"));
+        return view('proposal.pf.guarantor.index' , compact("guarantor" , "proposal" , "type"));
 
     }
 }

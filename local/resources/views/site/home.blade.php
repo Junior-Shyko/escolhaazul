@@ -149,7 +149,7 @@
                     <div class="col-md-3 col-sm-6">
                         <h4><strong>Quais os requisitos para alugar com a Espíndola?</strong></h4>
                         <p>O pretenso locatário precisa comprovar renda superior a 3 vezes o valor do aluguel, podendo compor a renda com outras pessoas que não necessitam residir no imóvel. Ademais, não pode ter restrições nos órgãos de proteção ao crédito (SPC e SERASA) e nem figurar em processos judiciais que questionem sua idoneidade. Por fim, precisa optar por uma das modalidades de garantia locatícia: caução ou fiança.</p>
-                        <p>Obs.: Caso não tenha recedido o e-mail,<a href="http://espindolaimobiliaria.com.br/escolhaazul/?action=cadastre-guarantor" target="_blank"><u> clique aqui </u></a>para fazer o cadastro do locatário adicional ou <a href="http://espindolaimobiliaria.com.br/escolhaazul/?action=guarantor-legal" target="_blank"> <u>aqui</u> </a> se for pessoa jurídica.</p>
+                        <p>Obs.: Caso não tenha recedido o e-mail,<a href="http://espindolaimobiliaria.com.br/escolhaazul/novo-fiador" target="_blank"><u> clique aqui </u></a>para fazer o cadastro do locatário adicional ou <a href="http://espindolaimobiliaria.com.br/escolhaazul/" target="_blank"> <u>aqui</u> </a> se for pessoa jurídica.</p>
                        
                         <div class="space"></div>
                         <br/>
@@ -169,7 +169,7 @@
                                 <em>Última declaração do IRPF (Imposto de Renda de Pessoa Física) na íntegra e com página de recibo;</em>
                             </li>
                             <li>                                
-                                <em>Comprovantes de renda (<u><a href="https://espindola.helpshift.com/a/espindola-imobiliaria/?l=pt&s=locacao&f=como-faco-para-comprovar-minha-renda" target="_blank"> <u>saiba mais</u></a></u>);</em>
+                                <em>Comprovantes de renda (<u><a href="https://espindola.zendesk.com/hc/pt-br/articles/235009488-Como-fa%C3%A7o-para-comprovar-minha-renda-" target="_blank"> <u>saiba mais</u></a></u>);</em>
                             </li>
                             <li>
                                 <!--<span class="fa fa-dot-circle-o"></span>-->
@@ -181,7 +181,8 @@
                             <li><em>Comprovante de residência atualizado.</em></li>
                         </ul>
                         <br/>
-                        <p>Para informações dos documentos necessários para locação com Pessoa Jurídica,<a href="https://espindola.helpshift.com/a/espindola-imobiliaria/?l=pt&s=locacao&f=qual-a-documentacao-necessaria-para-alugar-com-pessoa-juridica" target="_blank"> <u>clique aqui</u></a>.</p>
+                        <p>Para informações dos documentos necessários para locação com Pessoa Jurídica,<a href="https://espindola.zendesk.com/hc/pt-br/articles/235009548-Qual-a-documenta%C3%A7%C3%A3o-necess%C3%A1ria-para-alugar-com-Pessoa-Jur%C3%ADdica-" target="_blank"> <u>clique aqui</u></a>.</p>
+                        
 
                        
                         <h4><strong>Qual o valor da caução?</strong></h4>
@@ -191,12 +192,12 @@
 
                     <div class="col-md-3 col-sm-6">                       
                         <h4><strong>Quem pode ser fiador?</strong></h4>
-                        <p>Pode ser fiador qualquer pessoa física que atenda os mesmos requisitos do pretenso locatário e que tenha, preferencialmente, um imóvel na cidade de Fortaleza. Quanto a documentação, são as mesmas do pretenso locatário, sendo indispensável a anuência do cônjuge se casado.  Caso não tenha recedido o e-mail,  <a href="http://espindolaimobiliaria.com.br/escolhaazul/?action=cadastre-guarantor" target="_blank"> <u>clique aqui</u> </a> para fazer o cadastro do fiador.  </p>
+                        <p>Pode ser fiador qualquer pessoa física que atenda os mesmos requisitos do pretenso locatário e que tenha, preferencialmente, um imóvel na cidade de Fortaleza. Quanto a documentação, são as mesmas do pretenso locatário, sendo indispensável a anuência do cônjuge se casado.  Caso não tenha recedido o e-mail,  <a href="http://espindolaimobiliaria.com.br/escolhaazul/novo-fiador" target="_blank"> <u>clique aqui</u> </a> para fazer o cadastro do fiador.  </p>
 
                          <div class="space"><br/><br/><br/><br/></div>
 
                           <h4><strong>As condições contratuais são negociáveis?</strong></h4>
-                        <p>Sim, principalmente o preço do aluguel, início da vigência e eventuais reparos/benfeitorias. Quanto as demais condições, lhe garantimos que dificilmente será necessário, pois elaboramos cuidadosamente a cláusulas contratuais para garantir o equilíbrio e a segurança das partes envolvidas. Aproveite e confira <a href="https://espindola.helpshift.com/a/espindola-imobiliaria/?l=pt" target="_blank"><u> aqui </u></a> as dúvidas frequentes sobra as cláusulas do contrato de locação.</p>
+                        <p>Sim, principalmente o preço do aluguel, início da vigência e eventuais reparos/benfeitorias. Quanto as demais condições, lhe garantimos que dificilmente será necessário, pois elaboramos cuidadosamente a cláusulas contratuais para garantir o equilíbrio e a segurança das partes envolvidas. Aproveite e confira <a href="https://espindola.zendesk.com" target="_blank"><u> aqui </u></a> as dúvidas frequentes sobra as cláusulas do contrato de locação.</p>
                     </div>
 
                     <div class="col-md-3 col-sm-6">
@@ -209,7 +210,7 @@
                         <p>A Espíndola solicita o pagamento do caução para evitar a análise de propostas de clientes que não tenham o real interesse de alugar um imóvel, assim podemos garantir o melhor atendimento possível. Não se preocupe, ela será devolvida mesmo se sua proposta for reprovada.</p>
                         <div class="space"></div>
                                 
-                        <a href="https://espindola.helpshift.com/a/espindola-imobiliaria/" class="btn-mais-perguntas pull-right" target="_blank"> <u>Mais perguntas </u><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                        <a href="https://espindola.zendesk.com" class="btn-mais-perguntas pull-right" target="_blank"> <u>Mais perguntas </u><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
                     </div>
                 </div>
                 <div class="alert">

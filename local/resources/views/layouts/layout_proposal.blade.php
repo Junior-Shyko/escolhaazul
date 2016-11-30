@@ -29,7 +29,6 @@
         <link rel="stylesheet" href="{{url('public/css/ladda.min.css')}}" />
         <link rel="stylesheet" href="{{ url('public/plugins/js-ui/jquery-ui.css') }}">
         <link rel="stylesheet" href="{{ url('public/plugins/js-ui/jquery-ui.css') }}">
-        <link rel="stylesheet" href="{{ url('public/css/style_button_load.css') }}">
 
         <script src="{{url('public/js/jquery-1.7.js')}}"></script> 
         {{-- PARA USO DOS UPLOADS --}}
@@ -200,10 +199,8 @@
         <!-- PARA MASCARAR OS CAMPOS COM BOOTSTRAP -->
         <script type="text/javascript" src="{{url('public/js/jasny-bootstrap.min.js')}}"></script>
         <!-- Latest compiled and minified JavaScript -->
-         <script type="text/javascript" src="{{url('public/js/button_load.js')}}"></script>
 
         <script type="text/javascript">
-
             $(function () {
                 //PARA INFORMAÇÃO DE ALGO QUANDO PASSA O MOUSE POR CIMA DO ICONE
                 $('[data-toggle="tooltip"]').tooltip()
