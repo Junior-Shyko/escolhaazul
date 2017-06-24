@@ -250,7 +250,7 @@
         </div>
     </div>
     <div class="col-md-2 ">
-        <label class="control-label"  for="input-demo-cep">CEP</label>
+        <label class="control-label"  for="input-demo-cep">CEP</label><small id="cep-info" class="text-danger"></small> 
         <input type="text" name="proposal_cep" id="input-demo-cep" value="{{$proposals->proposal_cep}}" class="cep form-control">
     </div>
     <div class="col-md-5 ">
@@ -275,13 +275,8 @@
     </div>
     <div class="col-md-3">
         <label class="control-label" for="input-demo-uf">UF</label>
-        <select name="proposal_state" id="proposal_state" class="form-control">
-            @if(!empty($proposals->proposal_state) )
-            <option value="">{{$proposals->proposal_state }}</option>
-            @endif
-            <option value="Não Informado">--Selecione--</option>
-            @include('proposal.uf')
-        </select>
+        <input type="text" name="proposal_state"  value="{{$proposals->proposal_state}}" id="input-demo-uf" class="form-control" data-cep="estado"> 
+        
     </div>
     <div class="col-md-3 ">
         <label class="control-label" for="inputSuccess1">Tempo que reside</label>
@@ -312,26 +307,7 @@
             <option value="Outros">Outros</option>
         </select>
     </div>
-    <div class="col-md-5  form-group">
-        <label class="control-label" >Motivo da locação</label>
-        <select name="proposal_lease_reason" id="proposal_lease_reason" class="form-control">
-            @if(!empty($proposals->proposal_lease_reason) )
-            <option value="">{{$proposals->proposal_lease_reason }}</option>
-            @endif
-            <option value="Não Informado">--Selecione--</option>
-            <option>Casamento</option>
-            <option>Independência</option>
-            <option>Para terceiros</option>
-            <option>Próximo de familiares</option>
-            <option>Próximo a instituição de ensino</option>
-            <option>Próximo ao trabalho</option>
-            <option>Redução de custo</option>
-            <option>Transferência de empresa</option>
-            <option>Troca de imóvel</option>
-            <option>Venda de imóvel próprio</option>
-            <option>Outros</option>
-        </select>
-    </div>
+
     <div class="col-md-12 ">
         <label class="pull-left label_titulo">Dados profissionais</label> 
     </div>
@@ -408,7 +384,7 @@
     <!-- area endereço profissional -->
     <label class="col-md-12 pull-left text-primary">Endereço profissional</label>
     <div class="col-md-3 ">
-        <label class="control-label"  for="input-cep">CEP</label>
+        <label class="control-label"  for="input-cep">CEP  </label><small id="inf-cep2" class="text-danger"></small>
         <input type="text" id="input-cep"  name="proposal_cep_business" type="text"  value="{{$proposals->proposal_cep_business}}" maxlength="9" placeholder="Informe o CEP" class="cep2 form-control">
     </div>
     <div class="col-md-4 ">
@@ -433,13 +409,8 @@
     </div>
     <div class="col-md-3 ">
         <label class="control-label">UF</label>
-        <select name="proposal_uf_business" id="estado2" class="selectpicker show-tick form-control">
-            @if(!empty($proposals->proposal_uf_business) )
-            <option value="">{{$proposals->proposal_uf_business }}</option>
-            @endif
-            <option value="Não Informado">--Selecione--</option>
-            @include('proposal.uf')
-        </select>
+        <input type="text" name="proposal_uf_business" id="estado2"  value="{{$proposals->proposal_uf_business}}" class="form-control">
+        
     </div>
     <p class="pull-right" style="color: black; font-size: 12pt; font-weight: bold;">Página 1 de 3</p>
 </div>

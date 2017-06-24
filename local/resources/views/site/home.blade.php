@@ -22,6 +22,11 @@
                             <div class="col-md-6">
                                 <h1>O jeito mais fácil de alugar um imóvel.</h1>
                                 <p class="lead">Faça sua proposta, preencha seu cadastro <br/> e envie seus documentos.<strong>Tudo on-line</strong></p>
+                                {{-- <p>
+                                    <div class="alert alert-warning">
+                                        <h4>Ops! Estamos com problemas nos servidores, em instante tente novamente.</h4>
+                                    </div>
+                                </p> --}}
                             </div>
                             <div class="col-md-3">
                             </div>
@@ -34,7 +39,7 @@
                                 <div label="col-md-12">
                                     <div class="col-md-2"></div>
                                     <div class="col-md-8">
-                                        <select name="tipo" id="" class="form-control" required >
+                                        <select name="tipo" id="" class="form-control "   required >
                                             <option value="">--Selecione--</option>
                                             <option value="Pessoa Física">Pessoa Física</option>
                                             <option value="Pessoa Jurídica">Pessoa Jurídica</option>
@@ -50,15 +55,15 @@
                             <div id="form-inquilino" class="col-md-4">
                                 <br />
                                 <div class="form-group inquilino col-xs-12">
-                                    <input type="text" name="user_name" id="nome_cadastro" class="form-control" placeholder="Nome completo ou razão social">
+                                    <input type="text" name="user_name" id="nome_cadastro" class="form-control"  required placeholder="Nome completo ou razão social">
                                    
                                 </div>
                                 <div class="form-group col-xs-12">
-                                    <input type="email" name="user_email" id="email_cadastro" class="form-control" placeholder="E-mail">
+                                    <input type="email" name="user_email" id="email_cadastro" class="form-control"  required placeholder="E-mail">
                                     
                                 </div>
                                 <div class="form-group col-xs-8">
-                                    <input type="text" id="fone_cadastro" name="user_phone" class="form-control" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Telefone">
+                                    <input type="text" id="fone_cadastro" name="user_phone" class="form-control"  required onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Telefone">
 
                                     
                                 </div>

@@ -264,23 +264,7 @@
             <option value="Outros">Outros</option>
           </select> 
     </div>
-    <div class="col-md-5  form-group">
-    <label class="control-label" >Motivo da locação</label>
-    <select name="proposal_lease_reason" id="proposal_lease_reason" class="form-control">
-          <option>{{(!empty($proposals->proposal_lease_reason) ? $proposals->proposal_lease_reason : ' -- Selecione --')}}</option>
-          <option>Casamento</option>
-          <option>Independência</option>                
-          <option>Para terceiros</option>
-          <option>Próximo de familiares</option>
-          <option>Próximo a instituição de ensino</option>
-          <option>Próximo ao trabalho</option>
-          <option>Redução de custo</option>
-          <option>Transferência de empresa</option>
-          <option>Troca de imóvel</option>
-          <option>Venda de imóvel próprio</option>
-          <option>Outros</option>
-        </select> 
-</div>  
+  
 
 <div class="col-md-12 ">
   <label class="pull-left label_titulo">Dados profissionais</label> 

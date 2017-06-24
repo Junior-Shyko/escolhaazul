@@ -93,6 +93,7 @@
 				<div class="col-md-5 form-group">
 					<label class="control-label">E-mail</label>
 					<input type="email" name="guarantor_email_immobile2" class="form-control">
+					
 				</div>
 	
 		    </div>

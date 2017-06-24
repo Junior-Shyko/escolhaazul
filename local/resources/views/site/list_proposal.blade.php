@@ -74,7 +74,7 @@
                                         @endif
                                     </div>
                                     <div class="col-md-9">
-                                        @if($proposals->proposal_status  == "Nova" || $proposals->proposal_status  == "Incompleto")
+                                        @if($proposals->proposal_status  == "Nova" || $proposals->proposal_status  == "Incompleta")
                                         <a href="{{ url('nova-proposta/'.base64_encode($proposals->proposal_id).'/tipo/'.$type_proposal) }}" class="continue-proposal">
                                             <p style="font-float: left;">
                                                 Continuar Proposta: {{$proposals->proposal_id}} 

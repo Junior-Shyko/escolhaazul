@@ -1,8 +1,16 @@
-
+ <script>
+$(document).ready(function() {
+    
+});
+ </script>
 
 <div class="container kv-main col-md-12"></div>
 <div class="col-md-12">
 
+    <div class="row" id="info_success">
+        <div class="popupunder alert alert-success fade in" id="alert_info"><button type="button" class="close close-sm" data-dismiss="alert"><i class="glyphicon glyphicon-remove"></i></button><strong>Salvo! </strong> Dados salvo automaticamente.</div>
+    </div>
+    
     <div id="guarantor">
         <div class="col-md-12">
             <h2> <label class="label_titulo">Fiador</label> </h2>

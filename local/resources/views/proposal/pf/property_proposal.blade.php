@@ -12,7 +12,7 @@
 </div>
 <div id="referencia_imoveis">	
 	<div class="col-md-3 ">
-		<label class="control-label" for="cep-bens">CEP</label>
+		<label class="control-label" for="cep-bens">CEP</label> <small class="text-danger" id="cep-info-bens" ></small>
 		<input type="text" name="proposal_immobile_cep" id="cep-bens" value="{{$proposals->proposal_immobile_cep}}" class="cep4 form-control">
 	</div>
 	<div class="col-md-4 ">
@@ -37,11 +37,8 @@
 		<input type="text" id="bens_cidade" name="proposal_immobile_city" class="form-control" value="{{$proposals->proposal_immobile_city}}">
 	</div>
 	<div class="col-md-2 ">
-		<label class="control-label">UF</label>					
-        <select name="proposal_immobile_uf" class="selectpicker show-tick form-control">
-        <option value="">{{(!empty($proposals->proposal_immobile_uf) ? $proposals->proposal_immobile_uf : ' -- Selecione --')}}</option>
- 			@include('proposal.uf')
-        </select>	     
+		<label class="control-label">UF</label>			
+		<input type="text" id="bens_uf" name="proposal_immobile_uf" class="form-control" value="{{$proposals->proposal_immobile_uf}}">	     
 	</div>
 		<div class="col-md-3  form-group ">
 		<label class="control-label">Valor</label>
@@ -76,7 +73,7 @@
 			</div>
 		    <div id="collapseBens" class="panel-collapse collapse panel-body">
 		    	<div class="col-md-3 ">
-					<label class="control-label" for="cep-bens2">CEP</label>
+					<label class="control-label" for="cep-bens2">CEP</label> <small class="text-danger" id="cep-bens2-info"></small>
 					<input type="text" name="proposal_immobile_cep2" id="cep-bens2" class="cep5 form-control" value="{{$proposals->proposal_immobile_cep2}}">
 				</div>
 				<div class="col-md-4 ">
@@ -102,10 +99,9 @@
 				</div>
 				<div class="col-md-2 ">
 					<label class="control-label">UF</label>					
-			        <select name="proposal_immobile_uf2" class="selectpicker show-tick form-control">
-			        <option value="">{{(!empty($proposals->proposal_immobile_uf2) ? $proposals->proposal_immobile_uf2 : ' -- Selecione --')}}</option>
-			 			@include('proposal.uf')
-			        </select>	     
+					
+					<input type="text" id="bens_uf2" name="proposal_immobile_uf2" class="form-control" value="{{$proposals->proposal_immobile_uf2}}">
+			        	     
 				</div>
 					<div class="col-md-3  form-group ">
 					<label class="control-label">Valor</label>

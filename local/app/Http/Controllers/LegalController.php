@@ -41,7 +41,9 @@ class LegalController extends Controller
 			    $input = $request->all();
 	            //RETIRANDO OS INDICES DO ARRAY PARA NÃO SER REGISTRADO NA TABELA VISTORIA
 	            $input = $request->except('_token', 'primeira_pj');
+                 \DB::enableQueryLog();
 	            legal::where('legal_id', $id)->update($input); 
+
                 $proposal = Legal::find($id); 
                 //PESQUISANDO O USUARIO PARA ENVIAR E-MAIL
                 $user = DB::table('users')->where('id', $id_user)->get();
@@ -67,8 +69,8 @@ class LegalController extends Controller
                  
                 });
                }
-                return response()->json(['mensagem' => 'success']);
-			    
+               // return response()->json(['mensagem' => 'success']);
+			    return \DB::getQueryLog();
 			    
 			}elseif(array_key_exists("segunda_pj", $request->all()))
 			{
@@ -88,13 +90,15 @@ class LegalController extends Controller
                 $request['legal_reference_charge_begin_contract2']  = Function_generic::DataBRtoMySQL($request['legal_reference_charge_begin_contract2']);
                 $request['legal_reference_banking_client_begin']    = Function_generic::DataBRtoMySQL($request['legal_reference_banking_client_begin']);
                 
-
+                
 			    $input = $request->all();
+
 	            //RETIRANDO OS INDICES DO ARRAY PARA NÃO SER REGISTRADO NA TABELA VISTORIA
 	            $input = $request->except('_token', 'segunda_pj');
+                \DB::enableQueryLog();
 	            legal::where('legal_id', $id)->update($input); 
-                
-                return response()->json(['mensagem' => 'success']);
+                 return \DB::getQueryLog();
+                //return response()->json(['mensagem' => 'success']);
 			
             }elseif(array_key_exists("terceira_pj", $request->all()))
             {

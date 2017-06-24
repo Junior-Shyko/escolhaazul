@@ -266,14 +266,16 @@
             @if(!empty($proposal[0]->guarantor_email)) 
 
                 <input type="email" name="guarantor_email" id="guarantor_email" value="{{$proposal[0]->guarantor_email}}" class="form-control"> 
-
+                <span class="text-danger" id="info_email_guarantor"></span>
            
             @elseif(!empty($proposal[0]->legal_guarantor_email))
                 <input type="text" name="guarantor_name" id="guarantor_name" value="{{$proposal[0]->legal_guarantor_email}}" class="form-control"> 
+                <span class="text-danger" id="info_email_guarantor"></span> 
             @endif 
         
         @else
-            <input type="email" name="guarantor_email" id="guarantor_email" value="" class="form-control">   
+            <input type="email" name="guarantor_email" id="guarantor_email" value="" class="form-control">  
+             <span class="text-danger" id="info_email_guarantor"></span> 
         @endif 
         
     </div>

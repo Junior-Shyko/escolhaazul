@@ -35,12 +35,15 @@
         </div>
         <div role="tabpanel" class="tab-pane box container col-md-12" id="create_user">
             @foreach($proposal as $proposals)
-            <form action="" method="" id="form_two">
+           
+            <form action="" method="" id="form_dois">
+    <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+    <input type="hidden" name="proposal_id" id="proposal_id" value="{{$proposals->proposal_id}}">
+    {{Form::text('segunda_pf' , 'segunda_pf')}}
+                @include('proposal.conjuge')   
+                
                 @include('proposal.pf.pf_second_step')
-                <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-                {{Form::hidden('segunda_pf' , 'segunda_pf')}}
-                <input type="hidden" name="proposal_id" id="proposal_id" value="{{$proposal[0]->proposal_id}}">
-            </form>
+           </form>
             @endforeach
         </div>
         <div role="tabpanel" class="tab-pane box container col-md-12" id="tree">

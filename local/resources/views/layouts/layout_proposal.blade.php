@@ -207,7 +207,34 @@
 
             })
             $(document).ready(function() {
-                $('.cep').cep();
+                $('#input-demo-cep').cep({
+                    done: function(endereco) {
+                  console.log('O endereço encontrado foi: ', endereco);
+                  $('#input-demo-logradouro').val(endereco.tipo_logradouro+' '+endereco.logradouro);
+                      $('#input-demo-bairro').val(endereco.bairro);
+                      $('#input-demo-cidade').val(endereco.cidade);
+                      $('#input-demo-uf').val(endereco.uf);
+
+                      if(endereco.logradouro == "")
+                      {
+                        $("#cep-info").css("display", "inline");
+                        $("#cep-info").text("( Não encontrado )"); 
+
+                      }else{
+
+                        $("#cep-info").text("");
+                        
+                      }
+            
+                      $('#guarantor_address').val(endereco.tipo_logradouro+' '+endereco.logradouro);
+                      $('#guarantor_district').val(endereco.bairro);
+                      $('#guarantor_city').val(endereco.cidade);
+              },
+            
+              // Outras opções, caso você queira
+              autofill: false,
+              cache: false
+                });
                   $('#input-demo-cep').blur(function(){
                     $('#input-numero').focus();
                   });
@@ -222,6 +249,18 @@
                   $('#rua2').val(endereco.tipo_logradouro+' '+endereco.logradouro);
                       $('#bairro2').val(endereco.bairro);
                       $('#cidade2').val(endereco.cidade);
+                      $('#estado2').val(endereco.uf);
+
+                      if(endereco.logradouro == "")
+                      {
+                        $("#inf-cep2").css("display", "inline");
+                        $("#inf-cep2").text("( Não encontrado )"); 
+
+                      }else{
+
+                        $("#inf-cep2").text("");
+                        
+                      }
             
                       $('#guarantor_address').val(endereco.tipo_logradouro+' '+endereco.logradouro);
                       $('#guarantor_district').val(endereco.bairro);
@@ -241,6 +280,15 @@
                   $('#rua_conjuge').val(endereco.tipo_logradouro+' '+endereco.logradouro);
                       $('#bairro_conjuge').val(endereco.bairro);
                       $('#cidade_conjuge').val(endereco.cidade);
+                     
+                      $('#uf_conjuge').val(endereco.uf);
+
+                      if(endereco.logradouro == "")
+                      {
+                        $("#cep-conjuge-info").text("( Não encontrado )"); 
+                      }else{
+                        $("#cep-conjuge-info").text(""); 
+                      }
             
               },
             
@@ -254,9 +302,17 @@
               // mas aqui você pode adicionar outras opções também
               done: function(endereco) {
                   console.log('O endereço encontrado foi: ', endereco);
-                  $('#bens_rua').val(endereco.tipo_logradouro+' '+endereco.logradouro);
+                  $('#bens_rua').val(endereco.tipo_logradouro+' '+endereco.tipo_logradouro);
                       $('#bens_bairro').val(endereco.bairro);
                       $('#bens_cidade').val(endereco.cidade);
+                      $('#bens_uf').val(endereco.uf);
+
+                      if(endereco.logradouro == "")
+                      {
+                        $("#cep-info-bens").text("( Não encontrado )"); 
+                      }else{
+                        $("#cep-info-bens").text(""); 
+                      }
               },
             
               // Outras opções, caso você queira
@@ -276,6 +332,14 @@
                   $('#bens_rua2').val(endereco.tipo_logradouro+' '+endereco.logradouro);
                       $('#bens_bairro2').val(endereco.bairro);
                       $('#bens_cidade2').val(endereco.cidade);
+                      $('#bens_uf2').val(endereco.uf);
+
+                      if(endereco.logradouro == "")
+                      {
+                        $("#cep-bens2-info").text("( Não encontrado )"); 
+                      }else{
+                        $("#cep-bens2-info").text(""); 
+                      }
               },
             
               // Outras opções, caso você queira

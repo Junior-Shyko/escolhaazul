@@ -207,14 +207,17 @@ class ProposalController extends Controller
     public function update(Request $request)
     {
         if($request->ajax()){
+          global $id;
             $id = $request['proposal_id'];
+
+
             $redirect = $request['third_step'];
             
            
 
             $input = $request->all();
             //RETIRANDO OS INDICES DO ARRAY PARA NÃO SER REGISTRADO NA TABELA VISTORIA
-           
+            
             
             //VERIFICANDO QUAL ETAPA PARA MASCARA DATAS
             if(array_key_exists("primeira_pf", $request->all())){
@@ -233,7 +236,7 @@ class ProposalController extends Controller
                 $request['proposal_status'] = "Incompleta";
 
                 $input = $request->except('_token', 'etapa', 'primeira_pf', 'segunda_pf','terceira_pf','compoeRenda_conjuge', 'third_step' , 'type_proposal');
-             
+           
                 Proposal::where('proposal_id', $id)->update($input);
                 //PESQUISANDO O USUARIO PARA ENVIAR E-MAIL
                 $user = DB::table('users')->where('id', $id_user)->get();
@@ -247,32 +250,34 @@ class ProposalController extends Controller
             }
 
             if(array_key_exists("segunda_pf", $request->all())){
-
+             
                 $request['proposal_conjuge_date_brith'] = Function_generic::DataBRtoMySQL($request['proposal_conjuge_date_brith']) ;
 
                 $request['proposal_conjuge_admission_date'] = Function_generic::DataBRtoMySQL($request['proposal_conjuge_admission_date']) ;
 
                 $request['proposal_banking_client_begin'] = Function_generic::DataBRtoMySQL($request['proposal_banking_client_begin']) ;
 
-                $request['proposal_immobile_value']     = Function_generic::moeda($request['proposal_immobile_value']);
-                $request['proposal_immobile_value2']    = Function_generic::moeda($request['proposal_immobile_value2']);
-                $request['proposal_vehicle_value']      = Function_generic::moeda($request['proposal_vehicle_value']);
-                $request['proposal_vehicle_value2']     = Function_generic::moeda($request['proposal_vehicle_value2']);
-                $request['proposal_banking_limit1']     = Function_generic::moeda($request['proposal_banking_limit1']);
-                $request['proposal_banking_limit2']     = Function_generic::moeda($request['proposal_banking_limit2']);
-                $request['proposal_banking_app']        = Function_generic::moeda($request['proposal_banking_app']);
-                $request['proposal_banking_app2']       = Function_generic::moeda($request['proposal_banking_app2']);
+                // $request['proposal_immobile_value']     = Function_generic::moeda($request['proposal_immobile_value']);
+                // $request['proposal_immobile_value2']    = Function_generic::moeda($request['proposal_immobile_value2']);
+                // $request['proposal_vehicle_value']      = Function_generic::moeda($request['proposal_vehicle_value']);
+                // $request['proposal_vehicle_value2']     = Function_generic::moeda($request['proposal_vehicle_value2']);
+                // $request['proposal_banking_limit1']     = Function_generic::moeda($request['proposal_banking_limit1']);
+                // $request['proposal_banking_limit2']     = Function_generic::moeda($request['proposal_banking_limit2']);
+                // $request['proposal_banking_app']        = Function_generic::moeda($request['proposal_banking_app']);
+                // $request['proposal_banking_app2']       = Function_generic::moeda($request['proposal_banking_app2']);
                  $request['proposal_status']            = "Incompleta";
-
-                $input = $request->except('_token', 'etapa', 'primeira_pf', 'segunda_pf','terceiraW_pf','compoeRenda_conjuge', 'third_step' , 'type_proposal');
-
-
-                Proposal::where('proposal_id', $id)->update($input);
-                //PESQUISANDO O USUARIO PARA ENVIAR E-MAIL
+                 $request['proposal_id'] = $id;
                 
-                //PESQUISANDO A PROPOSTA PARA ENVIAR E-MAIL
+                  $input = $request->except('_token', 'etapa', 'primeira_pf', 'segunda_pf','terceiraW_pf','compoeRenda_conjuge', 'third_step' , 'type_proposal');
+
+                Proposal::where('proposal_id', $request['proposal_id'])->update($input);
+
+                // PESQUISANDO O USUARIO PARA ENVIAR E-MAIL
+                
+                // PESQUISANDO A PROPOSTA PARA ENVIAR E-MAIL
                 $proposal = Proposal::find($id);
                 return response()->json(['message' => 'success']);
+
             }
 
 
@@ -300,7 +305,7 @@ class ProposalController extends Controller
                     if($request['proposal_guarantor_type'] == "enviar_fiador"){
                         $nome_fiador = $proposal->proposal_guarantor_name; 
                         $type = $request['proposal_guarantor_cpf'];
-
+                        
                         Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador, 'type' => $type], function ($m) use ( $proposal, $nome_fiador, $type ) {                   
                             $m->to($proposal->guarantor_email, $proposal->proposal_guarantor_name)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
                             $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
@@ -340,8 +345,8 @@ class ProposalController extends Controller
                         $nome_fiador = $proposal->proposal_occupant_name2;
                         Mail::send('email.email_fiador', ['proposal' => $proposal, 'nome_fiador' => $nome_fiador], function ($m) use ( $proposal, $nome_fiador ) {     @
                                         
-                            $m->to($proposal->proposal_occupant_email2, $proposal->proposal_occupant_name2)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
-                            $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
+                          $m->to($proposal->proposal_occupant_email2, $proposal->proposal_occupant_name2)->subject('SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO');
+                          $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
                         });
 
                     }
@@ -547,7 +552,7 @@ class ProposalController extends Controller
                 Guarantor::where('guarantor_id', $id)->update($input);
                     
                 $guarantor = Guarantor::find($id); 
-                
+                //dd($guarantor);
                 //DISPARAR O E-MAIL PARA O FIADOR 
                 $caminho = "http://espindolaimobiliaria.com.br/ea";
 
@@ -557,7 +562,7 @@ class ProposalController extends Controller
                 });  
 
                 Mail::send('email.email_adm_guarantor', [ 'guarantor' => $guarantor, 'caminho' => $caminho], function ($m) use ($guarantor, $caminho){                 
-                    $m->to($guarantor->guarantor_email, $guarantor->guarantor_name)->subject('CADASTRO ENVIADO COM SUCESSO');
+                    $m->to('fabiano@espindola.imb.br', $guarantor->guarantor_name)->subject('CADASTRO ENVIADO COM SUCESSO');
                     $m->cc("excelencesoft@gmail.com", 'Equipe Espindola');
                 }); 
 
