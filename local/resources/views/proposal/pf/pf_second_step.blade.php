@@ -86,15 +86,17 @@
     </div>  
         
     <div class="col-md-3 ">
-        <label class="control-label">Cartão de Crédito 01</label>                   
-        <select name="proposal_banking_card_credit" id="proposal_banking_card_credit"  class="selectpicker show-tick form-control">
-         <option>{{(!empty($proposals->proposal_banking_card_credit) ? $proposals->proposal_banking_card_credit : '--Selecione--')}}</option>
-          <option value="">--Selecione--</option>  
-          <option value="MasterCard">MasterCard</option>
-          <option value="Visa">Visa</option> 
-          <option value="American Express">American Express</option> 
-          <option value="Outros">Outros</option>                      
-        </select>        
+        <label class="control-label">Cartão de Crédito 01</label> 
+        {{ Form::select('proposal_banking_card_credit' , 
+            ['Não Informado' => '--Selecione--',
+            'MasterCard' => 'MasterCard',
+            'Visa' => 'Visa',
+            'American Express' => 'American Express',
+            'Outros' => 'Outros'], 
+            $proposals->proposal_banking_card_credit2, 
+            ['class' => 'form-control' , 'id' => 'proposal_banking_card_credit'] ) 
+        }}                       
+               
     </div>
     <div class="col-md-3 ">
         <label class="control-label" >Limite 01</label>
@@ -104,15 +106,17 @@
         </div>
     </div>
     <div class="col-md-3 ">
-        <label class="control-label">Cartão de Crédito 02</label>                   
-        <select name="proposal_banking_card_credit2" id="proposal_banking_card_credit2" class="selectpicker show-tick form-control">
-         <option>{{(!empty($proposals->proposal_banking_card_credit2) ? $proposals->proposal_banking_card_credit2 : '--Selecione--')}}</option> 
-          <option value="">--Selecione--</option>  
-          <option value="MasterCard">MasterCard</option>
-          <option value="Visa">Visa</option> 
-          <option value="American Express">American Express</option> 
-          <option value="Outros">Outros</option>                      
-        </select>        
+        <label class="control-label">Cartão de Crédito 02</label>
+        {{ Form::select('proposal_banking_card_credit2' , 
+            ['Não Informado' => '--Selecione--',
+            'MasterCard' => 'MasterCard',
+            'Visa' => 'Visa',
+            'American Express' => 'American Express',
+            'Outros' => 'Outros'], 
+            $proposals->proposal_banking_card_credit2, 
+            ['class' => 'form-control' , 'id' => 'proposal_banking_card_credit2'] ) 
+        }}                   
+            
     </div>
     <div class="col-md-3 ">
         <label class="control-label" >Limite 02</label>

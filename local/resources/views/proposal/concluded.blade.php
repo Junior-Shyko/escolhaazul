@@ -99,7 +99,11 @@ var noback = {
 			@if(isset($_GET['msg']) && ($_GET['msg'] == 'sucesso-proposta'))
 			<div class="alert">
 				<p>
-				Enviamos uma cópia para o e-mail <a href="#">{{$_GET['email']}}</a> com mais informações sobre o processo de locação e com os links
+				Enviamos uma cópia para o e-mail <a href="#">
+					@if(isset($_GET['email']))
+						{{$_GET['email']}}
+					@endif
+				</a> com mais informações sobre o processo de locação e com os links
 				 para dar prosseguimento no cadastro do inquilino adicional e/ou fiador, dependendo da opção selecionada. No e-mail
 				 informamos, também, a conta da <b>Espíndola Imobiliária</b> no <b>Bradesco</b> para depósito da <b>caução</b>, porém você 
 				 também poderá fazer o pagamento através de <b>cartão de crédito </b>clicando no botão abaixo do Pag Seguro. 

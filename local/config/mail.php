@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'mx1.weblink.com.br'),
+    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 2525),
+    'port' => env('MAIL_PORT', 587),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'contato@excellencesoft.com.br', 'name' => 'Equipe AdminEspíndola'],
+    'from' => ['address' => 'contato@espindola.imb.br', 'name' => 'Equipe Escolha Azul'],
 
     /*
     |--------------------------------------------------------------------------

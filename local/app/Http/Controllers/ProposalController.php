@@ -1,28 +1,22 @@
 <?php
-//ARQUIVO CRIADO EM 31/08/2016 AS 11:51 POR Junior Oliveira
+
 namespace EscolhaAzul\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use EscolhaAzul\Http\Requests;
 use EscolhaAzul\Proposal;
 use EscolhaAzul\User;
 use EscolhaAzul\Guarantor;
-
 use EscolhaAzul\Legal;
 use DB, Session;
-use Mail;
+use Mail, Auth  ;
 use EscolhaAzul\Function_generic;
-
-
 use Carbon\Carbon;
-
-use Illuminate\Http\RedirectResponse;
-
-use EscolhaAzul\Http\Requests;
 
 class ProposalController extends Controller
 {
-
-     public function check_proposal(Request $request )
+	     public function check_proposal(Request $request )
     {
         $type  = $request['tipo'];
         $name  = $request['user_name'];
@@ -64,11 +58,10 @@ class ProposalController extends Controller
           
            // return redirect('http://www.espindola.imb.br/paginaindisponivel');
 
-        }       
-
-        
+        }  
     }
-    /**
+
+     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -114,9 +107,6 @@ class ProposalController extends Controller
                
                 return redirect('nova-proposta/'.base64_encode($proposta_legal->legal_id).'/tipo/proposta-pj');
         }
-
-        
-
     }
 
     /**
@@ -377,129 +367,13 @@ class ProposalController extends Controller
 
         }
     }
+
     public function concluded()
     {
         return  view('proposal.concluded');
     }
 
-    public function upload(Request $request)
-    {
-        # code...
-        if($request->ajax())
-        {
-            //FAZENDO UPLOAD DAS FOTOS
-            if(isset($_FILES) && !empty($_FILES)){
-                if(array_key_exists("img_photo", $request->all())){
-                    switch ($request['type_proposal']) {
-                        case 'proposta-pf':
-                            $type_profile = 'Inquilino';
-                            break;
-                        case 'proposta-pj':
-                            $type_profile = 'Jurídico';
-                            break;
-                        case 'cadastro-pf':
-                            $type_profile = 'Fiador';
-                            break;
-                         case 'cadastro-pj':
-                            $type_profile = 'Fiador';
-                            break;          
-                        default:
-                            $type_profile = 'Inquilino';
-                            break;
-                    }
-
-                        $id_proposal = $request['id_proposal'];
-                        $tot_array = count($_FILES["img_photo"]["name"]);
-
-                          for ($i=0; $i < $tot_array; $i++) { 
-
-                                $tmp_name = $_FILES["img_photo"]["tmp_name"][$i];
-                                $name =  time(). '_'. $_FILES["img_photo"]["name"][$i];
-                                //echo "arquivo ".$cont." - ".$name."<br>";
-                                $uploadFile = 'public/img/upload/'. basename($name);   
-
-                                move_uploaded_file($tmp_name, $uploadFile);
-
-                                //CADASTRANDO NO BANCO
-                                $files_ambience =   DB::table('files')->insert([
-                                    'files_name' => $name, 
-                                    'files_id_proposal' => $id_proposal ,
-                                    'files_date' => Carbon::now() ,
-                                    'files_profile' => $type_profile 
-                                   
-                                ]); 
-
-                          }
-                        }
-                 } 
-            }
-
-        
-        
-    }
-    
-    public function upload_files(Request $request )
-    {
-        //created in 2016-09-15 12:40 by Junior Oliveira
-    //PERFIL DA PROPOSATA PARA SER ADICIONADO NA TABELA DE ARQUIVOS
-     switch ($request['type_proposal']) {
-          case 'proposta-pf':
-              $type_profile = 'Inquilino';
-              $campo = "proposal_id";
-              break;
-          case 'proposta-pj':
-              $type_profile = 'Jurídico';
-              $campo = "legal_id";
-              break;
-          case 'cadastro-pf':
-              $type_profile = 'Fiador';
-              $campo = "guarantor_id";
-              break;
-           case 'cadastro-pj':
-              $type_profile = 'Fiador';
-              $campo = "guarantor_legal_id";
-              break;          
-          default:
-              $type_profile = 'Inquilino';
-              $campo = "proposal_id";
-              break;
-      }
-
-       if(isset($_FILES))
-        {
-         // dd($request->all());
-        $id_proposal = $request['proposal_id'];
-        
-         $tot_array = count($_FILES["img_photo"]["name"]);
-         
-           for ($i=0; $i < $tot_array; $i++) { 
-
-              $tmp_name = $_FILES["img_photo"]["tmp_name"][$i];
-              $name =  time(). '_'. $_FILES["img_photo"]["name"][$i];
-              //echo "arquivo ".$cont." - ".$name."<br>";
-              $uploadFile = 'public/img/upload/'. basename($name);   
-
-              move_uploaded_file($tmp_name, $uploadFile);
-
-              //CADASTRANDO NO BANCO
-              $files_ambience =   DB::table('files')->insert([
-                  'files_name' => $name, 
-                  'files_id_proposal' => $id_proposal ,
-                  'files_date' => Carbon::now() ,
-                  'files_profile' => $type_profile 
-                 
-              ]); 
-             // dd($files_ambience);
-              
-          }
-         // return response()->json(['message' => 'success']);
-        }
-    }
-    /*
-    *Created in 2016-09-23 14:12 by Junior Oliveira
-    *CADASTRO AVULSO DE PROPOSTA DE FIADOR OU LOCATÁRIO ADICIONAL, O USUÁRIO COLOCARÁ O NOME DO PROPONENTE
-    */
-    public function new_guarantor()
+  public function new_guarantor()
     {
         $guarantor = Guarantor::create([
             'date_cadastre'=>Carbon::now()
@@ -601,5 +475,140 @@ class ProposalController extends Controller
 
         return view('proposal.pf.guarantor.index' , compact("guarantor" , "proposal" , "type"));
 
+    }
+
+public function upload(Request $request)
+    {
+        # code...
+        if($request->ajax())
+        {
+            //FAZENDO UPLOAD DAS FOTOS
+            if(isset($_FILES) && !empty($_FILES)){
+                if(array_key_exists("img_photo", $request->all())){
+                    switch ($request['type_proposal']) {
+                        case 'proposta-pf':
+                            $type_profile = 'Inquilino';
+                            break;
+                        case 'proposta-pj':
+                            $type_profile = 'Jurídico';
+                            break;
+                        case 'cadastro-pf':
+                            $type_profile = 'Fiador';
+                            break;
+                         case 'cadastro-pj':
+                            $type_profile = 'Fiador';
+                            break;          
+                        default:
+                            $type_profile = 'Inquilino';
+                            break;
+                    }
+
+                        $id_proposal = $request['id_proposal'];
+                        $tot_array = count($_FILES["img_photo"]["name"]);
+
+                          for ($i=0; $i < $tot_array; $i++) { 
+
+                                $tmp_name = $_FILES["img_photo"]["tmp_name"][$i];
+                                $name =  time(). '_'. $_FILES["img_photo"]["name"][$i];
+                                //echo "arquivo ".$cont." - ".$name."<br>";
+                                $uploadFile = 'public/img/upload/'. basename($name);   
+
+                                move_uploaded_file($tmp_name, $uploadFile);
+
+                                //CADASTRANDO NO BANCO
+                                $files_ambience =   DB::table('files')->insert([
+                                    'files_name' => $name, 
+                                    'files_id_proposal' => $id_proposal ,
+                                    'files_date' => Carbon::now() ,
+                                    'files_profile' => $type_profile 
+                                   
+                                ]); 
+
+                          }
+                        }
+                 } 
+            }
+    }
+
+     public function upload_files(Request $request )
+    {
+        //created in 2016-09-15 12:40 by Junior Oliveira
+    //PERFIL DA PROPOSATA PARA SER ADICIONADO NA TABELA DE ARQUIVOS
+     switch ($request['type_proposal']) {
+          case 'proposta-pf':
+              $type_profile = 'Inquilino';
+              $campo = "proposal_id";
+              break;
+          case 'proposta-pj':
+              $type_profile = 'Jurídico';
+              $campo = "legal_id";
+              break;
+          case 'cadastro-pf':
+              $type_profile = 'Fiador';
+              $campo = "guarantor_id";
+              break;
+           case 'cadastro-pj':
+              $type_profile = 'Fiador';
+              $campo = "guarantor_legal_id";
+              break;          
+          default:
+              $type_profile = 'Inquilino';
+              $campo = "proposal_id";
+              break;
+      }
+
+       if(isset($_FILES))
+        {
+         // dd($request->all());
+        $id_proposal = $request['proposal_id'];
+        
+         $tot_array = count($_FILES["img_photo"]["name"]);
+         
+           for ($i=0; $i < $tot_array; $i++) { 
+
+              $tmp_name = $_FILES["img_photo"]["tmp_name"][$i];
+              $name =  time(). '_'. $_FILES["img_photo"]["name"][$i];
+              //echo "arquivo ".$cont." - ".$name."<br>";
+              $uploadFile = 'public/img/upload/'. basename($name);   
+
+              move_uploaded_file($tmp_name, $uploadFile);
+
+              //CADASTRANDO NO BANCO
+              $files_ambience =   DB::table('files')->insert([
+                  'files_name' => $name, 
+                  'files_id_proposal' => $id_proposal ,
+                  'files_date' => Carbon::now() ,
+                  'files_profile' => $type_profile 
+                 
+              ]); 
+             // dd($files_ambience);
+              
+          }
+         // return response()->json(['message' => 'success']);
+        }
+    }
+    
+
+    public function send_email()
+    {
+       $user = Auth::user();
+       $data = "Teste de envio";
+
+       $email = Mail::send('email.email_teste', [$data => "Teste de envio" ], function ($m) {
+               
+         $m->to('franciscoanto@gmail.com','Junior')->subject('Vistoria 360 - Novo upload 360');
+         //$m->attach($attach);
+          
+       });
+
+       if($email){
+       
+          echo "Enviador";
+       
+       }else{
+          
+          echo "false";
+       
+       }
     }
 }

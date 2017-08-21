@@ -35,6 +35,7 @@ Route::get('novo-fiador' , 'ProposalController@new_guarantor');
 Route::get('cadastrar-fiador/{id}/tipo/{type}' , 'ProposalController@registering_guarantor');
 Route::post('update-fiador','ProposalController@guarantor_update');
 
+Route::get('email-teste' , 'ProposalController@send_email');
 
 Route::group(['prefix' => 'pj'], function () {
     Route::post('update','LegalController@update');

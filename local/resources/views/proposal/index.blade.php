@@ -39,7 +39,7 @@
             <form action="" method="" id="form_dois">
     <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
     <input type="hidden" name="proposal_id" id="proposal_id" value="{{$proposals->proposal_id}}">
-    {{Form::text('segunda_pf' , 'segunda_pf')}}
+    {{Form::hidden('segunda_pf' , 'segunda_pf')}}
                 @include('proposal.conjuge')   
                 
                 @include('proposal.pf.pf_second_step')

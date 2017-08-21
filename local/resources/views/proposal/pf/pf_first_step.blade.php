@@ -16,21 +16,22 @@
         <input type="text" name="proposal_reference" required id="proposal_reference" value="{{$proposals->proposal_reference}}" class="form-control" >
     </div>
     <div class="col-md-3">
-        <label class="control-label">Tipo do imóvel</label>                 
-        <select  class="form-control" data-live-search="true" name="proposal_type_immobile">
-            @if(!empty($proposals->proposal_type_immobile))
-            <option data-tokens="">{{$proposals->proposal_type_immobile}}</option>
-            <option value="" class="separator"></option>
-            @endif
-            <option value="Não Informado">--Selecione--</option>
-            <option data-tokens="">Apartamento</option>
-            <option data-tokens="">Casa</option>
-            <option data-tokens="">Kitinet</option>
-            <option data-tokens="">Loja</option>
-            <option data-tokens="">Sala</option>
-            <option data-tokens="">Terreno</option>
-            <option data-tokens="">Outros</option>
-        </select>
+        <label class="control-label">Tipo do imóvel</label>  
+        {{ Form::select('proposal_type_immobile' ,
+        [
+            'Não Informado' => '--Selecione--',
+            'Apartamento' => 'Apartamento',
+            'Casa' => 'Casa',
+            'Kitinet' => 'Kitinet',
+            'Loja' => 'Loja',
+            'Sala' => 'Sala',
+            'Terreno' => 'Terreno',
+            'Outros' => 'Outros'
+        ],$proposals->proposal_type_immobile,
+        [
+            'class' => 'form-control'
+        ]) }}               
+        
     </div>
     <div class="col-md-3">
         <label  id="info-atendente" >Atendente Responsável</label>
@@ -51,17 +52,17 @@
     </div>
     <div class="col-md-4">
         <label class="control-label" for="inputSuccess1">Finalidade </label>
-        <select class="selectpicker form-control" name="proposal_finality" id="proposal_finality">
-            @if(!empty($proposals->proposal_finality))
-            <option>{{ $proposals->proposal_finality }}</option>
-            <option value="" class="divider"></option>
-            @else
-            <option value="Não Informado">--Selecione--</option>
-            @endif           
-            <option>Residencial</option>
-            <option>Comercial</option>
-            <option>Temporada</option>
-        </select>
+        {{ Form::select('proposal_finality' , 
+                [ 'Não Informado' => '--Selecione--',
+                'Residencial' => 'Residencial',
+                'Comercial' => 'Comercial',
+                'Temporada' => 'Temporada',
+                ], $proposals->proposal_finality,
+                [ 'class' => 'form-control' , 
+                'id' => 'proposal_finality']
+            ) 
+        }}
+        
     </div>
     <div class="col-md-4">
         <label for="validate-text">Prazo desejado <small class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="Aluguéis Residenciais tem a vigência mínima de 30 Meses. O valor padrão pode ser alterado."> </small></label>
@@ -71,18 +72,20 @@
         </div>
     </div>
     <div class="col-md-3">
-        <label class="control-label" for="inputSuccess1">Tipo de garantia*</label>
-        <select  class="form-control" name="proposal_type_guarantee" id="tipo_garantia">
-            @if(!empty($proposals->proposal_type_guarantee))
-            <option>{{ $proposals->proposal_type_guarantee }}</option>
-            <option value=""  class="divider"></option>
-            @else
-            <option value="Não Informado">--Selecione--</option>
-            @endif      
-            <option value="Fiador">Fiador</option>
-            <option value="Caução (em título)">Caução (em título)</option>
-            <option value="Outras">Outras</option>
-        </select>
+        <label class="control-label" for="inputSuccess1">Tipo de garantia* </label>
+        {{ Form::select('proposal_type_guarantee', 
+            [ 'Não Informado' => '--Selecione--',
+              'Carta fiança' => 'Carta fiança', 
+              'Caução (em título)' => 'Caução (em título)' ,
+              'Caução em dinheiro' => 'Caução em dinheiro', 
+              'Sem garantia' => 'Sem garantia', 
+              'Seguro fiança' => 'Seguro fiança', 
+              'Fiador' => 'Fiador',  
+              'Outras' => 'Outras'], 
+              $proposals->proposal_type_guarantee , 
+            [ 'class' => 'form-control' , 
+              'id' => 'tipo_garantia']) }}
+      
     </div>
     <div class="col-md-4">
         <label class="control-label">Aluguel proposto</label>
@@ -124,29 +127,30 @@
         <input type="text" name="proposal_name" id="proposal_name" value="{{$proposals->proposal_name}}"  class="form-control">
     </div>
     <div class="col-md-4  form-group">
-        <label class="control-label" >Motivo da locação</label>
-        <select name="proposal_lease_reason" id="proposal_lease_reason" class="form-control">
-            <option>{{(!empty($proposals->proposal_lease_reason) ? $proposals->proposal_lease_reason : ' -- Selecione --')}}</option>
-            <option>Casamento</option>
-            <option>Independência</option>
-            <option>Para terceiros</option>
-            <option>Próximo de familiares</option>
-            <option>Próximo a instituição de ensino</option>
-            <option>Próximo ao trabalho</option>
-            <option>Redução de custo</option>
-            <option>Transferência de empresa</option>
-            <option>Troca de imóvel</option>
-            <option>Venda de imóvel próprio</option>
-            <option>Outros</option>
-        </select>
+        <label class="control-label" >Motivo da locação</label>       
+            {{ Form::select('proposal_lease_reason' ,
+                ['Não Informado' => ' -- Selecione --',
+                'Casamento' => 'Casamento',
+                'Independência' => 'Independência',
+                'Para terceiros' => 'Para terceiros',
+                'Próximo de familiares' => 'Próximo de familiares',
+                'Próximo a instituição de ensino' => 'Próximo a instituição de ensino',
+                'Próximo ao trabalho' => 'Próximo ao trabalho',
+                'Transferência de empresa' => 'Transferência de empresa',
+                'Troca de imóvel' => 'Troca de imóvel',
+                'Venda de imóvel próprio' => 'Venda de imóvel próprio',
+                'Outros' => 'Outros'
+                ],
+                $proposals->proposal_lease_reason,
+                ['id' => 'proposal_lease_reason',
+                'class' => 'form-control']) 
+            }}            
     </div>
     <div class="col-md-3 ">
         <label class="control-label">Sexo</label>         
-        <select name="proposal_sex" id="proposal_sex" class="selectpicker show-tick form-control">
-            <option>{{(!empty($proposals->proposal_sex) ? $proposals->proposal_sex : '--Selecione--')}}</option>
-            <option value="Masculino">Masculino</option>
-            <option value="Feminino">Feminino</option>
-        </select>
+        
+        {{ Form::select('proposal_sex',['Masculino' => 'Masculino' , 'Feminino' =>'Feminino'],$proposals->proposal_sex,['class' => 'form-control' , 'id' => 'proposal_sex']) }}
+           
     </div>
     <div class="col-md-3 ">
         <label class="control-label" for="dtn">Data de nascimento</label>
@@ -182,47 +186,45 @@
     </div>
     <div class="col-md-3">
         <label class="control-label" for="inputSuccess1">Estado civil</label>
-        <select name="proposal_estate_civil" id="estado_civil" class="form-control">
-            @if(!empty($proposals->proposal_estate_civil) )
-            <option value="">{{$proposals->proposal_estate_civil }}</option>
-            @endif
-            <option value="Não Informado">--Selecione--</option>
-            <option value="Solteiro">Solteiro</option>
-            <option value="Casado">Casado</option>
-            <option value="União Estável">União Estável</option>
-            <option value="Desquitado">Desquitado</option>
-            <option value="Divorciado">Divorciado</option>
-            <option value="Separado">Separado</option>
-            <option value="Viúvo">Viúvo</option>
-        </select>
+        {{ Form::select('proposal_estate_civil' , 
+            ['Não Informado' => '--Selecione--',
+             'Solteiro' => 'Solteiro',
+             'Casado' => 'Casado',
+             'União Estável' => 'União Estável',
+             'Desquitado' => 'Desquitado',
+             'Divorciado' => 'Divorciado',   
+             'Separado' => 'Separado',
+             'Viúvo' => 'Viúvo'
+            ], $proposals->proposal_estate_civil,
+            ['id' => 'estado_civil' , 'class' => 'form-control']) 
+        }}
+        
     </div>
     <div class="col-md-3 ">
         <label class="control-label" for="inputSuccess1">Nº de dependentes</label>
-        <select name="proposal_number_dependent" id="proposal_number_dependent" class="form-control">
-            @if(!empty($proposals->proposal_number_dependent) )
-            <option value="">{{$proposals->proposal_number_dependent }}</option>
-            @endif
-            <option value="Não Informado">--Selecione--</option>
-            <option >Nenhum</option>
-            <option>01</option>
-            <option>02</option>
-            <option>03</option>
-            <option>04 ou mais</option>
-        </select>
+        {{ Form::select('proposal_number_dependent' , [
+                'Não Informado' => '--Selecione--',
+                'Nenhum' => 'Nenhum',
+                '01' => '01',
+                '02' => '02',
+                '03' => '03',
+                '04 ou mais' => '04 ou mais'] , $proposals->proposal_number_dependent , 
+                ['id' => 'proposal_number_dependent' , 'class' => 'form-control'] ) 
+        }}
+        
     </div>
     <div class="col-md-3 ">
         <label class="control-label" for="inputSuccess1">Grau de instrução</label>
-        <select name="proposal_degree_education" id="proposal_degree_education" class="form-control">
-            @if(!empty($proposals->proposal_degree_education) )
-            <option value="">{{$proposals->proposal_degree_education }}</option>
-            @endif
-            <option value="Não Informado">--Selecione--</option>
-            <option value="Fundamental" >Fundamental</option>
-            <option value="Ensino Médio">Ensino médio</option>
-            <option value="Superior">Superior</option>
-            <option value="Pós Graduação">Pós graduação</option>
-            <option value="Outros">Outros</option>
-        </select>
+        {{ Form::select('proposal_degree_education' , 
+            ['Não Informado' => '--Selecione--',
+            'Fundamental' => 'Fundamental',
+            'Ensino Médio' => 'Ensino médio',
+            'Superior' => 'Superior',
+            'Pós graduação' => 'Pós graduação',
+            'Outros' => 'Outros',
+            ], $proposals->proposal_degree_education,
+            ['class' => 'form-control']) }}
+        
     </div>
     <div class="col-md-3 ">
         <label class="control-label">Telefone</label>
@@ -278,34 +280,31 @@
         <input type="text" name="proposal_state"  value="{{$proposals->proposal_state}}" id="input-demo-uf" class="form-control" data-cep="estado"> 
         
     </div>
-    <div class="col-md-3 ">
+    <div class="col-md-3 form-group">
         <label class="control-label" for="inputSuccess1">Tempo que reside</label>
-        <select name="proposal_time_residing" id="proposal_time_residing" class="form-control">
-            @if(!empty($proposals->proposal_time_residing) )
-            <option value="">{{$proposals->proposal_time_residing }}</option>
-            @endif
-            <option value="Não Informado">--Selecione--</option>
-            <option value="Menos que 1 ano">Menos que 1 ano</option>
-            <option value="1 a 2 anos">1 a 2 anos</option>
-            <option value="3 a 4 anos">3 a 4 anos</option>
-            <option value="Acima de 5 anos">Acima de 5 anos</option>
-        </select>
+        {{ Form::select('proposal_time_residing' , 
+                ['Não Informado' => '--Selecione--',
+                'Menos que 1 ano' => 'Menos que 1 ano',
+                '1 a 2 anos' => '1 a 2 anos',
+                '3 a 4 anos' => '3 a 4 anos',
+                'Acima de 5 anos' => 'Acima de 5 anos'], $proposals->proposal_time_residing,
+                ['class' => 'form-control']) 
+        }}        
     </div>
     <div class="col-md-3 ">
         <label class="control-label" for="inputSuccess1">Tipo de residência</label>
-        <select name="proposal_type_residence" id="proposal_type_residence"  class="form-control">
-            @if(!empty($proposals->proposal_type_residence) )
-            <option value="">{{$proposals->proposal_type_residence }}</option>
-            @endif
-            <option value="Não Informado">--Selecione--</option>
-            <option value="Alugada">Alugada</option>
-            <option value="Financiada">Financiada</option>
-            <option value="Hotel ou flat">Hotel ou flat</option>
-            ]
-            <option value="Mora com os pais">Mora com os pais</option>
-            <option value="Própria">Própria</option>
-            <option value="Outros">Outros</option>
-        </select>
+        {{ Form::select('proposal_type_residence' , 
+                ['Não Informado' => '--Selecione--',
+                'Alugada' => 'Alugada',
+                'Financiada' => 'Financiada',
+                'Hotel ou flat' => 'Hotel ou flat',
+                'Mora com os pais' => 'Mora com os pais',
+                'Própria' => 'Própria',   
+                'Outras' => 'Outras' ] , 
+                $proposals->proposal_type_residence , 
+                ['id' => 'proposal_type_residence' , 'class' => 'form-control'])  
+        }}
+        
     </div>
 
     <div class="col-md-12 ">
@@ -329,20 +328,18 @@
     </div>
     <div class="col-md-3 ">
         <label class="control-label" for="inputSuccess1">Vínculo empregatício</label>
-        <select name="proposal_clt" id="proposal_clt" class="selectpicker show-tick form-control">
-            @if(!empty($proposals->proposal_clt) )
-            <option value="">{{$proposals->proposal_clt }}</option>
-            @endif
-            <option value="Não Informado">--Selecione--</option>
-            <option value="Aposentado/Pensionista">Aposentado/pensionista</option>
-            <option value="Autônomo">Autônomo</option>
-            <option value="Empresário">Empresário</option>
-            <option value="Estudante">Estudante</option>
-            <option value="Funcionário Público">Funcionário público</option>
-            <option value="Registro CLT">Registro CLT</option>
-            <option value="Profisional Liberal">Profisional liberal</option>
-            <option value="Outros">Outros</option>
-        </select>
+        {{ Form::select('proposal_clt' , 
+                ['Não Informado' => 'Não Informado',
+                'Aposentado/pensionista' => 'Aposentado/pensionista',
+                'Autônomo' => 'Autônomo',
+                'Empresário' => 'Empresário',
+                'Funcionário público' => 'Funcionário público',
+                'Registro CLT' => 'Registro CLT',
+                'Profisional liberal' => 'Profisional liberal',
+                'Outros' => 'Outros'] , 
+                $proposals->proposal_clt , 
+                ['class' => 'form-control' , 'id' => 'proposal_clt']) 
+        }}
     </div>
     <div class="col-md-3 ">
         <label class="control-label" for="dtnadm">Data de admissão</label>
