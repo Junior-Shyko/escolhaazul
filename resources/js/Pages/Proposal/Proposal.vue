@@ -1,8 +1,9 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
+import Address from '@/Components/Address.vue';
 
 const state = reactive({
     tab: null,
@@ -126,7 +127,8 @@ const stepForm = (value) => {
                                             </v-btn>
                                         </v-col>
                                         <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
-                                            <v-btn elevation="2" color="blue-darken-2 m-1">
+                                            <v-btn elevation="2" color="blue-darken-2 m-1"
+                                            @click="state.dialogDataAddress = true">
                                                 <v-icon icon="fas fa-plus-circle" class="mb-1 mr-1"></v-icon>
                                                 Adicionar Endereço
                                             </v-btn>
@@ -211,6 +213,25 @@ const stepForm = (value) => {
                                                 </v-card-actions>
                                             </v-card>
                                         </v-dialog>
+                                        <v-dialog
+                                        class="block w-full "
+                                            v-model="state.dialogDataAddress"
+                                            >
+                                            <v-card>
+                                                <v-card-text>
+                                                    <Address />
+                                                </v-card-text>
+                                                <v-card-actions class="flex justify-center">
+                                                   
+                                                    <v-btn class="bg-teal-lighten-5"
+                                                        @click="state.dialogDataAddress = false">
+                                                        Sair
+                                                    </v-btn>
+
+                                                    
+                                                </v-card-actions>
+                                            </v-card>
+                                            </v-dialog>
                                     </v-row>
                                 </v-window-item>
                                 <v-window-item value="two">
