@@ -16,8 +16,8 @@ const state = reactive({
     skill: 33,
 });
 const stepForm = (value) => {
-    console.log({value})
-    if(value == 'two') {
+    console.log({ value })
+    if (value == 'two') {
         state.skill = 66
     }
 }
@@ -47,7 +47,7 @@ const stepForm = (value) => {
                     <v-col cols="12" xs="12" sm="12" md="12">
                         <v-progress-linear v-model="state.skill" color="light-blue" striped height="25" class="mb-1">
                             <template v-slot:default="{ value }">
-                                <strong>{{value}}%</strong>
+                                <strong>{{ value }}%</strong>
                             </template>
                         </v-progress-linear>
                     </v-col>
@@ -120,21 +120,18 @@ const stepForm = (value) => {
                                     </v-row>
                                     <v-row no-gutters>
                                         <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
-                                            <v-btn elevation="2" color="blue-darken-2 m-1"
+                                            <v-btn elevation="2" color="primary m-1"
                                                 @click="state.dialogDataPersonal = true">
                                                 <v-icon icon="fas fa-plus-circle" class="mb-1 mr-1"></v-icon>
                                                 Adicionar Dados pessoais
                                             </v-btn>
                                         </v-col>
                                         <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
-                                            <v-btn elevation="2" color="blue-darken-2 m-1"
-                                            @click="state.dialogDataAddress = true">
-                                                <v-icon icon="fas fa-plus-circle" class="mb-1 mr-1"></v-icon>
-                                                Adicionar Endereço
-                                            </v-btn>
+                                           <Address />
                                         </v-col>
                                         <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
-                                            <v-btn elevation="2" color="blue-darken-2 m-1">
+                                            <v-btn elevation="2" color="primary m-1"
+                                                @click="state.dialogDataContact = true">
                                                 <v-icon icon="fas fa-plus-circle" class="mb-1 mr-1"></v-icon>
                                                 Adicionar Contato
                                             </v-btn>
@@ -201,37 +198,28 @@ const stepForm = (value) => {
                                                         </v-col>
                                                     </v-row>
                                                 </v-card-text>
-                                                <v-card-actions class="flex justify-between">
-                                                    <v-btn class="bg-teal-lighten-5"
+                                                <v-card-actions class="flex justify-center">
+                                                    <v-btn class="bg-blue-grey-lighten-4"
                                                         @click="state.dialogDataPersonal = false">
                                                         Sair
-                                                    </v-btn>
-
-                                                    <v-btn class="bg-light-blue-darken-3">
-                                                        Salvar
                                                     </v-btn>
                                                 </v-card-actions>
                                             </v-card>
                                         </v-dialog>
-                                        <v-dialog
-                                        class="block w-full "
-                                            v-model="state.dialogDataAddress"
-                                            >
+                                       
+                                        <v-dialog class="block w-full " v-model="state.dialogDataContact">
                                             <v-card>
                                                 <v-card-text>
-                                                    <Address />
+                                                    contato
                                                 </v-card-text>
                                                 <v-card-actions class="flex justify-center">
-                                                   
-                                                    <v-btn class="bg-teal-lighten-5"
-                                                        @click="state.dialogDataAddress = false">
+                                                    <v-btn class="bg-blue-grey-lighten-4"
+                                                        @click="state.dialogDataContact = false">
                                                         Sair
                                                     </v-btn>
-
-                                                    
                                                 </v-card-actions>
                                             </v-card>
-                                            </v-dialog>
+                                        </v-dialog>
                                     </v-row>
                                 </v-window-item>
                                 <v-window-item value="two">
@@ -259,7 +247,6 @@ const stepForm = (value) => {
                         </v-card-text>
 
                         <v-card-actions class="flex justify-between bg-gray-100">
-                            {{ state.tab }}
                             <v-tabs v-model="state.tab" color="blue-darken-2" align-tabs="center">
                                 <v-btn class="bg-teal-lighten-5">
                                     <template v-slot:prepend>

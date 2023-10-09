@@ -15,6 +15,7 @@ import * as directives from 'vuetify/directives'
 import '@fortawesome/fontawesome-free/css/all.css'
 import { aliases, fa } from 'vuetify/iconsets/fa'
 import { mdi } from 'vuetify/iconsets/mdi'
+import colors from 'vuetify/lib/util/colors'
 
 const vuetify = createVuetify({
     components,
@@ -27,6 +28,21 @@ const vuetify = createVuetify({
           mdi,
         }
     },
+    theme: {
+        themes: {
+            light: {
+                colors: {
+                    primary: '#2587E9', // #413b6b
+                    secondary: '#afbdcc', // #FFCDD2
+                    error: '#E44D3A',
+                    info: '##70b3ec',
+                    warning: '#fec107',
+                    success: '#00c292',
+                    disable: '#cfdded'
+                }
+            }
+        }
+    }
 })
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
