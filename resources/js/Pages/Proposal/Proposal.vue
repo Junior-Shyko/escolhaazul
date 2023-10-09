@@ -11,9 +11,15 @@ const state = reactive({
     dialogDataPersonal: false,
     dialogDataAddress: false,
     dialogDataContact: false,
-    password: ''
+    password: '',
+    skill: 33,
 });
-
+const stepForm = (value) => {
+    console.log({value})
+    if(value == 'two') {
+        state.skill = 66
+    }
+}
 </script>
 
 <template>
@@ -34,20 +40,24 @@ const state = reactive({
                         suas referências pessoais.</label>
                     <label for="" v-if="state.tab == 'tree'" class="text-blue-700 hover:text-slate-600 font-medium">Estamos
                         finalizando, envie seus arquivos.</label>
+
                 </div>
+                <v-row>
+                    <v-col cols="12" xs="12" sm="12" md="12">
+                        <v-progress-linear v-model="state.skill" color="light-blue" striped height="25" class="mb-1">
+                            <template v-slot:default="{ value }">
+                                <strong>{{value}}%</strong>
+                            </template>
+                        </v-progress-linear>
+                    </v-col>
+                </v-row>
                 <div class="flex justify-center">
                     <v-card class="w-full">
-                        <v-tabs v-model="state.tab" color="blue-darken-2" align-tabs="center">
-                            <v-tab value="one">Etapa 1</v-tab>
-                            <v-tab value="two">Etapa 2</v-tab>
-                            <v-tab value="tree">Etapa 3</v-tab>
-                        </v-tabs>
                         <v-card-text>
-
                             <v-window v-model="state.tab">
                                 <v-window-item value="one">
                                     <v-row no-gutters>
-                                        <v-badge color="default" content="Referencia do Imovel" inline></v-badge>                                        
+                                        <v-badge color="default" content="Referencia do Imovel" inline></v-badge>
                                     </v-row>
                                     <v-row no-gutters>
                                         <v-col col cols="12" sx="12" sm="12" md="4">
@@ -74,198 +84,187 @@ const state = reactive({
                                                 :items="['Ana', 'Paulo', 'Maria']"></v-select>
                                         </v-col>
                                         <v-col col cols="12" sx="12" sm="12" md="4">
-                                            <v-text-field
-                                            class="mt-1"
-                                                label="Prazo Desejado"
-                                                model-value="30"
-                                                suffix="meses"
-                                                ></v-text-field>
+                                            <v-text-field class="mt-1" label="Prazo Desejado" model-value="30"
+                                                suffix="meses"></v-text-field>
 
                                         </v-col>
                                         <v-col col cols="12" sx="12" sm="12" md="4">
-                                            <v-select 
-                                                class="m-2" 
-                                                variant="underlined" label="Tipo de garantia"
+                                            <v-select class="m-2" variant="underlined" label="Tipo de garantia"
                                                 :items="['Carta Fiança', 'Caução', 'Crédito']"></v-select>
                                         </v-col>
                                     </v-row>
                                     <v-row no-gutters>
                                         <v-col col cols="12" sx="12" sm="12" md="4">
-                                            <v-text-field
-                                            class="m-1"
-                                                label="Aluguel Proposto"
-                                                model-value="00,00"
-                                                prefix="R$"
-                                                ></v-text-field>
+                                            <v-text-field class="m-1" label="Aluguel Proposto" model-value="00,00"
+                                                prefix="R$"></v-text-field>
                                         </v-col>
                                         <v-col col cols="12" sx="12" sm="12" md="8">
-                                            <v-textarea
-                                            class="m-1"
-                                            rows="3"
-                                            variant="underlined"
-                                                label="Aluguel Proposto"
-                                                maxlength="120"
-                                            single-line
-                                                ></v-textarea>
+                                            <v-textarea class="m-1" rows="3" variant="underlined" label="Aluguel Proposto"
+                                                maxlength="120" single-line></v-textarea>
                                         </v-col>
                                     </v-row>
                                     <v-row no-gutters>
-                                        <v-badge color="default" content="Dados Pessoais" inline></v-badge>                                        
+                                        <v-badge color="default" content="Dados Pessoais" inline></v-badge>
                                     </v-row>
                                     <v-row no-gutters>
-                                        <v-col cols="12" sx="12" sm="12" md="6">                
-                                            <v-text-field label="Nome completo" 
-                                            class="m-1"  model-value="Junior Oliveira"></v-text-field>
+                                        <v-col cols="12" sx="12" sm="12" md="6">
+                                            <v-text-field label="Nome completo" class="m-1"
+                                                model-value="Junior Oliveira"></v-text-field>
                                         </v-col>
-                                        <v-col cols="12" sx="12" sm="12" md="6">                
-                                            <v-text-field label="E-mail" class="m-1"  model-value="fran@mail.com"></v-text-field>
-                                                                             
-                                        </v-col>                            
+                                        <v-col cols="12" sx="12" sm="12" md="6">
+                                            <v-text-field label="E-mail" class="m-1"
+                                                model-value="fran@mail.com"></v-text-field>
+
+                                        </v-col>
                                     </v-row>
                                     <v-row no-gutters>
                                         <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
-                                            <v-btn elevation="2"  color="blue-darken-2 m-1" @click="state.dialogDataPersonal = true">
-                                                <v-icon icon="fas fa-plus-circle" class="mb-1 mr-1"
-                                                ></v-icon>
+                                            <v-btn elevation="2" color="blue-darken-2 m-1"
+                                                @click="state.dialogDataPersonal = true">
+                                                <v-icon icon="fas fa-plus-circle" class="mb-1 mr-1"></v-icon>
                                                 Adicionar Dados pessoais
-                                            </v-btn>  
+                                            </v-btn>
                                         </v-col>
                                         <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
-                                            <v-btn elevation="2"  color="blue-darken-2 m-1">
+                                            <v-btn elevation="2" color="blue-darken-2 m-1">
                                                 <v-icon icon="fas fa-plus-circle" class="mb-1 mr-1"></v-icon>
                                                 Adicionar Endereço
-                                            </v-btn>  
+                                            </v-btn>
                                         </v-col>
                                         <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
-                                            <v-btn elevation="2"  color="blue-darken-2 m-1">
+                                            <v-btn elevation="2" color="blue-darken-2 m-1">
                                                 <v-icon icon="fas fa-plus-circle" class="mb-1 mr-1"></v-icon>
                                                 Adicionar Contato
-                                            </v-btn>  
+                                            </v-btn>
                                         </v-col>
-                                            <v-dialog
-                                            v-model="state.dialogDataPersonal"
-                                            persistent
-                                            class="block w-full "
-                                            >
+                                        <v-dialog v-model="state.dialogDataPersonal" persistent class="block w-full ">
                                             <v-card>
                                                 <v-card-text>
                                                     <v-row>
                                                         <v-col cols="6" sx="6" sm="6" md="3">
                                                             <InputLabel for="cpf" value="CPF" />
-                                                            <TextInput
-                                                                id="cpf-texte"
-                                                                type="text"
+                                                            <TextInput id="user_cpf" type="text"
                                                                 class="mt-1 block w-full border-gray-500"
-                                                                v-model="state.password"
-                                                                required
-                                                                autocomplete="current-password"
-                                                                autofocus
-                                                            />
+                                                                v-model="state.password" required
+                                                                autocomplete="current-password" autofocus />
                                                         </v-col>
                                                         <v-col cols="6" sx="6" sm="6" md="3">
-                                                            <InputLabel for="cpf" value="Data de Nasc." />
-                                                            <TextInput
-                                                                id="cpf-texte"
-                                                                type="text"
+                                                            <InputLabel for="dtNas" value="Data de Nasc." />
+                                                            <TextInput id="dtNas" type="text"
                                                                 class="mt-1 block w-full border-gray-500"
-                                                                model-value="05/11/1984"
-                                                                required
-                                                                autocomplete="current-password"
-                                                                autofocus
-                                                            />
+                                                                model-value="05/11/1984" required
+                                                                autocomplete="current-password" autofocus />
                                                         </v-col>
                                                         <v-col cols="6" sx="6" sm="6" md="3">
                                                             <InputLabel value="Identidade" />
-                                                            <TextInput
-                                                                id="identity"
-                                                                type="text"
-                                                                class="mt-1 block w-full border-gray-500"
-                                                                model-value=""
-                                                                required
-                                                                autocomplete="current-password"
-                                                                autofocus
-                                                            />
+                                                            <TextInput id="identity" type="text"
+                                                                class="mt-1 block w-full border-gray-500" model-value=""
+                                                                required autocomplete="current-password" autofocus />
                                                         </v-col>
                                                         <v-col cols="6" sx="6" sm="6" md="3">
                                                             <InputLabel value="Orgão Emissor" />
-                                                            <TextInput
-                                                                id="identity"
-                                                                type="text"
+                                                            <TextInput id="emissor" type="text"
                                                                 class="mt-1 block w-full border-gray-500"
-                                                                model-value="SSP-CE"
-                                                                required
-                                                                autocomplete="current-password"
-                                                                autofocus
-                                                            />
+                                                                model-value="SSP-CE" required
+                                                                autocomplete="current-password" autofocus />
                                                         </v-col>
                                                         <v-col cols="6" sx="6" sm="6" md="3">
                                                             <InputLabel value="Nacionalidade" />
-                                                            <TextInput
-                                                                id="identity"
-                                                                type="text"
-                                                                class="mt-1 block w-full border-gray-500"
-                                                                model-value=""
-                                                                required
-                                                                autocomplete="current-password"
-                                                                autofocus
-                                                            />
+                                                            <TextInput id="nationality" type="text"
+                                                                class="mt-1 block w-full border-gray-500" model-value=""
+                                                                required autocomplete="current-password" autofocus />
                                                         </v-col>
                                                         <v-col cols="6" sx="6" sm="6" md="3">
                                                             <InputLabel value="Naturalidade" />
-                                                            <TextInput
-                                                                id="identity"
-                                                                type="text"
+                                                            <TextInput id="naturality" type="text"
                                                                 class="mt-1 block w-full border-gray-500"
-                                                                model-value="SSP-CE"
-                                                                required
-                                                                autocomplete="current-password"
-                                                                autofocus
-                                                            />
+                                                                model-value="SSP-CE" required
+                                                                autocomplete="current-password" autofocus />
                                                         </v-col>
                                                         <v-col cols="6" sx="6" sm="6" md="3">
-                                                            <v-select 
-                                                                class="m-2" 
-                                                                variant="underlined" label="Estado Civil"
+                                                            <v-select class="m-2" variant="underlined" label="Estado Civil"
                                                                 :items="['Casado', 'Solteiro', 'Viúvo']">
                                                             </v-select>
                                                         </v-col>
                                                         <v-col cols="6" sx="6" sm="6" md="3">
-                                                            <v-select 
-                                                                class="m-2" 
-                                                                variant="underlined" label="Nº de Dependentes"
-                                                                :items="['0', '1', '2']">
+                                                            <v-select class="m-2" variant="underlined"
+                                                                label="Nº de Dependentes" :items="['0', '1', '2']">
                                                             </v-select>
                                                         </v-col>
                                                         <v-col cols="12" sx="12" sm="12" md="3">
-                                                            <v-select 
-                                                                class="m-2" 
-                                                                variant="underlined" label="Grau de Instrução"
+                                                            <v-select class="m-2" variant="underlined"
+                                                                label="Grau de Instrução"
                                                                 :items="['Fundamental', 'Ensina Médio', 'Ensino Superior']">
                                                             </v-select>
                                                         </v-col>
                                                     </v-row>
                                                 </v-card-text>
                                                 <v-card-actions class="flex justify-between">
-                                                <v-btn class="bg-teal-lighten-5" @click="state.dialogDataPersonal = false">
-                                                    Sair
-                                                </v-btn>
+                                                    <v-btn class="bg-teal-lighten-5"
+                                                        @click="state.dialogDataPersonal = false">
+                                                        Sair
+                                                    </v-btn>
 
-                                                <v-btn class="bg-light-blue-darken-3">
-                                                    Salvar
-                                                </v-btn>
+                                                    <v-btn class="bg-light-blue-darken-3">
+                                                        Salvar
+                                                    </v-btn>
                                                 </v-card-actions>
                                             </v-card>
-                                            </v-dialog>
+                                        </v-dialog>
                                     </v-row>
                                 </v-window-item>
                                 <v-window-item value="two">
-                                    One 2
+                                    <v-row no-gutters>
+                                        <v-badge color="default" content="Referências Pessoais" inline></v-badge>
+                                        <v-col col cols="12" sx="12" sm="12" md="4">
+                                            <v-select class="m-2" variant="underlined" label="Finalidade"
+                                                :items="['Ana', 'Paulo', 'Maria']"></v-select>
+                                        </v-col>
+                                        <v-col col cols="12" sx="12" sm="12" md="4">
+                                            <v-text-field class="mt-1" label="Prazo Desejado" model-value="30"
+                                                suffix="meses"></v-text-field>
+
+                                        </v-col>
+                                        <v-col col cols="12" sx="12" sm="12" md="4">
+                                            <v-select class="m-2" variant="underlined" label="Tipo de garantia"
+                                                :items="['Carta Fiança', 'Caução', 'Crédito']"></v-select>
+                                        </v-col>
+                                    </v-row>
                                 </v-window-item>
                                 <v-window-item value="tree">
                                     One 3
                                 </v-window-item>
                             </v-window>
                         </v-card-text>
+
+                        <v-card-actions class="flex justify-between bg-gray-100">
+                            {{ state.tab }}
+                            <v-tabs v-model="state.tab" color="blue-darken-2" align-tabs="center">
+                                <v-btn class="bg-teal-lighten-5">
+                                    <template v-slot:prepend>
+                                        <v-tab :value="stepForm('one')" v-if="state.tab == 'two'">
+                                            <v-icon icon="fas fa-arrow-left" class="mb-4"></v-icon>
+                                            <span class="mb-3">Anterior</span>
+                                        </v-tab>
+                                        <v-tab :value="stepForm('two')" v-if="state.tab == 'tree'">
+                                            <v-icon icon="fas fa-arrow-left" class="mb-4"></v-icon>
+                                            <span class="mb-3">Anterior</span>
+                                        </v-tab>
+                                    </template>
+                                </v-btn>
+
+                                <v-btn class="bg-light-blue-darken-3">
+                                    <v-tab :value="stepForm('two')" v-if="state.tab == 'one'">
+                                        <span class="mb-3">Próxima Etapa</span>
+                                        <v-icon icon="fas fa-arrow-right" class="mb-4"></v-icon>
+                                    </v-tab>
+                                    <v-tab :value="stepForm('tree')" v-if="state.tab == 'two'">
+                                        <span class="mb-3">Útima Etapa</span>
+                                        <v-icon icon="fas fa-arrow-right" class="mb-4"></v-icon>
+                                    </v-tab>
+                                </v-btn>
+                            </v-tabs>
+                        </v-card-actions>
                     </v-card>
                 </div>
             </div>
