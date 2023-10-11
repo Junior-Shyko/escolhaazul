@@ -248,11 +248,11 @@ const stepForm = (value) => {
                             <v-tabs v-model="state.tab" color="blue-darken-2" align-tabs="center">
                                 <v-btn class="bg-teal-lighten-5">
                                     <template v-slot:prepend>
-                                        <v-tab :value="stepForm('one')" v-if="state.tab == 'two'">
+                                        <v-tab value="one" v-if="state.tab == 'two'">
                                             <v-icon icon="fas fa-arrow-left" class="mb-4"></v-icon>
                                             <span class="mb-3">Anterior</span>
                                         </v-tab>
-                                        <v-tab :value="stepForm('two')" v-if="state.tab == 'tree'">
+                                        <v-tab value="two" v-if="state.tab == 'tree'">
                                             <v-icon icon="fas fa-arrow-left" class="mb-4"></v-icon>
                                             <span class="mb-3">Anterior</span>
                                         </v-tab>
@@ -260,11 +260,12 @@ const stepForm = (value) => {
                                 </v-btn>
 
                                 <v-btn class="bg-light-blue-darken-3">
-                                    <v-tab :value="stepForm('two')" v-if="state.tab == 'one'">
+                                    {{ state.tab }}
+                                    <v-tab value="two" v-if="state.tab == 'one'">
                                         <span class="mb-3">Próxima Etapa</span>
                                         <v-icon icon="fas fa-arrow-right" class="mb-4"></v-icon>
                                     </v-tab>
-                                    <v-tab :value="stepForm('tree')" v-if="state.tab == 'two'">
+                                    <v-tab value="tree" v-if="state.tab == 'two'">
                                         <span class="mb-3">Útima Etapa</span>
                                         <v-icon icon="fas fa-arrow-right" class="mb-4"></v-icon>
                                     </v-tab>
