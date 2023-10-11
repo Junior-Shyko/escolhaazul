@@ -15,11 +15,17 @@ import * as directives from 'vuetify/directives'
 import '@fortawesome/fontawesome-free/css/all.css'
 import { aliases, fa } from 'vuetify/iconsets/fa'
 import { mdi } from 'vuetify/iconsets/mdi'
+//Componente do vuetify
+import { VDataTable } from 'vuetify/labs/VDataTable'
+
 import colors from 'vuetify/lib/util/colors'
 
 const vuetify = createVuetify({
-    components,
-    directives,
+    components: {
+        ...components,
+        ...directives,
+        VDataTable
+    },
     icons: {
         defaultSet: 'fa',
         aliases,
@@ -35,7 +41,7 @@ const vuetify = createVuetify({
                     primary: '#2587E9', // #413b6b
                     secondary: '#afbdcc', // #FFCDD2
                     error: '#E44D3A',
-                    info: '##70b3ec',
+                    info: '#70b3ec',
                     warning: '#fec107',
                     success: '#00c292',
                     disable: '#cfdded'

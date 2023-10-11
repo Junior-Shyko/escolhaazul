@@ -4,6 +4,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import Address from '@/Components/Address.vue';
+import ContactPhone from '@/Components/ContactPhone.vue'
 
 const state = reactive({
     tab: null,
@@ -127,14 +128,11 @@ const stepForm = (value) => {
                                             </v-btn>
                                         </v-col>
                                         <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
+                                            <!-- COMPONENTE PARA CADASTRAR ENDEREÇO -->
                                            <Address />
                                         </v-col>
                                         <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
-                                            <v-btn elevation="2" color="primary m-1"
-                                                @click="state.dialogDataContact = true">
-                                                <v-icon icon="fas fa-plus-circle" class="mb-1 mr-1"></v-icon>
-                                                Adicionar Contato
-                                            </v-btn>
+                                           <ContactPhone />
                                         </v-col>
                                         <v-dialog v-model="state.dialogDataPersonal" persistent class="block w-full ">
                                             <v-card>
@@ -207,7 +205,7 @@ const stepForm = (value) => {
                                             </v-card>
                                         </v-dialog>
                                        
-                                        <v-dialog class="block w-full " v-model="state.dialogDataContact">
+                                        <!-- <v-dialog class="block w-full " v-model="state.dialogDataContact">
                                             <v-card>
                                                 <v-card-text>
                                                     contato
@@ -219,7 +217,7 @@ const stepForm = (value) => {
                                                     </v-btn>
                                                 </v-card-actions>
                                             </v-card>
-                                        </v-dialog>
+                                        </v-dialog> -->
                                     </v-row>
                                 </v-window-item>
                                 <v-window-item value="two">
