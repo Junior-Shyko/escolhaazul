@@ -13,9 +13,9 @@ assignees: ''
 
 ## **Objetivo**
 
-**Como** secretária executiva de planejamento e gestão interna (SEPGI)
-**Quero** que sejam adicionados novas informações no campo de cadastro do iSUS 
-**Para** que eu possa orientar as ações da minha secretaria no tocante a delimitação de força de trabalho.
+- **Como** secretária executiva de planejamento e gestão interna (SEPGI)
+- **Quero** que sejam adicionados novas informações no campo de cadastro do iSUS 
+- **Para** que eu possa orientar as ações da minha secretaria no tocante a delimitação de força de trabalho.
 
 
 
