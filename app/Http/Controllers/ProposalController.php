@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\Proposal;
 use Illuminate\Http\Request;
 use App\Http\Services\UserService;
+use App\Http\Services\PhoneService;
 use App\Http\Requests\StoreProposalRequest;
 use App\Http\Requests\ProposalCreateRequest;
 use App\Http\Requests\UpdateProposalRequest;
@@ -74,9 +75,21 @@ class ProposalController extends Controller
 
     public function createUser(ProposalCreateRequest $request)
     {
+       
        try {
-        $user = new UserService($request->name, $request->email);
-        $user->createUser();
+        $userService = new UserService($request->name, $request->email);
+        $user = $userService->createUser();
+        $createPhone = false;
+        if(true) {         
+            $id = $user->id;
+            $phone = new PhoneService($request->phone, $id , 'User', $id);
+            $createPhone = $phone->createPhone();
+            if($createPhone)
+                return response()->json(['mesage' => 'success'], 200);
+        }
+        
+        return response()->json(['message' => 'Phone not cadastre'], 200);
+
        } catch (\Exception $th) {
          dump($th->getMessage());
        }

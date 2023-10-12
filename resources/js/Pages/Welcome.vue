@@ -36,6 +36,12 @@ const submit = () => {
     // });
     verifyField(form)
     console.log(form)
+    form.post('api/form/proposal', {
+        preserveScroll: true,
+        onSuccess: (data) => {
+            console.log(data)
+        },
+    });
     
 };
 
@@ -89,8 +95,8 @@ const verifyField = (errors) => {
                         </p>
                         <form @submit.prevent="submit">
                             <main class="mt-4 p-4">
-                                <h1 class="text-xl font-semibold text-gray-700 text-center">O jeito mais fácil de alugar um
-                                    imóvel.</h1>
+                                <h1 class="text-xl font-semibold text-gray-700 text-center">
+                                    O jeito mais fácil de alugar um imóvel.</h1>
                                 <div class="">
                                     <div class="mb-2  text-center">
                                         <label for="" class="text-gray-700">Quem é o principal inquilino?</label>

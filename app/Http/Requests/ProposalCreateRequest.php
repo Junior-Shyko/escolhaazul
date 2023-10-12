@@ -41,6 +41,7 @@ class ProposalCreateRequest extends FormRequest
         return [
             'name' => 'required|min:2|max:60',
             'email' => 'required|email:rfc,dns',
+            'phone' => 'required|max:20'
         ];
     }
 
@@ -55,7 +56,7 @@ class ProposalCreateRequest extends FormRequest
             'name.required' => 'Nome é obrigatório',
             'email.required' => 'Nome é obrigatório',
             'email.email' => 'O Formato do E-mail está incorreto',
-
+            'phone.required' => 'O número de telefone é obrigatório'
         ];
     }
 }

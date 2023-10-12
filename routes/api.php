@@ -20,5 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('form')->group(function () {
-    Route::post('/create/user', [ProposalController::class, 'createUser'])->name('form-create-user');
+    Route::post('/proposal', [ProposalController::class, 'createUser'])->name('form/proposal');
 });
