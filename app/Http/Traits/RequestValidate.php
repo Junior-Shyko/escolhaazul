@@ -1,38 +1,22 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Traits;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StorePhoneRequest extends FormRequest
-{
-    use \App\Http\Traits\RequestValidate;
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
+trait RequestValidate {
 
     public function failedValidation(Validator $validator)
-
     {
 
         throw new HttpResponseException(response()->json([
-
             'success'   => false,
-
             'message'   => 'Validation errors',
-
             'data'      => $validator->errors()
-
         ]));
 
     }
     
-   
-
 }
+
