@@ -18,14 +18,17 @@ const props = defineProps({
                     <v-row>
                         <v-card class="mx-auto" max-width="344" max-height="400" style="overflow: scroll;">
                             <v-card-text>
-                                <div>Termos de uso</div>
+                                
                                 <p class="text-h4 text--primary">
                                     {{ props.user.name}}
                                 </p>
-                                <p>adjective
-                                   
-                                </p>
-                                <div class="text--primary">
+                                <br>
+                                    <v-divider></v-divider>
+                                <p class="">
+                                   Esse é o nosso Termo de Uso, para continuar você deve ler e se desejar, aceite para continuar.
+                                </p><br>
+                                    <v-divider></v-divider>
+                                <div class="text-blue-grey-darken-2">
                                     relating to or dependent on charity; charitable.<br>
                                     "an eleemosynary educational institution."
                                     <p>
