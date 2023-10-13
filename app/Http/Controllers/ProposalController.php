@@ -20,9 +20,10 @@ class ProposalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('Proposal/Proposal');
+        $user = $request->all();
+        return Inertia::render('Proposal/Proposal', ['user' => $user]);
     }
 
     /**
@@ -103,6 +104,7 @@ class ProposalController extends Controller
     {
 
         $user = $request->data['user'];
+        // $user = [];
        
         return Inertia::render('Proposal/Terms', ['user' => $user]);
     }

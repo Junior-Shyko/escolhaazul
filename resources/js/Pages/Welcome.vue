@@ -33,22 +33,6 @@ const state = reactive({
 
 const submit = () => {
     verifyField(form)
-    // console.log(form)
-    // router.post('api/form/proposal', form, {
-    //     onSuccess: (page) => {
-    //         console.log('data', page)
-    //         return Promise.all([
-    //             this.doThing(),
-    //             this.doAnotherThing()
-    //         ])
-    //         // return to_route('users.index');
-    //     },
-    //     onFinish: visit => {
-    //         console.log({visit})
-    //         // This won't be called until doThing()
-    //         // and doAnotherThing() have finished.
-    //     },
-    // });
     const url = import.meta.env.VITE_BASE_API
     api.post(url + 'form/proposal', form)
     .then(res => {
