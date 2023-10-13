@@ -85,7 +85,7 @@ class ProposalController extends Controller
             $phone = new PhoneService($request->phone, $id , 'User', $id);
             $createPhone = $phone->createPhone();
             if($createPhone)
-                return response()->json(['mesage' => 'success'], 200);
+                return redirect('formulario/termos')->with(['user_id' => $id]);
         }
         
         return response()->json(['message' => 'Phone not cadastre'], 200);
@@ -93,5 +93,10 @@ class ProposalController extends Controller
        } catch (\Exception $th) {
          dump($th->getMessage());
        }
+    }
+
+    public function terms()
+    {
+        return Inertia::render('Proposal/Terms');
     }
 }

@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm, router } from '@inertiajs/vue3';
 import { reactive } from 'vue';
 
 defineProps({
@@ -31,15 +31,21 @@ const state = reactive({
 })
 
 const submit = () => {
-    // form.post(route('password.confirm'), {
-    //     onFinish: () => form.reset(),
-    // });
     verifyField(form)
-    console.log(form)
-    form.post('api/form/proposal', {
-        preserveScroll: true,
-        onSuccess: (data) => {
-            console.log(data)
+    // console.log(form)
+    router.post('api/form/proposal', form, {
+        onSuccess: (page) => {
+            console.log('data', page)
+            return Promise.all([
+                this.doThing(),
+                this.doAnotherThing()
+            ])
+            // return to_route('users.index');
+        },
+        onFinish: visit => {
+            console.log({visit})
+            // This won't be called until doThing()
+            // and doAnotherThing() have finished.
         },
     });
     
