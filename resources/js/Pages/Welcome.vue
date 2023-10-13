@@ -1,6 +1,7 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm, router } from '@inertiajs/vue3';
 import { reactive } from 'vue';
+import api from '@/Services/server'
 
 defineProps({
     canLogin: {
@@ -31,12 +32,34 @@ const state = reactive({
 })
 
 const submit = () => {
-    // form.post(route('password.confirm'), {
-    //     onFinish: () => form.reset(),
-    // });
     verifyField(form)
-    console.log(form)
-    
+    // console.log(form)
+    // router.post('api/form/proposal', form, {
+    //     onSuccess: (page) => {
+    //         console.log('data', page)
+    //         return Promise.all([
+    //             this.doThing(),
+    //             this.doAnotherThing()
+    //         ])
+    //         // return to_route('users.index');
+    //     },
+    //     onFinish: visit => {
+    //         console.log({visit})
+    //         // This won't be called until doThing()
+    //         // and doAnotherThing() have finished.
+    //     },
+    // });
+    const url = import.meta.env.VITE_BASE_API
+    api.post(url + 'form/proposal', form)
+    .then(res => {
+        console.log(res)
+        router.post('formulario/termos', res, {
+            preserveScroll: (res) => Object.keys(res).length,
+        })
+    })
+    .catch(err => {
+        console.log({err})
+    })
 };
 
 const verifyField = (errors) => {
@@ -53,7 +76,8 @@ const verifyField = (errors) => {
     <Head title="Welcome" />
 
     <div
-        class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
+        class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter
+         dark:bg-gray-900 selection:bg-red-500 selection:text-white">
         <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
             <Link v-if="$page.props.auth.user" :href="route('dashboard')"
                 class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
@@ -89,8 +113,8 @@ const verifyField = (errors) => {
                         </p>
                         <form @submit.prevent="submit">
                             <main class="mt-4 p-4">
-                                <h1 class="text-xl font-semibold text-gray-700 text-center">O jeito mais fácil de alugar um
-                                    imóvel.</h1>
+                                <h1 class="text-xl font-semibold text-gray-700 text-center">
+                                    O jeito mais fácil de alugar um imóvel.</h1>
                                 <div class="">
                                     <div class="mb-2  text-center">
                                         <label for="" class="text-gray-700">Quem é o principal inquilino?</label>

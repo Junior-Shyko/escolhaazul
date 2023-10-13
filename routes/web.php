@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('formulario')->group(function () {
     Route::get('/proposta', [ProposalController::class, 'index'])->name('proposal.index');
+    Route::post('termos',  [ProposalController::class, 'terms'])->name('formulario/termos');
 });
 
 require __DIR__.'/auth.php';

@@ -13,8 +13,9 @@ class UserService {
         public string $email = ''
     ) { }
 
-    public function createUser() {
-       
+    public function createUser() : User
+    { 
+      
         $pass = rand(8, 20);
         $user = User::create([
             'name' => $this->name,
@@ -22,7 +23,7 @@ class UserService {
             'password' => Hash::make($pass),
         ]);
 
-        dump($user);
+        return $user;
         // event(new Registered($user));
     }
 }
