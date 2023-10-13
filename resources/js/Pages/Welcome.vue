@@ -1,6 +1,7 @@
 <script setup>
 import { Head, Link, useForm, router } from '@inertiajs/vue3';
 import { reactive } from 'vue';
+import api from '@/Services/server'
 
 defineProps({
     canLogin: {
@@ -33,22 +34,32 @@ const state = reactive({
 const submit = () => {
     verifyField(form)
     // console.log(form)
-    router.post('api/form/proposal', form, {
-        onSuccess: (page) => {
-            console.log('data', page)
-            return Promise.all([
-                this.doThing(),
-                this.doAnotherThing()
-            ])
-            // return to_route('users.index');
-        },
-        onFinish: visit => {
-            console.log({visit})
-            // This won't be called until doThing()
-            // and doAnotherThing() have finished.
-        },
-    });
-    
+    // router.post('api/form/proposal', form, {
+    //     onSuccess: (page) => {
+    //         console.log('data', page)
+    //         return Promise.all([
+    //             this.doThing(),
+    //             this.doAnotherThing()
+    //         ])
+    //         // return to_route('users.index');
+    //     },
+    //     onFinish: visit => {
+    //         console.log({visit})
+    //         // This won't be called until doThing()
+    //         // and doAnotherThing() have finished.
+    //     },
+    // });
+    const url = import.meta.env.VITE_BASE_API
+    api.post(url + 'form/proposal', form)
+    .then(res => {
+        console.log(res)
+        router.post('formulario/termos', res, {
+            preserveScroll: (res) => Object.keys(res).length,
+        })
+    })
+    .catch(err => {
+        console.log({err})
+    })
 };
 
 const verifyField = (errors) => {
