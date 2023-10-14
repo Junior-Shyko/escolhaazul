@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('rental_datas', function (Blueprint $table) {
             $table->id();
-            $table->string('refImmobile', 200)->nullable(false);
+            $table->string('refImmobile', 200)->nullable(true);
             $table->string('typeRentalUser', 50)->nullable(false);
             $table->string('finality', 50)->nullable();
             $table->integer('term')->comment('Prazo Desejado')->nullable();

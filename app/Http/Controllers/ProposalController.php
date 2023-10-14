@@ -11,6 +11,7 @@ use App\Http\Services\PhoneService;
 use App\Http\Requests\StoreProposalRequest;
 use App\Http\Requests\ProposalCreateRequest;
 use App\Http\Requests\UpdateProposalRequest;
+use App\Models\RentalData;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
@@ -76,20 +77,21 @@ class ProposalController extends Controller
 
     public function createUser(ProposalCreateRequest $request)
     {
-       
        try {
+        //Criando um usuário
         $userService = new UserService($request->name, $request->email);
         $user = $userService->createUser();
         $createPhone = false;
-        if(true) {         
-            $id = $user->id;
-            $phone = new PhoneService($request->phone, $id , 'User', $id);
+        //Usuário criado
+        if($user) {
+            //Cadastrando telefone
+            $phone = new PhoneService($request->phone, $user->id , 'User', $user->id);
             $createPhone = $phone->createPhone();
+            $rentalDataId = RentalData::insertGetId(
+                ['typeRentalUser' => $request->type, 'user_id' => $user->id]
+            );
             if($createPhone)
-                // return redirect('formulario/termos')->with(['user' => $user]);
-                // return redirect()->route('formulario/termos', [$user]);
-                // return response()->json(['user' => $user], 200);
-                // return Inertia::render('Proposal/Terms', ['user' => $user]);
+                $user->proposal_id = $rentalDataId;
                 return response()->json(['user' => $user], 200);
         }
         

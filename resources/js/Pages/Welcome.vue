@@ -103,7 +103,7 @@ const verifyField = (errors) => {
                                     <div class="mb-2  text-center">
                                         <label for="" class="text-gray-700">Quem é o principal inquilino?</label>
                                     </div>
-                                    <select name="" id=""
+                                    <select name="typeRentalUser"
                                         class="form-select appearance-none block w-full px-5 py-2 border rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:ring focus:outline-none"
                                         v-model="form.type">
                                         <option value="" selected disabled>--Selecione--</option>

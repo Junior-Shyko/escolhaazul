@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRentalDataRequest;
 use App\Http\Requests\UpdateRentalDataRequest;
+use Illuminate\Http\Request;
 use App\Models\RentalData;
 
 class RentalDataController extends Controller
@@ -29,7 +30,7 @@ class RentalDataController extends Controller
      */
     public function store(StoreRentalDataRequest $request)
     {
-        //
+        dump($request->all());
     }
 
     /**
@@ -51,9 +52,18 @@ class RentalDataController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRentalDataRequest $request, RentalData $rentalData)
+    public function update(UpdateRentalDataRequest $request)
     {
-        //
+
+        try {
+            $idRental = $request->proposal_id;
+            unset($request['proposal_id']);
+           
+            $rental = new RentalData;
+            $rental->where('id', $idRental)->update($request->all());
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**

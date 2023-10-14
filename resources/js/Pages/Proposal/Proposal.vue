@@ -6,6 +6,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import Address from '@/Components/Address.vue';
 import ContactPhone from '@/Components/ContactPhone.vue'
 import RentalData from '@/Components/Proposal/RentalData.vue'
+import api from '@/Services/server'
 
 const props = defineProps({
     user: Object
@@ -31,6 +32,18 @@ const stepForm = (value) => {
 
 const receiveEmit = (value) => {
     console.log('receiveEmit', value)
+    var dataPut = {
+        proposal_id : value.proposal_id,
+        user_id: value.user_id
+    }
+    dataPut[value.nameInput] = value.valueInput
+    api.put('api/rental-data/update', dataPut)
+    .then(res => {
+        console.log({res})
+    })
+    .catch(err => {
+        console.log(err)
+    })
 }
 
 </script>
