@@ -12,8 +12,7 @@ use App\Http\Requests\StoreProposalRequest;
 use App\Http\Requests\ProposalCreateRequest;
 use App\Http\Requests\UpdateProposalRequest;
 use App\Models\RentalData;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
+
 
 class ProposalController extends Controller
 {

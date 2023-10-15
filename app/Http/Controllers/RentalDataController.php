@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RentalData;
+use Illuminate\Http\Request;
+use App\Http\Repository\Helpers;
 use App\Http\Requests\StoreRentalDataRequest;
 use App\Http\Requests\UpdateRentalDataRequest;
-use Illuminate\Http\Request;
-use App\Models\RentalData;
 
 class RentalDataController extends Controller
 {
@@ -57,8 +58,8 @@ class RentalDataController extends Controller
 
         try {
             $idRental = $request->proposal_id;
-            unset($request['proposal_id']);
-           
+            unset($request['proposal_id']);//Excluindo para não entrar no update
+
             $rental = new RentalData;
             $rental->where('id', $idRental)->update($request->all());
         } catch (\Throwable $th) {

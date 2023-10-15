@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('typeRentalUser', 50)->nullable(false);
             $table->string('finality', 50)->nullable();
             $table->integer('term')->comment('Prazo Desejado')->nullable();
-            $table->integer('warrantyType')->comment('Tipo de garantia')->nullable();
+            $table->string('warrantyType', 50)->comment('Tipo de garantia')->nullable();
             $table->float('proposedValue', 8, 2)->nullable();
             $table->float('currentCondominiumValue', 8, 2)->nullable();
             $table->float('iptu', 8, 2)->nullable();

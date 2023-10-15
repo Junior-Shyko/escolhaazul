@@ -12,14 +12,30 @@ const saveField = (val) => {
     var valueInputNew = {
         user_id: props.user.id,
         nameInput : val.name,
-        valueInput : val.parentElement.innerText,
+        // valueInput : val.value,
         proposal_id : props.user.proposal_id
     }
+
+    switch (val.name) {
+        case 'proposedValue':
+            var newValue = 0;
+            newValue = parseInt(val.value.replace(/[\D]+/g,''));
+            newValue = newValue + '';
+            newValue = newValue.replace(/([0-9]{2})$/g, ".$1");
+            valueInputNew.valueInput = newValue
+            break;
+    
+        default:
+        valueInputNew.valueInput = val.value
+            break;
+    }
+    console.log({ valueInputNew })
     emit('updateInput', valueInputNew);
 }
 
 const state = reactive({
-    type: ''
+    type: '',
+    proposedValue : 0
 })
 props.user.name = 'Osama'
 props.user.id = 91;
@@ -81,7 +97,8 @@ props.user.proposal_id = 5;
             <v-col col cols="12" sx="12" sm="12" md="4">
                 <v-text-field class="m-1" label="Aluguel Proposto" 
                 @blur="saveField($event.target)" name="proposedValue"
-                model-value="00,00" prefix="R$"></v-text-field>
+                prefix="R$" v-model="state.proposedValue" v-mask-decimal.br="2"
+                ></v-text-field>
             </v-col>
             <v-col col cols="12" sx="12" sm="12" md="8">
                 <v-textarea class="m-1" rows="3" variant="underlined" label="Observação" 
