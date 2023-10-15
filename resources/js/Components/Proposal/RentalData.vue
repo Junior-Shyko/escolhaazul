@@ -50,9 +50,9 @@ const state = reactive({
     term: ''
 })
 
-props.user.name = 'Osama'
-props.user.id = 91;
-props.user.proposal_id = 5;
+// props.user.name = 'Osama'
+// props.user.id = 91;
+// props.user.proposal_id = 5;
 //endpoint para buscar dados
 const getData = () => {
     endpoint.getData('rental_datas' , props.user.proposal_id , props.user.id)
