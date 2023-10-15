@@ -1,11 +1,19 @@
 <script setup>
+import { Head, Link, useForm, router } from '@inertiajs/vue3';
 
 const props = defineProps({
     user: Object
 });
+
+const checkTerms = () => {
+    console.log(props.user)
+    router.post('../formulario/proposta', props.user)
+}
+
 </script>
 
 <template>
+    <Head title="Termos de Uso" />
     <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter
         dark:bg-gray-900 selection:bg-red-500 selection:text-white">
         <div class="max-w-7xl mx-auto p-6 lg:p-8">
@@ -63,7 +71,11 @@ const props = defineProps({
                                 <v-btn variant="tonal" class="bg-blue-lighten-5 hover:bg-indigo-lighten-5">
                                     Desistir
                                 </v-btn>
-                                <v-btn variant="outlined" class="text-center bg-primary">
+                                <v-btn 
+                                    variant="outlined" 
+                                    class="text-center bg-primary"
+                                    @click="checkTerms"
+                                >
                                     Aceito
                                 </v-btn>
                             </v-card-actions>

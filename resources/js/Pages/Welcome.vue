@@ -33,22 +33,6 @@ const state = reactive({
 
 const submit = () => {
     verifyField(form)
-    // console.log(form)
-    // router.post('api/form/proposal', form, {
-    //     onSuccess: (page) => {
-    //         console.log('data', page)
-    //         return Promise.all([
-    //             this.doThing(),
-    //             this.doAnotherThing()
-    //         ])
-    //         // return to_route('users.index');
-    //     },
-    //     onFinish: visit => {
-    //         console.log({visit})
-    //         // This won't be called until doThing()
-    //         // and doAnotherThing() have finished.
-    //     },
-    // });
     const url = import.meta.env.VITE_BASE_API
     api.post(url + 'form/proposal', form)
     .then(res => {
@@ -119,7 +103,7 @@ const verifyField = (errors) => {
                                     <div class="mb-2  text-center">
                                         <label for="" class="text-gray-700">Quem é o principal inquilino?</label>
                                     </div>
-                                    <select name="" id=""
+                                    <select name="typeRentalUser"
                                         class="form-select appearance-none block w-full px-5 py-2 border rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:ring focus:outline-none"
                                         v-model="form.type">
                                         <option value="" selected disabled>--Selecione--</option>
