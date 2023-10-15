@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Repositories\ProposalRepository;
 use Inertia\Inertia;
 
 use App\Models\Proposal;
@@ -108,5 +109,13 @@ class ProposalController extends Controller
         // $user = [];
        
         return Inertia::render('Proposal/Terms', ['user' => $user]);
+    }
+
+
+    public function getData($component, $proposal, $user)
+    {
+        $getData = new ProposalRepository;
+        return $getData->getData($component, $proposal, $user)->first();
+        
     }
 }

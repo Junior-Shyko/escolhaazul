@@ -95,12 +95,15 @@ const receiveEmit = (value) => {
                                         <v-row no-gutters>
                                             <v-col cols="12" sx="12" sm="12" md="6">
                                                 <v-text-field label="Nome completo" class="m-1"
-                                                    model-value="Junior Oliveira"></v-text-field>
+                                                    model-value="Junior Oliveira"
+                                                    v-model="props.user.name"
+                                                ></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sx="12" sm="12" md="6">
                                                 <v-text-field label="E-mail" class="m-1"
-                                                    model-value="fran@mail.com"></v-text-field>
-
+                                                    model-value="email@mail.com"
+                                                    v-model="props.user.email"
+                                                ></v-text-field>
                                             </v-col>
                                         </v-row>
                                         <v-row no-gutters>

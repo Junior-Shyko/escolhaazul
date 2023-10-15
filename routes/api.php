@@ -26,4 +26,6 @@ Route::prefix('form')->group(function () {
 
 Route::put('/rental-data/update', [RentalDataController::class, 'update'])->name('rental-data/update');
 
+Route::get('component/{table}/proposal/{proposal}/user/{user}', [ProposalController::class, 'getData'])->name('getDataProposal');
+
 

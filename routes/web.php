@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('formulario')->group(function () {
     Route::get('/proposta', [ProposalController::class, 'index'])->name('formulario/proposta');
-    Route::post('/proposta', [ProposalController::class, 'create'])->name('formulario/proposta');
+    // Route::post('/proposta', [ProposalController::class, 'index'])->name('formulario/proposta');
     Route::post('termos',  [ProposalController::class, 'terms'])->name('formulario/termos');
 });
 
