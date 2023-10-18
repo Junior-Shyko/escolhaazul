@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\RentalDataController;
+use App\Http\Controllers\DataPersonalController;
 
 /*
 |--------------------------------------------------------------------------

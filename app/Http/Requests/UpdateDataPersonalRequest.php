@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateDataPersonalRequest extends FormRequest
 {
@@ -13,7 +14,22 @@ class UpdateDataPersonalRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+
+        throw new HttpResponseException(response()->json([
+
+            'success'   => false,
+
+            'message'   => 'Validation errors',
+
+            'data'      => $validator->errors()
+
+        ]));
+
     }
 
 
@@ -24,9 +40,6 @@ class UpdateDataPersonalRequest extends FormRequest
      */
     public function rules(): array
     {
-        $req = new UpdateDataPersonalRequest;
-        $validator = new Validator;
-        $req->failedValidation($validator);
         return [
             'sex' => 'min:3',
             'birthDate' => 'date',

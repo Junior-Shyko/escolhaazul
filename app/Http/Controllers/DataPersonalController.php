@@ -53,7 +53,13 @@ class DataPersonalController extends Controller
      */
     public function update(UpdateDataPersonalRequest $request)
     {
-        dump($request->all());
+       
+       try {
+        $personal = DataPersonal::where('user_id', $request->user_id)->first();
+       $personal->update($request->all());
+       } catch (\Throwable $th) {
+        throw $th;
+       }
     }
 
     /**

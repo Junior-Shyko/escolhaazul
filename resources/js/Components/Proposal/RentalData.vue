@@ -17,7 +17,8 @@ const saveField = (val) => {
     var valueInputNew = {
         user_id: props.user.id,
         nameInput : val.name,
-        proposal_id : props.user.proposal_id
+        proposal_id : props.user.proposal_id,
+        route: 'rental-data'
     }
 /**
  * Refatorar para um função externa
@@ -50,10 +51,10 @@ const state = reactive({
     term: ''
 })
 
-props.user.id = 91;
-props.user.name = 'Osama'
-props.user.email = 'Osama@mail.com'
-props.user.proposal_id = 5;
+// props.user.id = 91;
+// props.user.name = 'Osama'
+// props.user.email = 'Osama@mail.com'
+// props.user.proposal_id = 5;
 //endpoint para buscar dados
 const getData = () => {
     endpoint.getData('rental_datas' , props.user.proposal_id , props.user.id)

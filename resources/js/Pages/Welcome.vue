@@ -135,16 +135,15 @@ const verifyField = (errors) => {
                                 </div>
                             </main>
                             <footer class="mt-6 p-4">
-                                {{ state.loading }}
                                 <v-btn
-                                type="submit"
+                                    type="submit"
                                     :loading="state.loading"
                                     color="primary"
                                     rounded="xl" size="x-large"
                                     class="w-full text-xl font-semibold transition-colors"
                                     >
                                     Continuar
-                            </v-btn>
+                                </v-btn>
                             </footer>
                         </form>
                     </div>

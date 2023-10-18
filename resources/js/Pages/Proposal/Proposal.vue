@@ -37,13 +37,13 @@ const receiveEmit = (value) => {
     }
     dataPut[value.nameInput] = value.valueInput
     console.log('receiveEmit', dataPut)
-    // api.put('api/rental-data/update', dataPut)
-    // .then(res => {
-    //     console.log({res})
-    // })
-    // .catch(err => {
-    //     console.log(err)
-    // })
+    api.put('api/'+value.route+'/update', dataPut)
+    .then(res => {
+        console.log({res})
+    })
+    .catch(err => {
+        console.log(err)
+    })
 }
 
 </script>
@@ -108,7 +108,7 @@ const receiveEmit = (value) => {
                                         </v-row>
                                         <v-row no-gutters>
                                             <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
-                                                <DataPersonal @updateInput="receiveEmit"/>
+                                                <DataPersonal @updateInput="receiveEmit" :user="props.user"/>
                                             </v-col>
                                             <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
                                                 <!-- COMPONENTE PARA CADASTRAR ENDEREÇO -->

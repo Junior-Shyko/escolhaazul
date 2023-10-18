@@ -12,6 +12,7 @@ use App\Http\Services\PhoneService;
 use App\Http\Requests\StoreProposalRequest;
 use App\Http\Requests\ProposalCreateRequest;
 use App\Http\Requests\UpdateProposalRequest;
+use App\Models\DataPersonal;
 use App\Models\RentalData;
 
 
@@ -90,6 +91,7 @@ class ProposalController extends Controller
             $rentalDataId = RentalData::insertGetId(
                 ['typeRentalUser' => $request->type, 'user_id' => $user->id]
             );
+            DataPersonal::insert(['user_id' => $user->id]);
             if($createPhone)
                 $user->proposal_id = $rentalDataId;
                 return response()->json(['user' => $user], 200);

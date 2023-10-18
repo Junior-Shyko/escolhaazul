@@ -1,6 +1,10 @@
 <script setup>
 import { reactive } from 'vue';
 
+const props = defineProps({
+    user: Object
+});
+
 const emit = defineEmits(['updateInput']);
 
 const state = reactive({
@@ -17,12 +21,13 @@ const state = reactive({
 })
 
 const saveField = (value) => {
-    console.log(value)
+    console.log(props.user)
+
     var valueInputNew = {
-        user_id: 90,
+        user_id: props.user.id,
         nameInput: value.name,
-        proposal_id: 5,
-        table: 'dataPersonal'
+        valueInput: value.value,
+        route: 'data-personal'
     }
     emit('updateInput', valueInputNew);
 }
@@ -43,6 +48,7 @@ const saveField = (value) => {
                                         <v-container>
                                             <v-row class="flex justify-center">
                                                 <small class="text-blue-darken-4 text-h6">Agora, informe um pouco dos seus dados pessoais</small>
+                                                <small>{{ $page.props.user }}</small>
                                             </v-row>
                                             <v-row>
                                                 <!-- 987.098.098-88 -->
@@ -67,7 +73,7 @@ const saveField = (value) => {
                                                 <v-col cols="6" sx="6" sm="6" md="3">
                                                     <v-text-field label="Orgão Emissor" variant="underlined"
                                                         class="mt-1 block w-full border-gray-500 text-xs md:text-base"
-                                                        v-model="state.organ" name="organ"
+                                                        v-model="state.organ" name="organConsignor"
                                                         @blur="saveField($event.target)"></v-text-field>
                                                 </v-col>
                                                 <v-col cols="6" sx="6" sm="6" md="3">
@@ -106,7 +112,7 @@ const saveField = (value) => {
                                                             'Superior completo (ou graduação)',
                                                             'Pós-graduação',
                                                             'Mestrado',
-                                                            'Doutorado']" name="degreeEducation"
+                                                            'Doutorado']" name="EducationLevel"
                                                              @blur="saveField($event.target)">
                                                     </v-select>
                                                 </v-col>
