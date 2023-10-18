@@ -1,12 +1,11 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
-import { Head, Link } from '@inertiajs/vue3';
-import TextInput from '@/Components/TextInput.vue';
-import InputLabel from '@/Components/InputLabel.vue';
+import { Head } from '@inertiajs/vue3';
 import Address from '@/Components/Address.vue';
 import ContactPhone from '@/Components/ContactPhone.vue'
 import RentalData from '@/Components/Proposal/RentalData.vue'
 import api from '@/Services/server'
+import DataPersonal from '@/Components/Proposal/DataPersonal.vue'
 
 const props = defineProps({
     user: Object
@@ -19,7 +18,7 @@ const state = reactive({
     dialogDataPersonal: false,
     dialogDataAddress: false,
     dialogDataContact: false,
-    password: '',
+    cpf: '',
     skill: 33,
     field: ''
 });
@@ -31,19 +30,20 @@ const stepForm = (value) => {
 }
 
 const receiveEmit = (value) => {
-    console.log('receiveEmit', value)
+   
     var dataPut = {
         proposal_id : value.proposal_id,
         user_id: value.user_id
     }
     dataPut[value.nameInput] = value.valueInput
-    api.put('api/rental-data/update', dataPut)
-    .then(res => {
-        console.log({res})
-    })
-    .catch(err => {
-        console.log(err)
-    })
+    console.log('receiveEmit', dataPut)
+    // api.put('api/rental-data/update', dataPut)
+    // .then(res => {
+    //     console.log({res})
+    // })
+    // .catch(err => {
+    //     console.log(err)
+    // })
 }
 
 </script>
@@ -108,89 +108,19 @@ const receiveEmit = (value) => {
                                         </v-row>
                                         <v-row no-gutters>
                                             <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
-                                                <v-btn elevation="2" color="primary m-1"
-                                                    @click="state.dialogDataPersonal = true">
-                                                    <v-icon icon="fas fa-plus-circle" class="mb-1 mr-1"></v-icon>
-                                                    Adicionar Dados pessoais
-                                                </v-btn>
+                                                <DataPersonal @updateInput="receiveEmit"/>
                                             </v-col>
                                             <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
                                                 <!-- COMPONENTE PARA CADASTRAR ENDEREÇO -->
-                                            <Address />
+                                                <Address />
                                             </v-col>
+                                            
                                             <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
-                                            <ContactPhone />
+                                                <!-- COMPONENTE PARA CADASTRAR O CONTATO TELEFONICO -->
+                                                <ContactPhone />
                                             </v-col>
-                                            <v-dialog v-model="state.dialogDataPersonal" persistent class="block w-full ">
-                                                <v-card>
-                                                    <v-card-text>
-                                                        <v-row>
-                                                            <v-col cols="6" sx="6" sm="6" md="3">
-                                                                <InputLabel for="cpf" value="CPF" />
-                                                                <TextInput id="user_cpf" type="text"
-                                                                    class="mt-1 block w-full border-gray-500"
-                                                                    v-model="state.password" required
-                                                                    autocomplete="current-password" autofocus />
-                                                            </v-col>
-                                                            <v-col cols="6" sx="6" sm="6" md="3">
-                                                                <InputLabel for="dtNas" value="Data de Nasc." />
-                                                                <TextInput id="dtNas" type="text"
-                                                                    class="mt-1 block w-full border-gray-500"
-                                                                    model-value="05/11/1984" required
-                                                                    autocomplete="current-password" autofocus />
-                                                            </v-col>
-                                                            <v-col cols="6" sx="6" sm="6" md="3">
-                                                                <InputLabel value="Identidade" />
-                                                                <TextInput id="identity" type="text"
-                                                                    class="mt-1 block w-full border-gray-500" model-value=""
-                                                                    required autocomplete="current-password" autofocus />
-                                                            </v-col>
-                                                            <v-col cols="6" sx="6" sm="6" md="3">
-                                                                <InputLabel value="Orgão Emissor" />
-                                                                <TextInput id="emissor" type="text"
-                                                                    class="mt-1 block w-full border-gray-500"
-                                                                    model-value="SSP-CE" required
-                                                                    autocomplete="current-password" autofocus />
-                                                            </v-col>
-                                                            <v-col cols="6" sx="6" sm="6" md="3">
-                                                                <InputLabel value="Nacionalidade" />
-                                                                <TextInput id="nationality" type="text"
-                                                                    class="mt-1 block w-full border-gray-500" model-value=""
-                                                                    required autocomplete="current-password" autofocus />
-                                                            </v-col>
-                                                            <v-col cols="6" sx="6" sm="6" md="3">
-                                                                <InputLabel value="Naturalidade" />
-                                                                <TextInput id="naturality" type="text"
-                                                                    class="mt-1 block w-full border-gray-500"
-                                                                    model-value="SSP-CE" required
-                                                                    autocomplete="current-password" autofocus />
-                                                            </v-col>
-                                                            <v-col cols="6" sx="6" sm="6" md="3">
-                                                                <v-select class="m-2" variant="underlined" label="Estado Civil"
-                                                                    :items="['Casado', 'Solteiro', 'Viúvo']">
-                                                                </v-select>
-                                                            </v-col>
-                                                            <v-col cols="6" sx="6" sm="6" md="3">
-                                                                <v-select class="m-2" variant="underlined"
-                                                                    label="Nº de Dependentes" :items="['0', '1', '2']">
-                                                                </v-select>
-                                                            </v-col>
-                                                            <v-col cols="12" sx="12" sm="12" md="3">
-                                                                <v-select class="m-2" variant="underlined"
-                                                                    label="Grau de Instrução"
-                                                                    :items="['Fundamental', 'Ensina Médio', 'Ensino Superior']">
-                                                                </v-select>
-                                                            </v-col>
-                                                        </v-row>
-                                                    </v-card-text>
-                                                    <v-card-actions class="flex justify-center">
-                                                        <v-btn class="bg-blue-grey-lighten-4"
-                                                            @click="state.dialogDataPersonal = false">
-                                                            Sair
-                                                        </v-btn>
-                                                    </v-card-actions>
-                                                </v-card>
-                                            </v-dialog>
+
+                                          
                                         
                                             <!-- <v-dialog class="block w-full " v-model="state.dialogDataContact">
                                                 <v-card>

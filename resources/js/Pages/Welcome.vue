@@ -28,10 +28,14 @@ const form = useForm({
 })
 
 const state = reactive({
-    errors: []
+    errors: [],
+    loading: false
 })
 
 const submit = () => {
+    state.loading = true
+    setTimeout(() => (state.loading = false), 4000)
+
     verifyField(form)
     const url = import.meta.env.VITE_BASE_API
     api.post(url + 'form/proposal', form)
@@ -131,10 +135,16 @@ const verifyField = (errors) => {
                                 </div>
                             </main>
                             <footer class="mt-6 p-4">
-                                <button
-                                    class="px-4 py-3 rounded-full bg-blue-300 text-blue-900 focus:ring focus:outline-none w-full text-xl font-semibold transition-colors">
+                                {{ state.loading }}
+                                <v-btn
+                                type="submit"
+                                    :loading="state.loading"
+                                    color="primary"
+                                    rounded="xl" size="x-large"
+                                    class="w-full text-xl font-semibold transition-colors"
+                                    >
                                     Continuar
-                                </button>
+                            </v-btn>
                             </footer>
                         </form>
                     </div>
