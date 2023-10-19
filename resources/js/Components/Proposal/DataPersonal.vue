@@ -1,6 +1,6 @@
 <script setup>
-import { reactive } from 'vue';
-import moment from 'moment';
+import { reactive , onMounted} from 'vue';
+import endpoint from '@/Services/endpoints'
 
 const props = defineProps({
     user: Object
@@ -18,11 +18,11 @@ const state = reactive({
     maritalStatus: '',
     dependents: '',
     degreeEducation: '',
-    sex: ''
+    sex: '',
+    cpf: ''
 })
 
 const saveField = (value) => {
-    console.log(value)
     
     var valueInputNew = {
         user_id: props.user.id,
@@ -31,11 +31,10 @@ const saveField = (value) => {
         route: 'data-personal'
     }
 
-    var day = '';
     switch (value.name) {
         case 'birthDate':
             // day = moment(value.value, "MM-DD-YYYY");
-            day = new Date(value.value)
+            let day = new Date(value.value)
             let dataFormatada = (day.getFullYear() + "-" + ((day.getMonth() + 1)) + "-" + (day.getDate() )) ; 
             valueInputNew.valueInput = dataFormatada;
             break;
@@ -44,10 +43,33 @@ const saveField = (value) => {
             valueInputNew.valueInput = value.value;
             break;
     }
-    console.log({day})
-    
     emit('updateInput', valueInputNew);
 }
+
+const getData = () => {
+    endpoint.getData('data_personals' , 0 , props.user.id)
+    .then(res => {
+        //Preenchendo os dados
+        state.birthDate      = res.birthDate
+        // state.identity          = res.proposedValue
+        state.organ            = res.organConsignor
+        state.nationality   = res.nationality
+        // state.naturality= res.typeRentalUser
+        // state.maritalStatus      = res.term
+        // state.dependents      = res.term
+        state.degreeEducation      = res.EducationLevel
+        state.sex      = res.sex
+        state.cpf = res.cpf
+    })
+    .catch(err => {
+        console.log({err})
+    })
+        
+}
+
+onMounted(() => {
+    getData()
+})
 </script>
 
 <template>
