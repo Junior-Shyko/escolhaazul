@@ -1,5 +1,6 @@
 <script setup>
 import { reactive } from 'vue';
+import moment from 'moment';
 
 const props = defineProps({
     user: Object
@@ -21,14 +22,30 @@ const state = reactive({
 })
 
 const saveField = (value) => {
-    console.log(props.user)
-
+    console.log(value)
+    
     var valueInputNew = {
         user_id: props.user.id,
         nameInput: value.name,
-        valueInput: value.value,
+        
         route: 'data-personal'
     }
+
+    var day = '';
+    switch (value.name) {
+        case 'birthDate':
+            // day = moment(value.value, "MM-DD-YYYY");
+            day = new Date(value.value)
+            let dataFormatada = (day.getFullYear() + "-" + ((day.getMonth() + 1)) + "-" + (day.getDate() )) ; 
+            valueInputNew.valueInput = dataFormatada;
+            break;
+    
+        default:
+            valueInputNew.valueInput = value.value;
+            break;
+    }
+    console.log({day})
+    
     emit('updateInput', valueInputNew);
 }
 </script>
