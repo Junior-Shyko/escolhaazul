@@ -1,5 +1,5 @@
 <script setup>
-import { reactive , onMounted} from 'vue';
+import { reactive, onMounted } from 'vue';
 import endpoint from '@/Services/endpoints'
 
 const props = defineProps({
@@ -23,11 +23,11 @@ const state = reactive({
 })
 
 const saveField = (value) => {
-    
+
     var valueInputNew = {
         user_id: props.user.id,
         nameInput: value.name,
-        
+
         route: 'data-personal'
     }
 
@@ -35,10 +35,10 @@ const saveField = (value) => {
         case 'birthDate':
             // day = moment(value.value, "MM-DD-YYYY");
             let day = new Date(value.value)
-            let dataFormatada = (day.getFullYear() + "-" + ((day.getMonth() + 1)) + "-" + (day.getDate() )) ; 
+            let dataFormatada = (day.getFullYear() + "-" + ((day.getMonth() + 1)) + "-" + (day.getDate()));
             valueInputNew.valueInput = dataFormatada;
             break;
-    
+
         default:
             valueInputNew.valueInput = value.value;
             break;
@@ -47,24 +47,24 @@ const saveField = (value) => {
 }
 
 const getData = () => {
-    endpoint.getData('data_personals' , 0 , props.user.id)
-    .then(res => {
-        //Preenchendo os dados
-        state.birthDate      = res.birthDate
-        // state.identity          = res.proposedValue
-        state.organ            = res.organConsignor
-        state.nationality   = res.nationality
-        // state.naturality= res.typeRentalUser
-        // state.maritalStatus      = res.term
-        // state.dependents      = res.term
-        state.degreeEducation      = res.EducationLevel
-        state.sex      = res.sex
-        state.cpf = res.cpf
-    })
-    .catch(err => {
-        console.log({err})
-    })
-        
+    endpoint.getData('data_personals', 0, props.user.id)
+        .then(res => {
+            //Preenchendo os dados
+            state.sex = res.sex
+            state.birthDate = res.birthDate
+            state.organ = res.organConsignor
+            state.cpf = res.cpf
+            state.nationality = res.nationality
+            state.degreeEducation = res.EducationLevel
+            state.identity = res.proposedValue
+            state.naturality = res.typeRentalUser
+            state.maritalStatus = res.term
+            state.dependents = res.number_dependents
+        })
+        .catch(err => {
+            console.log({ err })
+        })
+
 }
 
 onMounted(() => {
@@ -86,8 +86,8 @@ onMounted(() => {
                                     <v-card-text>
                                         <v-container>
                                             <v-row class="flex justify-center">
-                                                <small class="text-blue-darken-4 text-h6">Agora, informe um pouco dos seus dados pessoais</small>
-                                                <small>{{ $page.props.user }}</small>
+                                                <small class="text-blue-darken-4 text-h6">Agora, informe um pouco dos seus
+                                                    dados pessoais</small>
                                             </v-row>
                                             <v-row>
                                                 <!-- 987.098.098-88 -->
@@ -100,7 +100,8 @@ onMounted(() => {
                                                 <v-col cols="6" sx="6" sm="6" md="3">
                                                     <v-text-field label="Data de Nasc." variant="underlined"
                                                         class="mt-1 block w-full border-gray-500 text-xs md:text-base"
-                                                        v-model="state.birthDate" name="birthDate"  @blur="saveField($event.target)"
+                                                        v-model="state.birthDate" name="birthDate"
+                                                        @blur="saveField($event.target)"
                                                         v-mask="'00/00/0000'"></v-text-field>
                                                 </v-col>
                                                 <v-col cols="6" sx="6" sm="6" md="3">
@@ -137,8 +138,7 @@ onMounted(() => {
                                                 <v-col cols="6" sx="6" sm="6" md="3">
                                                     <v-select class="m-1" variant="underlined" label="Nº de Dependentes"
                                                         v-model="state.dependents" :items="['0', '1', '2', '3', '4+']"
-                                                        name="dependents"
-                                                        @blur="saveField($event.target)">
+                                                        name="dependents" @blur="saveField($event.target)">
                                                     </v-select>
                                                 </v-col>
                                                 <v-col cols="12" sx="12" sm="12" md="4">
@@ -152,15 +152,14 @@ onMounted(() => {
                                                             'Pós-graduação',
                                                             'Mestrado',
                                                             'Doutorado']" name="EducationLevel"
-                                                             @blur="saveField($event.target)">
+                                                        @blur="saveField($event.target)">
                                                     </v-select>
                                                 </v-col>
                                                 <v-col cols="12" sx="12" sm="12" md="4">
                                                     <v-select class="m-2" variant="underlined" label="Sexo"
                                                         v-model="state.sex" :items="[
                                                             'Masculino',
-                                                            'Feminino']" name="sex"
-                                                             @blur="saveField($event.target)">
+                                                            'Feminino']" name="sex" @blur="saveField($event.target)">
                                                     </v-select>
                                                 </v-col>
                                             </v-row>

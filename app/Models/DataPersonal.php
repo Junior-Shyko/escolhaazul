@@ -16,9 +16,10 @@ class DataPersonal extends Model
         'cpf',
         'nationality',
         'EducationLevel',
-        'naturality',
+        'user_id',
         'identity',
+        'naturality',
         'maritalStatus',
-        'user_id'
+        'number_dependents'
     ];
 }
