@@ -112,29 +112,13 @@ const receiveEmit = (value) => {
                                             </v-col>
                                             <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
                                                 <!-- COMPONENTE PARA CADASTRAR ENDEREÇO -->
-                                                <Address />
+                                                <Address :user="props.user"/>
                                             </v-col>
                                             
                                             <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
                                                 <!-- COMPONENTE PARA CADASTRAR O CONTATO TELEFONICO -->
                                                 <ContactPhone />
                                             </v-col>
-
-                                          
-                                        
-                                            <!-- <v-dialog class="block w-full " v-model="state.dialogDataContact">
-                                                <v-card>
-                                                    <v-card-text>
-                                                        contato
-                                                    </v-card-text>
-                                                    <v-card-actions class="flex justify-center">
-                                                        <v-btn class="bg-blue-grey-lighten-4"
-                                                            @click="state.dialogDataContact = false">
-                                                            Sair
-                                                        </v-btn>
-                                                    </v-card-actions>
-                                                </v-card>
-                                            </v-dialog> -->
                                         </v-row>
                                     </v-window-item>
                                     <v-window-item value="two">

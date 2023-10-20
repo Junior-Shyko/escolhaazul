@@ -2,8 +2,13 @@
 import { ref, reactive, onMounted } from "vue";
 import { useForm } from '@inertiajs/vue3';
 
+const props = defineProps({
+    user: Object
+});
+
 const state = reactive({
     dialogDataAddress: false,
+    loadingBtn: false
 })
 
 const form = useForm({
@@ -59,14 +64,16 @@ const searchCep = (cep) => {
                     <v-icon icon="fas fa-plus-circle" class="mb-1 mr-1"></v-icon>
                     Adicionar Endereço
                     <v-row no-gutters>
-                        <v-col cols="12" sx="12" sm="12" md="4">
+                        <v-col cols="12" sx="12" sm="12" md="4">                          
                             <v-dialog class="block w-full " v-model="state.dialogDataAddress">
                                 <v-card>
                                     <v-card-text>
                                         <v-row>
                                             <v-col cols="12" xs="12" sm="12" md="3">
                                                 <v-text-field label="CEP" class="m-1" v-model="form.cep"
-                                                    @blur="searchCep(form.cep)" variant="underlined"></v-text-field>
+                                                    v-mask-cep @blur="searchCep(form.cep)"
+                                                    variant="underlined">
+                                                </v-text-field>
                                             </v-col>
                                             <v-col cols="12" xs="12" sm="12" md="3">
                                                 <v-text-field label="Endereço" class="m-1" v-model="form.address"
@@ -94,10 +101,15 @@ const searchCep = (cep) => {
                                             </v-col>
                                         </v-row>
                                     </v-card-text>
-                                    <v-card-actions class="flex justify-center">
-                                        <v-btn class="bg-blue-grey-lighten-4" @click="state.dialogDataAddress = false">
+                                    <v-card-actions class="flex justify-between">
+                                        <v-btn class="bg-blue-grey-lighten-4 ml-5 mb-2" @click="state.dialogDataAddress = false">
                                             Sair
                                         </v-btn>
+                                        <v-btn color="" class="bg-primary ml-5 mb-2" @click="state.dialogDataAddress = false">
+                                            <v-icon icon="fas fa-save"></v-icon>
+                                            Confirmar
+                                        </v-btn>
+                                      
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
