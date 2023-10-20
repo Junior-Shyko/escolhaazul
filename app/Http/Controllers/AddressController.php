@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
-use App\Models\Address;
 
 class AddressController extends Controller
 {
@@ -29,7 +30,23 @@ class AddressController extends Controller
      */
     public function store(StoreAddressRequest $request)
     {
-        //
+        $address = [];
+        $address['cep'] = $request->cep;
+        $address['address'] = $request->address;
+        $address['number'] = $request->number;
+        $address['complement'] = $request->complement;
+        $address['neighborhood'] = $request->neighborhood;
+        $address['city'] = $request->city;
+        $address['UF'] = $request->state;
+        $address['object_id'] = $request->object_id;
+        $address['object_type'] = $request->object_type;
+        $address['user_id'] = $request->object_id;
+        try {
+            Address::create($address);
+            return response()->json(['message' => 'success'],200);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
