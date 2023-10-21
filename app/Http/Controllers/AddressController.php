@@ -45,7 +45,6 @@ class AddressController extends Controller
         try {
             Address::create($address);
             return response()->json(['message' => 'success'],200);
-            // return redirect()->back();
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -61,7 +60,7 @@ class AddressController extends Controller
         $address = new AddressRepository;
         return $address->getData($user, $object, $type);
       } catch (\Throwable $th) {
-        //throw $th;
+        throw $th;
       }
     }
 
@@ -78,7 +77,13 @@ class AddressController extends Controller
      */
     public function update(UpdateAddressRequest $request )
     {
-        dump($request->all());
+        try {
+            $address = new AddressRepository;            
+            $address->getData($request->object_id, $request->object_id, $request->object_type)->update($request->all());          
+            return response()->json(['message' => 'success'],200);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
