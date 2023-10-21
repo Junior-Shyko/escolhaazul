@@ -15,6 +15,22 @@ async function getData(table, proposal, user)
     return dataRental
 }
 
+async function getAddress(user, object, type)
+{
+    const address = api.get('api/address/'+user+'/'+ object +'/'+ type +'')
+    .then(res => {
+        // console.log(res)
+      
+        return res.data
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+    return address
+}
+
 export default {
-    getData,    
+    getData,
+    getAddress  
 }

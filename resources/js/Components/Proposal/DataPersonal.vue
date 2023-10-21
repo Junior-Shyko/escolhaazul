@@ -165,8 +165,8 @@ onMounted(() => {
                                             </v-row>
                                         </v-container>
                                     </v-card-text>
-                                    <v-card-actions class="flex justify-center">
-                                        <v-btn class="bg-blue-grey-lighten-4" @click="state.dialogDataPersonal = false">
+                                    <v-card-actions  class="flex justify-between bg-blue-grey-lighten-4">
+                                        <v-btn class="bg-blue-grey-lighten-5 ml-5 mb-2"  @click="state.dialogDataPersonal = false">
                                             Sair
                                         </v-btn>
                                     </v-card-actions>

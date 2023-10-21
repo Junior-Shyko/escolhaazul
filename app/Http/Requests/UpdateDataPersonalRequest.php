@@ -41,14 +41,11 @@ class UpdateDataPersonalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sex' => 'min:3',
-            'birthDate' => 'date',
-            'identity' => 'min:5',
-            'organConsignor' => 'min:5',
-            'cpf' => 'min:5',
-            'nationality' => 'min:5',
-            'naturality' => 'min:5',
-            'educationLevel' => 'min:5',
+            'cep' => 'min:8',
+            'address' => 'string|max:3',
+            'neighborhood' => 'string|max:3',
+            'city' => 'string|max:3',
+            'UF' => 'string|max:2',
             'user_id' => 'numeric',
         ];
     }

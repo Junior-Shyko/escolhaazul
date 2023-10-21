@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Http\Repositories\AddressRepository;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
 
@@ -44,6 +45,7 @@ class AddressController extends Controller
         try {
             Address::create($address);
             return response()->json(['message' => 'success'],200);
+            // return redirect()->back();
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -52,9 +54,15 @@ class AddressController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Address $address)
+    public function show($user, $object, $type)
     {
-        //
+        
+      try {
+        $address = new AddressRepository;
+        return $address->getData($user, $object, $type);
+      } catch (\Throwable $th) {
+        //throw $th;
+      }
     }
 
     /**
@@ -68,9 +76,9 @@ class AddressController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAddressRequest $request, Address $address)
+    public function update(UpdateAddressRequest $request )
     {
-        //
+        dump($request->all());
     }
 
     /**
