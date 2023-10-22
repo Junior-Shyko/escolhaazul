@@ -41,12 +41,31 @@ class UpdateDataPersonalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cep' => 'min:8',
-            'address' => 'string|max:3',
-            'neighborhood' => 'string|max:3',
-            'city' => 'string|max:3',
-            'UF' => 'string|max:2',
-            'user_id' => 'numeric',
+            'sex' => 'min:3',
+            'birthDate' => 'date',
+            'organConsignor' => 'string|min:3',
+            'cpf' => 'string|min:11|cpf',
+            // 'nationality' => 'string|min:3',
+            // 'EducationLevel' => 'string|min:3',            
+            // 'user_id' => 'numeric',
+            // 'identity' => 'string|min:3',            
+            // 'naturality' => 'string|min:3',            
+            // 'maritalStatus' => 'string|min:3',            
+            // 'number_dependents' => 'string'
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'cpf.min' => 'O CPF não é válido',
+            'birthDate.date' => 'Data de Nascimento tem que ser uma data válida',
+            'organConsignor.min' => 'O orgão Emissor tem que ter no mínimo 3 caracteres'
         ];
     }
 
