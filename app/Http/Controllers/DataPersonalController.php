@@ -55,10 +55,11 @@ class DataPersonalController extends Controller
     {
        
        try {
+        // dd($request->all());
             $personal = DataPersonal::where('user_id', $request->user_id)->first();
             $personal->update($request->all());
        } catch (\Throwable $th) {
-        throw $th;
+            dump($th->getMessage());
        }
     }
 

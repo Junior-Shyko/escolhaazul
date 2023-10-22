@@ -1,6 +1,7 @@
 <script setup>
 import { reactive, onMounted } from 'vue';
 import endpoint from '@/Services/endpoints'
+import functions from "@/Util/functions";
 
 const props = defineProps({
     user: Object
@@ -30,12 +31,19 @@ const saveField = (value) => {
 
         route: 'data-personal'
     }
-
+   
     switch (value.name) {
         case 'birthDate':
-            // day = moment(value.value, "MM-DD-YYYY");
             let day = new Date(value.value)
-            let dataFormatada = (day.getFullYear() + "-" + ((day.getMonth() + 1)) + "-" + (day.getDate()));
+            
+            let verDay = 0;
+            //formatando adicionar 0 na frente
+            if(day.getMonth() + 1 < 10) {
+                verDay = '0'+ (day.getMonth() + 1)
+            }else{
+                verDay = (day.getMonth() + 1)
+            }
+            let dataFormatada = (day.getFullYear() + "-" + ((day.getDate())) + "-" + (verDay));
             valueInputNew.valueInput = dataFormatada;
             break;
 
@@ -63,6 +71,7 @@ const getData = () => {
         })
         .catch(err => {
             console.log({ err })
+            functions.toast('Ops!', 'Ocorreu um erro. Tente depois', 'error')
         })
 
 }

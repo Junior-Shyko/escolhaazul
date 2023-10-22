@@ -6,6 +6,7 @@ import ContactPhone from '@/Components/ContactPhone.vue'
 import RentalData from '@/Components/Proposal/RentalData.vue'
 import api from '@/Services/server'
 import DataPersonal from '@/Components/Proposal/DataPersonal.vue'
+import functions from "@/Util/functions";
 
 const props = defineProps({
     user: Object
@@ -36,13 +37,19 @@ const receiveEmit = (value) => {
         user_id: value.user_id
     }
     dataPut[value.nameInput] = value.valueInput
-    console.log('receiveEmit', dataPut)
+
     api.put('api/'+value.route+'/update', dataPut)
     .then(res => {
-        console.log({res})
+        if(res.data){
+            Object.entries(res.data.data).forEach(([key, value]) => {
+                functions.toast('Ops!', value[0], 'error')
+            });
+        }      
     })
     .catch(err => {
         console.log(err)
+       
+        // functions.toast('Sucesso', 'Endereço Cadastrado', 'error')
     })
 }
 
