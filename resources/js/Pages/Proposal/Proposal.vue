@@ -21,7 +21,10 @@ const state = reactive({
     dialogDataContact: false,
     cpf: '',
     skill: 33,
-    field: ''
+    field: '',
+    btnStep: true,
+    panel: [0]
+
 });
 const stepForm = (value) => {
     console.log({ value })
@@ -44,7 +47,8 @@ const receiveEmit = (value) => {
             Object.entries(res.data.data).forEach(([key, value]) => {
                 functions.toast('Ops!', value[0], 'error')
             });
-        }      
+        }
+        state.btnStep = false  
     })
     .catch(err => {
         console.log(err)
@@ -52,6 +56,10 @@ const receiveEmit = (value) => {
         // functions.toast('Sucesso', 'Endereço Cadastrado', 'error')
     })
 }
+
+onMounted(() => {
+    console.log(state.tab)
+})
 
 </script>
 
@@ -67,13 +75,13 @@ const receiveEmit = (value) => {
             </div>
             <div class=" grid grid-cols-1 gap-1 p-2">
                 <div class=" flex justify-center">
-                    {{ state.field }}
-                    <label for="" v-if="state.tab == 'one'" class="text-blue-700 hover:text-slate-600 font-medium">{{ user.name }},
-                        informe seus dados pessoais.</label>
-                    <label for="" v-if="state.tab == 'two'" class="text-blue-700 hover:text-slate-600 font-medium">{{ user.name }},
-                        suas referências pessoais.</label>
-                    <label for="" v-if="state.tab == 'tree'" class="text-blue-700 hover:text-slate-600 font-medium">Estamos
-                        finalizando, envie seus arquivos.</label>
+                    {{ state.tab }}
+                    <h6 v-if="state.tab == 'one'" class="text-blue-700 hover:text-slate-600 font-medium">{{ user.name }},
+                        informe seus dados pessoais.</h6>
+                    <h6 v-if="state.tab == 'two'" class="text-blue-700 hover:text-slate-600 font-medium">{{ user.name }},
+                        suas referências pessoais.</h6>
+                    <h6 v-if="state.tab == 'tree'" class="text-blue-700 hover:text-slate-600 font-medium">Estamos
+                        finalizando, envie seus arquivos.</h6>
 
                 </div>
                 <v-container>
@@ -95,7 +103,6 @@ const receiveEmit = (value) => {
                                     <v-window-item value="one">
                                         <!-- Dados da locação -->
                                         <RentalData :user="user" @updateInput="receiveEmit"/>
-
                                         <v-row no-gutters>
                                             <v-badge color="default" content="Dados Pessoais" inline></v-badge>
                                         </v-row>
@@ -130,20 +137,25 @@ const receiveEmit = (value) => {
                                     </v-window-item>
                                     <v-window-item value="two">
                                         <v-row no-gutters>
-                                            <v-badge color="default" content="Referências Pessoais" inline></v-badge>
-                                            <v-col col cols="12" sx="12" sm="12" md="4">
-                                                <v-select class="m-2" variant="underlined" label="Finalidade"
-                                                    :items="['Ana', 'Paulo', 'Maria']"></v-select>
-                                            </v-col>
-                                            <v-col col cols="12" sx="12" sm="12" md="4">
-                                                <v-text-field class="mt-1" label="Prazo Desejado" model-value="30"
-                                                    suffix="meses"></v-text-field>
+                                            <v-badge color="default" content="Referências Pessoais" inline class="mb-2"></v-badge>
+                                            <v-expansion-panels
+                                                v-model="state.panel"
+                                                :disabled="state.expansion"
+                                                multiple>
+                                                <v-expansion-panel>
+                                                    <v-expansion-panel-title>Panel 1</v-expansion-panel-title>
+                                                    <v-expansion-panel-text>
+                                                    Some content 01
+                                                    </v-expansion-panel-text>
+                                                </v-expansion-panel>
 
-                                            </v-col>
-                                            <v-col col cols="12" sx="12" sm="12" md="4">
-                                                <v-select class="m-2" variant="underlined" label="Tipo de garantia"
-                                                    :items="['Carta Fiança', 'Caução', 'Crédito']"></v-select>
-                                            </v-col>
+                                                <v-expansion-panel>
+                                                    <v-expansion-panel-title>Panel 2</v-expansion-panel-title>
+                                                    <v-expansion-panel-text>
+                                                    Some content 02
+                                                    </v-expansion-panel-text>
+                                                </v-expansion-panel>
+                                            </v-expansion-panels>
                                         </v-row>
                                     </v-window-item>
                                     <v-window-item value="tree">
@@ -155,21 +167,17 @@ const receiveEmit = (value) => {
                             <v-card-actions class="flex justify-between bg-gray-100">
                                 <v-tabs v-model="state.tab" color="blue-darken-2" align-tabs="center">
                                     <v-btn class="bg-teal-lighten-5">
-                                        <template v-slot:prepend>
-                                            <v-tab value="one" v-if="state.tab == 'two'">
-                                                <v-icon icon="fas fa-arrow-left" class="mb-4"></v-icon>
-                                                <span class="mb-3">Anterior</span>
-                                            </v-tab>
-                                            <v-tab value="two" v-if="state.tab == 'tree'">
-                                                <v-icon icon="fas fa-arrow-left" class="mb-4"></v-icon>
-                                                <span class="mb-3">Anterior</span>
-                                            </v-tab>
-                                        </template>
+                                        <v-tab value="one" v-if="state.tab == 'two'">
+                                            <v-icon icon="fas fa-arrow-left" class="mb-4"></v-icon>
+                                            <span class="mb-3">Anterior one</span>
+                                        </v-tab>
+                                        <v-tab value="two" v-if="state.tab == 'tree'">
+                                            <v-icon icon="fas fa-arrow-left" class="mb-4"></v-icon>
+                                            <span class="mb-3">Anterior two</span>
+                                        </v-tab>
                                     </v-btn>
-
-                                    <v-btn class="bg-light-blue-darken-3">
-                                        {{ state.tab }}
-                                        <v-tab value="two" v-if="state.tab == 'one'">
+                                    <v-btn class="bg-light-blue-darken-3" :disabled="state.btnStep">
+                                        <v-tab value="two" v-if="state.tab == 'one'" >
                                             <span class="mb-3">Próxima Etapa</span>
                                             <v-icon icon="fas fa-arrow-right" class="mb-4"></v-icon>
                                         </v-tab>
