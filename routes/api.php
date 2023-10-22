@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\BankController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\RentalDataController;
 use App\Http\Controllers\DataPersonalController;
@@ -25,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('form')->group(function () {
     Route::post('/proposal', [ProposalController::class, 'createUser'])->name('form/proposal');
     Route::post('address', [AddressController::class, 'store'] )->name('api/form/address');
+    Route::post('bank', [BankController::class, 'store'] )->name('api/form/bank');
     Route::put('address', [AddressController::class, 'update'] )->name('api/form/address/update');
     
 });

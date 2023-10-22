@@ -2,10 +2,11 @@
 import { ref, reactive, onMounted } from "vue";
 import { Head } from '@inertiajs/vue3';
 import Address from '@/Components/Address.vue';
-import ContactPhone from '@/Components/ContactPhone.vue'
-import RentalData from '@/Components/Proposal/RentalData.vue'
-import api from '@/Services/server'
-import DataPersonal from '@/Components/Proposal/DataPersonal.vue'
+import ContactPhone from '@/Components/ContactPhone.vue';
+import RentalData from '@/Components/Proposal/RentalData.vue';
+import api from '@/Services/server';
+import DataPersonal from '@/Components/Proposal/DataPersonal.vue';
+import Step2 from "@/Components/Proposal/Step2.vue";
 import functions from "@/Util/functions";
 
 const props = defineProps({
@@ -22,8 +23,8 @@ const state = reactive({
     cpf: '',
     skill: 33,
     field: '',
-    btnStep: true,
-    panel: [0]
+    btnStep: false,
+   
 
 });
 
@@ -72,6 +73,13 @@ const skill = () => {
 onMounted(() => {
     console.log(state.tab)
 })
+
+props.user.id = 139
+props.user.proposal_id = 53
+props.user.email = 'your.email+fakedata80077@gmail.com'
+props.user.name = 'Ines Kemmer'
+
+
 
 </script>
 
@@ -136,55 +144,7 @@ onMounted(() => {
                                     </v-window-item>
 
                                     <v-window-item value="two">
-                                        <v-row no-gutters>
-                                            <v-badge color="default" content="Referências Pessoais" inline class="mb-2"></v-badge>
-                                            <v-expansion-panels
-                                                v-model="state.panel"
-                                                multiple>
-                                                <v-expansion-panel>
-                                                    <v-expansion-panel-title>Bancárias</v-expansion-panel-title>
-                                                    <v-expansion-panel-text>
-                                                    Some content 01
-                                                    </v-expansion-panel-text>
-                                                </v-expansion-panel>
-
-                                                <v-expansion-panel>
-                                                    <v-expansion-panel-title>Imobiliárias</v-expansion-panel-title>
-                                                    <v-expansion-panel-text>
-                                                    Some content 02
-                                                    </v-expansion-panel-text>
-                                                </v-expansion-panel>
-                                                <v-expansion-panel>
-                                                    <v-expansion-panel-title>Comercial</v-expansion-panel-title>
-                                                    <v-expansion-panel-text>
-                                                    Some contentComercial
-                                                    </v-expansion-panel-text>
-                                                </v-expansion-panel>
-                                                <v-expansion-panel>
-                                                    <v-expansion-panel-title>Pessoais</v-expansion-panel-title>
-                                                    <v-expansion-panel-text>
-                                                    Some content Pessoais
-                                                    </v-expansion-panel-text>
-                                                </v-expansion-panel>
-                                               <div class="mt-2 flex w-full">
-                                                <v-badge color="default" content="Bens" inline class="mb-2"></v-badge>
-                                            
-                                               </div>
-                                                <v-expansion-panel>
-                                                    <v-expansion-panel-title>Imóveis</v-expansion-panel-title>
-                                                    <v-expansion-panel-text>
-                                                    Some content Imóveis
-                                                    </v-expansion-panel-text>
-                                                </v-expansion-panel>
-                                                <v-expansion-panel>
-                                                    <v-expansion-panel-title>Veículos</v-expansion-panel-title>
-                                                    <v-expansion-panel-text>
-                                                    Some content Veículos
-                                                    </v-expansion-panel-text>
-                                                </v-expansion-panel>
-                                                
-                                            </v-expansion-panels>
-                                        </v-row>
+                                       <Step2 :user="props.user"/>
                                     </v-window-item>
 
                                     <v-window-item value="three">
