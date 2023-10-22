@@ -26,36 +26,48 @@ const state = reactive({
     panel: [0]
 
 });
-const stepForm = (value) => {
-    console.log({ value })
-    if (value == 'two') {
-        state.skill = 66
-    }
-}
 
 const receiveEmit = (value) => {
-   
+
     var dataPut = {
-        proposal_id : value.proposal_id,
+        proposal_id: value.proposal_id,
         user_id: value.user_id
     }
     dataPut[value.nameInput] = value.valueInput
 
-    api.put('api/'+value.route+'/update', dataPut)
-    .then(res => {
-        if(res.data){
-            Object.entries(res.data.data).forEach(([key, value]) => {
-                functions.toast('Ops!', value[0], 'error')
-            });
-        }
-        state.btnStep = false  
-    })
-    .catch(err => {
-        console.log(err)
-       
-        // functions.toast('Sucesso', 'Endereço Cadastrado', 'error')
-    })
+    api.put('api/' + value.route + '/update', dataPut)
+        .then(res => {
+            if (res.data) {
+                Object.entries(res.data.data).forEach(([key, value]) => {
+                    functions.toast('Ops!', value[0], 'error')
+                });
+            }
+            state.btnStep = false
+        })
+        .catch(err => {
+            console.log(err)
+
+            // functions.toast('Sucesso', 'Endereço Cadastrado', 'error')
+        })
 }
+
+const skill = () => {
+    switch (state.tab) {
+        case 'one':
+            state.skill = 33
+            break;
+        case 'two':
+            state.skill = 66
+            break;
+        case 'three':
+            state.skill = 100
+            break;
+        
+        default:
+            break;
+    }
+}
+
 
 onMounted(() => {
     console.log(state.tab)
@@ -75,33 +87,20 @@ onMounted(() => {
             </div>
             <div class=" grid grid-cols-1 gap-1 p-2">
                 <div class=" flex justify-center">
-                    {{ state.tab }}
                     <h6 v-if="state.tab == 'one'" class="text-blue-700 hover:text-slate-600 font-medium">{{ user.name }},
                         informe seus dados pessoais.</h6>
                     <h6 v-if="state.tab == 'two'" class="text-blue-700 hover:text-slate-600 font-medium">{{ user.name }},
                         suas referências pessoais.</h6>
-                    <h6 v-if="state.tab == 'tree'" class="text-blue-700 hover:text-slate-600 font-medium">Estamos
+                    <h6 v-if="state.tab == 'three'" class="text-blue-700 hover:text-slate-600 font-medium">Estamos
                         finalizando, envie seus arquivos.</h6>
-
                 </div>
-                <v-container>
-                    <v-row>
-                    <v-col cols="12" xs="12" sm="12" md="12">
-                        <v-progress-linear v-model="state.skill" color="light-blue" striped height="25" class="mb-1">
-                            <template v-slot:default="{ value }">
-                                <strong>{{ value }}%</strong>
-                            </template>
-                        </v-progress-linear>
-                    </v-col>
-                </v-row>
-                </v-container>
+
                 <div class="flex justify-center">
                     <v-container>
                         <v-card class="w-full">
                             <v-card-text>
                                 <v-window v-model="state.tab">
                                     <v-window-item value="one">
-                                        <!-- Dados da locação -->
                                         <RentalData :user="user" @updateInput="receiveEmit"/>
                                         <v-row no-gutters>
                                             <v-badge color="default" content="Dados Pessoais" inline></v-badge>
@@ -135,59 +134,112 @@ onMounted(() => {
                                             </v-col>
                                         </v-row>
                                     </v-window-item>
+
                                     <v-window-item value="two">
                                         <v-row no-gutters>
                                             <v-badge color="default" content="Referências Pessoais" inline class="mb-2"></v-badge>
                                             <v-expansion-panels
                                                 v-model="state.panel"
-                                                :disabled="state.expansion"
                                                 multiple>
                                                 <v-expansion-panel>
-                                                    <v-expansion-panel-title>Panel 1</v-expansion-panel-title>
+                                                    <v-expansion-panel-title>Bancárias</v-expansion-panel-title>
                                                     <v-expansion-panel-text>
                                                     Some content 01
                                                     </v-expansion-panel-text>
                                                 </v-expansion-panel>
 
                                                 <v-expansion-panel>
-                                                    <v-expansion-panel-title>Panel 2</v-expansion-panel-title>
+                                                    <v-expansion-panel-title>Imobiliárias</v-expansion-panel-title>
                                                     <v-expansion-panel-text>
                                                     Some content 02
                                                     </v-expansion-panel-text>
                                                 </v-expansion-panel>
+                                                <v-expansion-panel>
+                                                    <v-expansion-panel-title>Comercial</v-expansion-panel-title>
+                                                    <v-expansion-panel-text>
+                                                    Some contentComercial
+                                                    </v-expansion-panel-text>
+                                                </v-expansion-panel>
+                                                <v-expansion-panel>
+                                                    <v-expansion-panel-title>Pessoais</v-expansion-panel-title>
+                                                    <v-expansion-panel-text>
+                                                    Some content Pessoais
+                                                    </v-expansion-panel-text>
+                                                </v-expansion-panel>
+                                               <div class="mt-2 flex w-full">
+                                                <v-badge color="default" content="Bens" inline class="mb-2"></v-badge>
+                                            
+                                               </div>
+                                                <v-expansion-panel>
+                                                    <v-expansion-panel-title>Imóveis</v-expansion-panel-title>
+                                                    <v-expansion-panel-text>
+                                                    Some content Imóveis
+                                                    </v-expansion-panel-text>
+                                                </v-expansion-panel>
+                                                <v-expansion-panel>
+                                                    <v-expansion-panel-title>Veículos</v-expansion-panel-title>
+                                                    <v-expansion-panel-text>
+                                                    Some content Veículos
+                                                    </v-expansion-panel-text>
+                                                </v-expansion-panel>
+                                                
                                             </v-expansion-panels>
                                         </v-row>
                                     </v-window-item>
-                                    <v-window-item value="tree">
-                                        One 3
+
+                                    <v-window-item value="three">
+                                       <v-row>
+                                       <v-container>
+                                            <div class="mt-2 flex w-full">
+                                                <v-badge color="default" content="Anexar documentos" inline class="mb-2"></v-badge>
+                                            </div>
+                                            <v-col cols="12">
+                                                <p class="text-sm">
+                                                    Além desta proposta devidamente preenchida, é necessário anexar abaixo os documentos que comprovem as informações aqui fornecidas.
+                                                     E, após a aprovação, será imprescindível apresentar os originais ou enviar cópia autenticada até o ato da entrega das chaves.
+                                                </p>
+                                                <div class="flex items-center justify-center w-full">
+    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+            </svg>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+        </div>
+        <input id="dropzone-file" type="file" multiple class="hidden" />
+    </label>
+</div> 
+                                            </v-col>
+                                       </v-container>
+                                       </v-row>
                                     </v-window-item>
                                 </v-window>
-                            </v-card-text>
-
-                            <v-card-actions class="flex justify-between bg-gray-100">
+                                <v-card-actions class="flex justify-center bg-gray-100 mt-3">
                                 <v-tabs v-model="state.tab" color="blue-darken-2" align-tabs="center">
-                                    <v-btn class="bg-teal-lighten-5">
-                                        <v-tab value="one" v-if="state.tab == 'two'">
-                                            <v-icon icon="fas fa-arrow-left" class="mb-4"></v-icon>
-                                            <span class="mb-3">Anterior one</span>
+                                    <template v-slot:default>
+
+                                        <v-btn class="bg-teal-lighten-5" @click="skill">
+                                        <v-tab value="one" @click="skill">
+                                            <span>1ª Etapa</span>
                                         </v-tab>
-                                        <v-tab value="two" v-if="state.tab == 'tree'">
-                                            <v-icon icon="fas fa-arrow-left" class="mb-4"></v-icon>
-                                            <span class="mb-3">Anterior two</span>
-                                        </v-tab>
+                                        <v-tab value="two" :disabled="state.btnStep">2ª Etapa</v-tab>
+                                        <v-tab value="three">3ª etapa</v-tab>
                                     </v-btn>
-                                    <v-btn class="bg-light-blue-darken-3" :disabled="state.btnStep">
-                                        <v-tab value="two" v-if="state.tab == 'one'" >
-                                            <span class="mb-3">Próxima Etapa</span>
-                                            <v-icon icon="fas fa-arrow-right" class="mb-4"></v-icon>
-                                        </v-tab>
-                                        <v-tab value="tree" v-if="state.tab == 'two'">
-                                            <span class="mb-3">Útima Etapa</span>
-                                            <v-icon icon="fas fa-arrow-right" class="mb-4"></v-icon>
-                                        </v-tab>
-                                    </v-btn>
+                                        </template>
+                                   
                                 </v-tabs>
+                                
                             </v-card-actions>
+                            <v-col cols="12" xs="12" sm="12" md="12">
+                            <v-progress-linear v-model="state.skill" color="light-blue" striped height="25" class="mb-1">
+                                <template v-slot:default="{ value }">
+                                    <strong>{{ value }}%</strong>
+                                </template>
+                            </v-progress-linear>
+                        </v-col>
+                            </v-card-text>
+                            
                         </v-card>
                     </v-container>
                 </div>
