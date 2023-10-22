@@ -74,14 +74,15 @@ const submit = () => {
             })
     } else {
         api.put('api/form/address', form)
-            .then(res => {
-                //Mensagem de sucesso      
-                functions.toast('Sucesso', 'Alterado Cadastrado', 'success')
-                state.verifyAction = 'atualizar'
-            })
-            .catch(err => {
-                functions.toast('Ops!', 'Ocorreu um erro. Tente depois', 'error')
-            })
+        .then(res => {
+            //Mensagem de sucesso      
+            functions.toast('Sucesso', 'Alterado Cadastrado', 'success')
+            state.verifyAction = 'atualizar'
+        })
+        .catch(err => {
+            console.log(err)
+            // functions.toast('Ops!', 'Ocorreu um erro. Tente depois', 'error')
+        })
     }
 
 }
@@ -99,7 +100,8 @@ const getData = () => {
             state.state = res.state
         })
         .catch(err => {
-            functions.toast('Ops!', 'Ocorreu um erro. Tente depois', 'error')
+            console.log(err)
+            // functions.toast('Ops!', 'Ocorreu um erro. Tente depois', 'error')
         })
 
 }
@@ -164,7 +166,7 @@ onMounted(() => {
                                             </v-btn>
                                             <v-btn color="" class="bg-primary ml-5 mb-2" type="submit"
                                                 v-if="state.verifyAction == 'atualizar'">
-                                                Atualizar Endereço
+                                                Atualizar
                                                 <v-icon icon="fas fa-save" class="mb-1 ml-1" size="small"></v-icon>
                                             </v-btn>
                                             <v-btn color="" class="bg-primary ml-5 mb-2" type="submit" v-else>
