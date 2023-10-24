@@ -26,13 +26,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('form')->group(function () {
     Route::post('/proposal', [ProposalController::class, 'createUser'])->name('form/proposal');
     Route::post('address', [AddressController::class, 'store'] )->name('api/form/address');
-    Route::post('bank', [BankController::class, 'store'] )->name('api/form/bank');
+    
     Route::put('address', [AddressController::class, 'update'] )->name('api/form/address/update');
     
 });
 
 Route::put('/rental-data/update', [RentalDataController::class, 'update'])->name('rental-data/update');
 Route::put('/data-personal/update', [DataPersonalController::class, 'update'])->name('data-personal/update');
+Route::post('bank-personal', [BankController::class, 'createOrUpdate'] )->name('api/form/bank');
+
 
 Route::get('component/{table}/proposal/{proposal}/user/{user}', [ProposalController::class, 'getData'])->name('getDataProposal');
 //Busca endereço

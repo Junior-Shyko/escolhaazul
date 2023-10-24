@@ -41,6 +41,26 @@ const toast = (titToast, descToast, typeToast) => {
       })
   }
 
+/**
+ * Função que recebe o formato do valor monetário em Real e converte para formato USA
+ * @param {string} val 
+ * @returns 
+ */
+const valurMoneyUSA = (val) => {
+    var newValue = 0;
+    newValue = parseInt(val.replace(/[\D]+/g, ''));
+    newValue = newValue + '';
+    newValue = newValue.replace(/([0-9]{2})$/g, ".$1");
+    return newValue
+}
+
+const brDatetoUsa = (datestring) => {
+    var dateSplitted = datestring.split('/');
+    return dateSplitted[2] + '-' + dateSplitted[1] + '-' + dateSplitted[0];
+}
+
 export default {
     toast,
+    valurMoneyUSA,
+    brDatetoUsa
 }
