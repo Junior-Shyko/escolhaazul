@@ -63,4 +63,9 @@ class BankController extends Controller
     {
         //
     }
+
+    public function createOrUpdate(UpdateBankRequest $request)
+    {
+        dump(array_key_exists('proposal_id' , $request->all()));
+    }
 }
