@@ -171,7 +171,7 @@ onMounted(() => {
           <v-badge color="default" content="Bens" inline class="mb-2"></v-badge>
 
         </div>
-        <v-expansion-panel>
+        <!-- <v-expansion-panel>
           <v-expansion-panel-title>Imóveis</v-expansion-panel-title>
           <v-expansion-panel-text>
             Some content Imóveis
@@ -188,7 +188,7 @@ onMounted(() => {
           <v-expansion-panel-text>
             Some content Veículos
           </v-expansion-panel-text>
-        </v-expansion-panel>
+        </v-expansion-panel> -->
 
       </v-expansion-panels>
     </v-row>
