@@ -33,10 +33,10 @@ Route::prefix('form')->group(function () {
 
 Route::put('/rental-data/update', [RentalDataController::class, 'update'])->name('rental-data/update');
 Route::put('/data-personal/update', [DataPersonalController::class, 'update'])->name('data-personal/update');
-Route::post('bank-personal', [BankController::class, 'createOrUpdate'] )->name('api/form/bank');
+Route::put('bank-personal/update', [BankController::class, 'createOrUpdate'] )->name('api/form/bank');
 
 
-Route::get('component/{table}/proposal/{proposal}/user/{user}', [ProposalController::class, 'getData'])->name('getDataProposal');
+Route::get('component/{table}/proposal/{proposal}/user/{user}/$type', [ProposalController::class, 'getData'])->name('getDataProposal');
 //Busca endereço
 Route::get('address/{user}/{object}/{type}' , [AddressController::class, 'show'] )->name('address/show');
 

@@ -25,8 +25,8 @@ class ProposalController extends Controller
     public function index(Request $request)
     {
         $user = $request->all();
-        // if(count($user) == 0)
-        //     return redirect('/');
+        if(count($user) == 0)
+            return redirect('/');
 
         return Inertia::render('Proposal/Proposal', ['user' => $user]);
     }
@@ -92,7 +92,7 @@ class ProposalController extends Controller
             $phone = new PhoneService($request->phone, $user->id , 'User', $user->id);
             $createPhone = $phone->createPhone();
             $rentalDataId = RentalData::insertGetId(
-                ['typeRentalUser' => $request->type, 'user_id' => $user->id]
+                ['typeRentalUser' => $request->type, 'user_id' => $user->id, 'object_id' => $user->id, 'object_type' => 'personal']
             );
             DataPersonal::insert(['user_id' => $user->id]);
             if($createPhone)
@@ -117,10 +117,10 @@ class ProposalController extends Controller
     }
 
 
-    public function getData($component, $proposal, $user)
+    public function getData($component, $proposal, $user, $objectType)
     {
         $getData = new ProposalRepository;
-        return $getData->getData($component, $proposal, $user)->first();
+        return $getData->getData($component, $proposal, $user, $objectType)->first();
         
     }
 }

@@ -29,6 +29,8 @@ class Bank extends Model
         'name_bank_application2',
         'name_agency_application2',
         'name_account_application2',
-        'value_application2'
+        'value_application2',
+        'object_id',
+        'object_type'
     ];
 }

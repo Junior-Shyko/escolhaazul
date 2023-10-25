@@ -6,7 +6,7 @@ import ContactPhone from '@/Components/ContactPhone.vue';
 import RentalData from '@/Components/Proposal/RentalData.vue';
 import api from '@/Services/server';
 import DataPersonal from '@/Components/Proposal/DataPersonal.vue';
-import Step2 from "@/Components/Proposal/Step2.vue";
+import Bank from "@/Components/Proposal/Bank.vue";
 import functions from "@/Util/functions";
 
 const props = defineProps({
@@ -32,13 +32,14 @@ const receiveEmit = (value) => {
 
     var dataPut = {
         proposal_id: value.proposal_id,
-        user_id: value.user_id
+        user_id: value.user_id,
+        object_type: value.object_type
     }
     dataPut[value.nameInput] = value.valueInput
-
+    console.log({value})
     api.put('api/' + value.route + '/update', dataPut)
         .then(res => {
-            if (res.data) {
+            if (res.data && res.data.data !== undefined) {
                 Object.entries(res.data.data).forEach(([key, value]) => {
                     functions.toast('Ops!', value[0], 'error')
                 });
@@ -74,10 +75,10 @@ onMounted(() => {
     console.log(state.tab)
 })
 
-props.user.id = 139
-props.user.proposal_id = 53
-props.user.email = 'your.email+fakedata80077@gmail.com'
-props.user.name = 'Ines Kemmer'
+// props.user.id = 139
+// props.user.proposal_id = 53
+// props.user.email = 'your.email+fakedata80077@gmail.com'
+// props.user.name = 'Ines Kemmer'
 
 
 
@@ -144,7 +145,7 @@ props.user.name = 'Ines Kemmer'
                                     </v-window-item>
 
                                     <v-window-item value="two">
-                                       <Step2 :user="props.user"/>
+                                       <Bank :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
                                     </v-window-item>
 
                                     <v-window-item value="three">
