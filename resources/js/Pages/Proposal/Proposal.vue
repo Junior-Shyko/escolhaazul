@@ -144,52 +144,103 @@ onMounted(() => {
                                     <v-window-item value="two">
                                         <!-- <Bank :user="props.user" @updateInput="receiveEmit" object_type="personal" /> -->
                                         <div class="mt-2 flex w-full">
-          <v-badge color="default" content="Referência" inline class="mb-2"></v-badge>
-
-        </div>
+                                            <v-badge color="default" content="Referência" inline class="mb-2"></v-badge>
+                                        </div>
+                                        <div class="m-2 flex w-full flex text-center justify-center">
+                                            <h6>Agora você vai adicionar algumas referências importante para análise da 
+                                                propposta clicando no icone desejado.
+                                            </h6>
+                                        </div>
+                                        <div
+                                            class="grid grid-cols-3 gap-4 font-mono text-white text-sm text-center font-bold leading-6 bg-stripes-fuchsia rounded-lg">
+                                            <div class="p-4 rounded-lg shadow-xl bg-sky-300">
+                                                <v-btn icon="fas fa-building-columns" elevation="2">
+                                                </v-btn>
+                                                <div class="flex justify-center">
+                                                    <small class="font-semibold">Bancária</small>
+                                                </div>
+                                            </div>
+                                            <div class="p-4 rounded-lg shadow-xl bg-sky-500">
+                                                <v-btn icon="fas fa-sign-hanging" elevation="2">
+                                                </v-btn>
+                                                <div class="flex justify-center">
+                                                    <small class="font-semibold">Imobiliária</small>
+                                                </div>
+                                            </div>
+                                            <div class="p-4 rounded-lg shadow-xl bg-sky-300">
+                                                <v-btn icon="fas fa-dumpster" elevation="2">
+                                                </v-btn>
+                                                <div class="flex justify-center">
+                                                    <small class="font-semibold">Comercial</small>
+                                                </div>
+                                            </div>
+                                            <div class="p-4 rounded-lg shadow-xl  bg-sky-500 border">
+                                                <v-btn icon="fas fa-person" elevation="4" >
+                                                </v-btn>
+                                                <div class="flex justify-center">
+                                                    <small class="font-semibold text-white">Pessoal</small>
+                                                </div>
+                                            </div>
+                                            <div class="p-4 rounded-lg shadow-xl bg-sky-300">
+                                                <v-btn icon="fas fa-home-user" elevation="2">
+                                                </v-btn>
+                                                <div class="flex justify-center">
+                                                    <small class="font-semibold">Imóveis</small>
+                                                </div>
+                                            </div>
+                                            <div class="p-4 rounded-lg shadow-xl  bg-sky-500 border">
+                                                <v-btn icon="fas fa-car" elevation="4" >
+                                                </v-btn>
+                                                <div class="flex justify-center">
+                                                    <small class="font-semibold text-white">Veículo</small>
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
                                         <!-- <Commercial /> -->
                                         <div class="bg-grey-lighten-5 flex">
 
                                             <v-container>
-                                                <v-row>
+                                                <!-- <v-row>
+
                                                     <v-col cols="12" class="flex justify-center">
                                                         <small>Preencha suas referências, clicando no icone</small>
                                                     </v-col>
                                                     <v-col cols="4" xs="4" sm="4" md="4">
-                                                        
+
                                                         <v-sheet elevation="8" class="p-2" rounded="rounded">
-                                                            <v-btn icon="fas fa-building-columns"  color="primary">
+                                                            <v-btn icon="fas fa-building-columns" color="primary">
                                                             </v-btn>
                                                             <div class="flex justify-center">
-                                                        <small>Imobiliária</small>
-                                                       </div>
+                                                                <small class="font-semibold">Imobiliária</small>
+                                                            </div>
                                                         </v-sheet>
                                                     </v-col>
                                                     <v-col cols="4" xs="4" sm="4" md="4">
                                                         <v-sheet elevation="8" class="p-2 " rounded="rounded">
-                                                        <v-btn icon="fas fa-dumpster"  color="primary">
-                                                        </v-btn>
-                                                       <div class="flex justify-center">
-                                                        <small>Comercial</small>
-                                                       </div>
-                                                    </v-sheet>
+                                                            <v-btn icon="fas fa-dumpster" color="primary">
+                                                            </v-btn>
+                                                            <div class="flex justify-center">
+                                                                <small class="font-semibold">Comercial</small>
+                                                            </div>
+                                                        </v-sheet>
                                                     </v-col>
 
                                                     <v-col cols="4" xs="4" sm="4" md="4">
-                                                        
+
                                                         <v-sheet elevation="8" class="p-2" rounded="rounded">
-                                                        <v-btn icon="fas fa-person" color="primary">
-                                                        </v-btn>
-                                                       <div class="flex justify-center">
-                                                        <small>Persoal</small>
-                                                       </div>
-                                                    </v-sheet>
+                                                            <v-btn icon="fas fa-person" color="primary">
+                                                            </v-btn>
+                                                            <div class="flex justify-center">
+                                                                <small class="font-semibold">Persoal</small>
+                                                            </div>
+                                                        </v-sheet>
                                                     </v-col>
-                                                </v-row>
+                                                </v-row> -->
                                             </v-container>
 
                                         </div>
-                                        <div class="bg-grey-lighten-5 flex mt-3">
+                                        <!-- <div class="bg-grey-lighten-5 flex mt-3">
 
                                             <v-container>
 
@@ -216,7 +267,7 @@ onMounted(() => {
                                                 </v-row>
                                             </v-container>
 
-                                        </div>
+                                        </div> -->
                                     </v-window-item>
 
                                     <v-window-item value="three">
@@ -247,7 +298,8 @@ onMounted(() => {
                                                                 </svg>
                                                                 <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
                                                                     <span class="font-semibold">Click to upload</span> or
-                                                                    drag and drop</p>
+                                                                    drag and drop
+                                                                </p>
                                                                 <p class="text-xs text-gray-500 dark:text-gray-400">SVG,
                                                                     PNG, JPG or GIF (MAX. 800x400px)</p>
                                                             </div>
@@ -292,9 +344,11 @@ onMounted(() => {
 
 
         </div>
-    </div></template>
+    </div>
+</template>
 
-<style>.bg-dots-darker {
+<style>
+.bg-dots-darker {
     background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(0,0,0,0.07)'/%3E%3C/svg%3E");
 }
 
@@ -302,4 +356,5 @@ onMounted(() => {
     .dark\:bg-dots-lighter {
         background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.07)'/%3E%3C/svg%3E");
     }
-}</style>
+}
+</style>
