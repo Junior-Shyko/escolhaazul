@@ -11,14 +11,14 @@ const props = defineProps({
 const emit = defineEmits(['updateInput']);
 
 const saveField = (val) => {
-//  console.log({val})
+  //  console.log({val})
   //Propriedade do valor é preenchido apos um tratamento de campo e valor
   var valueInputNew = {
-      user_id: props.user.id,
-      nameInput : val.name,
-      proposal_id : props.user.proposal_id,
-      route: 'bank-personal',
-      object_type: props.object_type
+    user_id: props.user.id,
+    nameInput: val.name,
+    proposal_id: props.user.proposal_id,
+    route: 'bank-personal',
+    object_type: props.object_type
   }
   var newValue = '';
   /**
@@ -43,16 +43,16 @@ const saveField = (val) => {
       break;
 
     default:
-    valueInputNew.valueInput = val.value
+      valueInputNew.valueInput = val.value
       break;
   }
- 
+
   //enviando informação para o componente pai
   emit('updateInput', valueInputNew);
 }
 
 const state = reactive({
-
+  dialogBank: false,
   name_bank: '',
   name_manager: '',
   name_agency: '',
@@ -69,49 +69,57 @@ const state = reactive({
 
 //endpoint para buscar dados
 const getData = () => {
-    endpoint.getData('banks' , props.user.proposal_id , props.user.id, 'personal')
+  endpoint.getData('banks', props.user.proposal_id, props.user.id, 'personal')
     .then(res => {
-      console.log({res})
-        //Preenchendo os dados
-        // state.finality      = res.warrantyType
-        // state.proposedValue = res.proposedValue
-        // state.ps            = res.ps
-        // state.refImmobile   = res.refImmobile
-        // state.typeRentalUser= res.typeRentalUser
-        // state.warrantyType  = res.warrantyType
-        // state.term      = res.term
+      console.log({ res })
+      //Preenchendo os dados
+      // state.finality      = res.warrantyType
+      // state.proposedValue = res.proposedValue
+      // state.ps            = res.ps
+      // state.refImmobile   = res.refImmobile
+      // state.typeRentalUser= res.typeRentalUser
+      // state.warrantyType  = res.warrantyType
+      // state.term      = res.term
     })
     .catch(err => {
-        console.log({err})
+      console.log({ err })
     })
-        
+
 }
 
 onMounted(() => {
-    getData()
+  getData()
 })
 
 </script>
 
 <template>
   <div>
-    <v-row no-gutters>
-      <v-badge color="default" content="Referências Pessoais" inline class="mb-2"></v-badge>
-      <v-expansion-panels v-model="state.panel" multiple>
-        <v-expansion-panel>
-          <v-expansion-panel-title>Bancárias</v-expansion-panel-title>
-          <v-expansion-panel-text>
-            <v-row>
-              <v-col cols="12" xs="12" sm="12" md="4">
-                <v-text-field label="Nome do Banco" variant="underlined" @blur="saveField($event.target)"
-                  name="name_bank" v-model="state.name_bank">
-                </v-text-field>
-                <v-text-field label="Nome do Gerente" variant="underlined"
-                  @blur="saveField($event.target)" v-model="state.name_manager"
-                  name="name_manager">
-                </v-text-field>
-              </v-col>
-              <v-col cols="12" xs="12" sm="12" md="4">
+    <v-row>
+      <v-col cols="12" @click="state.dialogBank = true">
+        <v-btn color="white" @click="state.dialogBank = true" elevation="2" icon="fas fa-building-columns">
+
+
+        </v-btn>
+        <v-row>
+          <v-col cols="12">
+            <div class="flex justify-center">
+              <small class="font-semibold">Bancária</small>
+            </div>
+            <v-dialog v-model="state.dialogBank" activator="parent">
+              <v-card>
+                <v-card-text>
+
+                  <v-row>
+                    <v-col cols="12" xs="12" sm="12" md="4">
+                      <v-text-field label="Nome do Banco" variant="underlined" @blur="saveField($event.target)"
+                        name="name_bank" v-model="state.name_bank">
+                      </v-text-field>
+                      <v-text-field label="Nome do Gerente" variant="underlined" @blur="saveField($event.target)"
+                        v-model="state.name_manager" name="name_manager">
+                      </v-text-field>
+                    </v-col>
+                    <v-col cols="12" xs="12" sm="12" md="4">
                 <v-text-field label="Agência" variant="underlined"
                   @blur="saveField($event.target)"
                   name="name_agency" v-model="state.name_agency">
@@ -131,8 +139,6 @@ onMounted(() => {
                   name="email_manager"
                 ></v-text-field>
               </v-col>
-            </v-row>
-            <v-row>
               <v-col cols="12" xs="12" sm="12" md="4">
                 <v-text-field label="Cliente Desde" variant="underlined"
                   @blur="saveField($event.target)" v-mask-date.br v-model="state.client_since"
@@ -163,34 +169,19 @@ onMounted(() => {
                   name="limit_credit_card2"
                 ></v-text-field>
               </v-col>
-            </v-row>
-          </v-expansion-panel-text>
-        </v-expansion-panel>
+                  </v-row>
 
-        <div class="mt-2 flex w-full">
-          <v-badge color="default" content="Bens" inline class="mb-2"></v-badge>
-
-        </div>
-        <!-- <v-expansion-panel>
-          <v-expansion-panel-title>Imóveis</v-expansion-panel-title>
-          <v-expansion-panel-text>
-            Some content Imóveis
-          </v-expansion-panel-text>
-        </v-expansion-panel>
-        <v-expansion-panel>
-          <v-expansion-panel-title>Veículos</v-expansion-panel-title>
-          <v-expansion-panel-text>
-            Some content Veículos
-          </v-expansion-panel-text>
-        </v-expansion-panel>
-        <v-expansion-panel>
-          <v-expansion-panel-title>Enviar</v-expansion-panel-title>
-          <v-expansion-panel-text>
-            Some content Veículos
-          </v-expansion-panel-text>
-        </v-expansion-panel> -->
-
-      </v-expansion-panels>
+                </v-card-text>
+                <v-card-actions  class="flex justify-between bg-blue-grey-lighten-4">
+                  <v-btn class="bg-blue-grey-lighten-5 ml-5 mb-2"  @click="state.dialogBank = false">
+                      Sair
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-col>
+        </v-row>
+      </v-col>
     </v-row>
   </div>
 </template>

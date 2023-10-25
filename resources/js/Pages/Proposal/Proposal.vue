@@ -154,11 +154,7 @@ onMounted(() => {
                                         <div
                                             class="grid grid-cols-3 gap-4 font-mono text-white text-sm text-center font-bold leading-6 bg-stripes-fuchsia rounded-lg">
                                             <div class="p-4 rounded-lg shadow-xl bg-sky-300">
-                                                <v-btn icon="fas fa-building-columns" elevation="2">
-                                                </v-btn>
-                                                <div class="flex justify-center">
-                                                    <small class="font-semibold">Bancária</small>
-                                                </div>
+                                                <Bank :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
                                             </div>
                                             <div class="p-4 rounded-lg shadow-xl bg-sky-500">
                                                 <v-btn icon="fas fa-sign-hanging" elevation="2">
