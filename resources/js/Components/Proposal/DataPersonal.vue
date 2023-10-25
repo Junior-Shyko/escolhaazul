@@ -55,7 +55,7 @@ const saveField = (value) => {
 }
 
 const getData = () => {
-    endpoint.getData('data_personals', 0, props.user.id)
+    endpoint.getData('data_personals', 0, props.user.id, 'personal')
         .then(res => {
             //Preenchendo os dados
             state.sex = res.sex

@@ -51,13 +51,9 @@ const state = reactive({
     term: ''
 })
 
-// props.user.id = 91;
-// props.user.name = 'Osama'
-// props.user.email = 'Osama@mail.com'
-// props.user.proposal_id = 5;
 //endpoint para buscar dados
 const getData = () => {
-    endpoint.getData('rental_datas' , props.user.proposal_id , props.user.id)
+    endpoint.getData('rental_datas' , props.user.proposal_id , props.user.id, 'personal')
     .then(res => {
         //Preenchendo os dados
         state.finality      = res.warrantyType

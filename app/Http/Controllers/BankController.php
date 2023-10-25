@@ -66,6 +66,32 @@ class BankController extends Controller
 
     public function createOrUpdate(UpdateBankRequest $request)
     {
-        dump(array_key_exists('proposal_id' , $request->all()));
+        //Verifica se tem os dados
+        $bank = Bank::where(
+            ['object_id' => $request->proposal_id, 'object_type' => 'personal']
+        )->first();
+        //Se nao tiver registro então cria um registro
+        if( is_null($bank) )
+        {
+            try {
+                $request['object_id'] = $request->proposal_id;
+                unset($request->proposal_id);
+                Bank::create($request->all());
+                return response()->json(['message' => 'success'], 200);
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+            
+        }else{
+            //Se já tiver um registro, então atualiza
+            try {
+                $request['object_id'] = $request->proposal_id;
+                unset($request['proposal_id']);
+                $bank->update($request->all());
+                return response()->json(['message' => 'Atualizado'], 200);
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
     }
 }
