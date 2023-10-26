@@ -7,6 +7,7 @@ import RentalData from '@/Components/Proposal/RentalData.vue';
 import api from '@/Services/server';
 import DataPersonal from '@/Components/Proposal/DataPersonal.vue';
 import Bank from "@/Components/Proposal/Bank.vue";
+import RealState from "@/Components/Proposal/RealState.vue"
 import Commercial from "@/Components/Proposal/Commercial.vue";
 import functions from "@/Util/functions";
 
@@ -157,11 +158,7 @@ onMounted(() => {
                                                 <Bank :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
                                             </div>
                                             <div class="p-4 rounded-lg shadow-xl bg-sky-500">
-                                                <v-btn icon="fas fa-sign-hanging" elevation="2">
-                                                </v-btn>
-                                                <div class="flex justify-center">
-                                                    <small class="font-semibold">Imobiliária</small>
-                                                </div>
+                                                <RealState :user="props.user" />
                                             </div>
                                             <div class="p-4 rounded-lg shadow-xl bg-sky-300">
                                                 <v-btn icon="fas fa-dumpster" elevation="2">
