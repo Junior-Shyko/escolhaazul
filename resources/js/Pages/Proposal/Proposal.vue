@@ -158,7 +158,7 @@ onMounted(() => {
                                                 <Bank :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
                                             </div>
                                             <div class="p-4 rounded-lg shadow-xl bg-sky-500">
-                                                <RealState :user="props.user" />
+                                                <RealState :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
                                             </div>
                                             <div class="p-4 rounded-lg shadow-xl bg-sky-300">
                                                 <v-btn icon="fas fa-dumpster" elevation="2">

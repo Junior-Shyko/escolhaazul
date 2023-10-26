@@ -12,7 +12,9 @@ class RealState extends Model
     protected $fillable = [
         'name', 
         'creci',
-        'email', 
+        'email',
+        'phone_fixed',
+        'phone_mobile',
         'object_id',
         'object_type', 
     ];

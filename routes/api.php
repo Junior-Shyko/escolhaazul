@@ -2,9 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AddressController;
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ProposalController;
+use App\Http\Controllers\RealStateController;
 use App\Http\Controllers\RentalDataController;
 use App\Http\Controllers\DataPersonalController;
 
@@ -34,7 +35,7 @@ Route::prefix('form')->group(function () {
 Route::put('/rental-data/update', [RentalDataController::class, 'update'])->name('rental-data/update');
 Route::put('/data-personal/update', [DataPersonalController::class, 'update'])->name('data-personal/update');
 Route::put('bank-personal/update', [BankController::class, 'createOrUpdate'] )->name('api/form/bank');
-Route::put('real-state/update', [BankController::class, 'createOrUpdate'] )->name('api/form/bank');
+Route::put('real-state/update', [RealStateController::class, 'createOrUpdate'] )->name('api/form/real-state');
 
 
 Route::get('component/{table}/proposal/{proposal}/user/{user}/$type', [ProposalController::class, 'getData'])->name('getDataProposal');
