@@ -10,9 +10,16 @@ const props = defineProps({
 const emit = defineEmits(['updateInput']);
 const saveField = (val) => {
     console.log(val)
-
+    var valueInputNew = {
+      user_id: props.user.id,
+      nameInput: val.name,
+      proposal_id: props.user.proposal_id,
+      route: 'real-state',
+      object_type: props.object_type,
+      valueInput : val.value
+    }
     //enviando informação para o componente pai
-//   emit('updateInput', valueInputNew);
+  emit('updateInput', valueInputNew);
 }
 
 const state = reactive({
@@ -20,6 +27,8 @@ const state = reactive({
   name: '',
   creci: '',
   email: '',
+  phone_fixed: '',
+  phone_mobile: '',
   object_id: '',
   object_type: '',
 })
@@ -33,7 +42,6 @@ const state = reactive({
           <v-btn color="white" 
             @click="state.dialogRealState = true"
             elevation="2" icon="fas fa-sign-hanging">
-
           </v-btn>
           <v-row>
             <v-col cols="12">
@@ -44,15 +52,30 @@ const state = reactive({
                 <v-card>
                   <v-card-text>
                     <v-row>
-                      <v-col cold="12" xs="12" sm="12" md="4">
+                      <v-col cold="12" xs="12" sm="12" md="6">
                         <v-text-field label="Nome" variant="underlined" @blur="saveField($event.target)"
-                        name="name_bank" v-model="state.name">
-                      </v-text-field>
+                        name="name" v-model="state.name">
+                        </v-text-field>
+                        <v-text-field label="Telefone Fixo" variant="underlined" @blur="saveField($event.target)"
+                          name="phone_fixed" v-model="state.phone_fixed" v-mask-phone.br>
+                        </v-text-field>
+                       
+                        <v-text-field label="E-mail" variant="underlined" @blur="saveField($event.target)"
+                          name="email" v-model="state.email">
+                        </v-text-field>
+                      </v-col>
+                      <v-col cols="12" xs="12" sm="12" md="6">
+                        <v-text-field label="CRECI" variant="underlined" @blur="saveField($event.target)"
+                        name="creci" v-model="state.creci">
+                        </v-text-field>
+                        <v-text-field label="Celular" variant="underlined" @blur="saveField($event.target)"
+                          name="phone_mobile" v-model="state.phone_mobile" v-mask-phone.br>
+                        </v-text-field>
                       </v-col>
                     </v-row>
                   </v-card-text>
                   <v-card-actions  class="flex justify-between bg-blue-grey-lighten-4">
-                  <v-btn class="bg-blue-grey-lighten-5 ml-5 mb-2"  @click="state.dialogRealState = false">
+                  <v-btn class="bg-blue-grey-lighten-5 ml-5 mb-2" @click="state.dialogRealState = false">
                       Sair
                   </v-btn>
                 </v-card-actions>
