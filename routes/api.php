@@ -34,6 +34,7 @@ Route::prefix('form')->group(function () {
 Route::put('/rental-data/update', [RentalDataController::class, 'update'])->name('rental-data/update');
 Route::put('/data-personal/update', [DataPersonalController::class, 'update'])->name('data-personal/update');
 Route::put('bank-personal/update', [BankController::class, 'createOrUpdate'] )->name('api/form/bank');
+Route::put('real-state/update', [BankController::class, 'createOrUpdate'] )->name('api/form/bank');
 
 
 Route::get('component/{table}/proposal/{proposal}/user/{user}/$type', [ProposalController::class, 'getData'])->name('getDataProposal');
