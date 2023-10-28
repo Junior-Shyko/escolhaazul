@@ -9,6 +9,7 @@ import DataPersonal from '@/Components/Proposal/DataPersonal.vue';
 import Bank from "@/Components/Proposal/Bank.vue";
 import RealState from "@/Components/Proposal/RealState.vue"
 import Commercial from "@/Components/Proposal/Commercial.vue";
+import Personal from "@/Components/Proposal/Personal.vue";
 import functions from "@/Util/functions";
 
 const props = defineProps({
@@ -31,7 +32,8 @@ const state = reactive({
 });
 
 const receiveEmit = (value) => {
-
+    console.log('Campo', value.name)
+    console.log('Valor', value.value)
     var dataPut = {
         proposal_id: value.proposal_id,
         user_id: value.user_id,
@@ -66,7 +68,6 @@ const skill = () => {
         case 'three':
             state.skill = 100
             break;
-
         default:
             break;
     }
@@ -77,10 +78,10 @@ onMounted(() => {
     console.log(state.tab)
 })
 
-// props.user.id = 139
-// props.user.proposal_id = 53
-// props.user.email = 'your.email+fakedata80077@gmail.com'
-// props.user.name = 'Ines Kemmer'
+props.user.id = 139
+props.user.proposal_id = 53
+props.user.email = 'your.email+fakedata80077@gmail.com'
+props.user.name = 'Ines Kemmer'
 
 
 
@@ -164,11 +165,12 @@ onMounted(() => {
                                                 <Commercial :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
                                             </div>
                                             <div class="p-4 rounded-lg shadow-xl  bg-sky-500 border">
-                                                <v-btn icon="fas fa-person" elevation="4" >
+                                                <!-- <v-btn icon="fas fa-person" elevation="4" >
                                                 </v-btn>
                                                 <div class="flex justify-center">
                                                     <small class="font-semibold text-white">Pessoal</small>
-                                                </div>
+                                                </div> -->
+                                                <Personal :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
                                             </div>
                                             <div class="p-4 rounded-lg shadow-xl bg-sky-300">
                                                 <v-btn icon="fas fa-home-user" elevation="2">
