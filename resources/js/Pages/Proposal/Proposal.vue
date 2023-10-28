@@ -160,12 +160,8 @@ onMounted(() => {
                                             <div class="p-4 rounded-lg shadow-xl bg-sky-500">
                                                 <RealState :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
                                             </div>
-                                            <div class="p-4 rounded-lg shadow-xl bg-sky-300">
-                                                <v-btn icon="fas fa-dumpster" elevation="2">
-                                                </v-btn>
-                                                <div class="flex justify-center">
-                                                    <small class="font-semibold">Comercial</small>
-                                                </div>
+                                            <div class="p-4 rounded-lg shadow-xl bg-sky-300">                                                
+                                                <Commercial :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
                                             </div>
                                             <div class="p-4 rounded-lg shadow-xl  bg-sky-500 border">
                                                 <v-btn icon="fas fa-person" elevation="4" >
@@ -320,11 +316,12 @@ onMounted(() => {
                                     </v-tabs>
 
                                 </v-card-actions>
-                                <v-col cols="12" xs="12" sm="12" md="12">
+                                <v-col cols="12" xs="12" sm="12" md="12" class=" text-center">
+                                    <small class="text-xs">Ao Finalizar essa etapa, você cumpriu {{ state.skill }}% da proposta</small>  
                                     <v-progress-linear v-model="state.skill" color="light-blue" striped height="25"
                                         class="mb-1">
                                         <template v-slot:default="{ value }">
-                                            <strong>{{ value }}%</strong>
+                                         <strong>{{ value }}%</strong>
                                         </template>
                                     </v-progress-linear>
                                 </v-col>

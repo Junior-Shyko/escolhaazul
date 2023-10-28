@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bank;
+use App\Http\Requests\StoreCommercialRequest;
+use App\Http\Requests\UpdateCommercialRequest;
 use App\Http\Services\ProposalService;
-use App\Http\Requests\StoreBankRequest;
-use App\Http\Requests\UpdateBankRequest;
+use App\Models\Commercial;
 
-class BankController extends Controller
+class CommercialController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,15 +28,15 @@ class BankController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBankRequest $request)
+    public function store(StoreCommercialRequest $request)
     {
-        dump($request->all());
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Bank $bank)
+    public function show(Commercial $commercial)
     {
         //
     }
@@ -44,7 +44,7 @@ class BankController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Bank $bank)
+    public function edit(Commercial $commercial)
     {
         //
     }
@@ -52,7 +52,7 @@ class BankController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBankRequest $request, Bank $bank)
+    public function update(UpdateCommercialRequest $request, Commercial $commercial)
     {
         //
     }
@@ -60,15 +60,14 @@ class BankController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Bank $bank)
+    public function destroy(Commercial $commercial)
     {
         //
     }
 
-    public function createOrUpdate(UpdateBankRequest $request)
+    public function createOrUpdate(UpdateCommercialRequest $request)
     {
-        $commercial = new Bank;
-        $proposalService = new ProposalService;
-        $proposalService->createOrUpdate($commercial, $request);
+        $commercial = new Commercial;
+        ProposalService::createOrUpdate($commercial, $request);
     }
 }

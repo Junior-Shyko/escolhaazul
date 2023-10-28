@@ -70,8 +70,8 @@ const getData = () => {
             state.dependents = res.number_dependents
         })
         .catch(err => {
-            console.log({ err })
-            functions.toast('Ops!', 'Ocorreu um erro. Tente depois', 'error')
+            console.log('Um erro pode ter ocorrido em relação aos dados pessoais')
+            // functions.toast('Ops!', 'Ocorreu um erro. Tente depois', 'error')
         })
 
 }
