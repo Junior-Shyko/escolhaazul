@@ -1,7 +1,5 @@
 <script setup>
 import { reactive, onMounted } from 'vue';
-import functions from "@/Util/functions";
-import endpoint from '@/Services/endpoints'
 
 const props = defineProps({
   user: Object,
