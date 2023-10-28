@@ -25,8 +25,8 @@ class ProposalController extends Controller
     public function index(Request $request)
     {
         $user = $request->all();
-        if(count($user) == 0)
-            return redirect('/');
+        // if(count($user) == 0)
+        //     return redirect('/');
 
         return Inertia::render('Proposal/Proposal', ['user' => $user]);
     }

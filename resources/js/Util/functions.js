@@ -59,8 +59,16 @@ const brDatetoUsa = (datestring) => {
     return dateSplitted[2] + '-' + dateSplitted[1] + '-' + dateSplitted[0];
 }
 
+//Remove espaços para ser validado no backend
+const formatPhone = (phone) => {
+   var newstr = ""
+   newstr = phone.split(" ").join("");
+   return newstr
+}
+
 export default {
     toast,
     valurMoneyUSA,
-    brDatetoUsa
+    brDatetoUsa,
+    formatPhone
 }
