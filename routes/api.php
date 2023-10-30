@@ -9,6 +9,7 @@ use App\Http\Controllers\RealStateController;
 use App\Http\Controllers\CommercialController;
 use App\Http\Controllers\RentalDataController;
 use App\Http\Controllers\DataPersonalController;
+use App\Http\Controllers\PersonalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,7 @@ Route::put('/data-personal/update', [DataPersonalController::class, 'update'])->
 Route::put('bank-personal/update', [BankController::class, 'createOrUpdate'] )->name('api/form/bank');
 Route::put('real-state/update', [RealStateController::class, 'createOrUpdate'] )->name('api/form/real-state');
 Route::put('commercial/update', [CommercialController::class, 'createOrUpdate'] )->name('api/form/commercial');
+Route::put('personal/update', [PersonalController::class, 'createOrUpdate'] )->name('api/form/personal');
 
 
 Route::get('component/{table}/proposal/{proposal}/user/{user}/$type', [ProposalController::class, 'getData'])->name('getDataProposal');

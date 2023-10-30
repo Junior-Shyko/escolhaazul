@@ -10,6 +10,7 @@ import Bank from "@/Components/Proposal/Bank.vue";
 import RealState from "@/Components/Proposal/RealState.vue"
 import Commercial from "@/Components/Proposal/Commercial.vue";
 import Personal from "@/Components/Proposal/Personal.vue";
+import Property from "@/Components/Proposal/Property.vue";
 import functions from "@/Util/functions";
 
 const props = defineProps({
@@ -178,6 +179,7 @@ props.user.name = 'Ines Kemmer'
                                                 <div class="flex justify-center">
                                                     <small class="font-semibold">Imóveis</small>
                                                 </div>
+                                                <Property  :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
                                             </div>
                                             <div class="p-4 rounded-lg shadow-xl  bg-sky-500 border">
                                                 <v-btn icon="fas fa-car" elevation="4" >
