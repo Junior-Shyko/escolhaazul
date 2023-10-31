@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('proporties', function (Blueprint $table) {
+        Schema::create('properties', function (Blueprint $table) {
             $table->id();
+            $table->float('value', 8,2)->nullable();
+            $table->char('financed', 3)->nullable();
+            $table->string('registration', 150)->nullable();
+            $table->string('registry', 50)->nullable();
+            $table->string('object_id', 50)->nullable();
+            $table->string('object_type', 150)->nullable();
             $table->timestamps();
         });
     }
@@ -22,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('proporties');
+        Schema::dropIfExists('properties');
     }
 };

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Proporty;
+use App\Models\Property;
 use Illuminate\Http\Request;
+use App\Http\Services\ProposalService;
 
-class ProportyController extends Controller
+class PropertyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +35,7 @@ class ProportyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Proporty $proporty)
+    public function show(Property $proporty)
     {
         //
     }
@@ -42,7 +43,7 @@ class ProportyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Proporty $proporty)
+    public function edit(Property $proporty)
     {
         //
     }
@@ -50,7 +51,7 @@ class ProportyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Proporty $proporty)
+    public function update(Request $request, Property $proporty)
     {
         //
     }
@@ -58,8 +59,14 @@ class ProportyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Proporty $proporty)
+    public function destroy(Property $proporty)
     {
         //
+    }
+
+    public function createOrUpdate(Request $request)
+    {
+        $commercial = new Property;
+        ProposalService::createOrUpdate($commercial, $request);
     }
 }
