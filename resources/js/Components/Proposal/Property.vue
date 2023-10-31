@@ -60,17 +60,17 @@ const closeDialog = (value) => {
               <small class="font-semibold">Imóveis</small>
             </div>
             <DialogProposal :dialog="state.dialogProperty" @updateDialog="closeDialog">
-              <v-col xs="6" sm="6" md="4">
+              <v-col cols="12" xs="12" sm="12" md="4">
                 <v-text-field label="Valor" variant="underlined" 
                   @blur="saveField($event.target)" name="value"
                   v-model="state.valueProperty"  v-mask-decimal.br="2">
                 </v-text-field>
-                <v-text-field label="Matrícula" variant="underlined" 
-                  @blur="saveField($event.target)" name="registration"
-                  v-model="state.registration">
+                <v-text-field label="Cartório" variant="underlined" 
+                  @blur="saveField($event.target)" name="registry"
+                  v-model="state.registry">
                 </v-text-field>
               </v-col>
-              <v-col xs="12" sm="12" md="4">
+              <v-col cols="12" xs="12" sm="12" md="4">
                 <v-select
                   label="Financiado?"
                   variant="underlined"
@@ -78,10 +78,14 @@ const closeDialog = (value) => {
                   v-model="state.financed"
                   :items="['Sim', 'Não']"
                 ></v-select>
-                <v-text-field label="Cartório" variant="underlined" 
-                  @blur="saveField($event.target)" name="registry"
-                  v-model="state.registry">
+               
+              </v-col>
+              <v-col cols="12" xs="12" sm="12" md="4">
+                <v-text-field label="Matrícula" variant="underlined" 
+                  @blur="saveField($event.target)" name="registration"
+                  v-model="state.registration">
                 </v-text-field>
+                
               </v-col>
               <v-col xs="12" sm="12" md="12">
                 <Address :user="props.user" object_type="property" />
