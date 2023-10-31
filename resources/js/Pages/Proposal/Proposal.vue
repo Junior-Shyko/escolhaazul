@@ -174,11 +174,6 @@ props.user.name = 'Ines Kemmer'
                                                 <Personal :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
                                             </div>
                                             <div class="p-4 rounded-lg shadow-xl bg-sky-300">
-                                                <v-btn icon="fas fa-home-user" elevation="2">
-                                                </v-btn>
-                                                <div class="flex justify-center">
-                                                    <small class="font-semibold">Imóveis</small>
-                                                </div>
                                                 <Property  :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
                                             </div>
                                             <div class="p-4 rounded-lg shadow-xl  bg-sky-500 border">

@@ -6,7 +6,9 @@ import functions from "@/Util/functions";
 
 
 const props = defineProps({
-    user: Object
+    user: Object,
+    object_type: String,
+    cleanField: Boolean
 });
 
 const state = reactive({
@@ -53,7 +55,7 @@ const searchCep = (cep) => {
 const submit = () => {
     let form = {}
     form.object_id = props.user.id
-    form.object_type = 'address_personal'
+    form.object_type = props.object_type
     form.cep = state.cep
     form.address = state.address
     form.number = state.number
@@ -91,13 +93,13 @@ const getData = () => {
     endpoint.getAddress(props.user.id, props.user.id, 'address_personal')
         .then(res => {
             //Preenchendo os dados que vem de retorno da API
-            state.cep = res.cep
-            state.address = res.address
-            state.number = res.number
-            state.complement = res.complement
-            state.neighborhood = res.neighborhood
-            state.city = res.city
-            state.state = res.state
+            // state.cep = res.cep
+            // state.address = res.address
+            // state.number = res.number
+            // state.complement = res.complement
+            // state.neighborhood = res.neighborhood
+            // state.city = res.city
+            // state.state = res.state
         })
         .catch(err => {
             console.log(err)
