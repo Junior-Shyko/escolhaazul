@@ -80,10 +80,10 @@ onMounted(() => {
     console.log(state.tab)
 })
 
-props.user.id = 139
-props.user.proposal_id = 53
-props.user.email = 'your.email+fakedata80077@gmail.com'
-props.user.name = 'Ines Kemmer'
+// props.user.id = 139
+// props.user.proposal_id = 53
+// props.user.email = 'your.email+fakedata80077@gmail.com'
+// props.user.name = 'Ines Kemmer'
 
 
 
