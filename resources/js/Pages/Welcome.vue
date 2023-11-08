@@ -37,7 +37,7 @@ const submit = () => {
     setTimeout(() => (state.loading = false), 4000)
 
     verifyField(form)
-    const url = import.meta.env.VITE_BASE_API
+    const url = EscolhaApp.baseAPI
     api.post(url + 'form/proposal', form)
     .then(res => {
         console.log(res)
