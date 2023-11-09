@@ -21,6 +21,14 @@ const saveField = (val) => {
     object_type: props.object_type
   }
   var newValue = '';
+  //Formatando numero de telefone
+  console.log(val.name )
+  if(val.name == 'phone_manager' ) {
+    newValue = functions.formatPhone(val.value)
+    console.log({newValue}) 
+    valueInputNew.valueInput = newValue
+  }
+
   /**
    * Refatorar para um função externa
    */
