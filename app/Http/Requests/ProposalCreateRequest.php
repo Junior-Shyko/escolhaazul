@@ -25,7 +25,7 @@ class ProposalCreateRequest extends FormRequest
 
             'message'   => 'Validation errors',
 
-            'data'      => $validator->errors()
+            'data'      => $validator->getMessageBag()
 
         ]));
 
@@ -54,6 +54,7 @@ class ProposalCreateRequest extends FormRequest
     {
         return [
             'name.required' => 'Nome é obrigatório',
+            'name.min' => 'O Nome deve ter acima de 02(dois) caracteres',
             'email.required' => 'Nome é obrigatório',
             'email.email' => 'O Formato do E-mail está incorreto',
             'phone.required' => 'O número de telefone é obrigatório'
