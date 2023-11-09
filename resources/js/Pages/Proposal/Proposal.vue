@@ -139,8 +139,8 @@ onMounted(() => {
                                             </v-col>
 
                                             <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
-                                                <!-- COMPONENTE PARA CADASTRAR O CONTATO TELEFONICO -->
-                                                <ContactPhone />
+                                                <!-- COMPONENTE PARA CADASTRAR O CONTATO TELEFONICO 
+                                                <ContactPhone />-->
                                             </v-col>
                                         </v-row>
                                     </v-window-item>
