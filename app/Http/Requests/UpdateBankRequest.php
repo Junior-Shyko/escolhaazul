@@ -39,7 +39,7 @@ class UpdateBankRequest extends FormRequest
     {
         return [
             'client_since' => 'date',
-            'phone_manager' => 'celular_com_ddd|min:3',
+            // 'phone_manager' => 'celular_com_ddd|min:3',
             'email_manager' => 'email:rfc,dns|min:3'
         ];
     }
@@ -54,7 +54,7 @@ class UpdateBankRequest extends FormRequest
         return [
             'email_manager.email' => 'O Email não é válido',
             'client_since.date' => 'Data tem que ser uma data válida',
-            'phone_manager.celular_com_ddd' => 'Telefone não está no formato correto'
+            // 'phone_manager.celular_com_ddd' => 'Telefone não está no formato correto'
         ];
     }
 }
