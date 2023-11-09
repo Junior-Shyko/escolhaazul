@@ -25,8 +25,8 @@ class ProposalController extends Controller
     public function index(Request $request)
     {
         $user = $request->all();
-        // if(count($user) == 0)
-        //     return redirect('/');
+        if(count($user) == 0)
+            return redirect('/');
 
         return Inertia::render('Proposal/Proposal', ['user' => $user]);
     }
@@ -81,11 +81,12 @@ class ProposalController extends Controller
 
     public function createUser(ProposalCreateRequest $request)
     {
-       try {
         //Criando um usuário
         $userService = new UserService($request->name, $request->email);
         $user = $userService->createUser();
         $createPhone = false;
+       try {
+
         //Usuário criado
         if($user) {
             //Cadastrando telefone
