@@ -12,6 +12,7 @@ use App\Http\Controllers\RealStateController;
 use App\Http\Controllers\CommercialController;
 use App\Http\Controllers\RentalDataController;
 use App\Http\Controllers\DataPersonalController;
+use App\Http\Controllers\GuarantorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,7 @@ Route::put('commercial/update', [CommercialController::class, 'createOrUpdate'] 
 Route::put('personal/update', [PersonalController::class, 'createOrUpdate'] )->name('api/form/personal');
 Route::put('property/update', [PropertyController::class, 'createOrUpdate'] )->name('api/form/property');
 Route::put('vehicle/update', [VehicleController::class, 'createOrUpdate'] )->name('api/form/vehicle');
+Route::put('guarantor/update', [GuarantorController::class, 'createOrUpdate'] )->name('api/guarantor');
 
 
 Route::get('component/{table}/proposal/{proposal}/user/{user}/$type', [ProposalController::class, 'getData'])->name('getDataProposal');

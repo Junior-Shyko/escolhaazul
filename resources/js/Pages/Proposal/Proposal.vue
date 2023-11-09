@@ -80,10 +80,10 @@ onMounted(() => {
     console.log(state.tab)
 })
 
-// props.user.id = 139
-// props.user.proposal_id = 53
-// props.user.email = 'your.email+fakedata80077@gmail.com'
-// props.user.name = 'Ines Kemmer'
+props.user.id = 139
+props.user.proposal_id = 53
+props.user.email = 'your.email+fakedata80077@gmail.com'
+props.user.name = 'Ines Kemmer'
 
 
 
@@ -116,6 +116,7 @@ onMounted(() => {
                                 <v-window v-model="state.tab">
                                     <v-window-item value="one">
                                         <RentalData :user="user" @updateInput="receiveEmit" />
+                                        
                                         <v-row no-gutters>
                                             <v-badge color="default" content="Dados Pessoais" inline></v-badge>
                                         </v-row>
