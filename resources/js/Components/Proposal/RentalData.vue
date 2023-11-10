@@ -10,7 +10,7 @@ const props = defineProps({
     user: Object
 });
 
-const emit = defineEmits(['updateInput']);
+const emit = defineEmits(['updateInput', 'update:menu']);
 
 const saveField = (val) => {
     //Propriedade do valor é preenchido apos um tratamento de campo e valor
@@ -19,10 +19,6 @@ const saveField = (val) => {
         nameInput: val.name,
         proposal_id: props.user.proposal_id,
         route: 'rental-data'
-    }
-    console.log('Fiador', val.value)
-    if (val.value == 'Fiador') {
-        state.dialogGuarantor = true
     }
 
     /**
@@ -104,6 +100,13 @@ const submit = () => {
             })
 
 }
+
+//Chamando o dialog para cadastrar fiador
+const guarantor = (event) => {
+    if (event == 'Fiador') {
+        state.dialogGuarantor = true
+    }
+}
 </script>
 
 <template>
@@ -138,9 +141,10 @@ const submit = () => {
                     model-value="30" suffix="meses" v-model="state.term"></v-text-field>
             </v-col>
             <v-col col cols="12" sx="12" sm="12" md="4">
-                <v-select class="m-2" variant="underlined" label="Tipo de garantia" @blur="saveField($event.target)"
-                    name="warrantyType" :items="['Carta Fiança', 'Caução', 'Crédito', 'Fiador']"
-                    v-model="state.warrantyType"></v-select>
+                <v-select class="m-2" variant="underlined" label="Tipo de garantia" @update:modelValue="guarantor($event)" 
+                    @blur="saveField($event.target)" name="warrantyType" 
+                    :items="['Carta Fiança', 'Caução', 'Crédito', 'Fiador']" v-model="state.warrantyType">
+                </v-select>
             </v-col>
             <v-col col cols="12" sx="12" sm="12" md="4">
                 <v-text-field class="m-1" label="Aluguel Proposto" @blur="saveField($event.target)" name="proposedValue"
