@@ -14,7 +14,7 @@
         
             EscolhaApp.assetURL = "{{ asset('') }}";
             EscolhaApp.baseURL = "{{ url('') }}/";
-            EscolhaApp.baseAPI = "{{ url('') }}/api/";
+            EscolhaApp.baseAPI = "{{ url('') }}/";
           </script>
         <!-- Scripts -->
         @routes
