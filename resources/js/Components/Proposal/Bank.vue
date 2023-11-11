@@ -22,7 +22,6 @@ const saveField = (val) => {
   }
   var newValue = '';
   //Formatando numero de telefone
-  console.log(val.name )
   if(val.name == 'phone_manager' ) {
     newValue = functions.formatPhone(val.value)
     console.log({newValue}) 
@@ -79,7 +78,6 @@ const state = reactive({
 const getData = () => {
   endpoint.getData('banks', props.user.proposal_id, props.user.id, 'personal')
     .then(res => {
-      console.log({ res })
       //Preenchendo os dados
       state.name_bank      = res.name_bank
       state.name_manager = res.name_manager
