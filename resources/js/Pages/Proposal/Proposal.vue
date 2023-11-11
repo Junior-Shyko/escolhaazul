@@ -234,7 +234,7 @@ props.user.name = 'Ines Kemmer'
                                         </v-window-item>
 
                                         <v-window-item value="three">
-                                           <UploadFiles />
+                                           <UploadFiles :user="props.user"/>
                                         </v-window-item>
                                     </v-window>
                                     <v-card-actions class="flex justify-center bg-gray-100 mt-3">
