@@ -92,11 +92,57 @@ props.user.name = 'Ines Kemmer'
     <div
         class="relative sm:flex min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
         <div class="max-w-7xl max-w-full w-full">
-            <div class="flex justify-between bg-white " style="margin-bottom: 10px; padding: 16px;">
+            <!-- <div class="flex justify-between bg-white " style="margin-bottom: 10px; padding: 16px;">
                 <h5> <img src="https://espindolaimobiliaria.com.br/escolhaazul/public/img/logo_espindola.png"
                         alt="Espíndola Imobiliária" width="96"></h5>
                 <h5>(85) 98810-1166</h5>
+            </div> -->
+            <header class="sticky inset-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-lg">
+                <v-container>
+                    <nav class="mx-auto flex max-w-6xl gap-8 px-6 transition-all duration-200 ease-in-out lg:px-12">
+        <div class="relative flex items-center">
+            <a href="/">
+                <img  src="https://espindolaimobiliaria.com.br/escolhaazul/public/img/logo_espindola.png" loading="lazy" style="color:transparent" width="96" height="96"></a>
+        </div>
+        <ul class="hidden items-center justify-center gap-6 md:flex">
+            <!-- <li class="pt-1.5 font-dm text-sm font-medium text-slate-700">
+                <a href="#">Pricing</a>
+            </li>
+            <li class="pt-1.5 font-dm text-sm font-medium text-slate-700">
+                <a href="#">Blog</a>
+            </li>
+            <li class="pt-1.5 font-dm text-sm font-medium text-slate-700">
+                <a href="#">Docs</a>
+            </li> -->
+        </ul>
+        <div class="flex-grow"></div>
+        <div class="hidden items-center justify-center gap-6 md:flex">
+            <a href="#" class="font-dm text-sm font-medium text-slate-700">(85) 98810-1166</a>
+            <a href="#"
+                class="rounded-md bg-gradient-to-br from-green-600 to-emerald-400 px-3 py-1.5 font-dm text-sm font-medium text-white shadow-md shadow-green-400/50 transition-transform duration-200 ease-in-out hover:scale-[1.03]">
+                Dúvidas?
+            </a>
+        </div>
+        <div class="relative flex items-center justify-center md:hidden">
+            <div class="grid grid-rows-2">
+            <div>
+                <a href="#" class="font-dm text-sm font-medium text-slate-700">(85) 98810-1166</a>
             </div>
+            <!-- ... -->
+            <div>
+                <a href="#"
+                class="rounded-md bg-gradient-to-br from-green-600 to-emerald-400 px-3 py-1.5 font-dm text-sm font-medium text-white shadow-md shadow-green-400/50 transition-transform duration-200 ease-in-out hover:scale-[1.03]">
+                Dúvidas?
+            </a>
+            </div>
+            </div>
+            
+           
+            
+        </div>
+    </nav>
+                </v-container>
+            </header>
             <div class=" grid grid-cols-1 gap-1 p-2">
                 <div class=" flex justify-center">
                     <h6 v-if="state.tab == 'one'" class="text-blue-700 hover:text-slate-600 font-medium">{{ user.name }},
@@ -114,7 +160,7 @@ props.user.name = 'Ines Kemmer'
                                 <v-window v-model="state.tab">
                                     <v-window-item value="one">
                                         <RentalData :user="user" @updateInput="receiveEmit" />
-                                        
+
                                         <v-row no-gutters>
                                             <v-badge color="default" content="Dados Pessoais" inline></v-badge>
                                         </v-row>
@@ -150,20 +196,23 @@ props.user.name = 'Ines Kemmer'
                                             <v-badge color="default" content="Referência" inline class="mb-2"></v-badge>
                                         </div>
                                         <div class="m-2 flex w-full flex text-center justify-center">
-                                            <h6>Agora você vai adicionar algumas referências importante para análise da 
+                                            <h6>Agora você vai adicionar algumas referências importante para análise da
                                                 propposta clicando no icone desejado.
                                             </h6>
                                         </div>
                                         <div
                                             class="grid grid-cols-3 gap-4 font-mono text-white text-sm text-center font-bold leading-6 bg-stripes-fuchsia rounded-lg">
                                             <div class="p-4 rounded-lg shadow-xl bg-sky-300">
-                                                <Bank :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
+                                                <Bank :user="props.user" @updateInput="receiveEmit"
+                                                    object_type="personal" />
                                             </div>
                                             <div class="p-4 rounded-lg shadow-xl bg-sky-500">
-                                                <RealState :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
+                                                <RealState :user="props.user" @updateInput="receiveEmit"
+                                                    object_type="personal" />
                                             </div>
-                                            <div class="p-4 rounded-lg shadow-xl bg-sky-300">                                                
-                                                <Commercial :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
+                                            <div class="p-4 rounded-lg shadow-xl bg-sky-300">
+                                                <Commercial :user="props.user" @updateInput="receiveEmit"
+                                                    object_type="personal" />
                                             </div>
                                             <div class="p-4 rounded-lg shadow-xl  bg-sky-500 border">
                                                 <!-- <v-btn icon="fas fa-person" elevation="4" >
@@ -171,10 +220,12 @@ props.user.name = 'Ines Kemmer'
                                                 <div class="flex justify-center">
                                                     <small class="font-semibold text-white">Pessoal</small>
                                                 </div> -->
-                                                <Personal :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
+                                                <Personal :user="props.user" @updateInput="receiveEmit"
+                                                    object_type="personal" />
                                             </div>
                                             <div class="p-4 rounded-lg shadow-xl bg-sky-300">
-                                                <Property  :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
+                                                <Property :user="props.user" @updateInput="receiveEmit"
+                                                    object_type="personal" />
                                             </div>
                                             <div class="p-4 rounded-lg shadow-xl  bg-sky-500 border">
                                                 <!-- <v-btn icon="fas fa-car" elevation="4" >
@@ -182,9 +233,10 @@ props.user.name = 'Ines Kemmer'
                                                 <div class="flex justify-center">
                                                     <small class="font-semibold text-white">Veículo</small>
                                                 </div> -->
-                                                <Vehicle :user="props.user" @updateInput="receiveEmit" object_type="personal"/>
+                                                <Vehicle :user="props.user" @updateInput="receiveEmit"
+                                                    object_type="personal" />
                                             </div>
-                                           
+
                                         </div>
                                         <!-- <Commercial /> -->
                                         <div class="bg-grey-lighten-5 flex">
@@ -317,11 +369,12 @@ props.user.name = 'Ines Kemmer'
 
                                 </v-card-actions>
                                 <v-col cols="12" xs="12" sm="12" md="12" class=" text-center">
-                                    <small class="text-xs">Ao Finalizar essa etapa, você cumpriu {{ state.skill }}% da proposta</small>  
+                                    <small class="text-xs">Ao Finalizar essa etapa, você cumpriu {{ state.skill }}% da
+                                        proposta</small>
                                     <v-progress-linear v-model="state.skill" color="light-blue" striped height="25"
                                         class="mb-1">
                                         <template v-slot:default="{ value }">
-                                         <strong>{{ value }}%</strong>
+                                            <strong>{{ value }}%</strong>
                                         </template>
                                     </v-progress-linear>
                                 </v-col>
