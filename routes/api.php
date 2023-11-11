@@ -34,6 +34,7 @@ Route::prefix('form')->group(function () {
     Route::post('address', [AddressController::class, 'store'] )->name('api/form/address');
     
     Route::put('address', [AddressController::class, 'update'] )->name('api/form/address/update');
+    Route::post('upload', [ProposalController::class, 'uploadProposal'])->name('upload');
     
 });
 
