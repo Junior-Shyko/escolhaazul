@@ -5,8 +5,10 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+
 //TERCEIROS
 import VueMask from '@devindex/vue-mask'; 
+import DropZone from 'dropzone-vue';
 
 // Vuetify
 // import '@mdi/font/css/materialdesignicons.css'
@@ -20,6 +22,7 @@ import { mdi } from 'vuetify/iconsets/mdi'
 import { VDataTable } from 'vuetify/labs/VDataTable'
 //Style
 import '@fortawesome/fontawesome-free/css/all.css'
+import 'dropzone-vue/dist/dropzone-vue.common.css';
 import colors from 'vuetify/lib/util/colors'
 
 
@@ -65,6 +68,7 @@ createInertiaApp({
             .use(ZiggyVue, Ziggy)
             .use(vuetify)
             .use(VueMask)
+            .use(DropZone)
             .mount(el);
     },
     progress: {
