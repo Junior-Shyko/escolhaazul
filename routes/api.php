@@ -12,6 +12,7 @@ use App\Http\Controllers\RealStateController;
 use App\Http\Controllers\CommercialController;
 use App\Http\Controllers\RentalDataController;
 use App\Http\Controllers\DataPersonalController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\GuarantorController;
 
 /*
@@ -34,7 +35,7 @@ Route::prefix('form')->group(function () {
     Route::post('address', [AddressController::class, 'store'] )->name('api/form/address');
     
     Route::put('address', [AddressController::class, 'update'] )->name('api/form/address/update');
-    Route::post('upload', [ProposalController::class, 'uploadProposal'])->name('upload');
+    Route::post('upload/proposal/{id}/{type}', [FileController::class, 'store'])->name('upload');
     
 });
 

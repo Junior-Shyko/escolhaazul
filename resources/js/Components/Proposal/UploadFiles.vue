@@ -2,12 +2,16 @@
 import {reactive} from "vue";
 import functions from "@/Util/functions";
 
-
-const state = reactive({
-  urlApi: EscolhaApp.baseAPI+'api/form/upload',
-  statusUpload: false
+const props = defineProps({
+    user: Object
 })
 
+
+const state = reactive({
+  urlApi: EscolhaApp.baseAPI+'api/form/upload/proposal/'+ props.user.proposal_id+ '/persoal',
+  statusUpload: false
+})
+console.log(props.user)
 </script>
 
 <template>

@@ -125,12 +125,4 @@ class ProposalController extends Controller
         
     }
 
-    public function uploadProposal(Request $request)
-    {
-        // dump($request->file('file'));
-       $imageFile = $request->file('file');
-       $nameImageFile = time().rand(1,100).'.'.$imageFile->extension();
-       $imageFile->move(public_path('upload'), $nameImageFile);
-       return response()->json(['messsage' => 'Upload realizado com sucesso']);
-    }
 }
