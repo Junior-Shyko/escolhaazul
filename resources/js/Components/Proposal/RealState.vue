@@ -1,5 +1,7 @@
 <script setup>
 import { reactive, onMounted } from 'vue';
+import functions from "@/Util/functions";
+import endpoint from '@/Services/endpoints'
 
 const props = defineProps({
   user: Object,
@@ -31,6 +33,26 @@ const state = reactive({
   object_type: '',
 })
 
+//endpoint para buscar dados
+const getData = () => {
+  endpoint.getData('real_states', props.user.proposal_id, props.user.id, 'personal')
+    .then(res => {
+      //Preenchendo os dados
+      state.name          = res.name
+      state.creci         = res.creci
+      state.email         = res.email
+      state.phone_fixed   = res.phone_fixed
+      state.phone_mobile  = res.phone_mobile
+    })
+    .catch(err => {
+      console.log({ err })
+    })
+
+}
+
+onMounted(() => {
+  getData()
+})
 </script>
 
 <template>

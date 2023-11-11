@@ -1,7 +1,9 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, onMounted  } from 'vue';
 import functions from '@/Util/functions';
 import DialogProposal from './DialogProposal.vue';
+import endpoint from '@/Services/endpoints'
+
 
 const props = defineProps({
   user: Object,
@@ -41,6 +43,30 @@ const state = reactive({
 const closeDialog = (value) => {
   state.dialogVehicle = value
 }
+
+const getData = () => {
+  endpoint.getData('vehicles', props.user.proposal_id, props.user.id, 'personal')
+    .then(res => {
+      //Preenchendo os dados
+      state.branch    = res.branch
+      state.model     = res.model
+      state.year      = res.year
+      state.plate     = res.plate
+      state.financed  = res.financed
+      state.financial = res.financial
+      state.value     = res.value
+    })
+    .catch(err => {
+      console.log({ err })
+    })
+
+}
+
+onMounted(() => {
+  getData()
+})
+
+
 </script>
 
 <template>
