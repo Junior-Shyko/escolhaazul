@@ -22,7 +22,6 @@ const saveField = (val) => {
   }
   var newValue = '';
   //Formatando numero de telefone
-  console.log(val.name )
   if(val.name == 'phone_manager' ) {
     newValue = functions.formatPhone(val.value)
     console.log({newValue}) 
@@ -79,15 +78,19 @@ const state = reactive({
 const getData = () => {
   endpoint.getData('banks', props.user.proposal_id, props.user.id, 'personal')
     .then(res => {
-      console.log({ res })
       //Preenchendo os dados
-      // state.finality      = res.warrantyType
-      // state.proposedValue = res.proposedValue
-      // state.ps            = res.ps
-      // state.refImmobile   = res.refImmobile
-      // state.typeRentalUser= res.typeRentalUser
-      // state.warrantyType  = res.warrantyType
-      // state.term      = res.term
+      state.name_bank      = res.name_bank
+      state.name_manager = res.name_manager
+      state.name_agency            = res.name_agency
+      state.phone_manager   = res.phone_manager
+      state.number_acoount= res.number_acoount
+      state.email_manager  = res.email_manager
+      state.client_since      = functions.usaDatetoBr(res.client_since);
+      state.name_credit_card1  = res.email_manager
+      state.credit_approved  = res.credit_approved
+      state.limit_credit_card1  = res.limit_credit_card1
+      state.name_credit_card2  = res.name_credit_card2
+      state.limit_credit_card2  = res.limit_credit_card2
     })
     .catch(err => {
       console.log({ err })

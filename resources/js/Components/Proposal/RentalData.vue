@@ -62,8 +62,10 @@ const form = useForm({
 
 //endpoint para buscar dados
 const getData = () => {
+    console.log('getData')
     endpoint.getData('rental_datas', props.user.proposal_id, props.user.id, 'personal')
         .then(res => {
+            console.log(res)
             //Preenchendo os dados
             state.finality = res.warrantyType
             state.proposedValue = res.proposedValue

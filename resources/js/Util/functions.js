@@ -66,9 +66,15 @@ const formatPhone = (phone) => {
    return newstr
 }
 
+const usaDatetoBr = (datestring) => {
+  var dateSplitted = datestring.split('-');
+  return dateSplitted[2] + '/' + dateSplitted[1] + '/' + dateSplitted[0];
+}
+
 export default {
     toast,
     valurMoneyUSA,
     brDatetoUsa,
-    formatPhone
+    formatPhone,
+    usaDatetoBr
 }

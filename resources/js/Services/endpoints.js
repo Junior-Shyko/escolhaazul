@@ -1,8 +1,9 @@
 import api from '@/Services/server'
 
-async function getData(table, proposal, user)
+async function getData(table, proposal, user, type)
 {
-    const dataRental = api.get('api/component/'+table+'/proposal/'+ proposal +'/user/'+ user +'')
+    console.log({proposal})
+    const dataRental = api.get('api/component/'+table+'/proposal/'+ proposal +'/user/'+ user +'/'+type)
     .then(res => {
         // console.log(res)
       
