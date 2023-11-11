@@ -48,7 +48,7 @@ Route::put('vehicle/update', [VehicleController::class, 'createOrUpdate'] )->nam
 Route::put('guarantor/update', [GuarantorController::class, 'createOrUpdate'] )->name('api/guarantor');
 
 
-Route::get('component/{table}/proposal/{proposal}/user/{user}/$type', [ProposalController::class, 'getData'])->name('getDataProposal');
+Route::get('component/{table}/proposal/{proposal}/user/{user}/{type}', [ProposalController::class, 'getData'])->name('getDataProposal');
 //Busca endereço
 Route::get('address/{user}/{object}/{type}' , [AddressController::class, 'show'] )->name('address/show');
 
