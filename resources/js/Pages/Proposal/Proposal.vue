@@ -44,7 +44,7 @@ const receiveEmit = (value) => {
     }
     dataPut[value.nameInput] = value.valueInput
     console.log({ value })
-    api.put('api/' + value.route + '/update', dataPut)
+    api.put(value.route + '/update', dataPut)
         .then(res => {
             if (res.data && res.data.data !== undefined) {
                 Object.entries(res.data.data).forEach(([key, value]) => {
@@ -76,15 +76,10 @@ const skill = () => {
     }
 }
 
-
-onMounted(() => {
-    console.log(state.tab)
-})
-
-props.user.id = 139
-props.user.proposal_id = 53
-props.user.email = 'your.email+fakedata80077@gmail.com'
-props.user.name = 'Ines Kemmer'
+// props.user.id = 139
+// props.user.proposal_id = 53
+// props.user.email = 'your.email+fakedata80077@gmail.com'
+// props.user.name = 'Ines Kemmer'
 
 </script>
 

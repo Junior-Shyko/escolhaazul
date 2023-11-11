@@ -65,7 +65,7 @@ const submit = () => {
     form.uf = state.uf
     //Quando for a primeira vez q cadastra o endereço
     if (state.verifyAction == 'create') {
-        api.post('api/form/address', form)
+        api.post('form/address', form)
             .then(res => {
                 //Mensagem de sucesso      
                 functions.toast('Sucesso', 'Endereço Cadastrado', 'success')
@@ -75,7 +75,7 @@ const submit = () => {
                 functions.toast('Ops!', 'Ocorreu um erro. Tente depois', 'error')
             })
     } else {
-        api.put('api/form/address', form)
+        api.put('form/address', form)
         .then(res => {
             //Mensagem de sucesso      
             functions.toast('Sucesso', 'Alterado Cadastrado', 'success')
