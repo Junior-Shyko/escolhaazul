@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { defineProps, reactive, onMounted } from "vue";
 import { Head } from '@inertiajs/vue3';
 import Address from '@/Components/Address.vue';
 import ContactPhone from '@/Components/ContactPhone.vue';
@@ -75,7 +75,9 @@ const skill = () => {
             break;
     }
 }
-
+onMounted(() => {
+    console.log(props.user)
+})
 // props.user.id = 139
 // props.user.proposal_id = 53
 // props.user.email = 'your.email+fakedata80077@gmail.com'
@@ -155,7 +157,7 @@ const skill = () => {
                                 <v-card-text>
                                     <v-window v-model="state.tab">
                                         <v-window-item value="one">
-                                            <RentalData :user="user" @updateInput="receiveEmit" />
+                                            <RentalData :user="props.user" @updateInput="receiveEmit" />
 
                                             <v-row no-gutters>
                                                 <v-badge color="default" content="Dados Pessoais" inline></v-badge>

@@ -5,7 +5,6 @@ export const urlBase = import.meta.env.VITE_BASE_URL;
 
 export const api = axios.create({
     // ONLINE
-    // baseURL: "http://159.203.69.144:38000/api/v1/",
     baseURL: EscolhaApp.baseAPI,
 });
 

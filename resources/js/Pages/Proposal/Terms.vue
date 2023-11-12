@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link, useForm, router } from '@inertiajs/vue3';
+import { Head,router } from '@inertiajs/vue3';
 
 const props = defineProps({
     user: Object

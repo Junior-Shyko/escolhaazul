@@ -1,9 +1,11 @@
-<script>
+<script setup>
 import endpoint from '@/Services/endpoints'
 import DialogProposal from './DialogProposal.vue'
 import {
     reactive,
-    onMounted
+    onMounted,
+    defineProps,
+    defineEmits
 } from 'vue';
 import {
     useForm
