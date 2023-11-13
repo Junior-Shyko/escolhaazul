@@ -42,4 +42,6 @@ Route::prefix('formulario')->group(function () {
     Route::post('termos',  [ProposalController::class, 'terms'])->name('formulario/termos');
 });
 
+Route::get('/finalizar/{email}', [ProposalController::class, 'finishProposal'])->name('proposal.finish');
+
 require __DIR__.'/auth.php';

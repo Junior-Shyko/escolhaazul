@@ -1,17 +1,22 @@
 <script setup>
-import {reactive} from "vue";
-import functions from "@/Util/functions";
+import {reactive, onMounted, ref} from "vue";
+import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
     user: Object
 })
 
-
 const state = reactive({
   urlApi: EscolhaApp.baseAPI+'form/upload/proposal/'+ props.user.proposal_id+ '/persoal',
-  statusUpload: false
+  statusUpload: false,
+  userProposal: props.user
 })
-console.log(props.user)
+
+function submit() {
+    // console.log(state.userProposal.email)
+    router.get('/finalizar/' + state.userProposal.email)
+}
+
 </script>
 
 <template>
@@ -29,6 +34,7 @@ console.log(props.user)
                         E, após a aprovação, será imprescindível apresentar os originais
                         ou
                         enviar cópia autenticada até o ato da entrega das chaves.
+                        
                     </p>
                     <div style="position: relative;">
                      
@@ -44,7 +50,9 @@ console.log(props.user)
                 </v-col>
             </v-container>
             <v-container>
-              
+                <form @submit.prevent="submit">
+                    <v-btn block color="primary" type="submit">Finalizar Proposta</v-btn>
+                </form>
             </v-container>
         </v-row>
     </div>
