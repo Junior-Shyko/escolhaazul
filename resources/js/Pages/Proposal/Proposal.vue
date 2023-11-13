@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, reactive, onMounted } from "vue";
+import { defineProps, reactive, onMounted, ref, onBeforeUnmount} from "vue";
 import { Head } from '@inertiajs/vue3';
 import Address from '@/Components/Address.vue';
 import ContactPhone from '@/Components/ContactPhone.vue';
@@ -71,9 +71,58 @@ const skill = () => {
             break;
     }
 }
+
+const showAlert = ref(true);
+
+// Adiciona um ouvinte de evento antes da descarga da página
+// onBeforeUnmount(() => {
+//   if (showAlert.value) {
+//     // Exibe o alerta quando a página está prestes a ser descarregada
+//     const message = 'Você tem certeza que deseja sair? Até agora suas informações foram salvas, mas você será redirecionado para o início.';
+//     if (!window.confirm(message)) {
+//       // Cancela a descarga da página se o usuário não confirmar
+//       showAlert.value = false;
+//       return false
+//     }
+//   }
+// });
+
 onMounted(() => {
-    console.log(props.user)
+    const handleKeyPress = (event) => {
+        console.log(event)
+    if (event.key === 'F5') {
+      event.preventDefault();
+      const message = 'Você tem certeza que deseja atualizar? Até agora suas informações foram salvas, mas você será redirecionado para o início.';
+      if (!window.confirm(message)) {
+        // Cancela a atualização da página se o usuário não confirmar
+        showAlert.value = false;
+      }else{
+        console.log(EscolhaApp.baseURL)
+        window.location.href=EscolhaApp.baseURL
+      }
+    }
+  };
+
+  window.addEventListener('keydown', handleKeyPress);
+
+  // Remove o ouvinte de evento quando o componente é desmontado
+  onBeforeUnmount(() => {
+    window.removeEventListener('keydown', handleKeyPress);
+  });
 })
+
+// Bloqueia o evento de recarregar a página no navegador
+window.onbeforeunload = (event) => {
+   
+  if (showAlert.value) {
+    console.log(showAlert.value)
+    // functions.toast('Ops!', 'Voce vai sair da página', 'error')
+    const message = 'Você tem certeza que deseja sair? Até agora suas informações foram salvas, mas você será redirecionado para o início.';
+    alert(message)
+    event.returnValue = message;
+    return false;
+  }
+};
 // props.user.id = 139
 // props.user.proposal_id = 53
 // props.user.email = 'your.email+fakedata80077@gmail.com'
