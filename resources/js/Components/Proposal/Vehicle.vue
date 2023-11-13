@@ -64,6 +64,7 @@ const getData = () => {
 
 onMounted(() => {
   getData()
+
 })
 
 
@@ -73,6 +74,7 @@ onMounted(() => {
   <div>
     <v-row>
       <v-col cols="12">
+       
         <v-btn color="white" @click="state.dialogVehicle = true" elevation="2" icon="fas fa-car">
         </v-btn>
         <v-row>
@@ -81,6 +83,7 @@ onMounted(() => {
               <small class="font-semibold">Veículo</small>
             </div>
             <DialogProposal :dialog="state.dialogVehicle" @updateDialog="closeDialog">
+             
               <v-col cols="12" xs="12" sm="12" md="3">
                 <v-text-field label="Marca" variant="underlined" 
                   @blur="saveField($event.target)" name="branch"

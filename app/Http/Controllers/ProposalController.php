@@ -113,7 +113,6 @@ class ProposalController extends Controller
 
         $user = $request->data['user'];
         // $user = [];
-       
         return Inertia::render('Proposal/Terms', ['user' => $user]);
     }
 
@@ -122,7 +121,11 @@ class ProposalController extends Controller
     {
         $getData = new ProposalRepository;
         return $getData->getData($component, $proposal, $user, $objectType)->first();
-        
+    }
+
+    public function finishProposal($email)
+    {
+        return Inertia::render('Proposal/Finish', ['email' => $email]);
     }
 
 }
