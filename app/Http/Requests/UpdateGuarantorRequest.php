@@ -39,8 +39,7 @@ class UpdateGuarantorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|min:5|email:rfc,dns',
-            'user_id' => 'required'
+            'email' => 'required|min:5|email:rfc,dns'
         ];
     }
 
@@ -52,8 +51,7 @@ class UpdateGuarantorRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.email' => 'O E-mail deve está em um formato válido',
-            'user.required' => 'O usuário dessa proposta é obrigatório',
+            'email.email' => 'O E-mail deve está em um formato válido'
         ];
     }
 }

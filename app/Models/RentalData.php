@@ -21,6 +21,8 @@ class RentalData extends Model
         'currentCondominiumValue',
         'iptu',
         'ps',
-        'user_id'
+        'user_id',
+        'status',
+        'date_finish'
     ];
 }

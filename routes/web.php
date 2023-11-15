@@ -40,8 +40,10 @@ Route::prefix('formulario')->group(function () {
     Route::get('/proposta', [ProposalController::class, 'index'])->name('formulario/proposta');
     Route::post('/proposta', [ProposalController::class, 'index'])->name('formulario/proposta');
     Route::post('termos',  [ProposalController::class, 'terms'])->name('formulario/termos');
+    Route::post('/finalizar', [ProposalController::class, 'alterStatus'])->name('form.finish');
 });
 
 Route::get('/finalizar/{email}', [ProposalController::class, 'finishProposal'])->name('proposal.finish');
+
 
 require __DIR__.'/auth.php';
