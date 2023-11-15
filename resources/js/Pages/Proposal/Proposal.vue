@@ -89,7 +89,6 @@ const showAlert = ref(true);
 
 onMounted(() => {
     const handleKeyPress = (event) => {
-        console.log(event)
     if (event.key === 'F5') {
       event.preventDefault();
       const message = 'Você tem certeza que deseja atualizar? Até agora suas informações foram salvas, mas você será redirecionado para o início.';

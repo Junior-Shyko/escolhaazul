@@ -14,7 +14,15 @@ const state = reactive({
 
 function submit() {
     // console.log(state.userProposal.email)
-    router.get('/finalizar/' + state.userProposal.email)
+    let dataFinish = {
+        status  : 'finalizada',
+        user_id : props.user.id,
+        proposal: props.user.proposal_id
+    }
+    
+    router.post('finalizar', dataFinish, {
+        preserveScroll: true
+    });
 }
 
 </script>

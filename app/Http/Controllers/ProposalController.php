@@ -2,23 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Repositories\ProposalRepository;
-use Inertia\Inertia;
+use Carbon\Carbon;
+use App\Models\User;
 
+use Inertia\Inertia;
 use App\Models\Proposal;
+use App\Models\RentalData;
+use App\Mail\FinishProposal;
+use App\Models\DataPersonal;
 use Illuminate\Http\Request;
 use App\Http\Services\UserService;
 use App\Http\Services\PhoneService;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreProposalRequest;
 use App\Http\Requests\ProposalCreateRequest;
 use App\Http\Requests\UpdateProposalRequest;
-use App\Models\DataPersonal;
-use App\Models\RentalData;
-
+use App\Http\Repositories\ProposalRepository;
 
 class ProposalController extends Controller
 {
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -85,27 +88,26 @@ class ProposalController extends Controller
         $userService = new UserService($request->name, $request->email);
         $user = $userService->createUser();
         $createPhone = false;
-       try {
+        try {
 
-        //Usuário criado
-        if($user) {
-            //Cadastrando telefone
-            $phone = new PhoneService($request->phone, $user->id , 'User', $user->id);
-            $createPhone = $phone->createPhone();
-            $rentalDataId = RentalData::insertGetId(
-                ['typeRentalUser' => $request->type, 'user_id' => $user->id, 'object_id' => $user->id, 'object_type' => 'personal']
-            );
-            DataPersonal::insert(['user_id' => $user->id]);
-            if($createPhone)
-                $user->proposal_id = $rentalDataId;
+            //Usuário criado
+            if ($user) {
+                //Cadastrando telefone
+                $phone = new PhoneService($request->phone, $user->id, 'User', $user->id);
+                $createPhone = $phone->createPhone();
+                $rentalDataId = RentalData::insertGetId(
+                    ['typeRentalUser' => $request->type, 'user_id' => $user->id, 'object_id' => $user->id, 'object_type' => 'personal']
+                );
+                DataPersonal::insert(['user_id' => $user->id]);
+                if ($createPhone)
+                    $user->proposal_id = $rentalDataId;
                 return response()->json(['user' => $user], 200);
-        }
-        
-        return response()->json(['message' => 'Phone not cadastre'], 200);
+            }
 
-       } catch (\Exception $th) {
-         dump($th->getMessage());
-       }
+            return response()->json(['message' => 'Phone not cadastre'], 200);
+        } catch (\Exception $th) {
+            dump($th->getMessage());
+        }
     }
 
     public function terms(Request $request)
@@ -128,4 +130,35 @@ class ProposalController extends Controller
         return Inertia::render('Proposal/Finish', ['email' => $email]);
     }
 
+    public function alterStatus(Request $request)
+    {
+
+        $proposal = RentalData::find($request->proposal);
+        $user = User::find($request->user_id);
+
+        try {
+            $proposal->update([
+                'status' => $request->status,
+                'date_finish' => Carbon::now()
+            ]);
+            $mail = Mail::to('contato@escolhaazul.com')
+                ->send(new FinishProposal([
+                    'fromEmail' => $user->email,
+                    'fromName' => $user->name,
+                    'subject' => 'Proposta enviada com sucesso'
+                ]));
+
+            if ($mail)
+                return redirect('finalizar/fran@mail.com');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+
+        // return redirect('finalizar/fran@mail.com');
+    }
+
+    public function sendGuarantor(Request $request)
+    {
+        
+    }
 }

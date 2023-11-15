@@ -101,12 +101,20 @@ const closeDialog = (value) => {
 const submit = () => {
     api.put('/guarantor/update', form)
         .then(res => {
-            //Mensagem de sucesso      
-            functions.toast('Sucesso', 'Fiador Cadastrado e receberá um e-mail.', 'success')
-
+            //Mensagem de sucesso
+            if (res.data.message !== 'Validation errors') {
+                functions.toast('Sucesso', 'Fiador Cadastrado e receberá um e-mail.', 'success')
+            } else {
+                if (res.data && res.data.data !== undefined) {
+                    Object.entries(res.data.data).forEach(([key, value]) => {
+                        functions.toast('Ops!', value[0], 'error')
+                    });
+                }
+                return false;
+            }
         })
         .catch(err => {
-            functions.toast('Ops!', 'Ocorreu um erro. Tente depois', 'error')
+            console.log({ err })
         })
 
 }
@@ -120,72 +128,82 @@ const guarantor = (event) => {
 </script>
 
 <template>
-<div>
-    <v-row no-gutters>
-        <v-badge color="default" content="Referencia do Imovel" inline></v-badge>
-    </v-row>
-    <v-row no-gutters>
-        <v-col col cols="12" sx="12" sm="12" md="4">
-            <v-autocomplete class="m-2" variant="underlined" name="refImmobile" label="Pesquisar o Imóvel" :items="['Apartamento com 2 dormitórios para alugar, 58 m² por R$ 1.350/mês - Vila União - Fortaleza/CE',
+    <div>
+        <v-row no-gutters>
+            <v-badge color="default" content="Referencia do Imovel" inline></v-badge>
+        </v-row>
+        <v-row no-gutters>
+            <v-col col cols="12" sx="12" sm="12" md="4">
+                <v-autocomplete class="m-2" variant="underlined" name="refImmobile" label="Pesquisar o Imóvel" :items="['Apartamento com 2 dormitórios para alugar, 58 m² por R$ 1.350/mês - Vila União - Fortaleza/CE',
                     'Casa com 4 dormitórios para alugar, 93 m² por R$ 1.250 /mês - Bela Vista - Fortaleza/CE',
                     'Galpão para alugar, 4000 m² por R$ 25.800,00 - Messejana - Fortaleza/CE',
                     'Apartamento com 4 dormitórios para alugar, 90 m² por R$ 1.500,00 /mês - José Bonifácio - Fortaleza/CE',
                     'Kitnet com 1 dormitório para alugar, 16 m² por R$ 680,00 /mês - Benfica - Fortaleza/CE',
-                    'Loja para alugar, 750 m² aluguel R$ 11.500,00/mês - Centro - Fortaleza/CE']" @blur="saveField($event.target)" v-model="state.refImmobile"></v-autocomplete>
-        </v-col>
-        <v-col col cols="12" sx="12" sm="12" md="4">
-            <v-select class="m-2" variant="underlined" label="Finalidade" name="finality" @blur="saveField($event.target)" :items="['Comercial', 'Residencial', 'Temporada']" v-model="state.finality"></v-select>
-        </v-col>
-        <v-col col cols="12" sx="12" sm="12" md="4">
-            <v-select class="m-2" variant="underlined" label="Atendente responsável" name="" :items="['Ana', 'Paulo', 'Maria']"></v-select>
-        </v-col>
-    </v-row>
-    <v-row no-gutters>
+                    'Loja para alugar, 750 m² aluguel R$ 11.500,00/mês - Centro - Fortaleza/CE']"
+                    @blur="saveField($event.target)" v-model="state.refImmobile"></v-autocomplete>
+            </v-col>
+            <v-col col cols="12" sx="12" sm="12" md="4">
+                <v-select class="m-2" variant="underlined" label="Finalidade" name="finality"
+                    @blur="saveField($event.target)" :items="['Comercial', 'Residencial', 'Temporada']"
+                    v-model="state.finality"></v-select>
+            </v-col>
+            <v-col col cols="12" sx="12" sm="12" md="4">
+                <v-select class="m-2" variant="underlined" label="Atendente responsável" name=""
+                    :items="['Ana', 'Paulo', 'Maria']"></v-select>
+            </v-col>
+        </v-row>
+        <v-row no-gutters>
 
-        <v-col col cols="12" sx="12" sm="12" md="4">
-            <v-text-field class="mt-1" label="Prazo Desejado" @blur="saveField($event.target)" name="term" model-value="30" suffix="meses" v-model="state.term"></v-text-field>
-        </v-col>
-        <v-col col cols="12" sx="12" sm="12" md="4">
-            <v-select class="m-2" variant="underlined" label="Tipo de garantia" @update:modelValue="guarantor($event)" @blur="saveField($event.target)" name="warrantyType" :items="['Carta Fiança', 'Caução', 'Crédito', 'Fiador']" v-model="state.warrantyType">
-            </v-select>
-        </v-col>
-        <v-col col cols="12" sx="12" sm="12" md="4">
-            <v-text-field class="m-1" label="Aluguel Proposto" @blur="saveField($event.target)" name="proposedValue" prefix="R$" v-model="state.proposedValue" v-mask-decimal.br="2"></v-text-field>
-        </v-col>
-        <v-col col cols="12" sx="12" sm="12" md="8">
-            <v-textarea class="m-1" rows="3" variant="outlined" label="Observação" @blur="saveField($event.target)" name="ps" v-model="state.ps" maxlength="120" single-line></v-textarea>
-        </v-col>
-        <DialogProposal :dialog="state.dialogGuarantor" @updateDialog="closeDialog">
-            <v-row>
-                <v-col cols="12">
-                    <div class="rounded-lg bg-white shadow-lg">
-                        <p class="m-2 text-gray-500 dark:text-gray-400 py-5">
-                            <v-icon icon="fas fa-circle-info"></v-icon>
-                            Você escolheu um fiador como garantia, agora precisa de algumas informações para enviar um
-                            e-mail para ele convidando a preencher um cadastro relacionado a essa sua proposta.
-                        </p>
-                    </div>
-                    <form @submit.prevent="submit">
-                        <v-card>
-                            <v-card-text>
-                                <v-text-field class="m-1" label="Nome do Fiador" variant="underlined" name="proposedValue" v-model="form.name"></v-text-field>
-                                <v-text-field class="m-1" label="E-mail do Fiador" variant="underlined" name="proposedValue" v-model="form.email"></v-text-field>
-                            </v-card-text>
-                            <v-card-actions>
+            <v-col col cols="12" sx="12" sm="12" md="4">
+                <v-text-field class="mt-1" label="Prazo Desejado" @blur="saveField($event.target)" name="term"
+                    model-value="30" suffix="meses" v-model="state.term"></v-text-field>
+            </v-col>
+            <v-col col cols="12" sx="12" sm="12" md="4">
+                <v-select class="m-2" variant="underlined" label="Tipo de garantia" @update:modelValue="guarantor($event)"
+                    @blur="saveField($event.target)" name="warrantyType"
+                    :items="['Carta Fiança', 'Caução', 'Crédito', 'Fiador']" v-model="state.warrantyType">
+                </v-select>
+            </v-col>
+            <v-col col cols="12" sx="12" sm="12" md="4">
+                <v-text-field class="m-1" label="Aluguel Proposto" @blur="saveField($event.target)" name="proposedValue"
+                    prefix="R$" v-model="state.proposedValue" v-mask-decimal.br="2"></v-text-field>
+            </v-col>
+            <v-col col cols="12" sx="12" sm="12" md="8">
+                <v-textarea class="m-1" rows="3" variant="outlined" label="Observação" @blur="saveField($event.target)"
+                    name="ps" v-model="state.ps" maxlength="120" single-line></v-textarea>
+            </v-col>
+            <DialogProposal :dialog="state.dialogGuarantor" @updateDialog="closeDialog">
+                <v-row>
+                    <v-col cols="12">
+                        <div class="rounded-lg bg-white shadow-lg">
+                            <p class="m-2 text-gray-500 dark:text-gray-400 py-5">
+                                <v-icon icon="fas fa-circle-info"></v-icon>
+                                Você escolheu um fiador como garantia, agora precisa de algumas informações para enviar um
+                                e-mail para ele convidando a preencher um cadastro relacionado a essa sua proposta.
+                            </p>
+                        </div>
+                        <form @submit.prevent="submit">
+                            <v-card>
+                                <v-card-text>
+                                    <v-text-field class="m-1" label="Nome do Fiador" variant="underlined"
+                                        name="proposedValue" v-model="form.name"></v-text-field>
+                                    <v-text-field class="m-1" label="E-mail do Fiador" variant="underlined"
+                                        name="proposedValue" v-model="form.email"></v-text-field>
+                                </v-card-text>
+                                <v-card-actions>
 
-                                <v-btn color="" :block="true" class="bg-primary mb-2" type="submit">
-                                    Confirmar convite
-                                    <v-icon icon="fas fa-paper-plane" class="mb-1 ml-1" size="small"></v-icon>
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </form>
-                </v-col>
+                                    <v-btn color="" :block="true" class="bg-primary mb-2" type="submit">
+                                        Confirmar convite
+                                        <v-icon icon="fas fa-paper-plane" class="mb-1 ml-1" size="small"></v-icon>
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </form>
+                    </v-col>
 
             </v-row>
         </DialogProposal>
     </v-row>
-</div>
-</template>
+</div></template>
 
 <style lang="scss" scoped></style>
