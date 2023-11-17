@@ -12,10 +12,21 @@ Instalação básica do laravel versão 10 com o Docker
  - 
 	 ### Configuração 
 	 - O arquivo .env armazena os valores para o docker-compose.yml
-	 - Rodar o comando `docker-compose exec laravel.test composer install`
-	 - Rodar o comando `docker-compose exec laravel.test npm run install`
-     - Rodar o comando `docker-compose exec laravel.test npm run dev`
+	 - Rodar o comando `docker-compose exec ea composer install`
+	 - Rodar o comando `docker-compose exec ea php artisan migrate`
+	 - Rodar o comando `docker-compose exec ea php artisan key:generate`
+	 - Rodar o comando `docker-compose exec ea php artisan cache:clear`
+	 - Rodar o comando `sudo chgrp -R www-data storage bootstrap/cache`
+	 - Rodar o comando `sudo chmod -R ug+rwx storage bootstrap/cache`
+	 - Rodar o comando `docker-compose exec ea npm install`
+     - Rodar o comando `docker-compose exec ea npm run dev`
 	 - Se precisar, dê permissão em alguns arquivo para o seu usuário
+
+	  ### Docker 
+	 - Domandos docker para uso do app
+	 - Rodar o comando para buildar a imagem: `docker-compose build --no-cache`
+	 - Rodar o comando para parar os containers `docker-compose down`
+	 - Rodar o comando para iniciar os containers `docker-compose up -d`
 
 ## Create files and folders
 
