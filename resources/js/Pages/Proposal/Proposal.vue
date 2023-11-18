@@ -15,6 +15,7 @@ import Property from "@/Components/Proposal/Property.vue";
 import Vehicle from "@/Components/Proposal/Vehicle.vue";
 import functions from "@/Util/functions";
 import UploadFiles from "@/Components/Proposal/UploadFiles.vue";
+import TabProposal from "@/Components/Proposal/TabProposal.vue";
 
 const props = defineProps({
     user: Object
@@ -56,8 +57,9 @@ const receiveEmit = (value) => {
         })
 }
 
-const skill = () => {
-    switch (state.tab) {
+const skill = (value) => {
+    console.log('Proposal: ', value)
+    switch (value) {
         case 'one':
             state.skill = 33
             break;
@@ -74,19 +76,6 @@ const skill = () => {
 
 const showAlert = ref(true);
 
-// Adiciona um ouvinte de evento antes da descarga da página
-// onBeforeUnmount(() => {
-//   if (showAlert.value) {
-//     // Exibe o alerta quando a página está prestes a ser descarregada
-//     const message = 'Você tem certeza que deseja sair? Até agora suas informações foram salvas, mas você será redirecionado para o início.';
-//     if (!window.confirm(message)) {
-//       // Cancela a descarga da página se o usuário não confirmar
-//       showAlert.value = false;
-//       return false
-//     }
-//   }
-// });
-
 onMounted(() => {
     const handleKeyPress = (event) => {
     if (event.key === 'F5') {
@@ -102,30 +91,30 @@ onMounted(() => {
     }
   };
 
-  window.addEventListener('keydown', handleKeyPress);
+//   window.addEventListener('keydown', handleKeyPress);
 
-  // Remove o ouvinte de evento quando o componente é desmontado
-  onBeforeUnmount(() => {
-    window.removeEventListener('keydown', handleKeyPress);
-  });
+//   // Remove o ouvinte de evento quando o componente é desmontado
+//   onBeforeUnmount(() => {
+//     window.removeEventListener('keydown', handleKeyPress);
+//   });
 })
 
 // Bloqueia o evento de recarregar a página no navegador
 window.onbeforeunload = (event) => {
    
-  if (showAlert.value) {
-    console.log(showAlert.value)
-    // functions.toast('Ops!', 'Voce vai sair da página', 'error')
-    const message = 'Você tem certeza que deseja sair? Até agora suas informações foram salvas, mas você será redirecionado para o início.';
-    alert(message)
-    event.returnValue = message;
-    return false;
-  }
+//   if (showAlert.value) {
+//     console.log(showAlert.value)
+//     // functions.toast('Ops!', 'Voce vai sair da página', 'error')
+//     const message = 'Você tem certeza que deseja sair? Até agora suas informações foram salvas, mas você será redirecionado para o início.';
+//     alert(message)
+//     event.returnValue = message;
+//     return false;
+//   }
 };
-// props.user.id = 139
-// props.user.proposal_id = 53
-// props.user.email = 'your.email+fakedata80077@gmail.com'
-// props.user.name = 'Ines Kemmer'
+props.user.id = 139
+props.user.proposal_id = 53
+props.user.email = 'your.email+fakedata80077@gmail.com'
+props.user.name = 'Ines Kemmer'
 
 </script>
 
@@ -159,6 +148,10 @@ window.onbeforeunload = (event) => {
                                         <v-window-item value="one">
                                             <RentalData :user="props.user" @updateInput="receiveEmit" />
 
+                                          
+                                        </v-window-item>
+
+                                        <v-window-item value="two">
                                             <v-row no-gutters>
                                                 <v-badge color="default" content="Dados Pessoais" inline></v-badge>
                                             </v-row>
@@ -187,9 +180,10 @@ window.onbeforeunload = (event) => {
                                                 <ContactPhone />-->
                                                 </v-col>
                                             </v-row>
+                                           
                                         </v-window-item>
 
-                                        <v-window-item value="two">
+                                        <v-window-item value="three">
                                             <div class="mt-2 flex w-full">
                                                 <v-badge color="default" content="Referência" inline class="mb-2"></v-badge>
                                             </div>
@@ -227,24 +221,20 @@ window.onbeforeunload = (event) => {
 
                                             </div>
                                             <!-- <Commercial /> -->
-                                           
                                         </v-window-item>
 
-                                        <v-window-item value="three">
-                                           <UploadFiles :user="props.user"/>
+                                        <v-window-item value="four">
+                                            <UploadFiles :user="props.user"/>
                                         </v-window-item>
+
                                     </v-window>
                                     <v-card-actions class="flex justify-center bg-gray-100 mt-3">
                                         <v-tabs v-model="state.tab" color="blue-darken-2" align-tabs="center">
                                             <template v-slot:default>
 
-                                                <v-btn class="bg-teal-lighten-5" @click="skill">
-                                                    <v-tab value="one" @click="skill">
-                                                        <span>1ª Etapa</span>
-                                                    </v-tab>
-                                                    <v-tab value="two" :disabled="state.btnStep">2ª Etapa</v-tab>
-                                                    <v-tab value="three">3ª etapa</v-tab>
-                                                </v-btn>
+                                                <div id="tab-proposal-tab" class="flex justify-center">
+                                                    <TabProposal :btnStep="state.tab" @updatetab="skill"/>
+                                                </div>
                                             </template>
 
                                         </v-tabs>
