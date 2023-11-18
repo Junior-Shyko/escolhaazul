@@ -1,17 +1,25 @@
 <template>
 <div>
     <v-tab @click="skill('one')" v-show="state.visibleStepOne">
+       <v-btn  variant="tonal">
         {{ state.btnStepOne }}
+       </v-btn>
     </v-tab>
     <v-tab  @click="skill('two')" v-show="state.visibleStepTwo">
+        <v-btn  variant="tonal">
         {{state.btnStepTwo}}
+    </v-btn>
     </v-tab>
     <v-tab @click="skill('three')" v-show="state.visibleStepThree">
+        <v-btn  variant="tonal">
         {{ state.btnStepThree }}
+    </v-btn>
         <!-- <v-icon icon="fas fa-angle-right"></v-icon> -->
     </v-tab>
     <v-tab @click="skill('four')" v-show="state.visibleStepFour">
+        <v-btn  variant="tonal">
         {{state.btnStepFour}}
+    </v-btn>
     </v-tab>
 </div>
 </template>
@@ -28,7 +36,7 @@ const props = defineProps({
 
 const state = reactive({
     btnStepOne: 'Início',
-    btnStepTwo: 'Próximo 2',
+    btnStepTwo: 'Próximo',
     btnStepThree: '',
     btnStepFour: '',
     disabledStepOne: false,
@@ -77,7 +85,7 @@ const skill = (value) => {
             state.btnStepOne = ''
             state.btnStepTwo = 'Anterior'
             state.btnStepThree = ''
-            state.btnStepFour = 'Ultima Etapa'
+            state.btnStepFour = 'Última Etapa'
 
          
             state.visibleStepOne = false
@@ -92,7 +100,7 @@ const skill = (value) => {
             state.btnStepOne = ''
             state.btnStepTwo = ''
             state.btnStepThree = 'Anterior'
-            state.btnStepFour = 'Ultima Etapa'
+            state.btnStepFour = 'Última Etapa'
 
            
             state.visibleStepOne = false

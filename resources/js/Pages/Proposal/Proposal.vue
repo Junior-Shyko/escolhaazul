@@ -61,14 +61,17 @@ const skill = (value) => {
     console.log('Proposal: ', value)
     switch (value) {
         case 'one':
-            state.skill = 33
+            state.skill = 25
             break;
         case 'two':
-            state.skill = 66
+            state.skill = 50
             break;
         case 'three':
-            state.skill = 100
+            state.skill = 75
             break;
+        case 'four':
+            state.skill = 100
+            break;    
         default:
             break;
     }
@@ -129,7 +132,16 @@ props.user.name = 'Ines Kemmer'
                     <v-col cols="12">
                         <div class=" grid grid-cols-1 gap-1 p-2">
                             <div class=" flex justify-center">
-
+                                <v-col cols="12" xs="12" sm="12" md="12" class=" text-center">
+                                        <small class="text-xs">Ao Finalizar essa etapa, você cumpriu {{ state.skill }}% da
+                                            proposta</small>
+                                        <v-progress-linear v-model="state.skill" color="light-blue" striped height="25"
+                                            class="mb-1">
+                                            <template v-slot:default="{ value }">
+                                                <strong>{{ value }}%</strong>
+                                            </template>
+                                        </v-progress-linear>
+                                    </v-col>
                                 <h6 v-if="state.tab == 'one'" class="text-blue-700 hover:text-slate-600 font-medium">{{
                                     user.name }},
                                     informe seus dados pessoais.</h6>
@@ -240,16 +252,7 @@ props.user.name = 'Ines Kemmer'
                                         </v-tabs>
 
                                     </v-card-actions>
-                                    <v-col cols="12" xs="12" sm="12" md="12" class=" text-center">
-                                        <small class="text-xs">Ao Finalizar essa etapa, você cumpriu {{ state.skill }}% da
-                                            proposta</small>
-                                        <v-progress-linear v-model="state.skill" color="light-blue" striped height="25"
-                                            class="mb-1">
-                                            <template v-slot:default="{ value }">
-                                                <strong>{{ value }}%</strong>
-                                            </template>
-                                        </v-progress-linear>
-                                    </v-col>
+                                   
                                 </v-card-text>
 
                             </v-card>
