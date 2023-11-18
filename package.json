@@ -27,6 +27,6 @@
         "dropzone-vue": "^0.1.11",
         "moment": "^2.29.4",
         "mosha-vue-toastify": "^1.0.23",
-        "vuetify": "^3.3.20"
+        "vuetify": "^3.4.0"
     }
 }

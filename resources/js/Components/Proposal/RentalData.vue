@@ -1,5 +1,8 @@
 <script setup>
 import endpoint from '@/Services/endpoints'
+import api from "@/Services/server";
+import axios from "axios";
+import functions from "@/Util/functions";
 import DialogProposal from './DialogProposal.vue'
 import {
     reactive,
@@ -10,8 +13,8 @@ import {
 import {
     useForm
 } from '@inertiajs/vue3'
-import api from "@/Services/server";
-import functions from "@/Util/functions";
+
+
 
 const props = defineProps({
     user: Object
@@ -69,7 +72,6 @@ const form = useForm({
 
 //endpoint para buscar dados
 const getData = () => {
-    console.log('getData')
     endpoint.getData('rental_datas', props.user.proposal_id, props.user.id, 'personal')
         .then(res => {
             console.log(res)
@@ -90,8 +92,19 @@ const getData = () => {
 
 }
 
+const getImmobiles = () => {
+    axios.get('https://espindolaimobiliaria.com.br/api/immobile-all')
+    .then(res => {
+        console.log({res})
+    })
+    .catch(err => {
+        console.log({err})
+    })
+}
+
 onMounted(() => {
     getData()
+    getImmobiles();
 })
 
 const closeDialog = (value) => {
@@ -132,6 +145,33 @@ const guarantor = (event) => {
         <v-row no-gutters>
             <v-badge color="default" content="Referencia do Imovel" inline></v-badge>
         </v-row>
+        <v-container>
+            <div class="m-2 flex w-full flex text-center justify-center">
+                <h6>
+                    Vamos iniciar sua proposta, nessa etapa inicial, você informará qual imóvel você está interessado para enviar 
+                    sua proposta. Super importante você preencher o máxima de informação possível.
+                </h6>
+            </div>
+            <v-row>
+            <v-col cols="12" md="6">
+                <div class="text-h5 text-center">
+                Informações do imóvel
+                </div>
+                <v-skeleton-loader
+                :loading="true"
+                type="list-item-two-line"
+                >
+                <v-list-item
+                    title="Title"
+                    subtitle="Subtitle"
+                    lines="two"
+                    rounded
+                ></v-list-item>
+                </v-skeleton-loader>
+            </v-col>
+            </v-row>
+            
+        </v-container>
         <v-row no-gutters>
             <v-col col cols="12" sx="12" sm="12" md="4">
                 <v-autocomplete class="m-2" variant="underlined" name="refImmobile" label="Pesquisar o Imóvel" :items="['Apartamento com 2 dormitórios para alugar, 58 m² por R$ 1.350/mês - Vila União - Fortaleza/CE',
@@ -168,7 +208,7 @@ const guarantor = (event) => {
                 <v-text-field class="m-1" label="Aluguel Proposto" @blur="saveField($event.target)" name="proposedValue"
                     prefix="R$" v-model="state.proposedValue" v-mask-decimal.br="2"></v-text-field>
             </v-col>
-            <v-col col cols="12" sx="12" sm="12" md="8">
+            <v-col col cols="12" sx="12" sm="12" md="12">
                 <v-textarea class="m-1" rows="3" variant="outlined" label="Observação" @blur="saveField($event.target)"
                     name="ps" v-model="state.ps" maxlength="120" single-line></v-textarea>
             </v-col>
