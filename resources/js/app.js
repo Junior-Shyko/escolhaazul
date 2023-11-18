@@ -19,7 +19,7 @@ import * as directives from 'vuetify/directives'
 import { aliases, fa } from 'vuetify/iconsets/fa'
 import { mdi } from 'vuetify/iconsets/mdi'
 //Componente do vuetify
-import { VDataTable } from 'vuetify/labs/VDataTable'
+import { VDataTable } from 'vuetify/components/VDataTable'
 //Style
 import '@fortawesome/fontawesome-free/css/all.css'
 import 'dropzone-vue/dist/dropzone-vue.common.css';
