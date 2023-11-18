@@ -1,7 +1,7 @@
 <script setup>
 import { Head, router } from '@inertiajs/vue3';
 import Header from "@/Components/Proposal/Header.vue";
-
+import termsImg from "../../../img/terms_ea.png"
 const props = defineProps({
     user: Object
 });
@@ -20,7 +20,7 @@ const checkTerms = () => {
 
         <div class="max-w-7xl max-w-full w-full">
             <Header />
-            <div class="flex justify-center">
+            <div class="flex justify-center bg-white mt-3">
                 <img src="https://espindolaimobiliaria.com.br/escolhaazul/public/img/logo_ea.jpg" alt="Escolha Azul"
                     style="width: 350px;">
             </div>
@@ -30,16 +30,23 @@ const checkTerms = () => {
                         <v-row>
                             <v-card class="mx-auto">
                                 <v-card-text>
-                                    <p class="text-h4 text--primary text-center">
-                                        {{ props.user.name }}
-                                    </p>
-                                    <img src="https://as1.ftcdn.net/v2/jpg/03/02/89/38/1000_F_302893891_576CG8QPTeA8wmgtC4zXaDernYd0a5uW.jpg"
-                                        width="128" height="128" alt="" srcset="">
-                                    <v-divider></v-divider>
-                                    <p class="text-center">
-                                        Esse é o nosso Termo de Uso, para continuar você deve ler e se desejar, aceite para
-                                        continuar.
-                                    </p><br>
+                                    <div class="items-center gap-4 w-full rounded-lg bg-stripes-violet text-center">
+                                        
+                                        <p class="text-h4 text--primary text-center">
+                                            {{ props.user.name }}
+                                        </p>
+                                        <v-row>
+                                            <v-col cols="12" class="flex justify-center mt-3 mb-3">
+                                                <img :src="termsImg"
+                                            width="128" height="128" alt="" srcset="">
+                                            </v-col>
+                                        </v-row>
+                                        <v-divider></v-divider>
+                                        <p class="text-center">
+                                            Esse é o nosso Termo de Uso, para continuar você deve ler e se desejar, aceite para
+                                            continuar.
+                                        </p><br>
+                                    </div>
                                     <v-divider></v-divider>
                                 </v-card-text>
 
