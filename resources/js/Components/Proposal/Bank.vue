@@ -2,6 +2,7 @@
 import { reactive, onMounted } from 'vue';
 import functions from "@/Util/functions";
 import endpoint from '@/Services/endpoints'
+import TitleAndSubtitle from './TitleAndSubtitle.vue';
 
 const props = defineProps({
   user: Object,
@@ -120,7 +121,7 @@ onMounted(() => {
             <v-dialog v-model="state.dialogBank" activator="parent">
               <v-card>
                 <v-card-text>
-
+                  <TitleAndSubtitle title="Referência Bancária" sub="Seus dados são salvos automaticamente." />
                   <v-row>
                     <v-col cols="12" xs="12" sm="12" md="4">
                       <v-text-field label="Nome do Banco" variant="underlined" @blur="saveField($event.target)"
