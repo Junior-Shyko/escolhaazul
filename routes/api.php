@@ -30,10 +30,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('form')->group(function () {
-    Route::post('/proposal', [ProposalController::class, 'createUser'])->name('form/proposal');
-    Route::post('address', [AddressController::class, 'store'] )->name('api/form/address');
-    
+Route::prefix('form')->group( function () {
+    // Route::post('/proposal', [ProposalController::class, 'createUser'])->name('form/proposal');
+    Route::post('address', [AddressController::class, 'store'] )->name('api/form/address');    
     Route::put('address', [AddressController::class, 'update'] )->name('api/form/address/update');
     Route::post('upload/proposal/{id}/{type}', [FileController::class, 'store'])->name('upload');
     

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProposalController;
+use App\Http\Controllers\TermController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,9 +39,19 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('formulario')->group(function () {
     Route::get('/proposta', [ProposalController::class, 'index'])->name('formulario/proposta');
-    Route::post('/proposta', [ProposalController::class, 'index'])->name('formulario/proposta');
+    Route::post('/proposta', [ProposalController::class, 'index'])->name('form.proposta.post');
     Route::post('termos',  [ProposalController::class, 'terms'])->name('formulario/termos');
+    Route::get('termos',  [ProposalController::class, 'show'])->name('form.termos');
     Route::post('/finalizar', [ProposalController::class, 'alterStatus'])->name('form.finish');
+    Route::post('/check-terms', [TermController::class, 'store'])->name('form.check-terms');
+});
+
+Route::prefix('api/form')->group( function () {
+    Route::post('/proposal', [ProposalController::class, 'createUser'])->name('form/proposal');
+    Route::post('address', [AddressController::class, 'store'] )->name('api/form/address');    
+    Route::put('address', [AddressController::class, 'update'] )->name('api/form/address/update');
+    Route::post('upload/proposal/{id}/{type}', [FileController::class, 'store'])->name('upload');
+    
 });
 
 Route::get('/finalizar/{email}', [ProposalController::class, 'finishProposal'])->name('proposal.finish');

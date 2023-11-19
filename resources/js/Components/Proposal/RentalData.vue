@@ -44,7 +44,7 @@ const saveField = (val) => {
       newValue = newValue.replace(/([0-9]{2})$/g, ".$1");
       valueInputNew.valueInput = newValue
       break;
-
+    
     default:
       valueInputNew.valueInput = val.value
       break;
@@ -116,11 +116,8 @@ const getImmobiles = async () => {
 }
 
 const detailsImmobile = (value) => {
-  console.log({ value })
   let code = value.substring(0, 6);
-  console.log(state.immobiles)
   let detailsImmobile = state.immobiles.filter(immob => immob.immobiles_code === code);
-  console.log(detailsImmobile)
   state.detailsImmob = detailsImmobile
   state.loadingSkeleton = false
 
@@ -171,12 +168,11 @@ const guarantor = (event) => {
       <v-badge color="default" content="Referencia do Imovel" inline></v-badge>
     </v-row>
     <v-container>
-      <div class="m-2 flex w-full flex text-center justify-center">
+      <div class="m-2 flex w-full text-center justify-center">
         <h6>
           Vamos iniciar sua proposta, nessa etapa inicial, você informará qual imóvel você está interessado para enviar
           sua proposta. Super importante você preencher o máxima de informação possível.
         </h6>
-        
       </div>
       <v-row>
         <v-col cols="12" md="12">
@@ -212,7 +208,7 @@ const guarantor = (event) => {
       <v-col col cols="12" sx="12" sm="12" md="4">
         <v-select class="m-2" variant="underlined" name="refImmobile" label="Pesquisar o Imóvel"
           :items="state.immobilesItens" @blur="saveField($event.target)" @update:modelValue="detailsImmobile($event)"
-          v-model="state.refImmobile" loading="true">
+          v-model="state.refImmobile">
         </v-select>
       </v-col>
       <v-col col cols="12" sx="12" sm="12" md="4">
