@@ -4,7 +4,7 @@
           {{ state.btnStepOne }}
 
     </v-tab>
-    <v-tab  @click="skill('two')" v-show="state.visibleStepTwo">
+    <v-tab  @click="skill('two')" v-show="state.visibleStepTwo" :disabled="props.disabledTwo">
       
         {{state.btnStepTwo}}
    
@@ -50,7 +50,6 @@ const state = reactive({
 
 const skill = (value) => {
     console.log(value)
-    console.log(props.btnStep)
     switch (value) {
         case 'one':
             state.btnStepOne = 'Início'

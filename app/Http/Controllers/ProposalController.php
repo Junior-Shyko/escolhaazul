@@ -13,6 +13,8 @@ use App\Models\DataPersonal;
 use Illuminate\Http\Request;
 use App\Http\Services\UserService;
 use App\Http\Services\PhoneService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreProposalRequest;
 use App\Http\Requests\ProposalCreateRequest;
@@ -28,8 +30,8 @@ class ProposalController extends Controller
     public function index(Request $request)
     {
         $user = $request->all();
-        // if(count($user) == 0)
-        //     return redirect('/');
+        if(count($user) == 0)
+            $user = Auth::user();
 
         return Inertia::render('Proposal/Proposal', ['user' => $user]);
     }
@@ -53,9 +55,9 @@ class ProposalController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Proposal $proposal)
+    public function show()
     {
-        //
+        
     }
 
     /**
@@ -85,9 +87,22 @@ class ProposalController extends Controller
     public function createUser(ProposalCreateRequest $request)
     {
         //Criando um usuário
-        $userService = new UserService($request->name, $request->email);
+        
+        // dump($request->phone);
+        $userService = new UserService($request->name, $request->email, $request->phone);
         $user = $userService->createUser();
+        // dump($user->password);
         $createPhone = false;
+        $passName = substr($request->name, 0, 4);
+        $passPhone = substr($request->phone, -4);
+        // dump($passName);
+        // dump($passPhone);
+        $password = $passName.$passPhone;
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $password])) {
+            $request->session()->regenerate();
+        }
+
         try {
 
             //Usuário criado
@@ -112,9 +127,7 @@ class ProposalController extends Controller
 
     public function terms(Request $request)
     {
-
         $user = $request->data['user'];
-        // $user = [];
         return Inertia::render('Proposal/Terms', ['user' => $user]);
     }
 

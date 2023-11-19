@@ -10,17 +10,21 @@ class UserService {
     
     public function __construct(
         public string $name = '', 
-        public string $email = ''
+        public string $email = '',
+        public string $phone = ''
     ) { }
 
     public function createUser() : User
     { 
-      
-        $pass = rand(8, 20);
+        // dump($this->phone);
+        $passName = substr($this->name, 0, 4);
+        $passPhone = substr($this->phone, -4);
+        // dump($passName);
+        // dump($passPhone);
         $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
-            'password' => Hash::make($pass),
+            'password' => Hash::make($passName.$passPhone),
         ]);
 
         return $user;

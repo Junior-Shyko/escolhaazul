@@ -32,10 +32,33 @@ const state = reactive({
   skill: 25,
   field: '',
   btnStep: false,
-  numberStep: 1
+  numberStep: 1,
+  validateImmobile: false,
+  validateFinality: false,
+  validateWarranty: false,
+  enabledTwo : true
 });
 
 const receiveEmit = (value) => {
+  console.log({value})
+  if(value.nameInput == 'refImmobile' && value.valueInput !== "")
+  {
+    state.validateImmobile = true;
+  }
+  if(value.nameInput == 'finality' && value.valueInput !== "")
+  {
+    state.validateFinality = true;
+  }
+  if(value.nameInput == 'warrantyType' && value.valueInput !== "")
+  {
+    state.validateWarranty = true;
+  }
+
+  if(state.validateImmobile && state.validateFinality && state.validateWarranty)
+  {
+    state.enabledTwo = false
+  }
+
   var dataPut = {
     proposal_id: value.proposal_id,
     user_id: value.user_id,
@@ -102,22 +125,22 @@ onMounted(() => {
     window.addEventListener('keydown', handleKeyPress);
 
     // Remove o ouvinte de evento quando o componente é desmontado
-    onBeforeUnmount(() => {
-      window.removeEventListener('keydown', handleKeyPress);
-    });
+    // onBeforeUnmount(() => {
+    //   window.removeEventListener('keydown', handleKeyPress);
+    // });
 })
 
 // Bloqueia o evento de recarregar a página no navegador
 window.onbeforeunload = (event) => {
 
-    if (showAlert.value) {
-      console.log(showAlert.value)
-      // functions.toast('Ops!', 'Voce vai sair da página', 'error')
-      const message = 'Você tem certeza que deseja sair? Até agora suas informações foram salvas, mas você será redirecionado para o início.';
-      alert(message)
-      event.returnValue = message;
-      return false;
-    }
+    // if (showAlert.value) {
+    //   console.log(showAlert.value)
+    //   // functions.toast('Ops!', 'Voce vai sair da página', 'error')
+    //   const message = 'Você tem certeza que deseja sair? Até agora suas informações foram salvas, mas você será redirecionado para o início.';
+    //   alert(message)
+    //   event.returnValue = message;
+    //   return false;
+    // }
 };
 // props.user.id = 139
 // props.user.proposal_id = 53
@@ -139,7 +162,7 @@ window.onbeforeunload = (event) => {
               <div class=" flex justify-center">
                 <v-col cols="12" xs="12" sm="12" md="12" class=" text-center">
                   <small class="text-xs">
-                    Você está na etapa <strong>{{ state.numberStep }}</strong> de <strong>4</strong>
+                    Olá, {{ props.user.name }}, você está na etapa <strong>{{ state.numberStep }}</strong> de <strong>4</strong>
                   </small>
                   <v-progress-linear v-model="state.skill" color="light-blue" striped height="25" class="mb-1">
                     <template v-slot:default="{ value }">
@@ -248,7 +271,12 @@ window.onbeforeunload = (event) => {
                       <template v-slot:default>
 
                         <div id="tab-proposal-tab" class="flex justify-center">
-                          <TabProposal :btnStep="state.tab" @updatetab="skill" />
+                          <TabProposal 
+                            :btnStep="state.tab"
+                            @updatetab="skill"
+                            :disabledTwo="state.enabledTwo"
+                           
+                          />
                         </div>
                       </template>
 
