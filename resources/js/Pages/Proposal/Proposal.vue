@@ -99,30 +99,30 @@ onMounted(() => {
     }
   };
 
-  //   window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener('keydown', handleKeyPress);
 
-  //   // Remove o ouvinte de evento quando o componente é desmontado
-  //   onBeforeUnmount(() => {
-  //     window.removeEventListener('keydown', handleKeyPress);
-  //   });
+    // Remove o ouvinte de evento quando o componente é desmontado
+    onBeforeUnmount(() => {
+      window.removeEventListener('keydown', handleKeyPress);
+    });
 })
 
 // Bloqueia o evento de recarregar a página no navegador
 window.onbeforeunload = (event) => {
 
-  //   if (showAlert.value) {
-  //     console.log(showAlert.value)
-  //     // functions.toast('Ops!', 'Voce vai sair da página', 'error')
-  //     const message = 'Você tem certeza que deseja sair? Até agora suas informações foram salvas, mas você será redirecionado para o início.';
-  //     alert(message)
-  //     event.returnValue = message;
-  //     return false;
-  //   }
+    if (showAlert.value) {
+      console.log(showAlert.value)
+      // functions.toast('Ops!', 'Voce vai sair da página', 'error')
+      const message = 'Você tem certeza que deseja sair? Até agora suas informações foram salvas, mas você será redirecionado para o início.';
+      alert(message)
+      event.returnValue = message;
+      return false;
+    }
 };
-props.user.id = 139
-props.user.proposal_id = 53
-props.user.email = 'your.email+fakedata80077@gmail.com'
-props.user.name = 'Ines Kemmer'
+// props.user.id = 139
+// props.user.proposal_id = 53
+// props.user.email = 'your.email+fakedata80077@gmail.com'
+// props.user.name = 'Ines Kemmer'
 
 </script>
 

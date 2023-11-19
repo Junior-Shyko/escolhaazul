@@ -51,4 +51,18 @@ class UpdateRentalDataRequest extends FormRequest
             'user_id' => 'numeric',
         ];
     }
+
+     /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'finality.min' => 'Escolha uma opção de finalidade',
+            'proposedValue.min' => 'Preencha o valor do aluguel proposto',
+            'ps' => 'Você poderá preencher alguma informação ou observação sobre o imovel ou sua proposta'
+        ];
+    }
 }

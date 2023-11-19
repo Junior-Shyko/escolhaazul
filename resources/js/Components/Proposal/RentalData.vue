@@ -1,7 +1,7 @@
 <script setup>
 import endpoint from '@/Services/endpoints'
 import api from "@/Services/server";
-import immobileData from './dataImmobile'
+
 import functions from "@/Util/functions";
 import axios from 'axios';
 import DialogProposal from './DialogProposal.vue'
@@ -212,7 +212,7 @@ const guarantor = (event) => {
       <v-col col cols="12" sx="12" sm="12" md="4">
         <v-select class="m-2" variant="underlined" name="refImmobile" label="Pesquisar o Imóvel"
           :items="state.immobilesItens" @blur="saveField($event.target)" @update:modelValue="detailsImmobile($event)"
-          v-model="state.refImmobile">
+          v-model="state.refImmobile" loading="true">
         </v-select>
       </v-col>
       <v-col col cols="12" sx="12" sm="12" md="4">

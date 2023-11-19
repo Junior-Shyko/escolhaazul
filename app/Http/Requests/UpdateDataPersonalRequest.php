@@ -43,8 +43,8 @@ class UpdateDataPersonalRequest extends FormRequest
         return [
             'sex' => 'min:3',
             'birthDate' => 'date',
-            'organConsignor' => 'string|min:3',
-            'cpf' => 'string|min:11|cpf',
+            'organConsignor' => 'min:3|string',
+            'cpf' => 'min:11|cpf|string',
             // 'nationality' => 'string|min:3',
             // 'EducationLevel' => 'string|min:3',            
             // 'user_id' => 'numeric',
@@ -63,7 +63,8 @@ class UpdateDataPersonalRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'cpf.min' => 'O CPF não é válido',
+            'cpf.min' => 'O CPF precisa ser preenchido',
+            'cpf.cpf' => 'O CPF não é válido',
             'birthDate.date' => 'Data de Nascimento tem que ser uma data válida',
             'organConsignor.min' => 'O orgão Emissor tem que ter no mínimo 3 caracteres'
         ];
