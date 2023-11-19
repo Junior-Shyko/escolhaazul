@@ -4,6 +4,7 @@ import { reactive, onMounted  } from 'vue';
 import DialogProposal from './DialogProposal.vue';
 import functions from '@/Util/functions';
 import endpoint from '@/Services/endpoints'
+import TitleAndSubtitle from './TitleAndSubtitle.vue';
 
 const props = defineProps({
   user: Object,
@@ -80,6 +81,14 @@ onMounted(() => {
               <small class="font-semibold">Pessoal</small>
             </div>
               <DialogProposal :dialog="state.dialogPersonal" @updateDialog="closeDialog">
+              
+                  <v-col cols="12">
+                    <TitleAndSubtitle
+                    title="Referência Pessoal"
+                    sub="Seus dados são salvos automaticamente"
+                />
+                  </v-col>
+               
                 <v-col cols="12" xs="12" sm="12" md="12">
                     <v-text-field label="Nome" variant="underlined"
                       @blur="saveField($event.target)"

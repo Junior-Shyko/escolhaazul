@@ -3,6 +3,7 @@ import { reactive, onMounted  } from 'vue';
 import functions from '@/Util/functions';
 import DialogProposal from './DialogProposal.vue';
 import endpoint from '@/Services/endpoints'
+import TitleAndSubtitle from './TitleAndSubtitle.vue';
 
 const props = defineProps({
   user: Object,
@@ -85,6 +86,7 @@ onMounted(() => {
               transition="fade-transition">
               <v-card>
                 <v-card-text>
+                  <TitleAndSubtitle title="Referência Comercial" sub="Seus dados são salvos automaticamente." />
                   <v-row>
                     <v-col cold="12" xs="12" sm="12" md="6">
                       <v-text-field label="Nome" variant="underlined" 

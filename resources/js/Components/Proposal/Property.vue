@@ -1,9 +1,10 @@
 <script setup>
-import { reactive, onMounted  } from 'vue';
+import { reactive, onMounted } from 'vue';
 import DialogProposal from './DialogProposal.vue';
 import Address from '@/Components/Address.vue';
 import functions from '@/Util/functions';
 import endpoint from '@/Services/endpoints'
+import TitleAndSubtitle from './TitleAndSubtitle.vue';
 
 const props = defineProps({
   user: Object,
@@ -22,11 +23,12 @@ const saveField = (val) => {
     proposal_id: props.user.proposal_id,
     route: 'property',
     object_type: props.object_type,
-    valueInput : newstr  }
+    valueInput: newstr
+  }
 
-  if(val.name == 'value') {
+  if (val.name == 'value') {
     newstr = functions.valurMoneyUSA(val.value)
-      valueInputNew.valueInput = newstr
+    valueInputNew.valueInput = newstr
   }
   // //enviando informação para o componente pai
   emit('updateInput', valueInputNew);
@@ -50,9 +52,9 @@ const getData = () => {
     .then(res => {
       //Preenchendo os dados
       state.valueProperty = res.value
-      state.registration  = res.registration
-      state.financed      = res.financed
-      state.registry      = res.registry
+      state.registration = res.registration
+      state.financed = res.financed
+      state.registry = res.registry
     })
     .catch(err => {
       console.log({ err })
@@ -78,32 +80,27 @@ onMounted(() => {
               <small class="font-semibold">Imóveis</small>
             </div>
             <DialogProposal :dialog="state.dialogProperty" @updateDialog="closeDialog">
+              <v-col cols="12">
+                <TitleAndSubtitle title="Imóveis/Bens" sub="Seus dados são salvos automaticamente" />
+              </v-col>
               <v-col cols="12" xs="12" sm="12" md="4">
-                <v-text-field label="Valor" variant="underlined" 
-                  @blur="saveField($event.target)" name="value"
-                  v-model="state.valueProperty"  v-mask-decimal.br="2">
+                <v-text-field label="Valor" variant="underlined" @blur="saveField($event.target)" name="value"
+                  v-model="state.valueProperty" v-mask-decimal.br="2">
                 </v-text-field>
-                <v-text-field label="Cartório" variant="underlined" 
-                  @blur="saveField($event.target)" name="registry"
+                <v-text-field label="Cartório" variant="underlined" @blur="saveField($event.target)" name="registry"
                   v-model="state.registry">
                 </v-text-field>
               </v-col>
               <v-col cols="12" xs="12" sm="12" md="4">
-                <v-select
-                  label="Financiado?"
-                  variant="underlined"
-                  @blur="saveField($event.target)" name="financed"
-                  v-model="state.financed"
-                  :items="['Sim', 'Não']"
-                ></v-select>
-               
+                <v-select label="Financiado?" variant="underlined" @blur="saveField($event.target)" name="financed"
+                  v-model="state.financed" :items="['Sim', 'Não']"></v-select>
+
               </v-col>
               <v-col cols="12" xs="12" sm="12" md="4">
-                <v-text-field label="Matrícula" variant="underlined" 
-                  @blur="saveField($event.target)" name="registration"
+                <v-text-field label="Matrícula" variant="underlined" @blur="saveField($event.target)" name="registration"
                   v-model="state.registration">
                 </v-text-field>
-                
+
               </v-col>
               <v-col xs="12" sm="12" md="12">
                 <Address :user="props.user" object_type="property" />
