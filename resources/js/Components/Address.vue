@@ -3,7 +3,7 @@ import { reactive, onMounted } from "vue";
 import endpoint from "@/Services/endpoints";
 import api from "@/Services/server";
 import functions from "@/Util/functions";
-
+import TitleAndSubtitle from "./Proposal/TitleAndSubtitle.vue";
 
 const props = defineProps({
     user: Object,
@@ -123,9 +123,14 @@ onMounted(() => {
                     <v-row no-gutters>
                         <v-col cols="12" sx="12" sm="12" md="4">
                             <v-dialog class="block w-full " v-model="state.dialogDataAddress">
+                                
                                 <v-card>
                                     <form @submit.prevent="submit">
                                         <v-card-text>
+                                            <TitleAndSubtitle
+                                                title="Informe, o endereço"
+                                                sub="Buscamos o endereço pelo cep"
+                                            />
                                             <v-row>
                                                 <v-col cols="12" xs="12" sm="12" md="12" v-if="state.infoErrosCep !== ''">
                                                     <small class="text-base text-error"> {{ state.infoErrosCep }}</small>

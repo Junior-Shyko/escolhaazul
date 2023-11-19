@@ -1,25 +1,24 @@
 <template>
 <div>
     <v-tab @click="skill('one')" v-show="state.visibleStepOne">
-       <v-btn  variant="tonal">
-        {{ state.btnStepOne }}
-       </v-btn>
+          {{ state.btnStepOne }}
+
     </v-tab>
     <v-tab  @click="skill('two')" v-show="state.visibleStepTwo">
-        <v-btn  variant="tonal">
+      
         {{state.btnStepTwo}}
-    </v-btn>
+   
     </v-tab>
     <v-tab @click="skill('three')" v-show="state.visibleStepThree">
-        <v-btn  variant="tonal">
+      
         {{ state.btnStepThree }}
-    </v-btn>
+ 
         <!-- <v-icon icon="fas fa-angle-right"></v-icon> -->
     </v-tab>
     <v-tab @click="skill('four')" v-show="state.visibleStepFour">
-        <v-btn  variant="tonal">
+        
         {{state.btnStepFour}}
-    </v-btn>
+   
     </v-tab>
 </div>
 </template>
@@ -55,7 +54,7 @@ const skill = (value) => {
     switch (value) {
         case 'one':
             state.btnStepOne = 'Início'
-            state.btnStepTwo = 'Próximo two'
+            state.btnStepTwo = 'Próximo'
             state.btnStepThree = ''
             state.btnStepFour = ''
           
@@ -123,7 +122,14 @@ onMounted(() => {
 
 <style >
 
-.v-tab--selected {
-    
+.v-tab__slider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    /* background: currentColor; */
+    pointer-events: none;
+    opacity: 0;
 }
 </style>

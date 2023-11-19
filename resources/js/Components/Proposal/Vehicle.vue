@@ -3,7 +3,7 @@ import { reactive, onMounted  } from 'vue';
 import functions from '@/Util/functions';
 import DialogProposal from './DialogProposal.vue';
 import endpoint from '@/Services/endpoints'
-
+import TitleAndSubtitle from './TitleAndSubtitle.vue';
 
 const props = defineProps({
   user: Object,
@@ -83,7 +83,9 @@ onMounted(() => {
               <small class="font-semibold">Veículo</small>
             </div>
             <DialogProposal :dialog="state.dialogVehicle" @updateDialog="closeDialog">
-             
+              <v-col cols="12">
+                <TitleAndSubtitle title="Veículo" sub="Seus dados são salvos automaticamente" />
+              </v-col>
               <v-col cols="12" xs="12" sm="12" md="3">
                 <v-text-field label="Marca" variant="underlined" 
                   @blur="saveField($event.target)" name="branch"
