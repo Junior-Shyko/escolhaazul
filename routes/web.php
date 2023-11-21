@@ -3,9 +3,10 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\TermController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProposalController;
-use App\Http\Controllers\TermController;
+use App\Http\Controllers\RentalDataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +46,9 @@ Route::prefix('formulario')->group(function () {
     Route::post('/finalizar', [ProposalController::class, 'alterStatus'])->name('form.finish');
     Route::post('/check-terms', [TermController::class, 'store'])->name('form.check-terms');
 });
-
+Route::prefix('admin')->group(function () {
+    Route::delete('proposal-delete', [RentalDataController::class, 'destroy'])->name('proposal-delete');
+});
 Route::prefix('api/form')->group( function () {
     Route::post('/proposal', [ProposalController::class, 'createUser'])->name('form/proposal');
     Route::post('address', [AddressController::class, 'store'] )->name('api/form/address');    
@@ -53,6 +56,8 @@ Route::prefix('api/form')->group( function () {
     Route::post('upload/proposal/{id}/{type}', [FileController::class, 'store'])->name('upload');
     
 });
+
+Route::get('proposta', [RentalDataController::class, 'create']);
 
 Route::get('/finalizar/{email}', [ProposalController::class, 'finishProposal'])->name('proposal.finish');
 
