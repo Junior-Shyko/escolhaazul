@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Term;
 use App\Models\RentalData;
 use Illuminate\Http\Request;
 use App\Http\Repository\Helpers;
@@ -23,7 +24,12 @@ class RentalDataController extends Controller
      */
     public function create()
     {
-        //
+        dump(request());
+        $proposta = RentalData::find(181);
+        $term = Term::where('rental_data_id', $proposta->id)->delete();
+        // $proposta->terms()->delete();
+        $proposta->delete();
+        dump($proposta->terms());
     }
 
     /**
@@ -72,6 +78,10 @@ class RentalDataController extends Controller
      */
     public function destroy(RentalData $rentalData)
     {
-        //
+        dd($rentalData);
+        // $proposta = RentalData::find(181);
+        // $term = Term::where('rental_data_id', $proposta->id)->delete();
+        // // $proposta->terms()->delete();
+        // $proposta->delete();
     }
 }
