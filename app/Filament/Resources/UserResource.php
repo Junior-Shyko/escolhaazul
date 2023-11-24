@@ -8,6 +8,8 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Navigation\NavigationGroup;
 use Illuminate\Database\Eloquent\Builder;
@@ -32,7 +34,17 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')
+                ->label('Nome do Usuário')
+                ->required(),
+                TextInput::make('email')
+                ->label('E-mail do Usuário')
+                ->required(),
+                TextInput::make('password')
+                ->label('Senha')
+                ->required(),
+                Select::make('roles')
+                ->relationship(name: 'roles', titleAttribute: 'name')
             ]);
     }
 
@@ -43,6 +55,8 @@ class UserResource extends Resource
                 TextColumn::make('name'),
                 TextColumn::make('email'),
                 TextColumn::make('created_at')->dateTime('d/m/Y')
+               
+                
             ])
             ->filters([
                 //
