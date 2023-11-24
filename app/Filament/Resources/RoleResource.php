@@ -7,6 +7,7 @@ use App\Filament\Resources\RoleResource\RelationManagers;
 use App\Models\Role;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -18,14 +19,20 @@ class RoleResource extends Resource
     protected static ?string $model = Role::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Papeis';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                ->label('Nome')
                     ->required()
                     ->maxLength(255),
+                Select::make('permissions')
+                ->label('Permissão')
+                ->multiple()
+                ->relationship(name: 'permissions', titleAttribute: 'name')
                
             ]);
     }
@@ -38,7 +45,7 @@ class RoleResource extends Resource
                     ->searchable(),
                 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

@@ -52,7 +52,8 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
+                TextColumn::make('name')
+                ->searchable(),
                 TextColumn::make('email'),
                 TextColumn::make('created_at')->dateTime('d/m/Y')
                

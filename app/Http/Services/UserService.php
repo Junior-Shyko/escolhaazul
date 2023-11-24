@@ -26,7 +26,8 @@ class UserService {
             'email' => $this->email,
             'password' => Hash::make($passName.$passPhone),
         ]);
-
+        //adicionando permissao ao usuário
+        $user->givePermissionTo('access_admin');
         return $user;
         // event(new Registered($user));
     }
