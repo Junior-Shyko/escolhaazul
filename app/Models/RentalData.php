@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RentalData extends Model
 {
@@ -38,6 +39,10 @@ class RentalData extends Model
         return $this->belongsTo(Term::class);
     }
 
-    
+    public function bank(): HasMany
+    {
+        return $this->hasMany(Bank::class, 'object_id');
+    }
+
 
 }
