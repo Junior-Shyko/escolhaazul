@@ -58,7 +58,7 @@ Route::prefix('api/form')->group( function () {
 });
 
 Route::get('proposta', [RentalDataController::class, 'create']);
-Route::get('proposta/analise/{id}', [RentalDataController::class, 'analysis']);
+Route::get('proposta/analise/{id}/proposal/{proposalId}', [RentalDataController::class, 'analysis'])->name('proposal.analysis.pdf');
 
 Route::get('/finalizar/{email}', [ProposalController::class, 'finishProposal'])->name('proposal.finish');
 

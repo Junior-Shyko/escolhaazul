@@ -13,9 +13,11 @@ use Filament\Tables\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\RentalDataResource\Pages;
 use App\Filament\Resources\RentalDataResource\RelationManagers;
+use App\Http\Repository\RentalDataRepository;
 
 class RentalDataResource extends Resource
 {
@@ -136,8 +138,14 @@ class RentalDataResource extends Resource
                     Action::make('Análise')
                         ->icon('heroicon-m-chart-pie')
                         ->action(function (RentalData $record){
-                            return redirect('proposta/analise/'.$record->id);
-                        }) 
+                            return redirect()->route('proposal.analysis.pdf', [$record->user_id, $record->id]);
+                        })
+                        // ->action(fn (RentalData $record) => $record->analysis())
+                        // ->url(fn (RentalData $record): string => route('proposal.analysis.pdf', $record))
+                        // ->openUrlInNewTab()
+                        // ->action(function (RentalData $record){
+                        //     return redirect('proposta/analise/'.$record);
+                        // }) 
                 ])->button()
                 ->label('Ações')
                 ->color('gray'),

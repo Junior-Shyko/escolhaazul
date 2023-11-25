@@ -7,7 +7,7 @@ const props = defineProps({
 })
 
 const state = reactive({
-  urlApi: EscolhaApp.baseAPI+'form/upload/proposal/'+ props.user.proposal_id+ '/persoal',
+  urlApi: EscolhaApp.baseAPI+'form/upload/proposal/'+ props.user.proposal_id+ '/personal',
   statusUpload: false,
   userProposal: props.user
 })

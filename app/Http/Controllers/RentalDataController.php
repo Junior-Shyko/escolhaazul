@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Term;
 use App\Models\User;
 use App\Models\RentalData;
-use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Repository\Helpers;
 use App\Http\Requests\StoreRentalDataRequest;
 use App\Http\Requests\UpdateRentalDataRequest;
+use Carbon\Carbon;
 
 class RentalDataController extends Controller
 {
@@ -86,11 +87,21 @@ class RentalDataController extends Controller
         // $proposta->delete();
     }
 
-    public function analysis($id)
+    public function analysis($id, $proposalId)
     {
-        $user = User::find(119);
-        dump($user->dataPersonal()->get());
-        dump($user->propoertie()->get());
-        dump($user->realState()->get());
+        //Usuário da proposta
+        $user = User::find($id);
+        $proposal = RentalData::find($proposalId);
+        // dd($proposal->bank()->first());
+        $titulo_page_pdf = 'Análise de proposta - '.$proposal->typeRentalUser;
+        // return view('proposal.analysis', compact('user', 'titulo_page_pdf', 'proposal'));
+        $pdf = Pdf::loadView('proposal.analysis', compact('user', 'titulo_page_pdf', 'proposal'));
+        return $pdf->stream('invoice.pdf');
+        // dd($rentalData->id);
+        // $user = User::find(119);
+        // dump($user->dataPersonal()->get());
+        // dump($user->propoertie()->get());
+        // dump($user->realState()->get());
+        // dump($user->referencePersonal()->get());
     }
 }
