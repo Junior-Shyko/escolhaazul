@@ -58,6 +58,7 @@ Route::prefix('api/form')->group( function () {
 });
 
 Route::get('proposta', [RentalDataController::class, 'create']);
+Route::get('proposta/analise/{id}', [RentalDataController::class, 'analysis']);
 
 Route::get('/finalizar/{email}', [ProposalController::class, 'finishProposal'])->name('proposal.finish');
 

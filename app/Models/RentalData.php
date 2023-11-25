@@ -37,4 +37,7 @@ class RentalData extends Model
     {
         return $this->belongsTo(Term::class);
     }
+
+    
+
 }
