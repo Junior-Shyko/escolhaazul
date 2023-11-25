@@ -8,9 +8,12 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
 use Filament\Navigation\NavigationGroup;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Support\Colors\Color;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
@@ -32,7 +35,17 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')
+                ->label('Nome do Usuário')
+                ->required(),
+                TextInput::make('email')
+                ->label('E-mail do Usuário')
+                ->required(),
+                TextInput::make('password')
+                ->label('Senha')
+                ->required(),
+                Select::make('roles')
+                ->relationship(name: 'roles', titleAttribute: 'name')
             ]);
     }
 
@@ -40,17 +53,27 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
+                TextColumn::make('name')
+                ->searchable(),
                 TextColumn::make('email'),
                 TextColumn::make('created_at')->dateTime('d/m/Y')
+                ->label('Criado'),
+                TextColumn::make('roles.name')
+                ->label('Papeis')
+                ->searchable()
+                ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
+                ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make()
+                ])->button()
+                ->label('Ações')
+                ->color('gray')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -24,7 +24,7 @@ class RentalDataResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Propostas';
-    
+
     public static function form(Form $form): Form
     {
         return $form
@@ -70,9 +70,9 @@ class RentalDataResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
-                ->label('Nº')
-                ->numeric()
-                ->sortable(),
+                    ->label('Nº')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Cliente')
                     ->numeric()
@@ -98,10 +98,10 @@ class RentalDataResource extends Resource
                 Tables\Columns\TextColumn::make('proposedValue')
                     ->label('Aluguel Proposto')
                     ->numeric()
-                    ->sortable(),             
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('date_finish')
-                ->label('Finalizada')
-                    ->dateTime()
+                    ->label('Finalizada')
+                    ->dateTime('d/m/Y')
                     ->sortable(),
             ])
             ->filters([
@@ -113,34 +113,35 @@ class RentalDataResource extends Resource
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make('delete')
-                    ->requiresConfirmation()
-                    ->action(function (RentalData $record) {
-                        try {
-                            $proposta = RentalData::find($record->id);
-                            Term::where('rental_data_id', $proposta->id)->delete();
-                            $proposta->delete();
-                            Notification::make()
-                            ->title('Sucesso!')
-                            ->success()
-                            ->body('Proposta excluída')
-                            ->send();
-
-                        } catch (\Throwable $th) {
-                            Notification::make()
-                            ->title('Ops!')
-                            ->danger()
-                            ->body('Ocorreu um erro inesperado')
-                            ->color('danger') 
-                            ->send();
-                        }
-                    }),
+                        ->requiresConfirmation()
+                        ->action(function (RentalData $record) {
+                            try {
+                                $proposta = RentalData::find($record->id);
+                                Term::where('rental_data_id', $proposta->id)->delete();
+                                $proposta->delete();
+                                Notification::make()
+                                    ->title('Sucesso!')
+                                    ->success()
+                                    ->body('Proposta excluída')
+                                    ->send();
+                            } catch (\Throwable $th) {
+                                Notification::make()
+                                    ->title('Ops!')
+                                    ->danger()
+                                    ->body('Ocorreu um erro inesperado')
+                                    ->color('danger')
+                                    ->send();
+                            }
+                        }),
                     Action::make('Análise')
-                    ->url('https://espindolaimobiliaria.com.br/ea//view/report/proposal_pf_adm.php?id=NDQ3NA==')
-                    ->icon('heroicon-m-chart-pie')
-                    ->openUrlInNewTab()
-                ]),
+                        ->url('https://espindolaimobiliaria.com.br/ea//view/report/proposal_pf_adm.php?id=NDQ3NA==')
+                        ->icon('heroicon-m-chart-pie')
+                        ->openUrlInNewTab()
+                ])->button()
+                ->label('Ações')
+                ->color('gray'),
 
-                
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
