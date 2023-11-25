@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Term;
+use App\Models\User;
 use App\Models\RentalData;
 use Illuminate\Http\Request;
 use App\Http\Repository\Helpers;
@@ -83,5 +84,13 @@ class RentalDataController extends Controller
         // $term = Term::where('rental_data_id', $proposta->id)->delete();
         // // $proposta->terms()->delete();
         // $proposta->delete();
+    }
+
+    public function analysis($id)
+    {
+        $user = User::find(119);
+        dump($user->dataPersonal()->get());
+        dump($user->propoertie()->get());
+        dump($user->realState()->get());
     }
 }

@@ -4,12 +4,16 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Filament\Panel;
+use App\Models\Property;
+use App\Models\DataPersonal;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -50,5 +54,20 @@ class User extends Authenticatable implements FilamentUser
     {
         // return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
         return $this->hasPermissionTo('access_admin');
+    }
+
+    public function dataPersonal(): HasMany
+    {
+        return $this->hasMany(DataPersonal::class);
+    }
+
+    public function propoertie(): HasMany
+    {
+        return $this->hasMany(Property::class, 'object_id');
+    }
+
+    public function realState(): HasMany
+    {
+        return $this->hasMany(RealState::class, 'object_id');
     }
 }
