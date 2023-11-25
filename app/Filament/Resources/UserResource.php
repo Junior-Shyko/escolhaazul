@@ -9,10 +9,11 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
 use Filament\Navigation\NavigationGroup;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Support\Colors\Color;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
@@ -56,16 +57,23 @@ class UserResource extends Resource
                 ->searchable(),
                 TextColumn::make('email'),
                 TextColumn::make('created_at')->dateTime('d/m/Y')
-               
-                
+                ->label('Criado'),
+                TextColumn::make('roles.name')
+                ->label('Papeis')
+                ->searchable()
+                ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
+                ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make()
+                ])->button()
+                ->label('Ações')
+                ->color('gray')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

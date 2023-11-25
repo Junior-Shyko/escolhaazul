@@ -137,7 +137,9 @@ class RentalDataResource extends Resource
                         ->url('https://espindolaimobiliaria.com.br/ea//view/report/proposal_pf_adm.php?id=NDQ3NA==')
                         ->icon('heroicon-m-chart-pie')
                         ->openUrlInNewTab()
-                ]),
+                ])->button()
+                ->label('Ações')
+                ->color('gray'),
 
 
             ])
