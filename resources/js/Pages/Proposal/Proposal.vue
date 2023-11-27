@@ -16,6 +16,8 @@ import Vehicle from "@/Components/Proposal/Vehicle.vue";
 import functions from "@/Util/functions";
 import UploadFiles from "@/Components/Proposal/UploadFiles.vue";
 import TabProposal from "@/Components/Proposal/TabProposal.vue";
+import Professional from "@/Components/Proposal/Professional.vue"
+
 
 const props = defineProps({
   user: Object
@@ -33,9 +35,9 @@ const state = reactive({
   field: '',
   btnStep: false,
   numberStep: 1,
-  validateImmobile: false,
-  validateFinality: false,
-  validateWarranty: false,
+  validateImmobile: true,
+  validateFinality: true,
+  validateWarranty: true,
   enabledTwo : true
 });
 
@@ -107,6 +109,7 @@ const skill = (value) => {
 
 const showAlert = ref(true);
 
+
 onMounted(() => {
   const handleKeyPress = (event) => {
     if (event.key === 'F5') {
@@ -116,7 +119,6 @@ onMounted(() => {
         // Cancela a atualização da página se o usuário não confirmar
         showAlert.value = false;
       } else {
-        console.log(EscolhaApp.baseURL)
         window.location.href = EscolhaApp.baseURL
       }
     }
@@ -133,14 +135,17 @@ onMounted(() => {
 // Bloqueia o evento de recarregar a página no navegador
 window.onbeforeunload = (event) => {
 
-    // if (showAlert.value) {
-    //   console.log(showAlert.value)
-    //   // functions.toast('Ops!', 'Voce vai sair da página', 'error')
-    //   const message = 'Você tem certeza que deseja sair? Até agora suas informações foram salvas, mas você será redirecionado para o início.';
-    //   alert(message)
-    //   event.returnValue = message;
-    //   return false;
-    // }
+    if (showAlert.value) {
+      // functions.toast('Ops!', 'Voce vai sair da página', 'error')
+      const message = 'Você tem certeza que deseja sair? Até agora suas informações foram salvas, mas você será redirecionado para o início.';
+      alert(message)
+      state.validateImmobile = true
+      state.validateFinality = true
+      state.validateWarranty = true
+      window.location.href = EscolhaApp.baseURL
+      // event.returnValue = message;
+      // return false;
+    }
 };
 // props.user.id = 139
 // props.user.proposal_id = 53
@@ -154,6 +159,7 @@ window.onbeforeunload = (event) => {
   <div
     class="relative sm:flex min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
     <div class="max-w-7xl max-w-full w-full">
+      {{ props.user }}
       <Header />
       <div class="container mx-auto">
         <v-row>
@@ -223,6 +229,13 @@ window.onbeforeunload = (event) => {
                           <!-- COMPONENTE PARA CADASTRAR O CONTATO TELEFONICO 
                                                 <ContactPhone />-->
                         </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col cols="12" sx="12" sm="12" md="12">
+                          <Professional />
+                        </v-col>
+                       
+                      
                       </v-row>
 
                     </v-window-item>

@@ -73,7 +73,7 @@ onMounted(() => {
                   <v-card-text>
                     <TitleAndSubtitle title="Referência Imobiliária" sub="Seus dados são salvos automaticamente." />
                     <v-row>
-                      <v-col cold="12" xs="12" sm="12" md="6">
+                      <v-col cols="12" xs="12" sm="12" md="6">
                         <v-text-field label="Nome" variant="underlined" @blur="saveField($event.target)"
                         name="name" v-model="state.name">
                         </v-text-field>
