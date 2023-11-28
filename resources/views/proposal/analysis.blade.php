@@ -193,13 +193,13 @@
                 <tr>
                     <td><strong>Endereço: </strong> 
                         <span>
-                            CEP: {{$user->address()->first()->cep}},
-                            {{$user->address()->first()->address}},
+                            CEP: {{ isset($user->address()->first()->cep) }},
+                            {{-- {{$user->address()->first()->address}},
                             Nº. {{isset($user->address()->first()->number)}},
                             {{$user->address()->first()->complement}},
                             {{$user->address()->first()->neighborhood}},
                             {{$user->address()->first()->city}},
-                            {{$user->address()->first()->UF}},                           
+                            {{$user->address()->first()->UF}},                            --}}
                         </span>
                     </td>
                     <td><strong>Telefone: </strong> <span>{{$user->dataPersonal()->first()->nationality}}</span></td>
@@ -209,8 +209,8 @@
                     <td><strong>Nº de dependentes: </strong> <span>{{$user->dataPersonal()->first()->number_dependents}}</span></td>
                 </tr>
                 <tr>
-                    <td><strong>CEP: </strong> <span>{{$user->address()->first()->cep}}</span></td>
-                    <td><strong>Tempo que reside: </strong> <span>{{$user->address()->first()->neighborhood}}</span></td>
+                    <td><strong>CEP: </strong> <span>{{ isset($user->address()->first()->cep) }}</span></td>
+                    <td><strong>Tempo que reside: </strong> <span>{{ isset($user->address()->first()->neighborhood) }}</span></td>
                 </tr>
                 <tr>
                    
@@ -242,13 +242,13 @@
                     <td><strong>E-Mail: </strong><span>{{$user->email}}</span></td>
                     <td><strong>Endereço: </strong> 
                         <span>
-                            CEP: {{$user->address()->first()->cep}},
-                            {{$user->address()->first()->address}},
+                            CEP: {{ isset($user->address()->first()->cep) }},
+                            {{-- {{$user->address()->first()->address}},
                             Nº. {{isset($user->address()->first()->number)}},
                             {{$user->address()->first()->complement}},
                             {{$user->address()->first()->neighborhood}},
                             {{$user->address()->first()->city}},
-                            {{$user->address()->first()->UF}},                           
+                            {{$user->address()->first()->UF}},                            --}}
                         </span>
                     </td>
                 </tr>

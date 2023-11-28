@@ -38,7 +38,7 @@ const state = reactive({
   validateImmobile: true,
   validateFinality: true,
   validateWarranty: true,
-  enabledTwo : true
+  enabledTwo : false
 });
 
 const receiveEmit = (value) => {
@@ -69,18 +69,18 @@ const receiveEmit = (value) => {
   dataPut[value.nameInput] = value.valueInput
 
   api.put(value.route + '/update', dataPut)
-    .then(res => {
-      if (res.data && res.data.data !== undefined) {
-        Object.entries(res.data.data).forEach(([key, value]) => {
-          functions.toast('Ops!', value[0], 'error')
-        });
-      }
-      state.btnStep = false
-    })
-    .catch(err => {
-      console.log(err)
-      // functions.toast('Sucesso', 'Endereço Cadastrado', 'error')
-    })
+  .then(res => {
+    if (res.data && res.data.data !== undefined) {
+      Object.entries(res.data.data).forEach(([key, value]) => {
+        functions.toast('Ops!', value[0], 'error')
+      });
+    }
+    state.btnStep = false
+  })
+  .catch(err => {
+    console.log(err)
+    // functions.toast('Sucesso', 'Endereço Cadastrado', 'error')
+  })
 }
 
 const skill = (value) => {
@@ -232,7 +232,7 @@ window.onbeforeunload = (event) => {
                       </v-row>
                       <v-row>
                         <v-col cols="12" sx="12" sm="12" md="12">
-                          <Professional />
+                          <Professional  :user="props.user" object_type="personal"/>
                         </v-col>
                        
                       

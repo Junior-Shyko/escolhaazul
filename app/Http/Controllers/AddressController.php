@@ -29,7 +29,7 @@ class AddressController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAddressRequest $request)
+    public function store(Request $request)
     {
         $address = [];
         $address['cep'] = $request->cep;
