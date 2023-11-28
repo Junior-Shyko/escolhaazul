@@ -75,6 +75,7 @@ class RentalDataResource extends Resource
                     ->label('Nº')
                     ->numeric()
                     ->sortable(),
+                   
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Cliente')
                     ->numeric()
@@ -105,7 +106,7 @@ class RentalDataResource extends Resource
                     ->label('Finalizada')
                     ->dateTime('d/m/Y')
                     ->sortable(),
-            ])
+            ]) ->defaultSort('id', 'desc')
             ->filters([
                 //
             ])

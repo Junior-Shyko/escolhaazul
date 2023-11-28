@@ -194,6 +194,7 @@
                     <td><strong>Endereço: </strong> 
                         <span>
                             CEP: {{isset($user->address()->first()->cep)}},
+                            CEP: {{ isset($user->address()->first()->cep) }},
                             {{-- {{$user->address()->first()->address}},
                             Nº. {{isset($user->address()->first()->number)}},
                             {{$user->address()->first()->complement}},
@@ -211,6 +212,8 @@
                 <tr>
                     <td><strong>CEP: </strong> <span>{{isset($user->address()->first()->cep)}}</span></td>
                     <td><strong>Tempo que reside: </strong> <span>@todo</span></td>
+                    <td><strong>CEP: </strong> <span>{{ isset($user->address()->first()->cep) }}</span></td>
+                    <td><strong>Tempo que reside: </strong> <span>{{ isset($user->address()->first()->neighborhood) }}</span></td>
                 </tr>
                 <tr>
                    
@@ -243,6 +246,7 @@
                     <td><strong>Endereço: </strong> 
                         <span>
                             CEP: {isset($user->address()->first()->cep)}},
+                            CEP: {{ isset($user->address()->first()->cep) }},
                             {{-- {{$user->address()->first()->address}},
                             Nº. {{isset($user->address()->first()->number)}},
                             {{$user->address()->first()->complement}},
