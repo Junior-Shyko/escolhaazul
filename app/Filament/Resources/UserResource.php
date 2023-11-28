@@ -61,7 +61,8 @@ class UserResource extends Resource
                 TextColumn::make('roles.name')
                 ->label('Papeis')
                 ->searchable()
-                ->sortable(),
+                ->sortable()
+                
             ])
             ->filters([
                 //
