@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreProposalRequest;
 use App\Http\Requests\ProposalCreateRequest;
 use App\Http\Requests\UpdateProposalRequest;
-use App\Http\Repositories\ProposalRepository;
+use App\Http\Repository\ProposalRepository;
 
 class ProposalController extends Controller
 {
@@ -31,7 +31,10 @@ class ProposalController extends Controller
     {
         $user = $request->all();
         if(count($user) == 0)
+        {
             $user = Auth::user();
+            $user->proposal_id = $request->session()->get('key');
+        }
 
         return Inertia::render('Proposal/Proposal', ['user' => $user]);
     }
@@ -113,6 +116,7 @@ class ProposalController extends Controller
                 $rentalDataId = RentalData::insertGetId(
                     ['typeRentalUser' => $request->type, 'user_id' => $user->id, 'object_id' => $user->id, 'object_type' => 'personal']
                 );
+                session(['key' => $rentalDataId]);
                 DataPersonal::insert(['user_id' => $user->id]);
                 if ($createPhone)
                     $user->proposal_id = $rentalDataId;

@@ -16,6 +16,8 @@ import Vehicle from "@/Components/Proposal/Vehicle.vue";
 import functions from "@/Util/functions";
 import UploadFiles from "@/Components/Proposal/UploadFiles.vue";
 import TabProposal from "@/Components/Proposal/TabProposal.vue";
+import Professional from "@/Components/Proposal/Professional.vue"
+
 
 const props = defineProps({
   user: Object
@@ -33,10 +35,10 @@ const state = reactive({
   field: '',
   btnStep: false,
   numberStep: 1,
-  validateImmobile: false,
-  validateFinality: false,
-  validateWarranty: false,
-  enabledTwo : true
+  validateImmobile: true,
+  validateFinality: true,
+  validateWarranty: true,
+  enabledTwo : false
 });
 
 const receiveEmit = (value) => {
@@ -67,18 +69,18 @@ const receiveEmit = (value) => {
   dataPut[value.nameInput] = value.valueInput
 
   api.put(value.route + '/update', dataPut)
-    .then(res => {
-      if (res.data && res.data.data !== undefined) {
-        Object.entries(res.data.data).forEach(([key, value]) => {
-          functions.toast('Ops!', value[0], 'error')
-        });
-      }
-      state.btnStep = false
-    })
-    .catch(err => {
-      console.log(err)
-      // functions.toast('Sucesso', 'Endereço Cadastrado', 'error')
-    })
+  .then(res => {
+    if (res.data && res.data.data !== undefined) {
+      Object.entries(res.data.data).forEach(([key, value]) => {
+        functions.toast('Ops!', value[0], 'error')
+      });
+    }
+    state.btnStep = false
+  })
+  .catch(err => {
+    console.log(err)
+    // functions.toast('Sucesso', 'Endereço Cadastrado', 'error')
+  })
 }
 
 const skill = (value) => {
@@ -107,6 +109,7 @@ const skill = (value) => {
 
 const showAlert = ref(true);
 
+
 onMounted(() => {
   const handleKeyPress = (event) => {
     if (event.key === 'F5') {
@@ -116,7 +119,6 @@ onMounted(() => {
         // Cancela a atualização da página se o usuário não confirmar
         showAlert.value = false;
       } else {
-        console.log(EscolhaApp.baseURL)
         window.location.href = EscolhaApp.baseURL
       }
     }
@@ -133,14 +135,17 @@ onMounted(() => {
 // Bloqueia o evento de recarregar a página no navegador
 window.onbeforeunload = (event) => {
 
-    // if (showAlert.value) {
-    //   console.log(showAlert.value)
-    //   // functions.toast('Ops!', 'Voce vai sair da página', 'error')
-    //   const message = 'Você tem certeza que deseja sair? Até agora suas informações foram salvas, mas você será redirecionado para o início.';
-    //   alert(message)
-    //   event.returnValue = message;
-    //   return false;
-    // }
+    if (showAlert.value) {
+      // functions.toast('Ops!', 'Voce vai sair da página', 'error')
+      const message = 'Você tem certeza que deseja sair? Até agora suas informações foram salvas, mas você será redirecionado para o início.';
+      alert(message)
+      state.validateImmobile = true
+      state.validateFinality = true
+      state.validateWarranty = true
+      window.location.href = EscolhaApp.baseURL
+      // event.returnValue = message;
+      // return false;
+    }
 };
 // props.user.id = 139
 // props.user.proposal_id = 53
@@ -216,13 +221,24 @@ window.onbeforeunload = (event) => {
                         </v-col>
                         <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
                           <!-- COMPONENTE PARA CADASTRAR ENDEREÇO -->
-                          <Address :user="props.user" />
+                          <Address :user="props.user" object_type="address_personal"/>
                         </v-col>
 
                         <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
                           <!-- COMPONENTE PARA CADASTRAR O CONTATO TELEFONICO 
                                                 <ContactPhone />-->
                         </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col cols="12" sx="12" sm="12" md="12">
+                          <Professional 
+                            :user="props.user"
+                            object_type="personal"
+                            @updateInput="receiveEmit"
+                          />
+                        </v-col>
+                       
+                      
                       </v-row>
 
                     </v-window-item>

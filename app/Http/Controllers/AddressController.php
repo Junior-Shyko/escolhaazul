@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use Illuminate\Http\Request;
-use App\Http\Repositories\AddressRepository;
+use App\Http\Repository\AddressRepository;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
 
@@ -29,7 +29,7 @@ class AddressController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAddressRequest $request)
+    public function store(Request $request)
     {
         $address = [];
         $address['cep'] = $request->cep;
