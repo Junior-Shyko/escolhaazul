@@ -14,8 +14,10 @@ const emit = defineEmits(['updateInput']);
 const saveField = (val) => {
 
   let newstr = val.value
-  if(val.name == 'phone_fixed' || val.name == 'phone_mobile') {
-    newstr = functions.formatPhone(val.value)    
+  console.log(val.name)
+  if(val.name == 'salary' || val.name == 'other_rents') {
+    newstr = functions.valurMoneyUSA(val.value)
+
   }
 
   var valueInputNew = {
@@ -26,9 +28,8 @@ const saveField = (val) => {
     object_type: props.object_type,
     valueInput : newstr
   }
-  console.log(valueInputNew)
   // //enviando informação para o componente pai
-  // emit('updateInput', valueInputNew);
+  emit('updateInput', valueInputNew);
 }
 
 const state = reactive({
@@ -89,22 +90,34 @@ const state = reactive({
         <v-text-field label="Pessoa para contato" variant="underlined" @blur="saveField($event.target)" name="contact_person" v-model="state.contact_person"></v-text-field>
       </v-col>
       <v-col cols="12" sx="6" sm="6" md="4">
-        <v-text-field label="E-mail (RH)" variant="underlined" @blur="saveField($event.target)" name="email" v-model="state.email"></v-text-field>
+        <v-text-field label="E-mail (RH)" 
+        variant="underlined" @blur="saveField($event.target)"
+        name="email" v-model="state.email">
+      </v-text-field>
       </v-col> 
       <v-col cols="12" sx="6" sm="6" md="4">
-        <v-text-field type="number" label="Salário (R$)" variant="underlined" @blur="saveField($event.target)" name="salary" v-model="state.salary"></v-text-field>
+        <v-text-field type="text" label="Salário (R$)" 
+        variant="underlined" @blur="saveField($event.target)"
+        name="salary" v-model="state.salary" v-mask-decimal.br="2">
+        </v-text-field>
       </v-col>
       <v-col cols="12" sx="6" sm="6" md="4">
-        <v-text-field type="number" label="Outras rendas (R$)" variant="underlined" @blur="saveField($event.target)" name="other_rents" v-model="state.other_rents"></v-text-field>
+        <v-text-field type="text" label="Outras rendas (R$)"
+          variant="underlined" @blur="saveField($event.target)"
+          name="other_rents" v-model="state.other_rents" v-mask-decimal.br="2">
+        </v-text-field>
       </v-col>
       <v-col cols="12" sx="6" sm="6" md="4">
-        <v-text-field label="Origem outras rendas" variant="underlined" @blur="saveField($event.target)" name="other_income_source" v-model="state.other_income_source"></v-text-field>
+        <v-text-field label="Origem outras rendas" 
+        variant="underlined" @blur="saveField($event.target)"
+        name="other_income_source" v-model="state.other_income_source">
+        </v-text-field>
       </v-col>
       <v-col cols="12" xs="6" sm="6" md="12">
         <h6 class="text-center mb-5"> {{ props.user.name }}, agora adicione o endereço atual do seu local de trabalho.</h6>
         <v-row  class="flex justify-center mb-5">
          
-          <Address :user="props.user" />
+          <Address :user="props.user" object_type="professional"/>
         </v-row>
       </v-col>
     </v-row>

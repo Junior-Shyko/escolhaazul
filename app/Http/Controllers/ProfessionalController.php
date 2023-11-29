@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Professional;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Services\ProposalService;
 use App\Http\Requests\StoreProfessionalRequest;
 use App\Http\Requests\UpdateProfessionalRequest;
-use App\Models\Professional;
 
 class ProfessionalController extends Controller
 {
@@ -62,5 +65,19 @@ class ProfessionalController extends Controller
     public function destroy(Professional $professional)
     {
         //
+    }
+
+    public function createOrUpdate(UpdateProfessionalRequest $request)
+    {
+        $professional = new Professional;
+        ProposalService::createOrUpdate($professional, $request);
+        // dd($request->all());
+        $user = User::find($request->user_id);
+
+        try {
+            // dump($user);    
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }
