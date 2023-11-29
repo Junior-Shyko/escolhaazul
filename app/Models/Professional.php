@@ -24,5 +24,5 @@ class Professional extends Model
         'other_income_source',
         'object_id',
         'object_type'
-    ],
+    ];
 }

@@ -51,10 +51,7 @@ Route::prefix('admin')->group(function () {
 });
 Route::prefix('api/form')->group( function () {
     Route::post('/proposal', [ProposalController::class, 'createUser'])->name('form/proposal');
-    // Route::post('address', [AddressController::class, 'store'] )->name('api/form/address');
-    Route::put('address', [AddressController::class, 'update'] )->name('api/form/address/update');
-    Route::post('upload/proposal/{id}/{type}', [FileController::class, 'store'])->name('upload');
-    
+    Route::post('upload/proposal/{id}/{type}', [FileController::class, 'store'])->name('upload');  
 });
 
 Route::get('proposta', [RentalDataController::class, 'create']);

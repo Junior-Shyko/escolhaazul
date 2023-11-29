@@ -159,7 +159,6 @@ window.onbeforeunload = (event) => {
   <div
     class="relative sm:flex min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
     <div class="max-w-7xl max-w-full w-full">
-      {{ props.user }}
       <Header />
       <div class="container mx-auto">
         <v-row>
@@ -222,7 +221,7 @@ window.onbeforeunload = (event) => {
                         </v-col>
                         <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
                           <!-- COMPONENTE PARA CADASTRAR ENDEREÇO -->
-                          <Address :user="props.user" />
+                          <Address :user="props.user" object_type="address_personal"/>
                         </v-col>
 
                         <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
@@ -232,7 +231,11 @@ window.onbeforeunload = (event) => {
                       </v-row>
                       <v-row>
                         <v-col cols="12" sx="12" sm="12" md="12">
-                          <Professional  :user="props.user" object_type="personal"/>
+                          <Professional 
+                            :user="props.user"
+                            object_type="personal"
+                            @updateInput="receiveEmit"
+                          />
                         </v-col>
                        
                       
