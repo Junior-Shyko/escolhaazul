@@ -2,7 +2,7 @@
 import { defineProps, reactive, onMounted, ref, onBeforeUnmount } from "vue";
 import { Head } from '@inertiajs/vue3';
 import Address from '@/Components/Address.vue';
-import ContactPhone from '@/Components/ContactPhone.vue';
+import Phone from '@/Components/Proposal/Phone.vue';
 import RentalData from '@/Components/Proposal/RentalData.vue';
 import api from '@/Services/server';
 import Header from "@/Components/Proposal/Header.vue";
@@ -42,7 +42,7 @@ const state = reactive({
 });
 
 const receiveEmit = (value) => {
-  console.log({value})
+
   if(value.nameInput == 'refImmobile' && value.valueInput !== "")
   {
     state.validateImmobile = true;
@@ -227,6 +227,7 @@ window.onbeforeunload = (event) => {
                         <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
                           <!-- COMPONENTE PARA CADASTRAR O CONTATO TELEFONICO 
                                                 <ContactPhone />-->
+                          <Phone :user="props.user" object_type="personal"/>
                         </v-col>
                       </v-row>
                       <v-row>

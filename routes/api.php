@@ -4,7 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\FileController;
-
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\PersonalController;
@@ -15,6 +14,7 @@ use App\Http\Controllers\RealStateController;
 use App\Http\Controllers\CommercialController;
 use App\Http\Controllers\RentalDataController;
 use App\Http\Controllers\DataPersonalController;
+use App\Http\Controllers\PhoneController;
 use App\Http\Controllers\ProfessionalController;
 
 /*
@@ -37,7 +37,7 @@ Route::prefix('form')->group( function () {
     Route::post('address', [AddressController::class, 'store'] )->name('api/form/address');    
     Route::put('address',  [AddressController::class, 'update'] )->name('api/form/address/update');
     Route::post('upload/proposal/{id}/{type}', [FileController::class, 'store'])->name('upload');
-    
+    Route::post('phone', [PhoneController::class, 'store'])->name('phone');
 });
 
 Route::put('/rental-data/update', [RentalDataController::class, 'update'])->name('rental-data/update');
