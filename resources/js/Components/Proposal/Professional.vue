@@ -3,6 +3,7 @@ import { reactive, onMounted  } from 'vue';
 import functions from '@/Util/functions';
 import Address from '@/Components/Address.vue';
 import endpoint from '@/Services/endpoints';
+import Phone from '@/Components/Proposal/Phone.vue';
 
 const props = defineProps({
   user: Object,
@@ -14,10 +15,9 @@ const emit = defineEmits(['updateInput']);
 const saveField = (val) => {
 
   let newstr = val.value
-  console.log(val.name)
+
   if(val.name == 'salary' || val.name == 'other_rents') {
     newstr = functions.valurMoneyUSA(val.value)
-
   }
 
   var valueInputNew = {
@@ -49,6 +49,36 @@ const state = reactive({
   object_id: '',
   object_type: '',
 })
+
+
+const getData = () => {
+  endpoint.getData('professionals', props.user.proposal_id, props.user.id, 'personal')
+    .then(res => {
+      //Preenchendo os dados
+      state.profession                = res.profession
+      state.activity                  = res.activity
+      state.name_bussiness            = res.name_bussiness
+      state.cnpj                      = res.cnpj
+      state.employment_relationship   = res.employment_relationship
+      state.contact_person   = res.contact_person
+      state.admission_date            = res.admission_date
+      state.function                  = res.function
+      state.email                     = res.email
+      state.salary                    = res.salary
+      state.other_rents               = res.other_rents
+      state.other_rents               = res.other_income_source
+    })
+    .catch(err => {
+      console.log({ err })
+    })
+
+}
+
+onMounted(() => {
+  getData()
+})
+
+
 </script>
 
 <template>
@@ -114,10 +144,12 @@ const state = reactive({
         </v-text-field>
       </v-col>
       <v-col cols="12" xs="6" sm="6" md="12">
-        <h6 class="text-center mb-5"> {{ props.user.name }}, agora adicione o endereço atual do seu local de trabalho.</h6>
+        <h6 class="text-center mb-5"> {{ props.user.name }}, 
+          agora adicione o endereço atual do seu local de trabalho e seu contatos telefônico.</h6>
         <v-row  class="flex justify-center mb-5">
          
           <Address :user="props.user" object_type="professional"/>
+          <Phone :user="props.user" object_type="professional"/>
         </v-row>
       </v-col>
     </v-row>

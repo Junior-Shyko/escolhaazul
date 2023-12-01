@@ -28,7 +28,17 @@ const saveContact = () => {
   console.log({contact})
   api.post('form/phone', contact)
   .then(res => {
-    console.log({res})
+    if (res.status == 200) {
+        functions.toast('Sucesso', 'Contato cadastrado', 'success')
+        state.number = '';
+      } else {
+        if (res.data && res.data.data !== undefined) {
+          Object.entries(res.data.data).forEach(([key, value]) => {
+            functions.toast('Ops!', value[0], 'error')
+          });
+        }
+        return false;
+      }
   })
   .catch(err => {
     console.log({err})
