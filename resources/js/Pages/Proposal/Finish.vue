@@ -2,7 +2,6 @@
 <script setup>
 import Header from '@/Components/Proposal/Header.vue';
 import { Head } from '@inertiajs/vue3';
-import { onMounted } from 'vue';
 import { reactive } from 'vue';
 import { urlBase } from "@/Services/server"
 
@@ -29,11 +28,6 @@ const state = reactive({
     ],
     newProposal: urlBase
 })
-
-onMounted(() => {
-    // console.log(state.newProposal)
-})
-
 </script>
 <template>
     <div>
@@ -73,7 +67,15 @@ onMounted(() => {
                                     informamos, também, a conta da <b>Espíndola Imobiliária</b> para transferência da
                                     <b>caução</b>, porém você 
                                     também poderá fazer o pagamento através de <b>cartão de crédito </b>clicando no botão abaixo do 
-                                    Pag Seguro ou através do <strong>PIX</strong> (financeiro@espindola.imb.br)
+                                    Pag Seguro ou através do <strong>PIX</strong> (financeiro@espindola.imb.br) .
+                                    </p>
+                                    <p>Lembramos que toda a sua proposta poderá ser acompanhada ou alterar os dados através de um painel 
+                                        administrativo exclusivo para você.
+                                    </p>
+                                    <p class="text-center">
+                                         <v-btn href="../admin" color="primary" size="x-small">
+                                            Click aqui para acessa-lo
+                                         </v-btn> .
                                     </p>
                                     <br>
                                     

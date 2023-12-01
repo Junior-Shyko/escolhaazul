@@ -29,7 +29,12 @@ class PhoneController extends Controller
      */
     public static function store(StorePhoneRequest $request)
     {
-       dump($request->all());
+       try {
+         Phone::create($request->all());
+         return response()->json(['message' => 'success'], 200);
+       } catch (\Throwable $th) {
+        throw $th;
+       }
     }
 
     /**
