@@ -51,7 +51,6 @@ Route::prefix('admin')->group(function () {
 });
 Route::prefix('api/form')->group( function () {
     Route::post('/proposal', [ProposalController::class, 'createUser'])->name('form/proposal');
-    Route::post('upload/proposal/{id}/{type}', [FileController::class, 'store'])->name('upload');  
 });
 
 Route::get('proposta', [RentalDataController::class, 'create']);

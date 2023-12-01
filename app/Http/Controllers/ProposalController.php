@@ -166,7 +166,7 @@ class ProposalController extends Controller
                 ]));
 
             if ($mail)
-                return redirect('finalizar/fran@mail.com');
+                return redirect('finalizar/' . $user->email);
         } catch (\Throwable $th) {
             throw $th;
         }

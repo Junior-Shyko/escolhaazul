@@ -4,7 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\FileController;
-
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\PersonalController;

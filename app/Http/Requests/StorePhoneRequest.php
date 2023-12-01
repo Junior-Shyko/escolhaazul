@@ -41,7 +41,7 @@ class StorePhoneRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'number' => 'required|max:15'
+            'number' => 'required|max:15|celular_com_ddd'
         ];
     }
 

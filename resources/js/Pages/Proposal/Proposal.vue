@@ -42,7 +42,7 @@ const state = reactive({
 });
 
 const receiveEmit = (value) => {
-  console.log({value})
+
   if(value.nameInput == 'refImmobile' && value.valueInput !== "")
   {
     state.validateImmobile = true;
