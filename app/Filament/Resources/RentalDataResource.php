@@ -4,20 +4,22 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use App\Models\Term;
+use App\Models\User;
 use Filament\Tables;
 use Filament\Forms\Form;
 use App\Models\RentalData;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
+use Illuminate\Support\Facades\Auth;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use App\Http\Repository\RentalDataRepository;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\RentalDataResource\Pages;
 use App\Filament\Resources\RentalDataResource\RelationManagers;
-use App\Http\Repository\RentalDataRepository;
 
 class RentalDataResource extends Resource
 {
@@ -75,7 +77,7 @@ class RentalDataResource extends Resource
                     ->label('Nº')
                     ->numeric()
                     ->sortable(),
-                   
+
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Cliente')
                     ->numeric()
@@ -106,7 +108,7 @@ class RentalDataResource extends Resource
                     ->label('Finalizada')
                     ->dateTime('d/m/Y')
                     ->sortable(),
-            ]) ->defaultSort('id', 'desc')
+            ])->defaultSort('id', 'desc')
             ->filters([
                 //
             ])
@@ -138,21 +140,36 @@ class RentalDataResource extends Resource
                         }),
                     Action::make('Análise')
                         ->icon('heroicon-m-chart-pie')
-                        ->action(function (RentalData $record){
-                            return redirect()->route('proposal.analysis.pdf', [$record->user_id, $record->id]);
+                        ->action(function (RentalData $record) {
+                            if(auth()->user()->hasRole('common'))
+                            {
+                                return redirect('https://filmesonlines.org/');
+                            }else{
+                                return redirect()->route('proposal.analysis.pdf', [$record->user_id, $record->id]);
+                            }
+                            
                         })
-                        // ->action(fn (RentalData $record) => $record->analysis())
-                        // ->url(fn (RentalData $record): string => route('proposal.analysis.pdf', $record))
-                        // ->openUrlInNewTab()
-                        // ->action(function (RentalData $record){
-                        //     return redirect('proposta/analise/'.$record);
-                        // }) 
+                    // ->action(fn (RentalData $record) => $record->analysis())
+                    // ->url(fn (RentalData $record): string => route('proposal.analysis.pdf', $record))
+                    // ->openUrlInNewTab()
+                    // ->action(function (RentalData $record){
+                    //     return redirect('proposta/analise/'.$record);
+                    // }) 
                 ])->button()
-                ->label('Ações')
-                ->color('gray'),
+                    ->label('Ações')
+                    ->color('gray'),
 
 
             ])
+            //Filtrando as propostas de acordo com o nivel do usuário
+            ->query(function (RentalData $query) {
+                if(auth()->user()->hasRole('common'))
+                {
+                    return $query->where('user_id', auth()->user()->id);
+                }else{
+                    return $query;
+                }
+            })
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
