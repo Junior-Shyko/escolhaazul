@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\RentalDataResource\Pages;
 
-use App\Filament\Resources\RentalDataResource;
 use Filament\Actions;
+use Illuminate\Support\Facades\Auth;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Resources\RentalDataResource;
 
 class ListRentalData extends ListRecords
 {
@@ -20,4 +21,25 @@ class ListRentalData extends ListRecords
             // ->label('Criar'),
         ];
     }
+
+    public function getTitle(): string
+    {
+        if(Auth::user()->hasRole('common'))
+        {
+            return 'Suas propostas';
+        }else{
+            return 'Propostas';
+        }
+    }
+
+    public function getSubheading(): string
+    {
+        if(Auth::user()->hasRole('common'))
+        {
+            return 'Lista de suas propostas enviadas, Pessoa Física e Pessoa Jurídica';
+        }else{
+            return 'Lista de propostas Pessoa Física e Pessoa Jurídica';
+        }
+    }
+
 }
