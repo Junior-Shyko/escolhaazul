@@ -1,12 +1,14 @@
 <?php
 
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\TermController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\RentalDataController;
+use App\Models\RentalData;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,5 +60,17 @@ Route::get('proposta/analise/{id}/proposal/{proposalId}', [RentalDataController:
 
 Route::get('/finalizar/{email}', [ProposalController::class, 'finishProposal'])->name('proposal.finish');
 
-
+Route::get('veiculos', function() {
+    dump(auth()->user()->id);
+    dump(auth()->user()->rentalData()->get());
+    $rental = auth()->user()->rentalData()->get();
+    foreach ($rental as $key => $value) {
+       dump($value->id);
+       $proposal = RentalData::find($value->id);
+       dump($proposal);
+       dump($proposal->vehicle()->get());
+    }
+    // dump(auth()->user()->address()->get());
+    // dump(auth()->user()->bank()->get());
+});
 require __DIR__.'/auth.php';

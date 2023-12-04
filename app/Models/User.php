@@ -102,4 +102,15 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Address::class, 'object_id');
     }
 
+
+    //Relação com dados da proposta
+    public function rentalData(): HasMany
+    {
+        return $this->hasMany(RentalData::class, 'object_id');
+    }
+
+    public function vehicle(): HasMany
+    {
+        return $this->hasMany(Vehicle::class, 'object_id');
+    }
 }
