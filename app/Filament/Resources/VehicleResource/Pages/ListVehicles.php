@@ -21,9 +21,4 @@ class ListVehicles extends ListRecords
         ];
     }
 
-    public static function tableQuery($query)
-    {
-        return $query->orderBy('created_at', 'asc'); // Substitua 'name' pelo campo pelo qual deseja ordenar
-    }
-
 }
