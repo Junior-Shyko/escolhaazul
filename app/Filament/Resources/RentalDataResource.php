@@ -25,7 +25,7 @@ class RentalDataResource extends Resource
 {
     protected static ?string $model = RentalData::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-clipboard-document-list';
 
     protected static ?string $navigationLabel = 'Propostas';
 
@@ -149,12 +149,6 @@ class RentalDataResource extends Resource
                             }
                             
                         })
-                    // ->action(fn (RentalData $record) => $record->analysis())
-                    // ->url(fn (RentalData $record): string => route('proposal.analysis.pdf', $record))
-                    // ->openUrlInNewTab()
-                    // ->action(function (RentalData $record){
-                    //     return redirect('proposta/analise/'.$record);
-                    // }) 
                 ])->button()
                     ->label('Ações')
                     ->color('gray'),

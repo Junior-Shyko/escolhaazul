@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\RentalData;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class RealState extends Model
 {
@@ -18,4 +20,9 @@ class RealState extends Model
         'object_id',
         'object_type', 
     ];
+
+    public function rentalData(): BelongsTo
+    {
+        return $this->belongsTo(RentalData::class, 'object_id');
+    }
 }
