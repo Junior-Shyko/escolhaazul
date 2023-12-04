@@ -44,5 +44,8 @@ class RentalData extends Model
         return $this->hasMany(Bank::class, 'object_id');
     }
 
-
+    public function vehicle(): HasMany
+    {
+        return $this->hasMany(Vehicle::class, 'object_id');
+    }
 }
