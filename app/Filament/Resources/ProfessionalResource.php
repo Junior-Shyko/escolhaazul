@@ -7,17 +7,21 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\Professional;
-use Filament\Actions\Action;
 use Filament\Resources\Resource;
-
+use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
+use Leandrocfe\FilamentPtbrFormFields\Money;
 use App\Http\Repository\RentalDataRepository;
+use Leandrocfe\FilamentPtbrFormFields\Document;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ProfessionalResource\Pages;
 use App\Filament\Resources\ProfessionalResource\RelationManagers;
+use App\Models\RentalData;
 
 class ProfessionalResource extends Resource
 {
@@ -30,43 +34,68 @@ class ProfessionalResource extends Resource
     public static function form(Form $form): Form
     {
         $idFromURL = request()->get('id');
+        $employment = new RentalDataRepository;        
         return $form
             ->schema([
-                TextInput::make('object_id')
-                ->label('Nº Proposta')
-                ->default($idFromURL)
-                ->disabled(),
-                Hidden::make('object_id')
-                    ->default($idFromURL),
-                Forms\Components\TextInput::make('profession')
-                ->label('Profissão')
-                    ->maxLength(150),
-                Forms\Components\TextInput::make('activity')
-                    ->maxLength(150),
-                Forms\Components\TextInput::make('name_bussiness')
-                    ->maxLength(150),
-                Forms\Components\TextInput::make('cnpj')
-                    ->maxLength(30),
-                Forms\Components\TextInput::make('employment_relationship')
-                    ->maxLength(150),
-                Forms\Components\DateTimePicker::make('admission_date'),
-                Forms\Components\TextInput::make('function')
-                    ->maxLength(150),
-                Forms\Components\TextInput::make('contact_person')
-                    ->maxLength(150),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->maxLength(150),
-                Forms\Components\TextInput::make('salary')
-                    ->numeric(),
-                Forms\Components\TextInput::make('other_rents')
-                    ->numeric(),
-                Forms\Components\TextInput::make('other_income_source')
-                    ->maxLength(150),
-                Forms\Components\TextInput::make('object_id')
-                    ->maxLength(15),
-                Forms\Components\TextInput::make('object_type')
-                    ->maxLength(150),
+                Section::make('Adicione seus dados profissionais')
+                    ->columns([
+                        'md' => 3
+                    ])
+                    ->schema([
+                        TextInput::make('object_id')
+                            ->label('Nº Proposta')
+                            ->default($idFromURL)
+                            ->disabled(),
+                        Hidden::make('object_id')
+                            ->default($idFromURL),
+                        Forms\Components\TextInput::make('profession')
+                            ->label('Profissão')
+                            ->maxLength(150),
+                        Forms\Components\TextInput::make('activity')
+                            ->label('Atividade')
+                            ->maxLength(150),
+                        Forms\Components\TextInput::make('name_bussiness')
+                            ->label('Nome da empresa')
+                            ->maxLength(150),
+                        Document::make('cnpj')
+                            ->label('CNPJ')
+                            ->maxLength(30)
+                            ->cnpj(),
+                        Select::make('employment_relationship')
+                            ->options($employment->getEmploymentRelationship())
+                            ->label('Vinculo Empregatício')
+                            ->native(false)
+                            ->preload(),
+                        Forms\Components\DatePicker::make('admission_date')
+                            ->label('Data Admissão')
+                            ->placeholder('MM/DD/YYYY'),
+                        Forms\Components\TextInput::make('function')
+                            ->label('Função')
+                            ->maxLength(150),
+                        Forms\Components\TextInput::make('contact_person')
+                            ->label('Pessoa para contato')
+                            ->maxLength(150),
+                        Forms\Components\TextInput::make('email')
+                            ->label('E-mail profissional')
+                            ->email()
+                            ->maxLength(150),
+                        Money::make('salary')
+                            ->label('Salário'),
+                        Money::make('other_rents')
+                            ->label('Outras Rendas'),
+                        Forms\Components\TextInput::make('other_income_source')
+                            ->label('Origem de outras rendas')
+                            ->maxLength(150),
+                        Select::make('object_type')
+                            ->options([
+                                'personal' => 'Pessoa Física',
+                                'legal' => 'Pessoa Jurídica'
+                            ])
+                            ->label('Tipo de referência')
+                            ->required()
+                            ->native(false)
+                            ->preload(),
+                    ])
             ]);
     }
 
@@ -75,25 +104,25 @@ class ProfessionalResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('object_id')
-                ->label('Nº Proposta')
+                    ->label('Nº Proposta')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('rentalData.user.name')
-                ->label('Proponente'),
+                    ->label('Proponente'),
                 Tables\Columns\TextColumn::make('profession')
-                ->label('Profissão')
+                    ->label('Profissão')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('activity')
-                ->label('Atividade')
+                    ->label('Atividade')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name_bussiness')
-                ->label('Nome da empresa')
+                    ->label('Nome da empresa')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('cnpj')
-                ->label('CNPJ')
+                    ->label('CNPJ')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('admission_date')
-                ->label('Data de admissão')
+                    ->label('Data de admissão')
                     ->dateTime('d/m/Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('Função')
