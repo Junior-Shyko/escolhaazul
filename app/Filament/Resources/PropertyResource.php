@@ -4,8 +4,8 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Property;
 use Filament\Forms\Form;
-use App\Models\RealState;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
@@ -15,36 +15,45 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Repository\RentalDataRepository;
-use App\Filament\Resources\RealStateResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\RealStateResource\RelationManagers;
+use App\Filament\Resources\PropertyResource\Pages;
+use App\Filament\Resources\PropertyResource\RelationManagers;
 
-class RealStateResource extends Resource
+class PropertyResource extends Resource
 {
-    protected static ?string $model = RealState::class;
+    protected static ?string $model = Property::class;
 
-    protected static ?string $navigationIcon = 'heroicon-m-building-office';
-    protected static ?string $navigationGroup = 'Referências'; 
-    protected static ?string $navigationLabel = 'Imobiliária';
+    protected static ?string $navigationIcon = 'heroicon-s-home-modern';
+    protected static ?string $navigationGroup = 'Referências';
+    protected static ?string $navigationLabel = 'Bens';
 
     public static function form(Form $form): Form
     {
         $idFromURL = request()->get('id');
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('object_id')
+                    ->label('Nº Proposta')
+                    ->default($idFromURL)
+                    ->disabled(),
+                Hidden::make('object_id')
+                    ->default($idFromURL),
+                Forms\Components\TextInput::make('value')
+                    ->label('Valor')
+                    ->numeric(),
+                Select::make('financed')
+                    ->label('Financiado')
+                    ->options([
+                        'sim' => 'Sim',
+                        'nao' => 'Não'
+                    ])
+                    ->native(false)
+                    ->preload(),
+                Forms\Components\TextInput::make('registration')
+                    ->label('Matricula')
                     ->maxLength(150),
-                Forms\Components\TextInput::make('creci')
+                Forms\Components\TextInput::make('registry')
+                    ->label('Cartório')
                     ->maxLength(50),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->maxLength(150),
-                Forms\Components\TextInput::make('phone_fixed')
-                    ->label('Telefone Fixo')
-                    ->mask('(99) 9999-9999'),
-                Forms\Components\TextInput::make('phone_mobile')
-                    ->label('Telefone Celular')
-                    ->mask('(99) 99999-9999'),
                 Select::make('object_type')
                     ->options([
                         'personal' => 'Pessoa Física',
@@ -54,13 +63,6 @@ class RealStateResource extends Resource
                     ->required()
                     ->native(false)
                     ->preload(),
-                TextInput::make('object_id')
-                    ->label('Nº Proposta')
-                    ->default($idFromURL)
-                    ->disabled(),
-                Hidden::make('object_id')
-                    ->default($idFromURL),
-
 
             ]);
     }
@@ -70,24 +72,36 @@ class RealStateResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('object_id')
-                    ->label('Nº Proposta')
+                    ->label('Nº. Proposta')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('rentalData.user.name')
                     ->label('Proponente')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->label('Imobiliária')
+                Tables\Columns\TextColumn::make('value')
+                    ->label('Valor')
+                    ->numeric(),
+                Tables\Columns\TextColumn::make('financed')
+                    ->label('Financiado')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('creci')
+                Tables\Columns\TextColumn::make('registration')
+                    ->label('Matricula')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
+                Tables\Columns\TextColumn::make('registry')
+                    ->label('Cartório')
                     ->searchable(),
-            ])->defaultSort('id', 'desc')
-            ->query(function (RealState $query) {
+                Tables\Columns\TextColumn::make('created_at')
+                ->label('Criado em')
+                    ->dateTime('d/m/Y')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+               
+            ])
+            ->defaultSort('id', 'desc')
+            ->query(function (Property $query) {
                 // if(auth()->user()->hasRole('common'))
                 if (auth()->user()->hasRole('common')) {
                     //Busca todos os veiculos da proposta
-                    $ids = RentalDataRepository::getEntityToProposal(RealState::class, 'object_id');
+                    $ids = RentalDataRepository::getEntityToProposal(Property::class, 'object_id');
                     return $query->whereIn('id', $ids);
                 } else {
                     return $query;
@@ -102,8 +116,8 @@ class RealStateResource extends Resource
                     Tables\Actions\DeleteAction::make(),
                     Action::make('Adicionar')
                         ->icon('heroicon-m-plus-circle')
-                        ->action(function (RealState $record) {
-                            return redirect('admin/real-states/create/?id=' . $record->object_id);
+                        ->action(function (Property $record) {
+                            return redirect('admin/properties/create/?id=' . $record->object_id);
                         })
 
                 ])
@@ -128,9 +142,9 @@ class RealStateResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRealStates::route('/'),
-            'create' => Pages\CreateRealState::route('/create'),
-            'edit' => Pages\EditRealState::route('/{record}/edit'),
+            'index' => Pages\ListProperties::route('/'),
+            'create' => Pages\CreateProperty::route('/create'),
+            'edit' => Pages\EditProperty::route('/{record}/edit'),
         ];
     }
 }
