@@ -48,4 +48,10 @@ class RentalData extends Model
     {
         return $this->hasMany(Vehicle::class, 'object_id');
     }
+
+
+    public function professional(): HasMany
+    {
+        return $this->hasMany(Professional::class, 'object_id');
+    }
 }

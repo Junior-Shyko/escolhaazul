@@ -11,9 +11,9 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
         <style>
-            [x-cloak] {
+            /* [x-cloak] {
                 display: none !important;
-            }
+            } */
         </style>
         <script>
             var EscolhaApp = {};
@@ -24,13 +24,14 @@
           </script>
         <!-- Scripts -->
         @routes
-        @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
+        @vite('resources/css/app.css')
+        
         @inertiaHead
         @filamentStyles
     </head>
     <body class="font-sans antialiased">
-        {{ $slot }}
         @inertia
         @filamentScripts
+        @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
     </body>
 </html>
