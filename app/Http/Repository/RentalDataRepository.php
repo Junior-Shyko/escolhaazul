@@ -5,7 +5,8 @@ namespace App\Http\Repository;
 use App\Models\User;
 use App\Models\RentalData;
 
-class RentalDataRepository {
+class RentalDataRepository
+{
 
     static public function getDataReport(RentalData $rental)
     {
@@ -21,7 +22,7 @@ class RentalDataRepository {
         dump($user->address()->where('object_type', 'address_personal')->get());
     }
 
-     /**
+    /**
      * Função que retorna o(s) id(s) de um determinado model que o usuário logado tenha relacionamento
      *
      * @return array
@@ -34,7 +35,7 @@ class RentalDataRepository {
         $entity = [];
         //Consultando uma entidade e preenchendo o array
         foreach ($rental as $key => $valRental) {
-            $entity = $model::where($fieldEntity,$valRental->id)->get();         
+            $entity = $model::where($fieldEntity, $valRental->id)->get();
         }
         $ids = [];
         //Loop para estrair os ids
@@ -43,5 +44,18 @@ class RentalDataRepository {
         }
         //Array de ids
         return $ids;
+    }
+
+    public function getEmploymentRelationship(): array
+    {
+        return [
+            'Aposentado/pensionista' => 'Aposentado/pensionista',
+            'Autônomo' => 'Autônomo',
+            'Empresário' => 'Empresário',
+            'Funcionário público' => 'Funcionário público',
+            'Registro CLT' => 'Registro CLT',
+            'Profisional liberal' => 'Profisional liberal',
+            'Outros' => 'Outros'
+        ];
     }
 }

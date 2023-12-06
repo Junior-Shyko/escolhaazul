@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Professional extends Model
 {
@@ -25,4 +27,9 @@ class Professional extends Model
         'object_id',
         'object_type'
     ];
+
+    public function rentalData(): BelongsTo
+    {
+        return $this->belongsTo(RentalData::class, 'object_id');
+    }
 }
