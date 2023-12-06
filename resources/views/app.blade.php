@@ -10,6 +10,11 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+        <style>
+            [x-cloak] {
+                display: none !important;
+            }
+        </style>
         <script>
             var EscolhaApp = {};
         
@@ -24,6 +29,7 @@
         @filamentStyles
     </head>
     <body class="font-sans antialiased">
+        {{ $slot }}
         @inertia
         @filamentScripts
     </body>
