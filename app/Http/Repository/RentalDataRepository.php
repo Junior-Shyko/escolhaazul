@@ -4,6 +4,7 @@ namespace App\Http\Repository;
 
 use App\Models\User;
 use App\Models\RentalData;
+use Illuminate\Support\Facades\DB;
 
 class RentalDataRepository
 {
