@@ -7,13 +7,15 @@ use App\Models\User;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\DataPersonal;
 use Filament\Resources\Resource;
+use Filament\Support\Colors\Color;
+use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Navigation\NavigationGroup;
 use Filament\Tables\Actions\ActionGroup;
-use Filament\Support\Colors\Color;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
@@ -43,6 +45,7 @@ class UserResource extends Resource
                 ->required(),
                 TextInput::make('password')
                 ->label('Senha')
+                ->password()
                 ->required(),
                 Select::make('roles')
                 ->relationship(name: 'roles', titleAttribute: 'name')
@@ -71,7 +74,21 @@ class UserResource extends Resource
                 ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make()
+                    Tables\Actions\DeleteAction::make(),
+                    Action::make('Editar Dados Pessoais')
+                        ->icon('heroicon-m-pencil-square')
+                        ->action(function (User $record) {
+                            // dump( $record->id);
+                            $dataPersonal = DataPersonal::where('user_id', $record->id)->first();
+                            
+                            if(is_null($dataPersonal)){
+                                return redirect('admin/data-personals/create/?id=' . $record->object_id);
+                            }
+                            return redirect('admin/data-personals/'. $dataPersonal->id.'/edit' );
+
+                            // 
+                        })
+                  
                 ])->button()
                 ->label('Ações')
                 ->color('gray')
