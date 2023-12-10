@@ -131,7 +131,7 @@ onMounted(() => {
                         </v-col>
                         <v-col cols="6" sx="6" sm="6" md="3">
                           <v-select class="m-1" variant="underlined" label="Estado Civil" v-model="state.maritalStatus"
-                            :items="['Casado', 'Solteiro', 'Viúvo']" name="maritalStatus"
+                            :items="['Casado', 'Desquitado','Divorciado', 'União Estável','Solteiro','Separado','Viúvo']" name="maritalStatus"
                             @blur="saveField($event.target)">
                           </v-select>
                         </v-col>

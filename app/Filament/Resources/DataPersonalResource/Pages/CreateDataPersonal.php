@@ -9,4 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateDataPersonal extends CreateRecord
 {
     protected static string $resource = DataPersonalResource::class;
+    protected static ?string $title = 'Cadastrar dados pessoais';
+
+   
 }
