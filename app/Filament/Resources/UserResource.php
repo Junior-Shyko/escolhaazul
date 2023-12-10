@@ -81,7 +81,8 @@ class UserResource extends Resource
                 ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\DeleteAction::make()
+                    ->successRedirectUrl(route('conta-excluida')),
                     Action::make('Editar Dados Pessoais')
                         ->icon('heroicon-o-pencil-square')
                         ->action(function (User $record) {
