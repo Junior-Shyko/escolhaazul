@@ -2,11 +2,15 @@
 
 namespace App\Http\Repository;
 
+use App\Models\DataPersonal;
 use App\Models\User;
 use App\Models\RentalData;
+use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class RentalDataRepository
 {
+    const DELETE = 'delete';
 
     static public function getDataReport(RentalData $rental)
     {
@@ -57,5 +61,62 @@ class RentalDataRepository
             'Profisional liberal' => 'Profisional liberal',
             'Outros' => 'Outros'
         ];
+    }
+
+    public function getMaritalStatus(): array
+    {
+        return [
+            'Casado' => 'Casado',
+            'Desquitado' => 'Desquitado',
+            'Divorciado' => 'Divorciado',
+            'União Estável' => 'União Estável',
+            'Solteiro' => 'Solteiro',
+            'Separado' => 'Separado',
+            'Viúvo' => 'Viúvo'
+        ];
+    }
+
+    /**
+     * Retorna o usuário pelo id dos dados pessoais
+     *
+     * @param [integer] $id
+     * @return User
+     */
+    public function getUserDataPersonal($id)
+    {
+        $personal = DataPersonal::find($id);
+        $user = User::find($personal->user_id);
+        return $user;
+    }
+
+    public function getUserData($id)
+    {
+        $user = User::find($id);
+        return $user;
+    }
+
+    /**
+     * Retorna um titulo diferente para cada situação
+     *
+     * @param [string] $type
+     * @param [string] $model
+     * @return void
+     */
+    public static function titleModalRole($type = self::DELETE, $model): string
+    {
+        $roles = auth()->user()->getRoleNames();
+        $title = '';
+        foreach ($roles as $role) {
+           if( ($role == 'superAdmin' || $role == 'admin' || $role == 'manager') && $type == 'delete')
+           {
+            $title = 'Excluir '.$model;
+           }
+           if($role == 'common' && $type == 'delete')
+           {
+            $title = 'Excluir sua conta';
+           }
+        }
+        
+        return $title;
     }
 }

@@ -29,7 +29,7 @@
         @filamentStyles
     </head>
     <body class="font-sans antialiased">
-        {{ $slot }}
+        
         @inertia
         @filamentScripts
     </body>

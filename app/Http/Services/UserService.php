@@ -14,21 +14,31 @@ class UserService {
         public string $phone = ''
     ) { }
 
+    /**
+     * Cria um usuário novo se o email não existir no banco de dados
+     *
+     * @return User
+     */
     public function createUser() : User
     { 
-        // dump($this->phone);
-        $passName = substr($this->name, 0, 4);
-        $passPhone = substr($this->phone, -4);
-        // dump($passName);
-        // dump($passPhone);
-        $user = User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => Hash::make($passName.$passPhone),
-        ]);
-        
-        //adicionando permissao ao usuário
-        $user->givePermissionTo('access_admin');
+        $user = User::where('email', $this->email)->first();
+
+        if(is_null($user))
+        {
+            $passName = substr($this->name, 0, 4);
+            $passPhone = substr($this->phone, -4);
+            $user = User::create([
+                'name' => $this->name,
+                'email' => $this->email,
+                'password' => Hash::make($passName.$passPhone),
+            ]);
+            
+            //adicionando permissao ao usuário
+            $user->givePermissionTo('access_admin');
+            $user->assignRole('common');
+            return $user;
+        }
+       
         return $user;
         // event(new Registered($user));
     }
