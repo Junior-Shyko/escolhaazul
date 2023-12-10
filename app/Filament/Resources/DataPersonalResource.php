@@ -22,7 +22,7 @@ class DataPersonalResource extends Resource
 {
     protected static ?string $model = DataPersonal::class;
     protected static ?string $navigationGroup = 'Dados';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationLabel = 'Dados Pessoais';
  
 
@@ -41,9 +41,13 @@ class DataPersonalResource extends Resource
         } else {
             //Busca o usuário que está no id da url
             $idFromURL = request()->get('id');
-            $user = $rentalRepo->getUserData($idFromURL);
-            $nameUser = $user->name;
-            $iduser = $user->id;
+            
+            if($idFromURL !== null){
+                $user = $rentalRepo->getUserData($idFromURL);
+                $nameUser = $user->name;
+                $iduser = $user->id;
+            }
+           
         }
         return $form
             ->schema([
