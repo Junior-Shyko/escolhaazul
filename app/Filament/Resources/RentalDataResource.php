@@ -76,11 +76,10 @@ class RentalDataResource extends Resource
                 Tables\Columns\TextColumn::make('id')
                     ->label('Nº')
                     ->numeric()
-                    ->sortable(),
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('user.name')
-                    ->label('Cliente')
-                    ->numeric()
-                    ->sortable(),
+                    ->label('Proponente')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('status')
                     ->searchable()
                     ->badge()
@@ -112,7 +111,6 @@ class RentalDataResource extends Resource
                 //
             ])
             ->actions([
-
                 ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),

@@ -10,6 +10,7 @@ use PhpParser\Node\Expr\Cast\Object_;
 
 class RentalDataRepository
 {
+    const DELETE = 'delete';
 
     static public function getDataReport(RentalData $rental)
     {
@@ -81,15 +82,41 @@ class RentalDataRepository
      * @param [integer] $id
      * @return User
      */
-    public function getUserDataPersonal($id): User
+    public function getUserDataPersonal($id)
     {
         $personal = DataPersonal::find($id);
         $user = User::find($personal->user_id);
         return $user;
     }
 
-    public function getUserData($id): User{
+    public function getUserData($id)
+    {
         $user = User::find($id);
         return $user;
+    }
+
+    /**
+     * Retorna um titulo diferente para cada situação
+     *
+     * @param [string] $type
+     * @param [string] $model
+     * @return void
+     */
+    public static function titleModalRole($type = self::DELETE, $model): string
+    {
+        $roles = auth()->user()->getRoleNames();
+        $title = '';
+        foreach ($roles as $role) {
+           if( ($role == 'superAdmin' || $role == 'admin' || $role == 'manager') && $type == 'delete')
+           {
+            $title = 'Excluir '.$model;
+           }
+           if($role == 'common' && $type == 'delete')
+           {
+            $title = 'Excluir sua conta';
+           }
+        }
+        
+        return $title;
     }
 }
