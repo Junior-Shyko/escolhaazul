@@ -26,11 +26,7 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    protected static ?string $navigationGroup = 'Usuários';
- 
-    protected static ?string $navigationLabel = 'Todos usuários';
+    protected static ?string $navigationIcon = 'heroicon-s-users';
 
     protected static ?int $navigationSort = 3;
 
@@ -87,7 +83,7 @@ class UserResource extends Resource
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
                     Action::make('Editar Dados Pessoais')
-                        ->icon('heroicon-m-pencil-square')
+                        ->icon('heroicon-o-pencil-square')
                         ->action(function (User $record) {
                            
                             $dataPersonal = DataPersonal::where('user_id', $record->id)->first();
@@ -125,4 +121,24 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
+
+    public static function getNavigationGroup(): string
+    {
+        if (auth()->user()->hasRole('common')) {
+            //Busca todos os dados dessa entidade desse usuário
+            return __('Usuário');
+        } else {
+            return __('Usuários');
+        }       
+    }
+    public static function getNavigationLabel(): string
+    {
+        if (auth()->user()->hasRole('common')) {
+            //Busca todos os dados dessa entidade desse usuário
+            return __('Seu perfil');
+        } else {
+            return __('Todos Usuários');
+        }       
+    }
+    
 }
