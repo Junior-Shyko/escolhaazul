@@ -59,7 +59,7 @@ Route::get('proposta', [RentalDataController::class, 'create']);
 Route::get('proposta/analise/{id}/proposal/{proposalId}', [RentalDataController::class, 'analysis'])->name('proposal.analysis.pdf');
 
 Route::get('/finalizar/{email}', [ProposalController::class, 'finishProposal'])->name('proposal.finish');
-
+Route::get('conta-excluida', [ProposalController::class, 'accountDelete'])->name('conta-excluida');
 Route::get('veiculos', function() {
     dump(auth()->user()->id);
     dump(auth()->user()->rentalData()->get());
