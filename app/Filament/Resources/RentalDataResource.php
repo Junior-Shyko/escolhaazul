@@ -77,7 +77,6 @@ class RentalDataResource extends Resource
                     ->label('Nº')
                     ->numeric()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Cliente')
                     ->numeric()

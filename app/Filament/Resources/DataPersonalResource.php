@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
+use App\Models\User;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
@@ -11,10 +12,12 @@ use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\ActionGroup;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Placeholder;
 use App\Http\Repository\RentalDataRepository;
+use Leandrocfe\FilamentPtbrFormFields\Document;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\DataPersonalResource\Pages;
 use App\Filament\Resources\DataPersonalResource\RelationManagers;
@@ -27,21 +30,37 @@ class DataPersonalResource extends Resource
     protected static ?string $navigationLabel = 'Dados Pessoais';
 
     public static function form(Form $form): Form
-    {
-        $idFromURL = request()->get('id');
+    {  
+        //Armazenará o nome do usuario
+        $nameUser = '';
+        //Repositorio com várias funções util    
+        $rentalRepo = new RentalDataRepository;
+        //Em caso de edição busca o usuario pelo valor da Entidade
+        if($form->getOperation() == 'edit'){
+            $user = $rentalRepo->getUserDataPersonal($form->getRecord()->id);
+            $nameUser = $user->name;
+        }else{
+            //Busca o usuário que está no id da url
+            $idFromURL = request()->get('id');
+            $user = $rentalRepo->getUserData($idFromURL);
+            $nameUser = $user->name;
+        }
         return $form
             ->schema([
-       
-                TextInput::make('object_id')
-                            ->label('Nº Proposta')
-                            ->default($idFromURL)
-                            ->disabled(),
-                        Hidden::make('user_id')
-                            ->default($idFromURL),
-                Forms\Components\TextInput::make('cpf')
+                Section::make('')
+    ->description('Cadastro relacionado aos dados pessoais do usuário')
+    ->columns([
+        'md' => 3
+    ])
+    ->schema([
+        Placeholder::make('Proponente')
+                    ->content($nameUser),
+                Hidden::make('user_id')
+                    ->default($idFromURL),
+                Document::make('cpf')
                     ->label('CPF')
+                    ->cpf()
                     ->maxLength(15),
-
                 Select::make('sex')
                     ->options([
                         'Masculino' => 'Masculino',
@@ -57,11 +76,9 @@ class DataPersonalResource extends Resource
                 Forms\Components\TextInput::make('organConsignor')
                     ->label('Orgão Emissor.')
                     ->maxLength(25),
-
                 Forms\Components\TextInput::make('nationality')
-                    ->label('Nacionalidade.')
+                    ->label('Nacionalidade')
                     ->maxLength(50),
-
                 Select::make('EducationLevel')
                     ->options([
                         'Ensino fundamental imcompleto' => 'Ensino fundamental imcompleto',
@@ -75,14 +92,15 @@ class DataPersonalResource extends Resource
                     ])
                     ->label('Grau de Instrução')
                     ->preload(),
-
-
                 Forms\Components\TextInput::make('naturality')
-                    ->label('naturalidade')
+                    ->label('Natural')
                     ->maxLength(100),
-                Forms\Components\TextInput::make('maritalStatus')
-                    ->label('Orgão Emissor.')
-                    ->maxLength(100),
+                Select::make('maritalStatus')
+                    ->options(
+                        $rentalRepo->getMaritalStatus()
+                    )
+                    ->label('Estado Civil')
+                    ->preload(),
                 Select::make('number_dependents')
                     ->options([
                         '0' => '0',
@@ -93,6 +111,8 @@ class DataPersonalResource extends Resource
                     ])
                     ->label('Nº Dependentes')
                     ->preload(),
+    ])
+               
             ]);
     }
 

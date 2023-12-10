@@ -12,10 +12,12 @@ use Filament\Resources\Resource;
 use Filament\Support\Colors\Color;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Select;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Navigation\NavigationGroup;
 use Filament\Tables\Actions\ActionGroup;
+use App\Http\Repository\RentalDataRepository;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
@@ -67,6 +69,15 @@ class UserResource extends Resource
                 ->sortable()
                 
             ])
+            ->defaultSort('id', 'desc')
+            ->query(function (User $query) {
+                if (auth()->user()->hasRole('common')) {
+                    //Busca todos os dados dessa entidade desse usuário
+                    return $query->where('id', '=', auth()->user()->id);
+                } else {
+                    return $query;
+                }
+            })
             ->filters([
                 //
             ])
@@ -78,15 +89,13 @@ class UserResource extends Resource
                     Action::make('Editar Dados Pessoais')
                         ->icon('heroicon-m-pencil-square')
                         ->action(function (User $record) {
-                            // dump( $record->id);
+                           
                             $dataPersonal = DataPersonal::where('user_id', $record->id)->first();
                             
                             if(is_null($dataPersonal)){
-                                return redirect('admin/data-personals/create/?id=' . $record->object_id);
+                                return redirect('admin/data-personals/create?id=' . $record->id);
                             }
                             return redirect('admin/data-personals/'. $dataPersonal->id.'/edit' );
-
-                            // 
                         })
                   
                 ])->button()
