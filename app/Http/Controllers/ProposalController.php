@@ -178,4 +178,9 @@ class ProposalController extends Controller
     {
         
     }
+
+    public function accountDelete()
+    {
+        return Inertia::render('Auth/AccountDelete');
+    }
 }
