@@ -3,22 +3,26 @@
 namespace App\Filament\Resources;
 
 use Filament\Panel;
+use App\Models\Role;
 use App\Models\User;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\DataPersonal;
 use Filament\Resources\Resource;
+
 use Filament\Support\Colors\Color;
 use Filament\Tables\Actions\Action;
+use App\Http\Repository\CustomAction;
 use Filament\Forms\Components\Select;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Navigation\NavigationGroup;
 use Filament\Tables\Actions\ActionGroup;
+use Illuminate\Database\Eloquent\Builder;
 use App\Http\Repository\RentalDataRepository;
 use App\Filament\Resources\UserResource\Pages;
+use Filament\Tables\Actions\ForceDeleteAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
 
@@ -46,17 +50,27 @@ class UserResource extends Resource
                 ->password()
                 ->required(),
                 Select::make('roles')
+                ->label('Nível')
                 ->relationship(name: 'roles', titleAttribute: 'name')
+                ->disabled(
+                    function () {
+                        if (auth()->user()->hasRole('common')) {
+                            return true;
+                        }
+                    }
+                )
             ]);
     }
 
     public static function table(Table $table): Table
-    {
+    {  
+        $title = RentalDataRepository::titleModalRole('delete', 'Usuário');
         return $table
             ->columns([
                 TextColumn::make('name')
                 ->searchable(),
-                TextColumn::make('email'),
+                TextColumn::make('email')
+                ->searchable(),
                 TextColumn::make('created_at')->dateTime('d/m/Y')
                 ->label('Criado'),
                 TextColumn::make('roles.name')
@@ -82,7 +96,7 @@ class UserResource extends Resource
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make()
-                    ->successRedirectUrl(route('conta-excluida')),
+                    ->modalHeading($title),
                     Action::make('Editar Dados Pessoais')
                         ->icon('heroicon-o-pencil-square')
                         ->action(function (User $record) {
@@ -141,5 +155,10 @@ class UserResource extends Resource
             return __('Todos Usuários');
         }       
     }
-    
+
+    public static function titleModalRole()
+    {
+       
+    }
+
 }

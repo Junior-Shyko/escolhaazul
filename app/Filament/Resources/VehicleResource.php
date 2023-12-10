@@ -24,7 +24,7 @@ class VehicleResource extends Resource
 {
     protected static ?string $model = Vehicle::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-m-truck';
     protected static ?string $navigationGroup = 'Referências'; 
     protected static ?string $navigationLabel = 'Veículo';
     
@@ -40,13 +40,17 @@ class VehicleResource extends Resource
                 ])
                 ->schema([
                     TextInput::make('branch')
-                    ->label('Marca'),
+                    ->label('Marca')
+                    ->searchable(),
                     TextInput::make('model')
-                    ->label('Modelo'),
+                    ->label('Modelo')
+                    ->searchable(),
                     TextInput::make('year')
-                    ->label('Ano'),
+                    ->label('Ano')
+                    ->searchable(),
                     TextInput::make('plate')
-                    ->label('Placa'),
+                    ->label('Placa')
+                    ->searchable(),
                     Select::make('financed')
                     ->options([
                         'sim' => 'Sim',

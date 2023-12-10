@@ -27,7 +27,7 @@ class ProfessionalResource extends Resource
 {
     protected static ?string $model = Professional::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-m-briefcase';
     protected static ?string $navigationGroup = 'Dados';
     protected static ?string $navigationLabel = 'Dados Profissional';
 
