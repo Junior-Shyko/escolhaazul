@@ -2,9 +2,11 @@
 
 namespace App\Http\Repository;
 
+use App\Models\DataPersonal;
 use App\Models\User;
 use App\Models\RentalData;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class RentalDataRepository
 {
@@ -58,5 +60,36 @@ class RentalDataRepository
             'Profisional liberal' => 'Profisional liberal',
             'Outros' => 'Outros'
         ];
+    }
+
+    public function getMaritalStatus(): array
+    {
+        return [
+            'Casado' => 'Casado',
+            'Desquitado' => 'Desquitado',
+            'Divorciado' => 'Divorciado',
+            'União Estável' => 'União Estável',
+            'Solteiro' => 'Solteiro',
+            'Separado' => 'Separado',
+            'Viúvo' => 'Viúvo'
+        ];
+    }
+
+    /**
+     * Retorna o usuário pelo id dos dados pessoais
+     *
+     * @param [integer] $id
+     * @return User
+     */
+    public function getUserDataPersonal($id): User
+    {
+        $personal = DataPersonal::find($id);
+        $user = User::find($personal->user_id);
+        return $user;
+    }
+
+    public function getUserData($id): User{
+        $user = User::find($id);
+        return $user;
     }
 }
