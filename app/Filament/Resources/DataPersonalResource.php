@@ -9,18 +9,14 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\DataPersonal;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\Placeholder;
 use App\Http\Repository\RentalDataRepository;
 use Leandrocfe\FilamentPtbrFormFields\Document;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\DataPersonalResource\Pages;
-use App\Filament\Resources\DataPersonalResource\RelationManagers;
 
 class DataPersonalResource extends Resource
 {
@@ -28,91 +24,95 @@ class DataPersonalResource extends Resource
     protected static ?string $navigationGroup = 'Dados';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationLabel = 'Dados Pessoais';
+ 
 
     public static function form(Form $form): Form
-    {  
+    {
         //Armazenará o nome do usuario
         $nameUser = '';
+        $iduser = '';
         //Repositorio com várias funções util    
         $rentalRepo = new RentalDataRepository;
         //Em caso de edição busca o usuario pelo valor da Entidade
-        if($form->getOperation() == 'edit'){
+        if ($form->getOperation() == 'edit') {
             $user = $rentalRepo->getUserDataPersonal($form->getRecord()->id);
             $nameUser = $user->name;
-        }else{
+            $iduser = $user->id;
+        } else {
             //Busca o usuário que está no id da url
             $idFromURL = request()->get('id');
             $user = $rentalRepo->getUserData($idFromURL);
             $nameUser = $user->name;
+            $iduser = $user->id;
         }
         return $form
             ->schema([
                 Section::make('')
-    ->description('Cadastro relacionado aos dados pessoais do usuário')
-    ->columns([
-        'md' => 3
-    ])
-    ->schema([
-        Placeholder::make('Proponente')
-                    ->content($nameUser),
-                Hidden::make('user_id')
-                    ->default($idFromURL),
-                Document::make('cpf')
-                    ->label('CPF')
-                    ->cpf()
-                    ->maxLength(15),
-                Select::make('sex')
-                    ->options([
-                        'Masculino' => 'Masculino',
-                        'Feminino' => 'Feminino'
+                    ->description('Cadastro relacionado aos dados pessoais do usuário')
+                    ->columns([
+                        'md' => 3
                     ])
-                    ->label('Sexo')
-                    ->preload(),
-                Forms\Components\DatePicker::make('birthDate')
-                    ->label('Data de Nasc.'),
-                Forms\Components\TextInput::make('identity')
-                    ->label('RG/Identidade')
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('organConsignor')
-                    ->label('Orgão Emissor.')
-                    ->maxLength(25),
-                Forms\Components\TextInput::make('nationality')
-                    ->label('Nacionalidade')
-                    ->maxLength(50),
-                Select::make('EducationLevel')
-                    ->options([
-                        'Ensino fundamental imcompleto' => 'Ensino fundamental imcompleto',
-                        'Ensino fundamental completo' => 'Ensino fundamental completo',
-                        'Ensino médio incompleto' => 'Ensino médio incompleto',
-                        'Ensino médio completo' => 'Ensino médio completo',
-                        'Superior completo (ou graduação)' => 'Superior completo (ou graduação)',
-                        'Pós-graduação' => 'Pós-graduação',
-                        'Mestrado' => 'Mestrado',
-                        'Doutorado' => 'Doutorado'
+                    ->schema([
+                        Placeholder::make('Proponente')
+                            ->content($nameUser),
+                        Hidden::make('user_id')
+                            ->default($iduser),
+                        Document::make('cpf')
+                            ->label('CPF')
+                            ->cpf()
+                            ->maxLength(15),
+                        Select::make('sex')
+                            ->options([
+                                'Masculino' => 'Masculino',
+                                'Feminino' => 'Feminino'
+                            ])
+                            ->label('Sexo')
+                            ->preload(),
+                        Forms\Components\DatePicker::make('birthDate')
+                            ->label('Data de Nasc.'),
+                        Forms\Components\TextInput::make('identity')
+                            ->label('RG/Identidade')
+                            ->maxLength(100),
+                        Forms\Components\TextInput::make('organConsignor')
+                            ->label('Orgão Emissor.')
+                            ->maxLength(25),
+                        Forms\Components\TextInput::make('nationality')
+                            ->label('Nacionalidade')
+                            ->maxLength(50),
+                        Select::make('EducationLevel')
+                            ->options([
+                                'Ensino fundamental imcompleto' => 'Ensino fundamental imcompleto',
+                                'Ensino fundamental completo' => 'Ensino fundamental completo',
+                                'Ensino médio incompleto' => 'Ensino médio incompleto',
+                                'Ensino médio completo' => 'Ensino médio completo',
+                                'Superior completo (ou graduação)' => 'Superior completo (ou graduação)',
+                                'Pós-graduação' => 'Pós-graduação',
+                                'Mestrado' => 'Mestrado',
+                                'Doutorado' => 'Doutorado'
+                            ])
+                            ->label('Grau de Instrução')
+                            ->preload(),
+                        Forms\Components\TextInput::make('naturality')
+                            ->label('Natural')
+                            ->maxLength(100),
+                        Select::make('maritalStatus')
+                            ->options(
+                                $rentalRepo->getMaritalStatus()
+                            )
+                            ->label('Estado Civil')
+                            ->preload(),
+                        Select::make('number_dependents')
+                            ->options([
+                                '0' => '0',
+                                '1' => '1',
+                                '2' => '2',
+                                '3' => '3',
+                                '4+' => '4+',
+                            ])
+                            ->label('Nº Dependentes')
+                            ->preload(),
                     ])
-                    ->label('Grau de Instrução')
-                    ->preload(),
-                Forms\Components\TextInput::make('naturality')
-                    ->label('Natural')
-                    ->maxLength(100),
-                Select::make('maritalStatus')
-                    ->options(
-                        $rentalRepo->getMaritalStatus()
-                    )
-                    ->label('Estado Civil')
-                    ->preload(),
-                Select::make('number_dependents')
-                    ->options([
-                        '0' => '0',
-                        '1' => '1',
-                        '2' => '2',
-                        '3' => '3',
-                        '4+' => '4+',
-                    ])
-                    ->label('Nº Dependentes')
-                    ->preload(),
-    ])
-               
+
             ]);
     }
 
@@ -153,12 +153,10 @@ class DataPersonalResource extends Resource
 
             ])
             ->defaultSort('created_at', 'desc')
-            ->query(function (DataPersonal $query) {
+            ->query(function (User $query) {
                 // if(auth()->user()->hasRole('common'))
                 if (auth()->user()->hasRole('common')) {
-                    //Busca todos os veiculos da proposta
-                    $ids = RentalDataRepository::getEntityToProposal(DataPersonal::class, 'user_id');
-                    return $query->whereIn('id', $ids);
+                    return auth()->user()->dataPersonal();
                 } else {
                     return $query;
                 }
