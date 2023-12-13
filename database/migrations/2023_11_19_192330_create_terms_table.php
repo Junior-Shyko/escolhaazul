@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('rental_data_id')->nullable(true);
             $table->timestamp('date_check')->nullable(true);
             
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('rental_data_id')->references('id')->on('rental_datas');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('rental_data_id')->references('id')->on('rental_datas')->onDelete('cascade');
             $table->timestamps();
         });
     }
