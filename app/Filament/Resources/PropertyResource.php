@@ -9,15 +9,16 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 
+use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
+use Leandrocfe\FilamentPtbrFormFields\Money;
 use App\Http\Repository\RentalDataRepository;
 use App\Filament\Resources\PropertyResource\Pages;
-use App\Filament\Resources\PropertyResource\RelationManagers;
 
 class PropertyResource extends Resource
 {
@@ -32,44 +33,49 @@ class PropertyResource extends Resource
         $idFromURL = request()->get('id');
         return $form
             ->schema([
-                TextInput::make('object_id')
-                    ->label('Nº Proposta')
-                    ->default($idFromURL)
-                    ->disabled(),
-                Hidden::make('object_id')
-                    ->default($idFromURL),
-                Forms\Components\TextInput::make('value')
-                    ->label('Valor')
-                    ->numeric(),
-                Select::make('financed')
-                    ->label('Financiado')
-                    ->options([
-                        'sim' => 'Sim',
-                        'nao' => 'Não'
-                    ])
-                    ->native(false)
-                    ->preload(),
-                Forms\Components\TextInput::make('registration')
-                    ->label('Matricula')
-                    ->maxLength(150),
-                Forms\Components\TextInput::make('registry')
-                    ->label('Cartório')
-                    ->maxLength(50),
-                Select::make('object_type')
-                    ->options([
-                        'personal' => 'Pessoa Física',
-                        'legal' => 'Pessoa Jurídica'
-                    ])
-                    ->label('Tipo de referência')
-                    ->required()
-                    ->native(false)
-                    ->preload(),
+                Section::make('')
+                    ->schema([
+                        TextInput::make('object_id')
+                            ->label('Nº Proposta')
+                            ->default($idFromURL)
+                            ->disabled(),
+                        Hidden::make('object_id')
+                            ->default($idFromURL),
+                        Money::make('value')
+                            ->label('Valor')
+                            ->prefix(null),
+                        Select::make('financed')
+                            ->label('Financiado')
+                            ->options([
+                                'sim' => 'Sim',
+                                'nao' => 'Não'
+                            ])
+                            ->native(false)
+                            ->preload(),
+                        Forms\Components\TextInput::make('registration')
+                            ->label('Matricula')
+                            ->maxLength(150),
+                        Forms\Components\TextInput::make('registry')
+                            ->label('Cartório')
+                            ->maxLength(50),
+                        Select::make('object_type')
+                            ->options([
+                                'personal' => 'Pessoa Física',
+                                'legal' => 'Pessoa Jurídica'
+                            ])
+                            ->label('Tipo de referência')
+                            ->required()
+                            ->native(false)
+                            ->preload(),
+                    ]) ->columns(2)
+
 
             ]);
     }
 
     public static function table(Table $table): Table
     {
+        $title = RentalDataRepository::titleModalRole('delete', 'Propriedade');
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('object_id')
@@ -91,11 +97,11 @@ class PropertyResource extends Resource
                     ->label('Cartório')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                ->label('Criado em')
+                    ->label('Criado em')
                     ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-               
+
             ])
             ->defaultSort('id', 'desc')
             ->query(function (Property $query) {
@@ -114,7 +120,8 @@ class PropertyResource extends Resource
             ->actions([
                 ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\DeleteAction::make()
+                    ->modalHeading($title),
                     Action::make('Adicionar')
                         ->icon('heroicon-m-plus-circle')
                         ->action(function (Property $record) {

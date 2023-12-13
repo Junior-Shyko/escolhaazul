@@ -156,9 +156,4 @@ class UserResource extends Resource
         }       
     }
 
-    public static function titleModalRole()
-    {
-       
-    }
-
 }
