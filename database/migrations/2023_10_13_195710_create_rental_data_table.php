@@ -22,8 +22,9 @@ return new class extends Migration
             $table->float('currentCondominiumValue', 8, 2)->nullable();
             $table->float('iptu', 8, 2)->nullable();
             $table->longText('ps')->nullable();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignId('user_id')->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');;
             $table->timestamps();
         });
     }
