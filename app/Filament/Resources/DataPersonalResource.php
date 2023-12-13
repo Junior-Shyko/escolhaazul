@@ -29,26 +29,11 @@ class DataPersonalResource extends Resource
     public static function form(Form $form): Form
     {
         //Armazenará o nome do usuario
-        $nameUser = '';
-        $iduser = '';
+
         //Repositorio com várias funções util    
         $rentalRepo = new RentalDataRepository;
-        //Em caso de edição busca o usuario pelo valor da Entidade
-        if ($form->getOperation() == 'edit') {
-            $user = $rentalRepo->getUserDataPersonal($form->getRecord()->id);
-            $nameUser = $user->name;
-            $iduser = $user->id;
-        } else {
-            //Busca o usuário que está no id da url
-            $idFromURL = request()->get('id');
-            
-            if($idFromURL !== null){
-                $user = $rentalRepo->getUserData($idFromURL);
-                $nameUser = $user->name;
-                $iduser = $user->id;
-            }
-           
-        }
+        $userForm = RentalDataRepository::getUserToForm($form);
+        
         return $form
             ->schema([
                 Section::make('')
@@ -58,9 +43,9 @@ class DataPersonalResource extends Resource
                     ])
                     ->schema([
                         Placeholder::make('Proponente')
-                            ->content($nameUser),
+                            ->content($userForm['nameUser']),
                         Hidden::make('user_id')
-                            ->default($iduser),
+                            ->default($userForm['idUser']),
                         Document::make('cpf')
                             ->label('CPF')
                             ->cpf()
@@ -78,7 +63,7 @@ class DataPersonalResource extends Resource
                             ->label('RG/Identidade')
                             ->maxLength(100),
                         Forms\Components\TextInput::make('organConsignor')
-                            ->label('Orgão Emissor.')
+                            ->label('Orgão Emissor')
                             ->maxLength(25),
                         Forms\Components\TextInput::make('nationality')
                             ->label('Nacionalidade')

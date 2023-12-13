@@ -12,12 +12,15 @@ use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Placeholder;
 use Illuminate\Database\Eloquent\Collection;
 use App\Http\Repository\RentalDataRepository;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Leandrocfe\FilamentPtbrFormFields\Money;
 use App\Filament\Resources\RentalDataResource\Pages;
 use App\Filament\Resources\RentalDataResource\RelationManagers;
 
@@ -31,41 +34,60 @@ class RentalDataResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $rentalRepo = new RentalDataRepository;
+        $userForm = RentalDataRepository::getUserToForm($form);
+        
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
+                Placeholder::make('Proponente')
+                ->content($userForm['nameUser']),
+            Hidden::make('user_id')
+                ->default($userForm['idUser']),
                 Forms\Components\TextInput::make('refImmobile')
+                ->label('Refência do Imóvel')
                     ->maxLength(200),
                 Forms\Components\TextInput::make('typeRentalUser')
+                ->label('Tipo de locação')
                     ->required()
                     ->maxLength(50),
                 Forms\Components\TextInput::make('finality')
+                ->label('Finalidade')
                     ->maxLength(50),
                 Forms\Components\TextInput::make('term')
+                ->label('Prazo desejado')
                     ->numeric(),
                 Forms\Components\TextInput::make('warrantyType')
+                ->label('Tipo de garantia')
                     ->maxLength(50),
-                Forms\Components\TextInput::make('proposedValue')
-                    ->numeric(),
-                Forms\Components\TextInput::make('currentCondominiumValue')
-                    ->numeric(),
-                Forms\Components\TextInput::make('iptu')
-                    ->numeric(),
+                Money::make('proposedValue')
+                ->label('Aluguel proposto')
+                ->prefix('R$'),
                 Forms\Components\Textarea::make('ps')
+                ->label('Observação')
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('object_id')
                     ->required()
                     ->maxLength(10),
-                Forms\Components\TextInput::make('object_type')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('status')
-                    ->required()
-                    ->maxLength(50)
-                    ->default('incompleta'),
-                Forms\Components\DateTimePicker::make('date_finish'),
+                      Select::make('status')
+                    ->options([
+                        'incompleta' => 'Incompleta',
+                        'finalizada' => 'Finalizada'
+                    ])
+                    ->label('Situação/Status')
+                    ->native(false)
+                    ->preload(),
+                Forms\Components\DateTimePicker::make('date_finish')
+                ->label('Finalizado em')
+                ->format('d/m/Y H:i'),
+                Select::make('object_type')
+                            ->options([
+                                'personal' => 'Pessoa Física',
+                                'legal' => 'Pessoa Jurídica'
+                            ])
+                            ->label('Tipo de referência')
+                            ->required()
+                            ->native(false)
+                            ->preload(),
             ]);
     }
 
