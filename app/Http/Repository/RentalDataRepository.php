@@ -82,7 +82,7 @@ class RentalDataRepository
      * @param [integer] $id
      * @return User
      */
-    public function getUserDataPersonal($id)
+    static public function getUserDataPersonal($id)
     {
         $personal = DataPersonal::find($id);
         $user = User::find($personal->user_id);
@@ -93,6 +93,32 @@ class RentalDataRepository
     {
         $user = User::find($id);
         return $user;
+    }
+
+    /**
+     * Formata id e nome do usuário para retornar como array
+     *
+     * @param [type] $form
+     * @return array
+     */
+    static public function getUserToForm($form): array
+    {
+        //Modo de edição de form
+        if ($form->getOperation() == 'edit') {
+            $user = self::getUserDataPersonal($form->getRecord()->id);
+            $nameUser = $user->name;
+            $idUser = $user->id;
+        } else {
+            //Busca o usuário que está no id da url
+            $idFromURL = request()->get('id');            
+            if($idFromURL !== null){
+                $user = self::getUserData($idFromURL);
+                $nameUser = $user->name;
+                $idUser = $user->id;
+            }
+           
+        }
+        return ['idUser' => $idUser,'nameUser' => $nameUser];
     }
 
     /**
@@ -113,7 +139,12 @@ class RentalDataRepository
            }
            if($role == 'common' && $type == 'delete')
            {
-            $title = 'Excluir sua conta';
+                if($model == 'Usuário'){
+                    $title = 'Excluir sua conta';
+                }else{
+                    $title = 'Excluir '.$model;
+                }
+               
            }
         }
         

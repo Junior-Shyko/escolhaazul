@@ -13,10 +13,10 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\ActionGroup;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Section;
 use App\Http\Repository\RentalDataRepository;
 use App\Filament\Resources\RealStateResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Leandrocfe\FilamentPtbrFormFields\PhoneNumber;
 use App\Filament\Resources\RealStateResource\RelationManagers;
 
 class RealStateResource extends Resource
@@ -32,19 +32,19 @@ class RealStateResource extends Resource
         $idFromURL = request()->get('id');
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Section::make('')
+                ->schema([
+                    Forms\Components\TextInput::make('name')
                     ->maxLength(150),
                 Forms\Components\TextInput::make('creci')
                     ->maxLength(50),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->maxLength(150),
-                Forms\Components\TextInput::make('phone_fixed')
-                    ->label('Telefone Fixo')
-                    ->mask('(99) 9999-9999'),
-                Forms\Components\TextInput::make('phone_mobile')
-                    ->label('Telefone Celular')
-                    ->mask('(99) 99999-9999'),
+                PhoneNumber::make('phone_fixed')
+                ->label('Telefone Fixo'),
+                PhoneNumber::make('phone_mobile')
+                    ->label('Telefone Celular'),
                 Select::make('object_type')
                     ->options([
                         'personal' => 'Pessoa Física',
@@ -60,13 +60,13 @@ class RealStateResource extends Resource
                     ->disabled(),
                 Hidden::make('object_id')
                     ->default($idFromURL),
-
-
+                ]) ->columns(2)
             ]);
     }
 
     public static function table(Table $table): Table
     {
+        $title = RentalDataRepository::titleModalRole('delete', 'Imobiliária');
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('object_id')
@@ -99,7 +99,8 @@ class RealStateResource extends Resource
             ->actions([
                 ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\DeleteAction::make()
+                    ->modalHeading($title),
                     Action::make('Adicionar')
                         ->icon('heroicon-m-plus-circle')
                         ->action(function (RealState $record) {
