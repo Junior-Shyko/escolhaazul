@@ -95,9 +95,17 @@ class RentalDataController extends Controller
         // dd($proposal->bank()->first());
         $titulo_page_pdf = 'Análise de proposta - '.$proposal->typeRentalUser;
         // return view('proposal.analysis', compact('user', 'titulo_page_pdf', 'proposal'));
+        $professionals = $user->professional()->get();
         $realstate = $user->realState()->get();
+        $commercials = $user->commercial()->get();
+        $personals = $user->referencePersonal()->get();
+        $banks = $user->bank()->get();
 
-        $pdf = Pdf::loadView('proposal.analysis', compact('user', 'titulo_page_pdf', 'proposal', 'realstate'));
+        $pdf = Pdf::loadView('proposal.analysis', compact('user',
+            'titulo_page_pdf',
+            'proposal',
+            'realstate', 'professionals', 'personals', 'banks',
+            'commercials'));
         return $pdf->stream('invoice.pdf');
         // dd($rentalData->id);
         // $user = User::find(119);

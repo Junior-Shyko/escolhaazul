@@ -40,6 +40,12 @@
         .pa-td {
             padding: 4px
         }
+        .w-50 {
+            width: 50%;
+        }
+        .w-100 {
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -195,19 +201,21 @@
             <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS IMOBILIÁRIAS</label>
             <div class="bottom_div"></div>
             @include('proposal.realState')
-
         </div>
         <div>
             <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS COMERCIAIS</label>
             <div class="bottom_div"></div>
+            @include('proposal.commercial')
         </div>
         <div>
             <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS PESSOAIS</label>
             <div class="bottom_div"></div>
+            @include('proposal.personal')
         </div>
         <div>
             <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS BANCÁRIAS</label>
             <div class="bottom_div"></div>
+            @include('proposal.bank')
         </div>
         <div>
             <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS DE BENS DE IMÓVEIS</label>
