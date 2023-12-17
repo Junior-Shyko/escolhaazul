@@ -63,42 +63,42 @@
                 </tr>
             </table>
         </header>
-        <div style="clear: both;"><br /></div>
-        <div>
-            <label class="text-info" style="font-size: 14pt;">INFORMAÇÕES DO IMÓVEL</label>                        
-            <div class="bottom_div"></div>
-            <table style="width:100%;">
-                <tr  class="">
-                    <td style="width: 50%;" class="font-size-10 table-border pa-td">
-                        <strong>Cod:</strong>  AP0370, Valor mensal: R$ 1.200,00 , Condomínio: R$ 150,00
-                        IPTU: R$ 25,46.                       
-                    </td>
-                    <td class="font-size-10 table-border pa-td">
-                        <span><strong>Tipo:</strong> Apartamento</span><br />
-                        
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="font-size-10 table-border pa-td">
-                        <span><strong>Endereço:</strong> Rua Carlos Gomes , 95 , José Bonifácio , Fortaleza</span><br />
-                    </td>
-                   
-                </tr>
-                <tr>
-                    <td colspan="2" class="font-size-10 table-border pa-td">
-                        <strong>IMOVEL: </strong> Apartamento no terreo com sala, 03 quartos ( sendo 01 suíte ), WC social, cozinha,
-                         lavanderia com área de serviço e quintal. Taxa do lixo: R$ 36,40, CONDOMÍNIO: Sem vaga de garagem, 
-                         cond. R$ 150,00. água incluso e energia individualizado. Localização privilegiada, próximo a Av. 
-                         Aguanambi, Instituto Pequeno Príncipe e a Econômica Auto Center. Espíndola Imobiliária não tem 
-                         nenhuma responsabilidade sobre a informação do valor da taxa condominial, pois esta é fornecida
-                          pela administração do condomínio. Ao entrar com o processo de locação, sugerimos conferir os
-                           valores.
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <br>
-       
+{{--        <div style="clear: both;"><br /></div>--}}
+{{--        <div>--}}
+{{--            <label class="text-info" style="font-size: 14pt;">INFORMAÇÕES DO IMÓVEL</label>                        --}}
+{{--            <div class="bottom_div"></div>--}}
+{{--            <table style="width:100%;">--}}
+{{--                <tr  class="">--}}
+{{--                    <td style="width: 50%;" class="font-size-10 table-border pa-td">--}}
+{{--                        <strong>Cod:</strong>  AP0370, Valor mensal: R$ 1.200,00 , Condomínio: R$ 150,00--}}
+{{--                        IPTU: R$ 25,46.                       --}}
+{{--                    </td>--}}
+{{--                    <td class="font-size-10 table-border pa-td">--}}
+{{--                        <span><strong>Tipo:</strong> Apartamento</span><br />--}}
+{{--                        --}}
+{{--                    </td>--}}
+{{--                </tr>--}}
+{{--                <tr>--}}
+{{--                    <td colspan="2" class="font-size-10 table-border pa-td">--}}
+{{--                        <span><strong>Endereço:</strong> Rua Carlos Gomes , 95 , José Bonifácio , Fortaleza</span><br />--}}
+{{--                    </td>--}}
+{{--                   --}}
+{{--                </tr>--}}
+{{--                <tr>--}}
+{{--                    <td colspan="2" class="font-size-10 table-border pa-td">--}}
+{{--                        <strong>IMOVEL: </strong> Apartamento no terreo com sala, 03 quartos ( sendo 01 suíte ), WC social, cozinha,--}}
+{{--                         lavanderia com área de serviço e quintal. Taxa do lixo: R$ 36,40, CONDOMÍNIO: Sem vaga de garagem, --}}
+{{--                         cond. R$ 150,00. água incluso e energia individualizado. Localização privilegiada, próximo a Av. --}}
+{{--                         Aguanambi, Instituto Pequeno Príncipe e a Econômica Auto Center. Espíndola Imobiliária não tem --}}
+{{--                         nenhuma responsabilidade sobre a informação do valor da taxa condominial, pois esta é fornecida--}}
+{{--                          pela administração do condomínio. Ao entrar com o processo de locação, sugerimos conferir os--}}
+{{--                           valores.--}}
+{{--                    </td>--}}
+{{--                </tr>--}}
+{{--            </table>--}}
+{{--        </div>--}}
+{{--        <br>--}}
+
         <div class="col-md-12">
             <label class="text-info" style="font-size: 14pt; ">
                 DADOS DE LOCAÇÃO - Atendente responsável:
@@ -127,7 +127,7 @@
             </tr>
 
             <tr>
-                
+
                 {{-- <td><strong>Tipo do Imóvel:</strong> <span>{{$proposal->currentCondominiumValue}}</span></td> --}}
             </tr>
             <tr>
@@ -136,7 +136,7 @@
                     <span>{{ number_format($proposal->proposedValue, '2', ',', '.') }}</span>
                 </td>
             </tr>
-            
+
             <tr>
                 <td colspan="2">
                     <strong>Observações:</strong>
@@ -169,143 +169,52 @@
             </tr>
         </table>
         <br>
-       
+
         <div>
-            <label class="text-info" style="font-size: 14pt;">DADOS PESSOAIS PROPONENTE</label>                        
+            <label class="text-info" style="font-size: 14pt;">DADOS PESSOAIS PROPONENTE</label>
             <div class="bottom_div"></div>
-            <table style="width:100%;">
-                <tr>
-                    <td style="width: 50%;">
-                        <strong>Nome Completo: </strong> 
-                        <span>{{$user->name}}</span><br />
-                    </td>
-                    <td><strong>Data nascimento: </strong> 
-                        <span>{{ \Carbon\Carbon::parse($user->dataPersonal()->first()->brithDate)->format('d/m/Y')}}</span></td>
-                </tr>
-                <tr>
-                    <td><strong>Órgão expeditor: </strong> 
-                        <span>{{$user->dataPersonal()->first()->organConsignor}}</span>
-                    </td>
-                    <td><strong>Nacionalidade: </strong> 
-                        <span> {{$user->dataPersonal()->first()->nationality}} </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Endereço: </strong> 
-                        <span>
-                            CEP: {{isset($user->address()->first()->cep)}},
-                            CEP: {{ isset($user->address()->first()->cep) }},
-                            {{-- {{$user->address()->first()->address}},
-                            Nº. {{isset($user->address()->first()->number)}},
-                            {{$user->address()->first()->complement}},
-                            {{$user->address()->first()->neighborhood}},
-                            {{$user->address()->first()->city}},
-                            {{$user->address()->first()->UF}},                            --}}
-                        </span>
-                    </td>
-                    <td><strong>Telefone: </strong> <span>{{$user->dataPersonal()->first()->nationality}}</span></td>
-                </tr>
-                <tr>
-                    <td><strong>Celular: </strong> <span>'proposal_phone_cel2</span></td>
-                    <td><strong>Nº de dependentes: </strong> <span>{{$user->dataPersonal()->first()->number_dependents}}</span></td>
-                </tr>
-                <tr>
-                    <td><strong>CEP: </strong> <span>{{isset($user->address()->first()->cep)}}</span></td>
-                    <td><strong>Tempo que reside: </strong> <span>@todo</span></td>
-                    <td><strong>CEP: </strong> <span>{{ isset($user->address()->first()->cep) }}</span></td>
-                    <td><strong>Tempo que reside: </strong> <span>{{ isset($user->address()->first()->neighborhood) }}</span></td>
-                </tr>
-                <tr>
-                   
-                    
-                </tr>
-                <tr>
-                    <td> 
-                        <strong>Sexo: </strong><span>{{$user->dataPersonal()->first()->sex}}</span>
-                    </td>
-                    <td><strong>Identidade: </strong><span>{{$user->dataPersonal()->first()->identity}}</span></td>
-                </tr>
-                <tr>
-                    <td><strong>CPF: </strong><span>{{$user->dataPersonal()->first()->cpf}}
-                    <input type="checkbox"> SPC
-                    </span>
-    
-                    </td>
-                    <td><strong>Naturalidade: </strong> <span>{{$user->dataPersonal()->first()->naturality}}</span></td>
-                </tr>
-                <tr>
-                    <td><strong>Filiação: </strong>  <span>'proposal_filiation</span></td>
-                    <td><strong>Celular: </strong> <span>'proposal_phone_cel1</span></td>
-                </tr>
-                <tr>
-                    <td><strong>Estado civil: </strong>  <span>{{$user->dataPersonal()->first()->maritalStatus}}</span></td>
-                    <td><strong>Grau de Instrução: </strong><span>{{$user->dataPersonal()->first()->EducationLevel}}</span></td>
-                </tr>
-                <tr>
-                    <td><strong>E-Mail: </strong><span>{{$user->email}}</span></td>
-                    <td><strong>Endereço: </strong> 
-                        <span>
-                            CEP: {isset($user->address()->first()->cep)}},
-                            CEP: {{ isset($user->address()->first()->cep) }},
-                            {{-- {{$user->address()->first()->address}},
-                            Nº. {{isset($user->address()->first()->number)}},
-                            {{$user->address()->first()->complement}},
-                            {{$user->address()->first()->neighborhood}},
-                            {{$user->address()->first()->city}},
-                            {{$user->address()->first()->UF}},                            --}}
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <strong>Complemento: </strong><span>'proposal_complement</span>
-                    </td>
-                    <td><strong>Cidade: </strong><span>'proposal_city</span></td>
-                </tr>
-                <tr>
-                    <td><strong> Tipo de Residência:</strong> <span>'proposal_type_residence</span></td>
-                </tr>
-            </table>
-            <br />
+            @include('proposal.dataPersonal')
         </div>
 
         <div>
-            <label class="text-info" style="font-size: 14pt;">DADOS PROFISSIONAIS</label>                        
+            <label class="text-info" style="font-size: 14pt;">DADOS PROFISSIONAIS</label>
             <div class="bottom_div"></div>
-
+            @include('proposal.professional')
         </div>
 
         <div>
-            <label class="text-info" style="font-size: 14pt;">DADOS DO CÔNJUGE</label>                        
+            <label class="text-info" style="font-size: 14pt;">DADOS DO CÔNJUGE</label>
             <div class="bottom_div"></div>
 
         </div>
         <div>
-            <label class="text-info" style="font-size: 14pt;">DADOS PROFISSIONAIS DO CONJUGE</label>                        
+            <label class="text-info" style="font-size: 14pt;">DADOS PROFISSIONAIS DO CONJUGE</label>
             <div class="bottom_div"></div>
         </div>
         <div>
-            <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS IMOBILIÁRIAS</label>                        
+            <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS IMOBILIÁRIAS</label>
+            <div class="bottom_div"></div>
+            @include('proposal.realState')
+
+        </div>
+        <div>
+            <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS COMERCIAIS</label>
             <div class="bottom_div"></div>
         </div>
         <div>
-            <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS COMERCIAIS</label>                        
+            <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS PESSOAIS</label>
             <div class="bottom_div"></div>
         </div>
         <div>
-            <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS PESSOAIS</label>                        
+            <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS BANCÁRIAS</label>
             <div class="bottom_div"></div>
         </div>
         <div>
-            <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS BANCÁRIAS</label>                        
+            <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS DE BENS DE IMÓVEIS</label>
             <div class="bottom_div"></div>
         </div>
         <div>
-            <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS DE BENS DE IMÓVEIS</label>                        
-            <div class="bottom_div"></div>
-        </div>
-        <div>
-            <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS DE BENS DE VEÍCULOS</label>                        
+            <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS DE BENS DE VEÍCULOS</label>
             <div class="bottom_div"></div>
         </div>
 
@@ -345,7 +254,7 @@
         </tr>
         <tr >
             <td colspan="2" class="tr_color">
-                RESULTADO ELIMINATÓRIAS:    (   ) Aprovado  -  (   ) Aprovado com ressalvas  -  (   ) Reprovado 
+                RESULTADO ELIMINATÓRIAS:    (   ) Aprovado  -  (   ) Aprovado com ressalvas  -  (   ) Reprovado
             </td>
         </tr>
         <tr>
@@ -459,7 +368,7 @@
   <br/>
   <p style="background: ;width: 300px; float: left; ">
     ___________________________________<br>
-    <label style="margin-left: 30px;"> Consultor Responsável</label>   
+    <label style="margin-left: 30px;"> Consultor Responsável</label>
   </p>
    <p style="background: ;width: 300px; float: right; margin-top: -2px; ">
     ____________________________________<br>

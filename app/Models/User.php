@@ -83,19 +83,19 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(File::class, 'object_id');
     }
-  
+
     // Relação com referencia comercial
     public function commercial(): HasMany
     {
         return $this->hasMany(Commercial::class, 'object_id');
     }
-    
+
     //Relação com referencia bancaria
     public function bank(): HasMany
     {
         return $this->hasMany(Bank::class, 'object_id');
     }
-        
+
     //Relação com referencia bancaria
     public function address(): HasMany
     {
@@ -112,5 +112,10 @@ class User extends Authenticatable implements FilamentUser
     public function vehicle(): HasMany
     {
         return $this->hasMany(Vehicle::class, 'object_id');
+    }
+
+    public function professional(): HasMany
+    {
+        return $this->hasMany(Professional::class, 'object_id');
     }
 }
