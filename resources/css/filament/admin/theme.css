@@ -1,0 +1,74 @@
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+/** header/logo */
+.fi-sidebar-header{
+    /* @apply bg-[#2484ec] ring-primary-500; */
+}
+
+/** sidebar */
+.fi-sidebar {
+    /* @apply bg-gradient-to-b dark:from-gray-950 dark:to-gray-800 from-primary-600 via-primary-500 to-sky-600  dark:bg-transparent; */
+    @apply bg-gradient-to-b dark:from-gray-950 dark:to-gray-800 from-[#2484ec] via-blue-500 to-[#0c498c] dark:bg-transparent;
+}
+
+.fi-sidebar-group div span {
+    @apply text-white;
+}
+
+.fi-sidebar-group .fi-icon-btn {
+    @apply text-sky-300;
+}
+
+.fi-sidebar-group .fi-icon-btn:hover {
+    @apply text-white;
+}
+
+.fi-sidebar-item-icon {
+    @apply text-sky-300
+}
+
+.fi-sidebar-item a {
+    @apply text-white;
+}
+
+.fi-sidebar-item-label {
+    @apply text-white;
+}
+
+.fi-sidebar-item a:hover {
+    @apply text-primary-50 bg-primary-700;
+}
+
+.fi-sidebar-item-active a {
+    @apply  bg-primary-700 bg-opacity-60;
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-label {
+    @apply  font-extrabold;
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-icon {
+    @apply text-primary-400;
+}
+
+/** main content */
+.fi-main-ctn {
+    @apply bg-[#F8F8F8];
+}
+
+/** badge */
+.fi-badge{
+    @apply rounded-full;
+}
+
+/** button */
+.fi-btn {
+    @apply ring-transparent shadow-gray-400 dark:shadow-gray-950;
+}
+
+/** Logo */
+.fi-logo {
+    height: 3.5rem !important;
+}
