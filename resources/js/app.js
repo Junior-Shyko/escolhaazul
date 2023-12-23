@@ -50,7 +50,14 @@ const vuetify = createVuetify({
                     info: '#70b3ec',
                     warning: '#fec107',
                     success: '#00c292',
-                    disable: '#cfdded'
+                    disable: '#cfdded',
+                    ea: {
+                        50: '#2484ec',
+                        100: '#86bcf4',
+                        200: '#0a407a',
+                        300: '#0c498c',
+                        400: '#0c4b8c'
+                      },
                 }
             }
         }
