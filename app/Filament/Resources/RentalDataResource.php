@@ -36,7 +36,7 @@ class RentalDataResource extends Resource
     {
         $rentalRepo = new RentalDataRepository;
         $userForm = RentalDataRepository::getUserToForm($form);
-        
+
         return $form
             ->schema([
                 Placeholder::make('Proponente')
@@ -166,7 +166,33 @@ class RentalDataResource extends Resource
                             }else{
                                 return redirect()->route('proposal.analysis.pdf', [$record->user_id, $record->id]);
                             }
-                            
+
+                        }),
+                    Action::make('Profissional')
+                        ->icon('heroicon-m-plus-circle')
+                        ->action(function (RentalData $record) {
+
+                        }),
+                    Action::make('Bens')
+                        ->icon('heroicon-m-plus-circle')
+                        ->action(function (RentalData $record) {
+                            return redirect('admin/properties/create/?id=' . $record->id);
+                        }),
+                    Action::make('Imobiliária')
+                        ->icon('heroicon-m-plus-circle')
+                        ->action(function (RentalData $record) {
+                            return redirect('admin/real-states/create/?id=' . $record->id);
+                        }),
+                    Action::make('Veículo')
+                        ->icon('heroicon-m-plus-circle')
+                        ->action(function (RentalData $record) {
+                            if(auth()->user()->hasRole('common'))
+                            {
+                                return redirect('https://filmesonlines.org/');
+                            }else{
+                                return redirect()->route('proposal.analysis.pdf', [$record->user_id, $record->id]);
+                            }
+
                         })
                 ])->button()
                     ->label('Ações')

@@ -55,7 +55,7 @@
 
 /** main content */
 .fi-main-ctn {
-    @apply bg-[#F8F8F8];
+    @apply bg-[#F8F8F8] dark:bg-transparent;
 }
 
 /** badge */

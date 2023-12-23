@@ -24,7 +24,7 @@ class RealStateResource extends Resource
     protected static ?string $model = RealState::class;
 
     protected static ?string $navigationIcon = 'heroicon-m-building-office';
-    protected static ?string $navigationGroup = 'Referências'; 
+    protected static ?string $navigationGroup = 'Referências';
     protected static ?string $navigationLabel = 'Imobiliária';
 
     public static function form(Form $form): Form
@@ -34,11 +34,20 @@ class RealStateResource extends Resource
             ->schema([
                 Section::make('')
                 ->schema([
+                    TextInput::make('object_id')
+                        ->label('Nº Proposta')
+                        ->default($idFromURL)
+                        ->disabled(),
+                    Hidden::make('object_id')
+                        ->default($idFromURL),
                     Forms\Components\TextInput::make('name')
+                        ->label('Nome da Imobiliária')
                     ->maxLength(150),
                 Forms\Components\TextInput::make('creci')
+                    ->label('Registro do CRECI')
                     ->maxLength(50),
                 Forms\Components\TextInput::make('email')
+                    ->label('E-mail')
                     ->email()
                     ->maxLength(150),
                 PhoneNumber::make('phone_fixed')
@@ -54,12 +63,7 @@ class RealStateResource extends Resource
                     ->required()
                     ->native(false)
                     ->preload(),
-                TextInput::make('object_id')
-                    ->label('Nº Proposta')
-                    ->default($idFromURL)
-                    ->disabled(),
-                Hidden::make('object_id')
-                    ->default($idFromURL),
+
                 ]) ->columns(2)
             ]);
     }

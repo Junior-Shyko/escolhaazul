@@ -8,12 +8,14 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\DataPersonal;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\Placeholder;
+use Filament\Infolists\Components\TextEntry;
 use App\Http\Repository\RentalDataRepository;
 use Leandrocfe\FilamentPtbrFormFields\Document;
 use App\Filament\Resources\DataPersonalResource\Pages;
@@ -24,7 +26,7 @@ class DataPersonalResource extends Resource
     protected static ?string $navigationGroup = 'Dados';
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationLabel = 'Dados Pessoais';
- 
+
 
     public static function form(Form $form): Form
     {
@@ -33,7 +35,7 @@ class DataPersonalResource extends Resource
         //Repositorio com várias funções util    
         $rentalRepo = new RentalDataRepository;
         $userForm = RentalDataRepository::getUserToForm($form);
-        
+
         return $form
             ->schema([
                 Section::make('')
@@ -109,23 +111,26 @@ class DataPersonalResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label('Usuário'),
+                // Tables\Columns\TextColumn::make('user_id')
+                //     ->numeric()
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('user.name')
+                //     ->label('Usuário'),
 
                 Tables\Columns\TextColumn::make('birthDate')
                     ->date('d/m/Y')
                     ->label('Data de nasc.')
+                    ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('cpf')
                     ->label('CPF')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('nationality')
                     ->label('Nacional')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Criado')
                     ->dateTime()
@@ -169,6 +174,7 @@ class DataPersonalResource extends Resource
             ]);
     }
 
+
     public static function getRelations(): array
     {
         return [
@@ -181,6 +187,7 @@ class DataPersonalResource extends Resource
         return [
             'index' => Pages\ListDataPersonals::route('/'),
             'create' => Pages\CreateDataPersonal::route('/create'),
+            'view' => Pages\ViewRentalData::route('/{record}'),
             'edit' => Pages\EditDataPersonal::route('/{record}/edit'),
         ];
     }
