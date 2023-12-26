@@ -38,7 +38,7 @@ const state = reactive({
   validateImmobile: true,
   validateFinality: true,
   validateWarranty: true,
-  enabledTwo : false
+  enabledTwo : true
 });
 
 const receiveEmit = (value) => {
@@ -225,21 +225,21 @@ window.onbeforeunload = (event) => {
                         </v-col>
 
                         <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
-                          <!-- COMPONENTE PARA CADASTRAR O CONTATO TELEFONICO 
+                          <!-- COMPONENTE PARA CADASTRAR O CONTATO TELEFONICO
                                                 <ContactPhone />-->
                           <Phone :user="props.user" object_type="personal"/>
                         </v-col>
                       </v-row>
                       <v-row>
                         <v-col cols="12" sx="12" sm="12" md="12">
-                          <Professional 
+                          <Professional
                             :user="props.user"
                             object_type="personal"
                             @updateInput="receiveEmit"
                           />
                         </v-col>
-                       
-                      
+
+
                       </v-row>
 
                     </v-window-item>
@@ -288,11 +288,11 @@ window.onbeforeunload = (event) => {
                       <template v-slot:default>
 
                         <div id="tab-proposal-tab" class="flex justify-center">
-                          <TabProposal 
+                          <TabProposal
                             :btnStep="state.tab"
                             @updatetab="skill"
                             :disabledTwo="state.enabledTwo"
-                           
+
                           />
                         </div>
                       </template>
