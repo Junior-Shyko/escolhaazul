@@ -14,8 +14,13 @@ class ListUsers extends ListRecords
 
     protected function getHeaderActions(): array
     {
-        return [
-            Actions\CreateAction::make(),
-        ];
+        if(auth()->user()->hasRole(['manager', 'admin', 'superAdmin'])){
+            return [
+                Actions\CreateAction::make()
+                ->label('Criar Usuário'),
+            ];
+        }else{
+            return [];
+        }
     }
 }

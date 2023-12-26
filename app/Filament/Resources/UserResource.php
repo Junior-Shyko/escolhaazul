@@ -34,7 +34,7 @@ class UserResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
-    
+
     public static function form(Form $form): Form
     {
         return $form
@@ -63,7 +63,7 @@ class UserResource extends Resource
     }
 
     public static function table(Table $table): Table
-    {  
+    {
         $title = RentalDataRepository::titleModalRole('delete', 'Usuário');
         return $table
             ->columns([
@@ -77,7 +77,7 @@ class UserResource extends Resource
                 ->label('Papeis')
                 ->searchable()
                 ->sortable()
-                
+
             ])
             ->defaultSort('id', 'desc')
             ->query(function (User $query) {
@@ -100,15 +100,15 @@ class UserResource extends Resource
                     Action::make('Editar Dados Pessoais')
                         ->icon('heroicon-o-pencil-square')
                         ->action(function (User $record) {
-                           
+
                             $dataPersonal = DataPersonal::where('user_id', $record->id)->first();
-                            
+
                             if(is_null($dataPersonal)){
                                 return redirect('admin/data-personals/create?id=' . $record->id);
                             }
                             return redirect('admin/data-personals/'. $dataPersonal->id.'/edit' );
                         })
-                  
+
                 ])->button()
                 ->label('Ações')
                 ->color('gray')
@@ -144,7 +144,7 @@ class UserResource extends Resource
             return __('Usuário');
         } else {
             return __('Usuários');
-        }       
+        }
     }
     public static function getNavigationLabel(): string
     {
@@ -153,7 +153,7 @@ class UserResource extends Resource
             return __('Seu perfil');
         } else {
             return __('Todos Usuários');
-        }       
+        }
     }
 
 }
