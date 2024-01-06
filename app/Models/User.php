@@ -118,4 +118,9 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(Professional::class, 'object_id');
     }
+
+    public function phone(): HasMany
+    {
+        return $this->hasMany(Phone::class);
+    }
 }
