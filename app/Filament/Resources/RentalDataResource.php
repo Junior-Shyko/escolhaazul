@@ -193,7 +193,12 @@ class RentalDataResource extends Resource
                                 return redirect()->route('proposal.analysis.pdf', [$record->user_id, $record->id]);
                             }
 
-                        })
+                        }),
+                    Action::make('Telefone')
+                          ->icon('heroicon-m-plus-circle')
+                          ->action(function (RentalData $record) {
+                              return redirect('admin/phones/create/?id=' . $record->id);
+                          }),
                 ])->button()
                     ->label('Ações')
                     ->color('gray'),
