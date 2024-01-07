@@ -85,11 +85,14 @@ class RentalDataRepository
     static public function getUserDataPersonal($id)
     {
         $personal = DataPersonal::find($id);
-        $user = User::find($personal->user_id);
-        return $user;
+        if(!is_null($personal))
+        {
+            $user = User::find($personal->user_id);
+            return $user;
+        }
     }
 
-    public function getUserData($id)
+    static public function getUserData($id)
     {
         $user = User::find($id);
         return $user;
@@ -104,19 +107,31 @@ class RentalDataRepository
     static public function getUserToForm($form): array
     {
         //Modo de edição de form
-        if ($form->getOperation() == 'edit') {
-            $user = self::getUserDataPersonal($form->getRecord()->id);
-            $nameUser = $user->name;
-            $idUser = $user->id;
-        } else {
-            //Busca o usuário que está no id da url
-            $idFromURL = request()->get('id');            
-            if($idFromURL !== null){
-                $user = self::getUserData($idFromURL);
+        if ($form->getOperation() == 'edit' || $form->getOperation() == 'view' ) {
+            if(isset($form->getRecord()->object_id))
+            {
+                $user = self::getUserDataPersonal($form->getRecord()->object_id);
                 $nameUser = $user->name;
                 $idUser = $user->id;
             }
-           
+//            $user = self::getUserDataPersonal($form->getRecord()->id);
+//            $nameUser = $user->name;
+//            $idUser = $user->id;
+        }
+        else{
+            //Busca o usuário que está no id da url
+            $idFromURL = request()->get('id');
+//            dd($idFromURL);
+            if($idFromURL !== null){
+                $user = self::getUserData($idFromURL);
+
+                $nameUser = $user->name;
+                $idUser = $user->id;
+
+            }else{
+                $idUser = $form->getLivewire()->data['user_id'];
+                $nameUser = null;
+            }
         }
         return ['idUser' => $idUser,'nameUser' => $nameUser];
     }
@@ -144,10 +159,10 @@ class RentalDataRepository
                 }else{
                     $title = 'Excluir '.$model;
                 }
-               
+
            }
         }
-        
+
         return $title;
     }
 }
