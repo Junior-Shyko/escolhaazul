@@ -64,16 +64,16 @@ Route::get('proposta/analise/{id}/proposal/{proposalId}', [RentalDataController:
 
 Route::get('/finalizar/{email}', [ProposalController::class, 'finishProposal'])->name('proposal.finish');
 Route::get('conta-excluida', [ProposalController::class, 'accountDelete'])->name('conta-excluida');
-Route::get('veiculos', function() {
+Route::get('phone', function() {
     dump(auth()->user()->id);
-    dump(auth()->user()->rentalData()->get());
-    $rental = auth()->user()->rentalData()->get();
-    foreach ($rental as $key => $value) {
-       dump($value->id);
-       $proposal = RentalData::find($value->id);
-       dump($proposal);
-       dump($proposal->vehicle()->get());
-    }
+    dump(auth()->user()->phone()->get());
+    // $rental = auth()->user()->rentalData()->get();
+    // foreach ($rental as $key => $value) {
+    //    dump($value->id);
+    //    $proposal = RentalData::find($value->id);
+    //    dump($proposal);
+    //    dump($proposal->vehicle()->get());
+    // }
     // dump(auth()->user()->address()->get());
     // dump(auth()->user()->bank()->get());
 });
