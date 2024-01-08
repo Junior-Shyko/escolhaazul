@@ -77,4 +77,6 @@ Route::get('phone', function() {
     // dump(auth()->user()->address()->get());
     // dump(auth()->user()->bank()->get());
 });
+Route::get('files', \App\Livewire\File::class);
+
 require __DIR__.'/auth.php';
