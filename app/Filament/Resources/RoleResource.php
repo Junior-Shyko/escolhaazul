@@ -33,7 +33,7 @@ class RoleResource extends Resource
                 ->label('Permissão')
                 ->multiple()
                 ->relationship(name: 'permissions', titleAttribute: 'name')
-               
+
             ]);
     }
 
@@ -43,7 +43,7 @@ class RoleResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                
+
                 Tables\Columns\TextColumn::make('created_at')
                 ->dateTime('d/m/Y')
                     ->sortable()
@@ -69,4 +69,6 @@ class RoleResource extends Resource
             'index' => Pages\ManageRoles::route('/'),
         ];
     }
+
+
 }
