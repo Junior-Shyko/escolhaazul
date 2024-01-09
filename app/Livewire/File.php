@@ -23,8 +23,11 @@ class File extends Component implements HasTable, HasForms
 
     public function render()
     {
-        $files = \App\Models\File::where('object_id', 4)->get();
-        return view('livewire.file')->with(['file' => $files]);
+        $idProposal = request()->get('id');
+        $files = \App\Models\File::where('object_id', $idProposal)->get();
+        $rental = $files[0]->rental()->with('user')->first();
+        $user = $rental->user->name;
+        return view('livewire.file')->with(['file' => $files, 'rental' => $rental, 'user' => $user]);
     }
 
     public function table(Table $table): Table

@@ -1,26 +1,52 @@
 
 <div class="container w-full md:max-w-5xl mx-auto pt-20 px-4">
+    <div>
+        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+           Proposta Nº. <strong> {{$rental->id}}</strong> - Proponente: <strong>{{$user}}</strong>
+        </p>
+    </div>
     <div class="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
 
 
-        <table class="border-collapse table-auto w-full text-sm">
+        <table class="w-full text-center table-auto min-w-max">
             <thead>
-            <tr class="border-b-2 border-2 mb-3 bg-midnight">
-                <th class="py-4">Nome do arquivo</th>
-                <th class="py-4">Arquivo</th>
-                <th class="py-4 p-4">Download</th>
+            <tr class="" >
+                <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+                    <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                        Nome do arquivo
+                    </p>
+                </th>
+                <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+                    <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                        Arquivo
+                    </p>
+                </th>
+                <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+                    <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                        Download
+                    </p>
+                </th>
             </tr>
             </thead>
             <tbody class="bg-white dark:bg-slate-800">
             @foreach($file as $files)
-                <tr>
-                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{$files->name}}</td>
-                    <td class="flex justify-center mt-2">
-                        <img src="{{url('upload/'.$files->name)}}" alt="" srcset="" width="50%">
+                <tr class="border-b hover:bg-gray-100">
+                    <td>
+                        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900
+                        flex justify-center">
+                            {{$files->name}}
+                        </p>
+                    </td>
+
+
+                    <td>
+                        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 flex justify-center">
+                            <img src="{{url('upload/'.$files->name)}}" alt="" srcset="" style="max-height: 200px;">
+                        </p>
                     </td>
                     <td>
                         <button
-                            class="block w-full select-none rounded-lg bg-gray-700"
+                            class="btn-download "
                             type="button">
                            Baixar
                         </button>
