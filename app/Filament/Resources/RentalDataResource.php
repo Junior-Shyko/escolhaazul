@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\File;
 use Filament\Forms;
 use App\Models\Term;
 use App\Models\User;
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Placeholder;
 use Illuminate\Database\Eloquent\Collection;
 use App\Http\Repository\RentalDataRepository;
+use Illuminate\Support\Facades\Route;
 use Leandrocfe\FilamentPtbrFormFields\Money;
 use App\Filament\Resources\RentalDataResource\Pages;
 use App\Filament\Resources\RentalDataResource\RelationManagers;
@@ -199,6 +201,12 @@ class RentalDataResource extends Resource
                           ->action(function (RentalData $record) {
                               return redirect('admin/phones/create/?id=' . $record->id);
                           }),
+                    Action::make('Arquivos')
+                        ->icon('heroicon-m-plus-circle')
+                        ->action(function (RentalData $record): void {
+                            redirect('admin/file?id='.$record->id);
+                        })
+                        ->openUrlInNewTab()
                 ])->button()
                     ->label('Ações')
                     ->color('gray'),
