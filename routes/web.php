@@ -54,6 +54,7 @@ Route::prefix('formulario')->group(function () {
 });
 Route::prefix('admin')->group(function () {
     Route::delete('proposal-delete', [RentalDataController::class, 'destroy'])->name('proposal-delete');
+//    Route::get('file', \App\Livewire\File::class)->name('admin.arquivos');
 });
 Route::prefix('api/form')->group( function () {
     Route::post('/proposal', [ProposalController::class, 'createUser'])->name('form/proposal');
@@ -77,4 +78,6 @@ Route::get('phone', function() {
     // dump(auth()->user()->address()->get());
     // dump(auth()->user()->bank()->get());
 });
+
+
 require __DIR__.'/auth.php';
