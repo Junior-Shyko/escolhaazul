@@ -1,4 +1,6 @@
-
+@php
+    if(!is_null($idProposal)):
+@endphp
 <div class="container w-full md:max-w-5xl mx-auto pt-20 px-4">
     <div>
         <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
@@ -35,21 +37,30 @@
                         <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900
                         flex justify-center">
                             {{$files->name}}
+                            @php
+                                $ext = substr($files->name, -4);
+                            @endphp
                         </p>
                     </td>
-
-
                     <td>
                         <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 flex justify-center">
-                            <img src="{{url('upload/'.$files->name)}}" alt="" srcset="" style="max-height: 200px;">
+                            <a href="{{url('upload/'.$files->name)}}" download>
+                                <img src="{{url('upload/'.$files->name)}}" alt="" srcset="" style="max-height: 200px;">
+                            </a>
+                            @if($ext == '.pdf')
+                                <object data="{{url('upload/'.$files->name)}}" type="application/pdf">
+                                    <iframe src="https://docs.google.com/viewer?url="{{url('upload/'.$files->name)}}"&embedded=true"></iframe>
+                                </object>
+
+                            @endif
                         </p>
                     </td>
                     <td>
-                        <button
+                        <a href="{{url('upload/'.$files->name)}}" download
                             class="btn-download "
                             type="button">
                            Baixar
-                        </button>
+                        </a>
                     </td>
                 </tr>
             @endforeach
@@ -58,3 +69,13 @@
 
     </div>
 </div>
+@else
+    <div class="container w-full md:max-w-5xl mx-auto pt-20 px-4">
+        <div>
+            <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+              Sem arquivos
+            </p>
+        </div>
+    </div>
+
+@endif
