@@ -23,11 +23,15 @@ class File extends Component implements HasTable, HasForms
 
     public function render()
     {
-        $idProposal = request()->get('id');
+        $idProposal = request()->get('id', null);
         $files = \App\Models\File::where('object_id', $idProposal)->get();
-        $rental = $files[0]->rental()->with('user')->first();
-        $user = $rental->user->name;
-        return view('livewire.file')->with(['file' => $files, 'rental' => $rental, 'user' => $user]);
+        $rental = count($files) > 0 ? $files[0]->rental()->with('user')->first() : null;
+        $user = !is_null($rental) ? $rental->user->name : null;
+        return view('livewire.file')->with(['file' => $files,
+            'rental' => $rental,
+            'user' => $user,
+            'idProposal' => $idProposal
+        ]);
     }
 
     public function table(Table $table): Table
@@ -44,4 +48,6 @@ class File extends Component implements HasTable, HasForms
                 Tables\Actions\CreateAction::make()
             ]);
     }
+
+
 }
