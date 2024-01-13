@@ -22,7 +22,7 @@ const toast = (titToast, descToast, typeToast) => {
             break;
         case 'warning':
             background = '#fec107'
-            break;    
+            break;
         default:
             background = 'default'
             break;
@@ -43,8 +43,8 @@ const toast = (titToast, descToast, typeToast) => {
 
 /**
  * Função que recebe o formato do valor monetário em Real e converte para formato USA
- * @param {string} val 
- * @returns 
+ * @param {string} val
+ * @returns
  */
 const valurMoneyUSA = (val) => {
     var newValue = 0;
@@ -70,11 +70,18 @@ const usaDatetoBr = (datestring) => {
   var dateSplitted = datestring.split('-');
   return dateSplitted[2] + '/' + dateSplitted[1] + '/' + dateSplitted[0];
 }
+//Prazo Desejado
+const termWanted = [12,18,24,30,36,42,48];
+//Tipo de garantia
+const typeOfGuarantee = ['Carta Fiança', 'Caução', 'Crédito', 'Fiador','Sem garantia', 'Seguro fiança', 'Outras']
+
 
 export default {
     toast,
     valurMoneyUSA,
     brDatetoUsa,
     formatPhone,
-    usaDatetoBr
+    usaDatetoBr,
+    termWanted,
+    typeOfGuarantee
 }
