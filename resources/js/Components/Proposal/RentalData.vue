@@ -44,7 +44,7 @@ const saveField = (val) => {
       newValue = newValue.replace(/([0-9]{2})$/g, ".$1");
       valueInputNew.valueInput = newValue
       break;
-    
+
     default:
       valueInputNew.valueInput = val.value
       break;
@@ -66,7 +66,8 @@ const state = reactive({
   immobiles: [],
   immobilesItens: [],
   detailsImmob: [],
-  loadingSkeleton: true
+  loadingSkeleton: true,
+  terms: functions.termWanted
 })
 
 //Cadastro de Fiador
@@ -107,7 +108,7 @@ const getImmobiles = async () => {
         state.immobiles.push(el)
         state.immobilesItens.push(el.immobiles_code + ' - ' + el.immobiles_address + ', nº ' + el.immobiles_number)
       });
-      // 
+      //
     })
     .catch(err => {
       // Handle errors
@@ -127,6 +128,8 @@ const detailsImmobile = (value) => {
 onMounted(() => {
   getData()
   getImmobiles();
+  var term = functions.termWanted
+    console.log(typeof state.terms)
 })
 
 const closeDialog = (value) => {
@@ -195,7 +198,7 @@ const guarantor = (event) => {
                 <strong>Bairro: </strong> {{ state.detailsImmob[0].immobiles_district }},
                 <strong>Cidade: </strong>{{ state.detailsImmob[0].immobiles_city }},
                 <strong>IPTU Mensal: </strong>{{ state.detailsImmob[0].immobiles_iptu_price }},
-                <strong>Cond.: </strong>{{ state.detailsImmob[0].immobiles_condominium_price }}               
+                <strong>Cond.: </strong>{{ state.detailsImmob[0].immobiles_condominium_price }}
               </p>
             </div>
           </v-sheet>
@@ -223,12 +226,15 @@ const guarantor = (event) => {
     <v-row no-gutters>
 
       <v-col col cols="12" sx="12" sm="12" md="4">
-        <v-text-field class="mt-1" label="Prazo Desejado" @blur="saveField($event.target)" name="term" model-value="30"
-          suffix="meses" v-model="state.term"></v-text-field>
+          <v-select class="m-2"
+            variant="underlined" label="Prazo Desejado em meses"
+            name="term"  suffix="meses"
+            :items="state.terms">
+          </v-select>
       </v-col>
       <v-col col cols="12" sx="12" sm="12" md="4">
         <v-select class="m-2" variant="underlined" label="Tipo de garantia" @update:modelValue="guarantor($event)"
-          @blur="saveField($event.target)" name="warrantyType" :items="['Carta Fiança', 'Caução', 'Crédito', 'Fiador']"
+          @blur="saveField($event.target)" name="warrantyType" :items="functions.typeOfGuarantee"
           v-model="state.warrantyType">
         </v-select>
       </v-col>
