@@ -71,9 +71,9 @@ const saveContact = () => {
               </v-col>
               <v-col cols="3" xs="3" sm="3" md="3">
                 <!-- <small class="text-xs">Salvar</small> -->
-                <v-btn class="mt-3" color="primary">
+                <v-btn class="mt-3" color="primary" @click="saveContact()">
 
-                  <v-icon icon="fas fa-save" class="mb-1 mr-1" @click="saveContact()"></v-icon>
+                  <v-icon icon="fas fa-save" class="mb-1 mr-1"></v-icon>
                 </v-btn>
 
               </v-col>
