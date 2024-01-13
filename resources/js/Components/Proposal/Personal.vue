@@ -17,7 +17,7 @@ const saveField = (val) => {
 
   let newValue = val.value
   if(val.name == 'phone_fixed' || val.name == 'phone_mobile') {
-    newValue = functions.formatPhone(val.value)    
+    newValue = functions.formatPhone(val.value)
   }
 
   var valueInputNew = {
@@ -72,7 +72,7 @@ onMounted(() => {
   <div>
     <v-row>
       <v-col cols="12" @click="state.dialogPersonal = true">
-        <v-btn color="white" @click="state.dialogPersonal = true" 
+        <v-btn color="white" @click="state.dialogPersonal = true"
           elevation="2" icon="fas fa-person">
         </v-btn>
         <v-row>
@@ -81,19 +81,19 @@ onMounted(() => {
               <small class="font-semibold">Pessoal</small>
             </div>
               <DialogProposal :dialog="state.dialogPersonal" @updateDialog="closeDialog">
-              
+
                   <v-col cols="12">
                     <TitleAndSubtitle
                     title="Referência Pessoal"
                     sub="Seus dados são salvos automaticamente"
                 />
                   </v-col>
-               
+
                 <v-col cols="12" xs="12" sm="12" md="12">
                     <v-text-field label="Nome" variant="underlined"
                       @blur="saveField($event.target)"
                       name="name" v-model="state.name">
-                    </v-text-field>                    
+                    </v-text-field>
                 </v-col>
                 <v-col cols="12" xs="12" sm="12" md="6">
                   <v-text-field label="C.P.F" variant="underlined"
@@ -104,18 +104,21 @@ onMounted(() => {
                       @blur="saveField($event.target)"
                       name="phone_fixed" v-model="state.phone_fixed" v-mask-phone.br>
                     </v-text-field>
-                   
+
                 </v-col>
                 <v-col cols="12" xs="12" sm="12" md="6">
-                <v-text-field label="Qual a relação?" variant="underlined"
-                      @blur="saveField($event.target)"
-                      name="relationship" v-model="state.relationship">
-                    </v-text-field>
+                    <v-select
+                        label="Qual a relação?"
+                        variant="underlined"
+                        name="relationship" v-model="state.relationship"
+                        @blur="saveField($event.target)"
+                        :items="['Amigo', 'Profissional', 'Parente', 'Outro']"
+                    ></v-select>
                     <v-text-field label="Telefone" variant="underlined"
                       @blur="saveField($event.target)"
                       name="phone_mobile" v-model="state.phone_mobile" v-mask-phone.br>
                     </v-text-field>
-                    </v-col>
+                </v-col>
               </DialogProposal>
           </v-col>
         </v-row>

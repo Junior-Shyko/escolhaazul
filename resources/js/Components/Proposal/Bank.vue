@@ -25,7 +25,7 @@ const saveField = (val) => {
   //Formatando numero de telefone
   if(val.name == 'phone_manager' ) {
     newValue = functions.formatPhone(val.value)
-    console.log({newValue}) 
+    console.log({newValue})
     valueInputNew.valueInput = newValue
   }
 
@@ -124,9 +124,11 @@ onMounted(() => {
                   <TitleAndSubtitle title="Referência Bancária" sub="Seus dados são salvos automaticamente." />
                   <v-row>
                     <v-col cols="12" xs="12" sm="12" md="4">
-                      <v-text-field label="Nome do Banco" variant="underlined" @blur="saveField($event.target)"
-                        name="name_bank" v-model="state.name_bank">
-                      </v-text-field>
+                        <v-combobox
+                            label="Nome do Banco" name="name_bank"
+                            variant="underlined" @blur="saveField($event.target)"
+                            :items="functions.banks"
+                        ></v-combobox>
                       <v-text-field label="Nome do Gerente" variant="underlined" @blur="saveField($event.target)"
                         v-model="state.name_manager" name="name_manager">
                       </v-text-field>

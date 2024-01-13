@@ -32,7 +32,7 @@ class DataPersonalResource extends Resource
     {
         //Armazenará o nome do usuario
 
-        //Repositorio com várias funções util    
+        //Repositorio com várias funções util
         $rentalRepo = new RentalDataRepository;
         $userForm = RentalDataRepository::getUserToForm($form);
 
@@ -120,7 +120,7 @@ class DataPersonalResource extends Resource
                 Tables\Columns\TextColumn::make('birthDate')
                     ->date('d/m/Y')
                     ->label('Data de nasc.')
-                    ->searchable()
+
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('cpf')

@@ -38,7 +38,7 @@ const state = reactive({
   validateImmobile: true,
   validateFinality: true,
   validateWarranty: true,
-  enabledTwo : true
+  enabledTwo : false
 });
 
 const receiveEmit = (value) => {

@@ -2,6 +2,7 @@
 import { reactive, onMounted } from 'vue';
 import TitleAndSubtitle from './TitleAndSubtitle.vue';
 import endpoint from '@/Services/endpoints'
+import functions from "@/Util/functions.js";
 
 const props = defineProps({
   user: Object,
@@ -59,7 +60,7 @@ onMounted(() => {
     <div>
       <v-row>
         <v-col cols="12">
-          <v-btn color="white" 
+          <v-btn color="white"
             @click="state.dialogRealState = true"
             elevation="2" icon="fas fa-sign-hanging">
           </v-btn>
@@ -74,13 +75,18 @@ onMounted(() => {
                     <TitleAndSubtitle title="Referência Imobiliária" sub="Seus dados são salvos automaticamente." />
                     <v-row>
                       <v-col cols="12" xs="12" sm="12" md="6">
-                        <v-text-field label="Nome" variant="underlined" @blur="saveField($event.target)"
-                        name="name" v-model="state.name">
-                        </v-text-field>
+                          <v-combobox
+                              label="Nome" name="name"
+                              variant="underlined" @blur="saveField($event.target)"
+                              :items="functions.listImmobiles"
+                              v-model="state.name"
+                              persistent-hint
+                              hint="Se não achou na lista, é só digitar outro nome."
+                          ></v-combobox>
                         <v-text-field label="Telefone Fixo" variant="underlined" @blur="saveField($event.target)"
                           name="phone_fixed" v-model="state.phone_fixed" v-mask-phone.br>
                         </v-text-field>
-                       
+
                         <v-text-field label="E-mail" variant="underlined" @blur="saveField($event.target)"
                           name="email" v-model="state.email">
                         </v-text-field>

@@ -37,7 +37,8 @@ const state = reactive({
   plate: '',
   financed: '',
   financial: '',
-  value: ''
+  value: '',
+
 })
 
 const closeDialog = (value) => {
@@ -74,7 +75,7 @@ onMounted(() => {
   <div>
     <v-row>
       <v-col cols="12">
-       
+
         <v-btn color="white" @click="state.dialogVehicle = true" elevation="2" icon="fas fa-car">
         </v-btn>
         <v-row>
@@ -87,28 +88,32 @@ onMounted(() => {
                 <TitleAndSubtitle title="Veículo" sub="Seus dados são salvos automaticamente" />
               </v-col>
               <v-col cols="12" xs="12" sm="12" md="3">
-                <v-text-field label="Marca" variant="underlined" 
-                  @blur="saveField($event.target)" name="branch"
-                  v-model="state.branch">
-                </v-text-field>               
+                  <v-combobox
+                      label="Marca" variant="underlined"
+                      @blur="saveField($event.target)" name="branch"
+                      v-model="state.branch"
+                      :items="functions.listVehicle"
+                  ></v-combobox>
               </v-col>
               <v-col cols="12" xs="12" sm="12" md="3">
-                <v-text-field label="Modelo" variant="underlined" 
+                <v-text-field label="Modelo" variant="underlined"
                   @blur="saveField($event.target)" name="model"
                   v-model="state.model">
                 </v-text-field>
               </v-col>
               <v-col cols="12" xs="12" sm="12" md="3">
-                <v-text-field label="Ano" variant="underlined" 
-                  @blur="saveField($event.target)" name="year"
-                  v-model="state.year">
-                </v-text-field>                 
+                  <v-combobox
+                      label="Ano" variant="underlined"
+                      @blur="saveField($event.target)" name="year"
+                      v-model="state.year"
+                      :items="functions.listYear"
+                  ></v-combobox>
               </v-col>
               <v-col cols="12" xs="12" sm="12" md="3">
-                <v-text-field label="Placa" variant="underlined" 
+                <v-text-field label="Placa" variant="underlined"
                   @blur="saveField($event.target)" name="plate"
                   v-model="state.plate">
-                </v-text-field>                    
+                </v-text-field>
               </v-col>
               <v-col cols="12" xs="12" sm="12" md="3">
                 <v-select
@@ -120,16 +125,16 @@ onMounted(() => {
                 ></v-select>
               </v-col>
               <v-col cols="12" xs="12" sm="12" md="6">
-                <v-text-field label="Financeira" variant="underlined" 
+                <v-text-field label="Financeira" variant="underlined"
                   @blur="saveField($event.target)" name="financial"
                   v-model="state.financial">
-                </v-text-field>                    
+                </v-text-field>
               </v-col>
               <v-col cols="12" xs="12" sm="12" md="3">
-                <v-text-field label="Valor" variant="underlined" 
+                <v-text-field label="Valor" variant="underlined"
                   @blur="saveField($event.target)" name="value"
                   v-model="state.value" v-mask-decimal.br="2">
-                </v-text-field>                    
+                </v-text-field>
               </v-col>
 
             </DialogProposal>
