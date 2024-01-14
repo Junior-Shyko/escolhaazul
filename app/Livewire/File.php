@@ -2,6 +2,9 @@
 
 namespace App\Livewire;
 
+use Filament\Actions\Action;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -12,9 +15,13 @@ use Filament\Tables;
 use Livewire\Component;
 use App\Models\File as FileModel;
 
-class File extends Component implements HasTable, HasForms
+class File extends Component implements HasTable, HasForms,HasActions
 {
-    use InteractsWithTable, InteractsWithForms;
+    use InteractsWithTable, InteractsWithForms, InteractsWithActions;
+
+    public FileModel $file;
+
+    protected int $id;
 
     public static function getNavigationIcon(): ?string
     {
@@ -23,11 +30,12 @@ class File extends Component implements HasTable, HasForms
 
     public function render()
     {
-        $idProposal = request()->get('id', null);
+        $idProposal = request()->get('id');
         $files = \App\Models\File::where('object_id', $idProposal)->get();
         $rental = count($files) > 0 ? $files[0]->rental()->with('user')->first() : null;
         $user = !is_null($rental) ? $rental->user->name : null;
-        return view('livewire.file')->with(['file' => $files,
+
+        return view('livewire.file')->with(['files' => $files,
             'rental' => $rental,
             'user' => $user,
             'idProposal' => $idProposal
@@ -37,7 +45,7 @@ class File extends Component implements HasTable, HasForms
     public function table(Table $table): Table
     {
         return $table
-            ->query(\App\Models\File::where('object_id', '=', 4))
+            ->query(\App\Models\File::where('object_id', '=', 5))
             ->columns([
 //                Tables\Columns\TextColumn::make('name'),
                 ImageColumn::make('name')
@@ -48,6 +56,19 @@ class File extends Component implements HasTable, HasForms
                 Tables\Actions\CreateAction::make()
             ]);
     }
+
+    public function deletefile(FileModel $file)
+    {
+
+        try {
+            $file->delete();
+        }catch (\Exception $e){
+            dump($e->getMessage());
+        }
+    }
+
+
+
 
 
 }
