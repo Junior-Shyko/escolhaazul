@@ -1,6 +1,7 @@
 @php
     if(!is_null($idProposal)):
 @endphp
+
 <div class="container w-full md:max-w-5xl mx-auto pt-20 px-4">
     <div>
         <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
@@ -31,42 +32,52 @@
             </tr>
             </thead>
             <tbody class="bg-white dark:bg-slate-800">
-            @foreach($file as $files)
+            @foreach($files as $file)
                 <tr class="border-b hover:bg-gray-100">
                     <td>
                         <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900
                         flex justify-center">
-                            {{$files->name}}
+                            {{$file->name}}
                             @php
-                                $ext = substr($files->name, -4);
+                                $ext = substr($file->name, -4);
                             @endphp
                         </p>
                     </td>
                     <td>
                         <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 flex justify-center">
-                            <a href="{{url('upload/'.$files->name)}}" download>
-                                <img src="{{url('upload/'.$files->name)}}" alt="" srcset="" style="max-height: 200px;">
+                            <a href="{{url('upload/'.$file->name)}}" download>
+                                <img src="{{url('upload/'.$file->name)}}" alt="" srcset="" style="max-height: 200px;">
                             </a>
                             @if($ext == '.pdf')
-                                <object data="{{url('upload/'.$files->name)}}" type="application/pdf">
-                                    <iframe src="https://docs.google.com/viewer?url="{{url('upload/'.$files->name)}}"&embedded=true"></iframe>
+                                <object data="{{url('upload/'.$file->name)}}" type="application/pdf">
+                                    <iframe src="https://docs.google.com/viewer?url="{{url('upload/'.$file->name)}}"&embedded=true"></iframe>
                                 </object>
 
                             @endif
                         </p>
                     </td>
                     <td>
-                        <a href="{{url('upload/'.$files->name)}}" download
+                        <a href="{{url('upload/'.$file->name)}}" download
                             class="btn-download "
                             type="button">
                            Baixar
                         </a>
+
+                        <button
+                        class="btn-delete"
+                        type="button"
+                        wire:click="deletefile({{$file->id}})"
+                        wire:confirm="Are you sure you want to delete this post?"
+                        >
+                            Excluir
+                        </button>
+
+
                     </td>
                 </tr>
             @endforeach
-            </tbody>
         </table>
-
+{{--        {{$this->table()}}--}}
     </div>
 </div>
 @else
