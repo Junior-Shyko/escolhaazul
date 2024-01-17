@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\RentalData;
 use Filament\Actions\Action;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\Concerns\InteractsWithActions;
@@ -12,45 +13,68 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Filament\Tables;
+use Filament\Tables\Actions\DeleteAction;
 use Livewire\Component;
 use App\Models\File as FileModel;
+use File as FileLaravel;
+use Illuminate\Http\Request;
+use Filament\Notifications\Notification;
 
 class File extends Component implements HasTable, HasForms,HasActions
 {
     use InteractsWithTable, InteractsWithForms, InteractsWithActions;
 
     public FileModel $file;
-
-    protected int $id;
+    public ?int $id = null;
+    public ?object $rental = null;
+    public ?object $files = null;
+    public ?string $user = null;
 
     public static function getNavigationIcon(): ?string
     {
         return 'heroicon-o-user-group';
     }
 
+    public function mount(Request $request){
+
+        if (null !== $request->get('id')) {
+            $this->id = $request->get('id');
+            $this->files = \App\Models\File::where('object_id',$this->id)->get();
+            $this->rental = count($this->files) > 0 ? $this->files[0]->rental()->with('user')->first() : null;
+            $this->user = !is_null($this->rental) ? $this->rental->user->name : null;
+        }
+
+
+    }
+
     public function render()
     {
-        $idProposal = request()->get('id');
-        $files = \App\Models\File::where('object_id', $idProposal)->get();
-        $rental = count($files) > 0 ? $files[0]->rental()->with('user')->first() : null;
-        $user = !is_null($rental) ? $rental->user->name : null;
 
-        return view('livewire.file')->with(['files' => $files,
-            'rental' => $rental,
-            'user' => $user,
-            'idProposal' => $idProposal
-        ]);
+        return view('livewire.file');
     }
 
     public function table(Table $table): Table
     {
+        $idProposal = request()->get('id');
         return $table
-            ->query(\App\Models\File::where('object_id', '=', 5))
+            ->query(\App\Models\File::where('object_id', '=', $this->id))
             ->columns([
-//                Tables\Columns\TextColumn::make('name'),
                 ImageColumn::make('name')
-                    ->defaultImageUrl(url('/upload/170362657081.png'))
+                    ->label('Imagem')
+                    ->state(function ($record) {
+                        $ext = substr($record->name,-4);
+                        if($ext == '.pdf'){
+                            return url('upload/pdf.jpg');
+                        }
+                        return url('upload/'.$record->name);
+                    })
+                    ->width(150)
+                    ->height(150)
 
+            ])
+            ->actions([
+                Tables\Actions\DeleteAction::make('delete')
+                    ->requiresConfirmation()
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()
@@ -59,12 +83,40 @@ class File extends Component implements HasTable, HasForms,HasActions
 
     public function deletefile(FileModel $file)
     {
-
         try {
-            $file->delete();
+            $id = $file->object_id;
+            //Excluindo o arquivo e o Registro
+            if (FileLaravel::exists(public_path('upload/'.$file->name))) {
+                FileLaravel::delete(public_path('upload/'.$file->name));
+                $file->delete();
+                Notification::make()
+                    ->title('Sucesso!')
+                    ->success()
+                    ->body('O Arquivo e o registro foram excluídos.')
+                    ->send();
+            }
+             return $this->redirect('file?id='.$id);
+//
         }catch (\Exception $e){
             dump($e->getMessage());
         }
+    }
+
+    /*
+     * Usado o metodo para view com $this->table
+     * */
+    public function deleteAction(): Action
+    {
+        return Action::make('delete')
+            ->label('Excluir')
+            ->requiresConfirmation()
+            ->color('danger')
+            ->action(function (array $arguments) {
+//                $post = Post::find($arguments['post']);
+//
+//                $post?->delete();
+                dump($arguments);
+            });
     }
 
 

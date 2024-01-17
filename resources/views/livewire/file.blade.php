@@ -1,11 +1,18 @@
-@php
-    if(!is_null($idProposal)):
-@endphp
-
+{{--<div class="container w-full md:max-w-5xl mx-auto pt-20 px-4">--}}
+{{--    <div>--}}
+{{--        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">--}}
+{{--            Proposta Nº. <strong>345</strong> - Proponente: <strong>Junior</strong>--}}
+{{--        </p>--}}
+{{--    </div>--}}
+{{--    <div class="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">--}}
+{{--        <h3>Files</h3>--}}
+{{--        {{$this->table}}--}}
+{{--    </div>--}}
+{{--</div>--}}
 <div class="container w-full md:max-w-5xl mx-auto pt-20 px-4">
     <div>
         <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-           Proposta Nº. <strong> {{$rental->id}}</strong> - Proponente: <strong>{{$user}}</strong>
+            Proposta Nº. <strong> {{$rental->id}}</strong> - Proponente: <strong>{{$user}}</strong>
         </p>
     </div>
     <div class="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
@@ -58,35 +65,29 @@
                     </td>
                     <td>
                         <a href="{{url('upload/'.$file->name)}}" download
-                            class="btn-download "
-                            type="button">
-                           Baixar
+                           class="btn-download "
+                           type="button">
+                            Baixar
                         </a>
 
                         <button
-                        class="btn-delete"
-                        type="button"
-                        wire:click="deletefile({{$file->id}})"
-                        wire:confirm="Are you sure you want to delete this post?"
+                            class="btn-delete"
+                            type="button"
+                            wire:click="deletefile({{$file->id}})"
+                            wire:confirm="Are you sure you want to delete this post?"
                         >
                             Excluir
                         </button>
-
-
+{{--                        {{ ($this->deleteAction)(['file' => $file->id]) }}--}}
                     </td>
                 </tr>
             @endforeach
+            <x-filament-actions::modals />
+
+
         </table>
-{{--        {{$this->table()}}--}}
+{{--                {{$this->table}}--}}
+
     </div>
 </div>
-@else
-    <div class="container w-full md:max-w-5xl mx-auto pt-20 px-4">
-        <div>
-            <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-              Sem arquivos
-            </p>
-        </div>
-    </div>
 
-@endif
