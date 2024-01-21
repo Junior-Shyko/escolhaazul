@@ -82,22 +82,6 @@ const verifyField = (errors) => {
 
   <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter
          dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-    <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
-      <Link v-if="$page.props.auth.user" :href="route('dashboard')"
-        class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-      Dashboard</Link>
-
-      <template v-else>
-        <Link :href="route('login')"
-          class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-        Log in</Link>
-
-        <Link v-if="canRegister" :href="route('register')"
-          class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-        Register</Link>
-      </template>
-    </div>
-
     <div class="max-w-7xl mx-auto p-6 lg:p-8">
       <div class="flex justify-center">
         <img src="https://espindolaimobiliaria.com.br/escolhaazul/public/img/logo_ea.jpg" alt="" style="width: 350px;">
@@ -120,12 +104,12 @@ const verifyField = (errors) => {
                   O jeito mais fácil de alugar um imóvel.</h1>
                 <div class="">
                   <div class="mb-2  text-center">
-                    <label class="text-gray-700">Quem é o principal inquilino?</label>
+                    <label class="text-gray-700"></label>
                   </div>
                   <select name="typeRentalUser"
                     class="form-select appearance-none block w-full px-5 py-2 border rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:ring focus:outline-none"
                     v-model="form.type">
-                    <option value="" selected disabled>--Selecione--</option>
+                    <option value="" selected disabled>Quem é o principal inquilino?</option>
                     <option value="Pessoa Física">Pessoa Física</option>
                     <option value="Pessoa Jurídica">Pessoa Jurídica</option>
 
