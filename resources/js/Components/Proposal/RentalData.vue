@@ -178,14 +178,14 @@ const guarantor = (event) => {
         </h6>
       </div>
       <v-row>
-        <v-col cols="12" md="12">
-          <div class="text-h5 text-center">
-            Informações do imóvel
-          </div>
-          <v-skeleton-loader :loading="state.loadingSkeleton" type="list-item-two-line"
-            v-if="state.detailsImmob.length === 0">
-          </v-skeleton-loader>
-        </v-col>
+<!--        <v-col cols="12" md="12">-->
+<!--          <div class="text-h5 text-center">-->
+<!--            Informações do imóvel-->
+<!--          </div>-->
+<!--          <v-skeleton-loader :loading="state.loadingSkeleton" type="list-item-two-line"-->
+<!--            v-if="state.detailsImmob.length === 0">-->
+<!--          </v-skeleton-loader>-->
+<!--        </v-col>-->
         <v-col cols="12">
 
           <v-sheet elevation="5" class="mx-auto p-3" rounded="rounded" v-if="state.detailsImmob.length > 0">
@@ -209,13 +209,13 @@ const guarantor = (event) => {
     </v-container>
     <v-row no-gutters>
       <v-col col cols="12" sx="12" sm="12" md="4">
-        <v-select class="m-2" variant="underlined" name="refImmobile" label="Pesquisar o Imóvel"
+        <v-combobox class="m-2" variant="underlined" name="refImmobile" label="Pesquisar o Imóvel(*)"
           :items="state.immobilesItens" @blur="saveField($event.target)" @update:modelValue="detailsImmobile($event)"
           v-model="state.refImmobile">
-        </v-select>
+        </v-combobox>
       </v-col>
       <v-col col cols="12" sx="12" sm="12" md="4">
-        <v-select class="m-2" variant="underlined" label="Finalidade" name="finality" @blur="saveField($event.target)"
+        <v-select class="m-2" variant="underlined" label="Finalidade(*)" name="finality" @blur="saveField($event.target)"
           :items="['Comercial', 'Residencial', 'Temporada']" v-model="state.finality"></v-select>
       </v-col>
       <v-col col cols="12" sx="12" sm="12" md="4">
@@ -233,7 +233,7 @@ const guarantor = (event) => {
           </v-select>
       </v-col>
       <v-col col cols="12" sx="12" sm="12" md="4">
-        <v-select class="m-2" variant="underlined" label="Tipo de garantia" @update:modelValue="guarantor($event)"
+        <v-select class="m-2" variant="underlined" label="Tipo de garantia(*)" @update:modelValue="guarantor($event)"
           @blur="saveField($event.target)" name="warrantyType" :items="functions.typeOfGuarantee"
           v-model="state.warrantyType">
         </v-select>
@@ -267,7 +267,7 @@ const guarantor = (event) => {
                 <v-card-actions>
 
                   <v-btn color="" :block="true" class="bg-primary mb-2" type="submit">
-                    Confirmar convite
+                    Confirmar Convite
                     <v-icon icon="fas fa-paper-plane" class="mb-1 ml-1" size="small"></v-icon>
                   </v-btn>
                 </v-card-actions>
