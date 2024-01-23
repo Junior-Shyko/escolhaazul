@@ -14,6 +14,18 @@
         <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
             Proposta Nº. <strong> {{$rental->id}}</strong> - Proponente: <strong>{{$user}}</strong>
         </p>
+        <form wire:submit="save">
+            {{-- @if ($photos) 
+        <img src="{{ $photos->temporaryUrl() }}">
+      
+    @endif --}}
+            <input type="file" wire:model="photos" multiple>
+         
+            @error('photos.*') <span class="error">{{ $message }}</span> @enderror
+         
+            <button type="submit">Save photo</button>
+        </form>
+       
     </div>
     <div class="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
 
@@ -82,12 +94,22 @@
                     </td>
                 </tr>
             @endforeach
-            <x-filament-actions::modals />
+            {{-- <x-filament-actions::modals /> --}}
 
 
         </table>
-{{--                {{$this->table}}--}}
+               {{-- {{$this->table}} --}}
 
     </div>
 </div>
+@section('scripts')
+    <script>
+        $(document).ready(function(){
+            $("#showEnterCodeModal").on('hidden.bs.modal', function(){
+                livewire.emit('onCloseModal');
+            });
+            console.log('live')
+        });
+    </script>
+@endsection
 

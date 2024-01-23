@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\RentalData;
 use Filament\Actions\Action;
+use Filament\Actions\CreateAction;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -19,16 +20,29 @@ use App\Models\File as FileModel;
 use File as FileLaravel;
 use Illuminate\Http\Request;
 use Filament\Notifications\Notification;
+use Livewire\WithFileUploads;
+use Livewire\Attributes\Validate;
+use Filament\Forms\Components\TextInput;
+
 
 class File extends Component implements HasTable, HasForms,HasActions
 {
-    use InteractsWithTable, InteractsWithForms, InteractsWithActions;
+    use InteractsWithTable, InteractsWithForms, InteractsWithActions, WithFileUploads;
 
     public FileModel $file;
     public ?int $id = null;
     public ?object $rental = null;
     public ?object $files = null;
     public ?string $user = null;
+    #[Validate(['photos.*' => 'image|max:1024'])]
+    public $photos = [];
+
+    public function save()
+    {
+        foreach ($this->photos as $photo) {
+            $photo->store('photos');
+        }
+    }
 
     public static function getNavigationIcon(): ?string
     {
@@ -59,17 +73,17 @@ class File extends Component implements HasTable, HasForms,HasActions
         return $table
             ->query(\App\Models\File::where('object_id', '=', $this->id))
             ->columns([
-                ImageColumn::make('name')
-                    ->label('Imagem')
-                    ->state(function ($record) {
-                        $ext = substr($record->name,-4);
-                        if($ext == '.pdf'){
-                            return url('upload/pdf.jpg');
-                        }
-                        return url('upload/'.$record->name);
-                    })
-                    ->width(150)
-                    ->height(150)
+                // ImageColumn::make('name')
+                //     ->label('Imagem')
+                //     ->state(function ($record) {
+                //         $ext = substr($record->name,-4);
+                //         if($ext == '.pdf'){
+                //             return url('upload/pdf.jpg');
+                //         }
+                //         return url('upload/'.$record->name);
+                //     })
+                //     ->width(150)
+                //     ->height(150)
 
             ])
             ->actions([
@@ -112,13 +126,23 @@ class File extends Component implements HasTable, HasForms,HasActions
             ->requiresConfirmation()
             ->color('danger')
             ->action(function (array $arguments) {
-//                $post = Post::find($arguments['post']);
-//
-//                $post?->delete();
                 dump($arguments);
             });
     }
 
+    public function getHeaderActions(): CreateAction
+    {
+        return 
+            \Filament\Actions\CreateAction::make()
+            ->label('Upload')
+            ->model(FileModel::class)
+            ->form([
+                TextInput::make('title')
+                    ->required()
+                    ->maxLength(255)
+            ])
+        ;
+    }
 
 
 
