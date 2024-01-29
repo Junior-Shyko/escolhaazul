@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\RentalData;
+use App\Models\File as FileApp;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Actions\Contracts\HasActions;
@@ -21,7 +22,7 @@ use File as FileLaravel;
 use Illuminate\Http\Request;
 use Filament\Notifications\Notification;
 use Livewire\WithFileUploads;
-use Livewire\Attributes\Validate;
+use Livewire\Attributes\Rule;
 use Filament\Forms\Components\TextInput;
 
 
@@ -34,13 +35,31 @@ class File extends Component implements HasTable, HasForms,HasActions
     public ?object $rental = null;
     public ?object $files = null;
     public ?string $user = null;
-    #[Validate(['photos.*' => 'image|max:1024'])]
+    #[Rule([
+        'photos.*' => ['required','mimes:jpeg,png,jpg,gif,svg','max:1000'], 
+    ], message: [
+        'required' => 'O :attribute é obrigatorio.',
+        'photos.mimes' => 'The :attribute are missing.',
+        'min' => 'The :attribute is too short.',
+    ], attribute: [
+        'photos.*' => 'photos',
+    ])]
     public $photos = [];
 
     public function save()
     {
+        $this->validate();
+        // dump($validated);
         foreach ($this->photos as $photo) {
-            $photo->store('photos');
+            // $photo->store('photos');
+            dump($photo);
+            $file = [
+                'name' => $photo->filename,
+                'object_id' => $this->id,
+                'object_type' => 'RentalData',
+            ];
+            dump($file);
+            // FileApp::create()
         }
     }
 
@@ -53,8 +72,8 @@ class File extends Component implements HasTable, HasForms,HasActions
 
         if (null !== $request->get('id')) {
             $this->id = $request->get('id');
-            $this->files = \App\Models\File::where('object_id',$this->id)->get();
-            $this->rental = count($this->files) > 0 ? $this->files[0]->rental()->with('user')->first() : null;
+            $this->files = \App\Models\File::where('object_id',$this->id)->get();           
+            $this->rental = count($this->files) > 0 ? $this->files[0]->rental()->with('user')->first() : auth()->user()->rentalData->first();
             $this->user = !is_null($this->rental) ? $this->rental->user->name : null;
         }
 
