@@ -15,14 +15,15 @@
             Proposta Nº. <strong> {{$rental->id}}</strong> - Proponente: <strong>{{$user}}</strong>
         </p>
         <form wire:submit="save">
+            {{dump(json_encode($this->photos))}}
             {{-- @if ($photos) 
         <img src="{{ $photos->temporaryUrl() }}">
       
     @endif --}}
             <input type="file" wire:model="photos" multiple>
-         
-            @error('photos.*') <span class="error">{{ $message }}</span> @enderror
-         
+            <div>@error('photos.*') Arquivo não suportado, tente novamente. @enderror</div>
+          
+
             <button type="submit">Save photo</button>
         </form>
        
