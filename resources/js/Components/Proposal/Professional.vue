@@ -34,6 +34,7 @@ const saveField = (val) => {
 
 const state = reactive({
   dialogProfessional: false,
+  
   profession: '',
   activity: '',
   name_bussiness: '',
@@ -82,7 +83,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-row no-gutters>
+  <v-row no-gutters class="mt-10">
     <v-badge color="default" content="Dados Profissionais" inline></v-badge>
   </v-row>
   <div class="m-2 flex w-full flex text-center justify-center">
@@ -90,9 +91,17 @@ onMounted(() => {
     </h6>
   </div>
   <div>
+   
     <v-row>
       <!-- 987.098.098-88 -->
-      <v-col cols="12" sx="6" sm="6" md="4">
+      <v-dialog
+      v-model="state.dialogProfessional"
+      width="auto"
+    >
+      <v-card>
+        <v-card-text>
+          <v-row>
+            <v-col cols="12" sx="6" sm="6" md="4">
         <v-text-field label="Profissão" variant="underlined" @blur="saveField($event.target)" name="profession"  v-model="state.profession"></v-text-field>
       </v-col>
       <v-col cols="12" sx="6" sm="6" md="4">
@@ -143,17 +152,38 @@ onMounted(() => {
         name="other_income_source" v-model="state.other_income_source">
         </v-text-field>
       </v-col>
-      <v-col cols="12" xs="6" sm="6" md="12">
-        <h6 class="text-center mb-5"> {{ props.user.name }}, 
-          agora adicione o endereço atual do seu local de trabalho e seu contatos telefônico.</h6>
+          </v-row>
+        </v-card-text>
+       
+        <v-card-actions class="flex justify-between bg-blue-grey-lighten-4">
+            <v-btn class="bg-blue-grey-lighten-5 ml-5 mb-2"
+                @click="state.dialogProfessional = false">
+                Continuar
+            </v-btn>
+            
+        </v-card-actions>
+
+
+      </v-card>
+    </v-dialog>
+      <v-col cols="12" xs="6" sm="6" md="12">        
         <v-row  class="flex justify-center mb-5">
-         
-          <Address :user="props.user" object_type="professional"/>
-          <Phone :user="props.user" object_type="professional"/>
+          <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
+            <v-btn elevation="2" color="primary m-1" @click="state.dialogProfessional = true">
+                    <v-icon icon="fas fa-plus-circle" class="mb-1 mr-1"></v-icon>
+                    Adicionar dados profissionais
+                    </v-btn>         
+          </v-col>
+          <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
+            <Address :user="props.user" object_type="professional"/>          
+          </v-col>
+          <v-col cols="12" sx="12" sm="12" md="4" class="flex justify-center">
+            <Phone :user="props.user" object_type="professional"/>          
+          </v-col>
         </v-row>
       </v-col>
     </v-row>
   </div>
 </template>
 
-<style lang="scss" scoped></style>cnpj
+<style lang="scss" scoped></style>

@@ -77,3 +77,17 @@
     hover:shadow-lg hover:shadow-slate-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85]
     active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none
 }
+.btn-delete {
+    @apply bg-red-500 text-zinc-50 mr-4 border rounded-lg py-1 px-2 font-sans text-sm font-bold shadow-md
+    shadow-slate-500/20 transition-all hover:shadow-lg hover:shadow-slate-500/40 focus:opacity-[0.85] focus:shadow-none
+    active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none
+}
+.btn-submit-file {
+    @apply bg-blue-600 shadow-xl hover:bg-blue-500 text-gray-50
+}
+.input-file-rental {
+    @apply block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+}
+.session-file-rental {
+    @apply bg-white border-gray-700 p-10 rounded-md mt-5
+}

@@ -54,7 +54,10 @@ function submit() {
                         E, após a aprovação, será imprescindível apresentar os originais
                         ou
                         enviar cópia autenticada até o ato da entrega das chaves.
-
+                        <hr>
+                        <v-badge color="info" content="Informações para upload" inline class="mb-2 mt-3"></v-badge>
+                        <br>
+                        Você pode adicionar até 20 arquivos de no máximo 5mb e no formato de .png, .jpg, .jpeg, .pdf, .img .
                     </p>
                 <div class="bg-gray-100 sm:px-8 md:px-16 sm:py-8 mt-5">
                     <label class="flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg
@@ -86,7 +89,6 @@ function submit() {
         </v-row>
     </div>
 </template>
-
 
 
 

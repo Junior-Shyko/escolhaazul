@@ -32,5 +32,6 @@
         
         @inertia
         @filamentScripts
+        @stack('scripts')
     </body>
 </html>

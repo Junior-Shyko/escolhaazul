@@ -1,24 +1,23 @@
 <template>
 <div>
-    <v-tab @click="skill('one')" v-show="state.visibleStepOne">
+    <v-tab @click="skill('one')" v-show="state.visibleStepOne" color="black">
           {{ state.btnStepOne }}
+    </v-tab>
+    <v-tab  @click="skill('two')" v-show="state.visibleStepTwo" :disabled="props.disabledTwo" style="color: #2587E9;">
+
+        {{state.btnStepTwo}}
 
     </v-tab>
-    <v-tab  @click="skill('two')" v-show="state.visibleStepTwo" :disabled="props.disabledTwo">
-      
-        {{state.btnStepTwo}}
-   
-    </v-tab>
     <v-tab @click="skill('three')" v-show="state.visibleStepThree">
-      
+
         {{ state.btnStepThree }}
- 
+
         <!-- <v-icon icon="fas fa-angle-right"></v-icon> -->
     </v-tab>
     <v-tab @click="skill('four')" v-show="state.visibleStepFour">
-        
+
         {{state.btnStepFour}}
-   
+
     </v-tab>
 </div>
 </template>
@@ -45,7 +44,7 @@ const state = reactive({
     visibleStepOne: true,
     visibleStepTwo: true,
     visibleStepThree: '',
-    visibleStepFour: '',
+    visibleStepFour: ''
 })
 
 const skill = (value) => {
@@ -56,7 +55,7 @@ const skill = (value) => {
             state.btnStepTwo = 'Próximo'
             state.btnStepThree = ''
             state.btnStepFour = ''
-          
+
 
             state.visibleStepOne = true
             state.visibleStepTwo = true
@@ -71,7 +70,7 @@ const skill = (value) => {
             state.btnStepThree = 'Próximo'
             state.btnStepFour = ''
 
-         
+
 
             state.visibleStepOne = true
             state.visibleStepTwo = false
@@ -85,7 +84,7 @@ const skill = (value) => {
             state.btnStepThree = ''
             state.btnStepFour = 'Última Etapa'
 
-         
+
             state.visibleStepOne = false
             state.visibleStepTwo = true
             state.visibleStepThree = false
@@ -98,17 +97,17 @@ const skill = (value) => {
             state.btnStepOne = ''
             state.btnStepTwo = ''
             state.btnStepThree = 'Anterior'
-            state.btnStepFour = 'Última Etapa'
+            state.btnStepFour = ''
 
-           
+
             state.visibleStepOne = false
             state.visibleStepTwo = false
             state.visibleStepThree = true
-            state.visibleStepFour = true
+            state.visibleStepFour = false
 
             emit('updatetab', value);
             break;
-            
+
         default:
             break;
     }
