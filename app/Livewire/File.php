@@ -36,30 +36,33 @@ class File extends Component implements HasTable, HasForms,HasActions
     public ?object $files = null;
     public ?string $user = null;
     #[Rule([
-        'photos.*' => ['required','mimes:jpeg,png,jpg,gif,svg','max:1000'], 
-    ], message: [
-        'required' => 'O :attribute é obrigatorio.',
-        'photos.mimes' => 'The :attribute are missing.',
-        'min' => 'The :attribute is too short.',
-    ], attribute: [
-        'photos.*' => 'photos',
+        'photos.*' => ['required','mimes:jpeg,png,jpg,gif,svg,pdf','max:1000'], 
     ])]
     public $photos = [];
 
+    public $update; 
+    
     public function save()
     {
         $this->validate();
-        // dump($validated);
         foreach ($this->photos as $photo) {
-            // $photo->store('photos');
-            dump($photo);
             $file = [
-                'name' => $photo->filename,
+                'name' => $photo->getFilename(),
                 'object_id' => $this->id,
                 'object_type' => 'RentalData',
             ];
-            dump($file);
-            // FileApp::create()
+            try {              
+                FileApp::create($file);
+                $photo->storeAs('upload', $photo->getFilename(), 'public');
+                Notification::make()
+                ->title('Sucesso!')
+                ->success()
+                ->body('O Arquivo foi enviado com sucesso')
+                ->send();
+                $this->redirect('../admin/file?id='.$this->id);
+            } catch (\Throwable $th) {
+                throw $th;
+            }
         }
     }
 
@@ -72,7 +75,8 @@ class File extends Component implements HasTable, HasForms,HasActions
 
         if (null !== $request->get('id')) {
             $this->id = $request->get('id');
-            $this->files = \App\Models\File::where('object_id',$this->id)->get();           
+            $this->files = \App\Models\File::where('object_id',$this->id)
+            ->orderBy('id', 'DESC')->get();           
             $this->rental = count($this->files) > 0 ? $this->files[0]->rental()->with('user')->first() : auth()->user()->rentalData->first();
             $this->user = !is_null($this->rental) ? $this->rental->user->name : null;
         }
@@ -82,7 +86,6 @@ class File extends Component implements HasTable, HasForms,HasActions
 
     public function render()
     {
-
         return view('livewire.file');
     }
 
@@ -118,9 +121,11 @@ class File extends Component implements HasTable, HasForms,HasActions
     {
         try {
             $id = $file->object_id;
+            // dump(storage_path('app/public/upload/'.$file->name));
+            // dump(FileLaravel::exists(storage_path('app/public/upload/'.$file->name)));
             //Excluindo o arquivo e o Registro
-            if (FileLaravel::exists(public_path('upload/'.$file->name))) {
-                FileLaravel::delete(public_path('upload/'.$file->name));
+            if (FileLaravel::exists(storage_path('app/public/upload/'.$file->name))) {
+                FileLaravel::exists(storage_path('app/public/upload/'.$file->name));
                 $file->delete();
                 Notification::make()
                     ->title('Sucesso!')
