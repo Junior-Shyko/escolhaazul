@@ -54,8 +54,6 @@ function submit() {
                         E, após a aprovação, será imprescindível apresentar os originais
                         ou
                         enviar cópia autenticada até o ato da entrega das chaves.
-                    </p>
-                    <p class="mt-5">
                         <hr>
                         <v-badge color="info" content="Informações para upload" inline class="mb-2 mt-3"></v-badge>
                         <br>
@@ -70,7 +68,6 @@ function submit() {
                         <span class="mt-2 text-sm leading-normal text-center">Jogue seus arquivos ou click no retângulo para envio.
                         <DropZone
                             :maxFiles="Number(20)"
-                            :maxFileSize="5"
                             :url="state.urlApi"
                             :uploadOnDrop="true"
                             :multipleUpload="false"
@@ -92,7 +89,6 @@ function submit() {
         </v-row>
     </div>
 </template>
-
 
 
 
