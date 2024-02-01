@@ -67,15 +67,22 @@ const saveContact = () => {
                 <v-text-field label="Telefone" variant="underlined" name="number"
                   v-model="state.number" v-mask-phone.br>
                 </v-text-field>
-
+                <p>
+                  <small>
+                    <v-btn variant="outlined" size="small">
+                      <a  href="../admin/phones" target="_blank">
+                        ver Contato(s) cad.
+                      </a>
+                    </v-btn>
+                  </small>
+                </p>
               </v-col>
               <v-col cols="3" xs="3" sm="3" md="3">
                 <!-- <small class="text-xs">Salvar</small> -->
                 <v-btn class="mt-3" color="primary" @click="saveContact()">
-
                   <v-icon icon="fas fa-save" class="mb-1 mr-1"></v-icon>
                 </v-btn>
-
+                
               </v-col>
               <!-- <div class="w-full m-auto">
                 <p class="mt-2 text-center text-xs mb-4 text-gray-500">Seus contatos cadastrados</p>
@@ -97,6 +104,11 @@ const saveContact = () => {
                     Item for the Nth time</li>
                 </ul>
               </div> -->
+             <v-row>
+              <v-col cols="12"  xs="12" sm="12" md="12">
+               
+              </v-col>
+             </v-row>
             </DialogProposal>
           </v-col>
         </v-row>

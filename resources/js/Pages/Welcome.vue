@@ -111,8 +111,7 @@ const verifyField = (errors) => {
                     v-model="form.type">
                     <option value="" selected disabled>Quem é o principal inquilino?</option>
                     <option value="Pessoa Física">Pessoa Física</option>
-                    <option value="Pessoa Jurídica">Pessoa Jurídica</option>
-
+                    <!-- <option value="Pessoa Jurídica">Pessoa Jurídica</option> -->
                   </select>
                   <div class="my-3">
                     <input type="text"
