@@ -91,7 +91,7 @@
                         >
                             Excluir
                         </button>
-{{--                        {{ ($this->deleteAction)(['file' => $file->id]) }}--}}
+                       {{ ($this->deleteAction)(['file' => $file->id]) }}
                     </td>
                 </tr>
             @endforeach
@@ -99,7 +99,7 @@
 
 
         </table>
-               {{-- {{$this->table}} --}}
+            {{$this->table}}
 
     </div>
 </div>

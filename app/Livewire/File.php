@@ -40,8 +40,7 @@ class File extends Component implements HasTable, HasForms,HasActions
     ])]
     public $photos = [];
 
-    public $update; 
-    
+   
     public function save()
     {
         $this->validate();
@@ -95,22 +94,25 @@ class File extends Component implements HasTable, HasForms,HasActions
         return $table
             ->query(\App\Models\File::where('object_id', '=', $this->id))
             ->columns([
-                // ImageColumn::make('name')
-                //     ->label('Imagem')
-                //     ->state(function ($record) {
-                //         $ext = substr($record->name,-4);
-                //         if($ext == '.pdf'){
-                //             return url('upload/pdf.jpg');
-                //         }
-                //         return url('upload/'.$record->name);
-                //     })
-                //     ->width(150)
-                //     ->height(150)
+                ImageColumn::make('name')
+                    ->label('Imagem')
+                    ->state(function ($record) {
+                        $ext = substr($record->name,-4);
+                        if($ext == '.pdf'){
+                            return url('storage/upload/pdf.jpg');
+                        }
+                        return url('storage/upload/'.$record->name);
+                    })
+                    ->width(150)
+                    ->height(150)
 
             ])
             ->actions([
                 Tables\Actions\DeleteAction::make('delete')
-                    ->requiresConfirmation()
+                ->label('Excluir')
+                ->requiresConfirmation()
+                ->color('danger')
+               
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()
@@ -121,9 +123,7 @@ class File extends Component implements HasTable, HasForms,HasActions
     {
         try {
             $id = $file->object_id;
-            // dump(storage_path('app/public/upload/'.$file->name));
-            // dump(FileLaravel::exists(storage_path('app/public/upload/'.$file->name)));
-            //Excluindo o arquivo e o Registro
+             //Excluindo o arquivo e o Registro
             if (FileLaravel::exists(storage_path('app/public/upload/'.$file->name))) {
                 FileLaravel::exists(storage_path('app/public/upload/'.$file->name));
                 $file->delete();
