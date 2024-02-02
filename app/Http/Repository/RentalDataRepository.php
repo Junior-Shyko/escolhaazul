@@ -84,10 +84,14 @@ class RentalDataRepository
      */
     static public function getUserDataPersonal($id)
     {
+
         $personal = DataPersonal::find($id);
         if(!is_null($personal))
         {
             $user = User::find($personal->user_id);
+            return $user;
+        }else{
+            $user = User::find($id);
             return $user;
         }
     }
@@ -108,6 +112,7 @@ class RentalDataRepository
     {
         //Modo de edição de form
         if ($form->getOperation() == 'edit' || $form->getOperation() == 'view' ) {
+            
             if(isset($form->getRecord()->object_id))
             {
                 $user = self::getUserDataPersonal($form->getRecord()->object_id);
