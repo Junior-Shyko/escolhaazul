@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\File;
 use Filament\Forms;
+use App\Models\File;
 use App\Models\Term;
 use App\Models\User;
 use Filament\Tables;
@@ -15,14 +15,15 @@ use Filament\Tables\Actions\Action;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
+use Illuminate\Support\Facades\Route;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Section;
 use Illuminate\Database\Eloquent\Collection;
-use App\Http\Repository\RentalDataRepository;
-use Illuminate\Support\Facades\Route;
 use Leandrocfe\FilamentPtbrFormFields\Money;
+use App\Http\Repository\RentalDataRepository;
 use App\Filament\Resources\RentalDataResource\Pages;
 use App\Filament\Resources\RentalDataResource\RelationManagers;
 
@@ -34,6 +35,22 @@ class RentalDataResource extends Resource
 
     protected static ?string $navigationLabel = 'Propostas';
 
+    protected static $viewFactory;
+
+    public $titleWwid = 'TitleWid';
+
+    public static function toHtml()
+    {
+        // If we haven't set our View Factory, we will set it now in the static instance of this
+        // Participant. That way, when other participants are rendered, we can reuse the same
+        // View Factory instance, which is better than resolving it each time from the IoC.
+        if (!static::$viewFactory) {
+            static::$viewFactory = view();
+        }
+        $participants = ['hoao', 'maria'];
+        return view('participant.widget')->with(['participants' => $participants])->render();
+    }
+
     public static function form(Form $form): Form
     {
         $rentalRepo = new RentalDataRepository;
@@ -41,55 +58,21 @@ class RentalDataResource extends Resource
 
         return $form
             ->schema([
-                Placeholder::make('Proponente')
-                ->content($userForm['nameUser']),
-            Hidden::make('user_id')
-                ->default($userForm['idUser']),
-                Forms\Components\TextInput::make('refImmobile')
-                ->label('Refência do Imóvel')
-                    ->maxLength(200),
-                Forms\Components\TextInput::make('typeRentalUser')
-                ->label('Tipo de locação')
-                    ->required()
-                    ->maxLength(50),
-                Forms\Components\TextInput::make('finality')
-                ->label('Finalidade')
-                    ->maxLength(50),
-                Forms\Components\TextInput::make('term')
-                ->label('Prazo desejado')
-                    ->numeric(),
-                Forms\Components\TextInput::make('warrantyType')
-                ->label('Tipo de garantia')
-                    ->maxLength(50),
-                Money::make('proposedValue')
-                ->label('Aluguel proposto')
-                ->prefix('R$'),
-                Forms\Components\Textarea::make('ps')
-                ->label('Observação')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('object_id')
-                    ->required()
-                    ->maxLength(10),
-                      Select::make('status')
-                    ->options([
-                        'incompleta' => 'Incompleta',
-                        'finalizada' => 'Finalizada'
-                    ])
-                    ->label('Situação/Status')
-                    ->native(false)
-                    ->preload(),
-                Forms\Components\DateTimePicker::make('date_finish')
-                ->label('Finalizado em')
-                ->format('d/m/Y H:i'),
-                Select::make('object_type')
-                            ->options([
-                                'personal' => 'Pessoa Física',
-                                'legal' => 'Pessoa Jurídica'
-                            ])
-                            ->label('Tipo de referência')
-                            ->required()
-                            ->native(false)
-                            ->preload(),
+                Section::make('Informação')
+                ->description(self::toHtml())
+                ->aside()
+                ->columns([
+                    'md' => 2
+                ])
+                ->schema([
+
+                    Placeholder::make('Risco no Serasa')
+                    ->content('Nível 3 - Score entre 301 - 500'),
+                    Placeholder::make('Proponente')
+                    ->content($userForm['nameUser']),
+                    Placeholder::make('Proponente')
+                    ->content($userForm['nameUser']),
+                ])
             ]);
     }
 
@@ -162,18 +145,15 @@ class RentalDataResource extends Resource
                     Action::make('Análise')
                         ->icon('heroicon-m-chart-pie')
                         ->action(function (RentalData $record) {
-                            if(auth()->user()->hasRole('common'))
-                            {
+                            if (auth()->user()->hasRole('common')) {
                                 return redirect('https://filmesonlines.org/');
-                            }else{
+                            } else {
                                 return redirect()->route('proposal.analysis.pdf', [$record->user_id, $record->id]);
                             }
-
                         }),
                     Action::make('Profissional')
                         ->icon('heroicon-m-plus-circle')
                         ->action(function (RentalData $record) {
-
                         }),
                     Action::make('Bens')
                         ->icon('heroicon-m-plus-circle')
@@ -188,23 +168,21 @@ class RentalDataResource extends Resource
                     Action::make('Veículo')
                         ->icon('heroicon-m-plus-circle')
                         ->action(function (RentalData $record) {
-                            if(auth()->user()->hasRole('common'))
-                            {
+                            if (auth()->user()->hasRole('common')) {
                                 return redirect('https://filmesonlines.org/');
-                            }else{
+                            } else {
                                 return redirect()->route('proposal.analysis.pdf', [$record->user_id, $record->id]);
                             }
-
                         }),
                     Action::make('Telefone')
-                          ->icon('heroicon-m-plus-circle')
-                          ->action(function (RentalData $record) {
-                              return redirect('admin/phones/create/?id=' . $record->id);
-                          }),
+                        ->icon('heroicon-m-plus-circle')
+                        ->action(function (RentalData $record) {
+                            return redirect('admin/phones/create/?id=' . $record->id);
+                        }),
                     Action::make('Arquivos')
                         ->icon('heroicon-m-plus-circle')
                         ->action(function (RentalData $record): void {
-                            redirect('admin/file?id='.$record->id);
+                            redirect('admin/file?id=' . $record->id);
                         })
                         ->openUrlInNewTab()
                 ])->button()
@@ -215,10 +193,9 @@ class RentalDataResource extends Resource
             ])
             //Filtrando as propostas de acordo com o nivel do usuário
             ->query(function (RentalData $query) {
-                if(auth()->user()->hasRole('common'))
-                {
+                if (auth()->user()->hasRole('common')) {
                     return $query->where('user_id', auth()->user()->id);
-                }else{
+                } else {
                     return $query;
                 }
             })
