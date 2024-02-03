@@ -47,8 +47,9 @@ class RentalDataResource extends Resource
         if (!static::$viewFactory) {
             static::$viewFactory = view();
         }
+       
         $participants = ['hoao', 'maria'];
-        return view('participant.widget')->with(['participants' => $participants])->render();
+        return static::$viewFactory->make('participant.widget')->with(['participants' =>$participants])->render();
     }
 
     public static function form(Form $form): Form
@@ -220,6 +221,13 @@ class RentalDataResource extends Resource
             'create' => Pages\CreateRentalData::route('/create'),
             'view' => Pages\ViewRentalData::route('/{record}'),
             'edit' => Pages\EditRentalData::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            RentalDataResource\Widgets\RentalDataOverview::class,
         ];
     }
 }
