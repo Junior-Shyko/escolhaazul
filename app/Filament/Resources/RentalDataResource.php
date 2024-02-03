@@ -12,10 +12,7 @@ use App\Models\RentalData;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
-use Illuminate\Support\Facades\Auth;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Select;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
@@ -35,12 +32,13 @@ class RentalDataResource extends Resource
 
     protected static ?string $navigationLabel = 'Propostas';
 
+    public ?string $rental = null; 
    
     public static function form(Form $form): Form
     {
         $rentalRepo = new RentalDataRepository;
         $userForm = RentalDataRepository::getUserToForm($form);
-
+        
         return $form
             ->schema([
                 Section::make()
@@ -243,8 +241,5 @@ class RentalDataResource extends Resource
         ];
     }
 
-    protected function getColumns(): int | array
-    {
-        return 6;
-    }
+
 }
