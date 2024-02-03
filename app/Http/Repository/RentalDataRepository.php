@@ -119,14 +119,10 @@ class RentalDataRepository
                 $nameUser = $user->name;
                 $idUser = $user->id;
             }
-//            $user = self::getUserDataPersonal($form->getRecord()->id);
-//            $nameUser = $user->name;
-//            $idUser = $user->id;
         }
         else{
             //Busca o usuário que está no id da url
             $idFromURL = request()->get('id');
-//            dd($idFromURL);
             if($idFromURL !== null){
                 $user = self::getUserData($idFromURL);
 
