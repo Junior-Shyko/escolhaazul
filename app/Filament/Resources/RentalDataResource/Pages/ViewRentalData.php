@@ -10,6 +10,9 @@ class ViewRentalData extends ViewRecord
 {
     protected static string $resource = RentalDataResource::class;
 
+    protected static ?string $title = 'Dados da proposta';
+    protected ?string $subheading = 'Informações sobre a proposta';
+
     protected function getHeaderActions(): array
     {
         return [

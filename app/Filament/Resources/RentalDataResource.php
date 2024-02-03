@@ -35,23 +35,7 @@ class RentalDataResource extends Resource
 
     protected static ?string $navigationLabel = 'Propostas';
 
-    protected static $viewFactory;
-
-    public $titleWwid = 'TitleWid';
-
-    public static function toHtml()
-    {
-        // If we haven't set our View Factory, we will set it now in the static instance of this
-        // Participant. That way, when other participants are rendered, we can reuse the same
-        // View Factory instance, which is better than resolving it each time from the IoC.
-        if (!static::$viewFactory) {
-            static::$viewFactory = view();
-        }
-       
-        $participants = ['hoao', 'maria'];
-        return static::$viewFactory->make('participant.widget')->with(['participants' =>$participants])->render();
-    }
-
+   
     public static function form(Form $form): Form
     {
         $rentalRepo = new RentalDataRepository;
@@ -59,21 +43,49 @@ class RentalDataResource extends Resource
 
         return $form
             ->schema([
-                Section::make('Informação')
-                ->description(self::toHtml())
-                ->aside()
-                ->columns([
-                    'md' => 2
-                ])
-                ->schema([
-
-                    Placeholder::make('Risco no Serasa')
-                    ->content('Nível 3 - Score entre 301 - 500'),
-                    Placeholder::make('Proponente')
-                    ->content($userForm['nameUser']),
-                    Placeholder::make('Proponente')
-                    ->content($userForm['nameUser']),
-                ])
+                Section::make()
+                    ->columns([
+                        'md' => 3
+                    ])
+                    ->schema([
+                        Placeholder::make('Proponente')
+                            ->content($userForm['nameUser']),
+                        Forms\Components\TextInput::make('user_id')
+                        ->label('Código usuário')
+                            ->required()
+                            ->numeric(),
+                        
+                        Forms\Components\TextInput::make('refImmobile')
+                        ->label('Referência do imóvel')
+                            ->maxLength(200),
+                        Forms\Components\TextInput::make('typeRentalUser')
+                        ->label('Tipo da proposta')
+                            ->required()
+                            ->maxLength(50),
+                        Forms\Components\TextInput::make('finality')
+                        ->label('Finalidade')
+                            ->maxLength(50),
+                        Forms\Components\TextInput::make('term')
+                        ->label('Prazo desejado')
+                            ->numeric(),
+                        Forms\Components\TextInput::make('warrantyType')
+                        ->label('Tipo de garantia')
+                            ->maxLength(50),
+                        Forms\Components\TextInput::make('proposedValue')
+                        ->label('Valor proposto')
+                            ->numeric(),
+                        
+                        Forms\Components\Textarea::make('ps')
+                        ->label('Observação')
+                            ->columnSpanFull(),
+                        Forms\Components\TextInput::make('status')
+                        ->label('Situação da proposta')
+                            ->required()
+                            ->maxLength(50)
+                            ->default('incompleta'),
+                        Forms\Components\DateTimePicker::make('date_finish')
+                        ->label('Data Finalizada'),
+                    ])
             ]);
     }
 
@@ -229,5 +241,10 @@ class RentalDataResource extends Resource
         return [
             RentalDataResource\Widgets\RentalDataOverview::class,
         ];
+    }
+
+    protected function getColumns(): int | array
+    {
+        return 6;
     }
 }
