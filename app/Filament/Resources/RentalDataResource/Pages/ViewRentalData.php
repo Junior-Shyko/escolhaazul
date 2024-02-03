@@ -16,4 +16,11 @@ class ViewRentalData extends ViewRecord
             Actions\EditAction::make(),
         ];
     }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            RentalDataResource\Widgets\RentalDataOverview::class,
+        ];
+    }
 }
