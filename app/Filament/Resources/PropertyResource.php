@@ -13,7 +13,7 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
-
+use Filament\Forms\Components\Actions\Action as ActionForm;
 use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Leandrocfe\FilamentPtbrFormFields\Money;
@@ -67,7 +67,7 @@ class PropertyResource extends Resource
                             ->required()
                             ->native(false)
                             ->preload(),
-                    ]) ->columns(2)
+                    ])->columns(2)
 
 
             ]);
