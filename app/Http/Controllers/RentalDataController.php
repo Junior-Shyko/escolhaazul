@@ -91,21 +91,27 @@ class RentalDataController extends Controller
     {
         //Usuário da proposta
         $user = User::find($id);
+//        dump($user);
         $proposal = RentalData::find($proposalId);
         // dd($proposal->bank()->first());
         $titulo_page_pdf = 'Análise de proposta - '.$proposal->typeRentalUser;
         // return view('proposal.analysis', compact('user', 'titulo_page_pdf', 'proposal'));
-        $professionals = $user->professional()->get();
-        $realstate = $user->realState()->get();
-        $commercials = $user->commercial()->get();
-        $personals = $user->referencePersonal()->get();
-        $banks = $user->bank()->get();
+        $professionals = $proposal->professional()->get();
+        $phones = $user->phone()->get();
+//        dump();
+
+        $realstate = $proposal->realState()->get();
+        $commercials = $proposal->commercial()->get();
+        $personals = $proposal->referencePersonal()->get();
+        $banks = $proposal->bank()->get();
+        $properties = $proposal->properties()->get();
+        $vehicles = $proposal->vehicle()->get();
+        $carbon = new Carbon();
 
         $pdf = Pdf::loadView('proposal.analysis', compact('user',
-            'titulo_page_pdf',
-            'proposal',
-            'realstate', 'professionals', 'personals', 'banks',
-            'commercials'));
+            'titulo_page_pdf','proposal', 'phones', 'properties',
+            'realstate', 'professionals', 'personals', 'banks', 'vehicles',
+            'commercials', 'carbon'));
         return $pdf->stream('invoice.pdf');
         // dd($rentalData->id);
         // $user = User::find(119);

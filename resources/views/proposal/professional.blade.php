@@ -1,4 +1,5 @@
 <table style="width:100%;">
+    {{$carbon}}
     @foreach($professionals as $professional)
 
     <tr>
@@ -18,17 +19,14 @@
         <td><strong>Atividade: </strong> <span>{{$professional['activity']}}</span></td>
     </tr>
     <tr>
-        <td><strong>Data de admissão: </strong> <span>{{$professional['admission_date']}}</span></td>
+        <td><strong>Data de admissão: </strong> <span>{{$carbon->parse($professional['admission_date'])->format('d/m/Y')}}</span></td>
         <td><strong>Cargo/Função: </strong> <span>{{$professional['function']}}</span></td>
     </tr>
     <tr>
-
         <td><strong>Pessoa para contato: </strong> <span>{{$professional['contact_person']}}</span></td>
+
     </tr>
-    <tr>
-        <td><strong>Telefone(RH): </strong> <span>{{$professional['contact_person']}}</span></td>
-        <td><strong>Ramal: </strong> <span>{{$professional['contact_person']}}</span></td>
-    </tr>
+
     <tr>
         <td><strong>E-mail: </strong> <span>{{$professional['email']}}</span></td>
         <td><strong>Salário(R$): </strong>
@@ -45,4 +43,11 @@
     </tr>
 
     @endforeach
+    <tr>
+        @foreach($phones as $phone)
+            @if($phone['object_type'] == 'professional')
+                <td><strong>Telefone: </strong> <span>{{$phone['number']}}</span></td>
+            @endif
+        @endforeach
+    </tr>
 </table>

@@ -220,10 +220,12 @@
         <div>
             <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS DE BENS DE IMÓVEIS</label>
             <div class="bottom_div"></div>
+            @include('proposal.propertie')
         </div>
         <div>
             <label class="text-info" style="font-size: 14pt;">REFERÊNCIAS DE BENS DE VEÍCULOS</label>
             <div class="bottom_div"></div>
+            @include('proposal.vehicle')
         </div>
 
 <div>

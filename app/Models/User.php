@@ -7,6 +7,7 @@ use Filament\Panel;
 use App\Models\Personal;
 use App\Models\Property;
 use App\Models\DataPersonal;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -62,21 +63,16 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(DataPersonal::class);
     }
 
+
+
     public function propoertie(): HasMany
     {
         return $this->hasMany(Property::class, 'object_id');
     }
 
-    public function realState(): HasMany
-    {
-        return $this->hasMany(RealState::class, 'object_id');
-    }
 
-    //Relação com referencia pessoal
-    public function referencePersonal(): HasMany
-    {
-        return $this->hasMany(Personal::class, 'object_id');
-    }
+
+
 
     //Relação com os arquivos de usuário
     public function files(): HasMany
@@ -84,11 +80,7 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(File::class, 'object_id');
     }
 
-    // Relação com referencia comercial
-    public function commercial(): HasMany
-    {
-        return $this->hasMany(Commercial::class, 'object_id');
-    }
+
 
     //Relação com referencia bancaria
     public function bank(): HasMany
@@ -102,6 +94,10 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Address::class, 'object_id');
     }
 
+    public function professional(): HasMany
+    {
+        return $this->hasMany(Professional::class, 'object_id');
+    }
 
     //Relação com dados da proposta
     public function rentalData(): HasMany
@@ -114,10 +110,7 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Vehicle::class, 'object_id');
     }
 
-    public function professional(): HasMany
-    {
-        return $this->hasMany(Professional::class, 'object_id');
-    }
+
 
     public function phone(): HasMany
     {
