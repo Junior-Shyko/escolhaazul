@@ -111,18 +111,10 @@ class DataPersonalResource extends Resource
     {
         return $table
             ->columns([
-                // Tables\Columns\TextColumn::make('user_id')
-                //     ->numeric()
-                //     ->sortable(),
-                // Tables\Columns\TextColumn::make('user.name')
-                //     ->label('Usuário'),
-
                 Tables\Columns\TextColumn::make('birthDate')
                     ->date('d/m/Y')
                     ->label('Data de nasc.')
-
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('cpf')
                     ->label('CPF')
                     ->searchable()
@@ -137,18 +129,16 @@ class DataPersonalResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Ultima Alteração')
+                    ->label('Última Alteração')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('identity')
                     ->label('RG/Identidade')
                     ->searchable(),
-
             ])
             ->defaultSort('created_at', 'desc')
-            ->query(function (User $query) {
-                // if(auth()->user()->hasRole('common'))
+            ->query(function (DataPersonal $query) {
                 if (auth()->user()->hasRole('common')) {
                     return auth()->user()->dataPersonal();
                 } else {
@@ -163,9 +153,9 @@ class DataPersonalResource extends Resource
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
                 ])
-                    ->button()
-                    ->label('Ações')
-                    ->color('primary')
+                ->button()
+                ->label('Ações')
+                ->color('primary')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
