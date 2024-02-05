@@ -13,7 +13,7 @@ class RentalData extends Model
     use HasFactory;
 
     protected $table = 'rental_datas';
-    
+
     protected $fillable = [
         'refImmobile',
         'typeRentalUser',
@@ -47,5 +47,29 @@ class RentalData extends Model
     public function vehicle(): HasMany
     {
         return $this->hasMany(Vehicle::class, 'object_id');
+    }
+
+    public function professional(): HasMany
+    {
+        return $this->hasMany(Professional::class, 'object_id');
+    }
+    public function realState(): HasMany
+    {
+        return $this->hasMany(RealState::class, 'object_id');
+    }
+    // Relação com referencia comercial
+    public function commercial(): HasMany
+    {
+        return $this->hasMany(Commercial::class, 'object_id');
+    }
+    //Relação com referencia pessoal
+    public function referencePersonal(): HasMany
+    {
+        return $this->hasMany(Personal::class, 'object_id');
+    }
+
+    public function properties(): HasMany
+    {
+        return $this->hasMany(Property::class, 'object_id');
     }
 }

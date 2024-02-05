@@ -18,12 +18,12 @@ class Vehicle extends Model
     ];
 
     protected $fillable = [
-        'branch', 
+        'branch',
         'model',
         'year',
         'plate',
         'financed',
-        'financial', 
+        'financial',
         'value',
         'object_id',
         'object_type'
@@ -37,12 +37,12 @@ class Vehicle extends Model
     static public function getVehicleToProposal(): array
     {
         //Buscando a proposta do usuario logado
-        $rental = auth()->user()->rentalData()->get();                    
+        $rental = auth()->user()->rentalData()->get();
         $vehicle = [];
         //Consultando a proposta e relacionando com o veiculo
         foreach ($rental as $key => $value) {
-            $proposal = RentalData::find($value->id);                       
-            $vehicle = $proposal->vehicle()->get();                        
+            $proposal = RentalData::find($value->id);
+            $vehicle = $proposal->vehicle()->get();
         }
         $ids = [];
         //Preenchendo um array
@@ -50,25 +50,11 @@ class Vehicle extends Model
             array_push($ids, $value->id);
             // $ids = $ids . intval($value->id).',';
         }
-     
-        // $vehicles = substr($ids,0,-1);
-        // dump($vehicles);
         return $ids;
     }
-
-    // public function rentalData(): HasMany
-    // {
-    //     return $this->hasMany(RentalData::class, 'object_id');
-    // }
-
     public function rentalData(): BelongsTo
     {
         return $this->belongsTo(RentalData::class, 'object_id');
     }
-
-    // public function rentalDataUser()
-    // {
-    //     return RentalData::where('user_id', auth()->)
-    // }
 
 }
