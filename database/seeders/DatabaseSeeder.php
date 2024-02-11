@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
 //            RoleSeeder::class,
 //            PermissionSeeder::class
             // RentalData::class
-            DataPersonalSeeder::class
+            // DataPersonalSeeder::class
+            AddressSeeder::class
         ]);
     }
 }
