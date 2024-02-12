@@ -22,9 +22,10 @@ class RentalData extends Seeder
         $rental = [];
 
 
-        for ($i = 0; $i < 2; $i++) {
-            $userId = $faker->numberBetween(1, 242);
-            if( !($i % 2) ) {
+        for ($i = 0; $i < 273; $i++) {
+            $userId = $faker->numberBetween(1, 273);
+            $date = $faker->dateTimeThisYear('+12 months');
+            if( !($i % 5) ) {
                 $finality = 'Residencial';
                 $warrantyType  = 'Caução';
                 $status = 'incompleta';
@@ -49,8 +50,11 @@ class RentalData extends Seeder
             $rental['object_type'] = 'personal';
             $rental['status'] = $status;
             $rental['date_finish'] = $date_finish;
+            $rental['created_at'] = $date;
+            $rental['updated_at'] = $date;
 
-            \App\Models\RentalData::create($rental);
+
+            \App\Models\RentalData::insert($rental);
         }
     }
 }

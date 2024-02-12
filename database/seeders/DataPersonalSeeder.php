@@ -10,14 +10,15 @@ class DataPersonalSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     * 
+     *
      */
     public function run(): void
     {
         $faker = \Faker\Factory::create('pt_BR');
         $dataPersonal = [];
-        for ($i = 0; $i < 213; $i++) {
-            $userId = $faker->numberBetween(1, 242);
+        for ($i = 0; $i < 273; $i++) {
+            $userId = $faker->numberBetween(1, 273);
+            $date = $faker->dateTimeThisYear('+12 months');
             $sex = $faker->randomElements(['Masculino', 'Feminino']);
             $org = $faker->randomElements(['SSP','AGU','COREN','CRAS','CREA','CRECI' ]);
             $est = $faker->randomElements(['Brasileiro', 'Estrangeiro']);
@@ -38,8 +39,9 @@ class DataPersonalSeeder extends Seeder
             $dataPersonal['naturality'] = $nat[0];
             $dataPersonal['maritalStatus'] = $mat[0];
             $dataPersonal['number_dependents'] = $faker->numberBetween(1, 5);
-            // dump($dataPersonal);
-            \App\Models\DataPersonal::create($dataPersonal);
+            $dataPersonal['created_at'] = $date;
+            $dataPersonal['updated_at'] = $date;
+            \App\Models\DataPersonal::insert($dataPersonal);
         }
     }
 }
