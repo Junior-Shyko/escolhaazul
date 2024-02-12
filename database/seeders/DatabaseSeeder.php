@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Bank;
 use Illuminate\Database\Seeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\PermissionSeeder;
@@ -26,7 +28,11 @@ class DatabaseSeeder extends Seeder
 //            PermissionSeeder::class
             // RentalData::class
             // DataPersonalSeeder::class
-            AddressSeeder::class
+            // AddressSeeder::class
+            // PhoneSeeder::class
+            // BankSeeder::class
+            // PropertySeeder::class
+            VehicleSeeder::class
         ]);
     }
 }
