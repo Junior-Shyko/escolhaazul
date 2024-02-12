@@ -13,12 +13,13 @@ class BankSeeder extends Seeder
     public function run(): void
     {
         $faker = \Faker\Factory::create('pt_BR');
-        $bank = [];        
-        
-        for ($i = 0; $i < 100; $i++) {
-            
-            $object_id = $faker->numberBetween(1, 253);
+        $bank = [];
+
+        for ($i = 0; $i < 189; $i++) {
+
+            $object_id = $faker->numberBetween(1, 273);
             $type = $faker->randomElements(['personal','professional']);
+            $date = $faker->dateTimeThisYear('+12 months');
             $namebank = $faker->randomElements([
                 'Banco do Brasil (BB)',
                 'Caixa Econômica Federal (CEF)',
@@ -40,7 +41,9 @@ class BankSeeder extends Seeder
             $bank['limit_credit_card2'] = $faker->randomFloat(2, 20, 30000);
             $bank['object_id'] = $object_id;
             $bank['object_type'] = $type[0];
-            \App\Models\Bank::create($bank);
+            $bank['created_at'] = $date;
+            $bank['updated_at'] = $date;
+            \App\Models\Bank::insert($bank);
         }
     }
 }

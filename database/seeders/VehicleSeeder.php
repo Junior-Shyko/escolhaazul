@@ -13,23 +13,23 @@ class VehicleSeeder extends Seeder
     public function run(): void
     {
         $faker = \Faker\Factory::create('pt_BR');
-        $veih = [];        
-        
-        for ($i = 0; $i < 70; $i++) {
-            
-            $object_id = $faker->numberBetween(1, 253);
-            $type = $faker->randomElements(['personal','professional','legal']);          
-            $object_id = $faker->numberBetween(1, 253);
-            $financed = $faker->randomElements(['Sim','Não']);          
+        $veih = [];
+
+        for ($i = 0; $i < 170; $i++) {
+
+            $object_id = $faker->numberBetween(1, 273);
+            $type = $faker->randomElements(['personal','professional','legal']);
+            $object_id = $faker->numberBetween(1, 273);
+            $financed = $faker->randomElements(['Sim','Não']);
             $veih['branch'] = $faker->name();
             $veih['model'] = $faker->word();
             $veih['year'] =  $faker->date('Y');
             $veih['plate'] = $faker->randomNumber(8, true);
             $veih['financed'] = $financed[0];
-            $veih['financial'] = $faker->name();            
+            $veih['financial'] = $faker->name();
             $veih['object_id'] = $object_id;
-            $veih['object_type'] = $type[0];            
-            
+            $veih['object_type'] = $type[0];
+
             \App\Models\Vehicle::create($veih);
         }
     }

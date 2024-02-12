@@ -17,7 +17,7 @@ class AddressSeeder extends Seeder
         $address = [];
         $type = $faker->randomElements(['address_personal','professional','professional','property']);
         for ($i = 0; $i < 200; $i++) {
-            $userId = $faker->numberBetween(1, 242);
+            $userId = $faker->numberBetween(1, 273);
             $address['cep'] = $faker->randomNumber(8, true);
             $address['address'] = $faker->streetName();
             $address['number'] = $faker->randomNumber();
