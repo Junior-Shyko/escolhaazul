@@ -14,22 +14,27 @@ class FinalityrentalChart extends ChartWidget
         $res = RentalData::where('finality', 'Residencial')->count();
         $com = RentalData::where('finality', 'Comercial')->count();
         $tem = RentalData::where('finality', 'Temporada')->count();
-        return [
-            'datasets' => [
-                [
-                    'label' => 'Finalidade',
-                    'data' => [$res, $com, $tem],
-                    'backgroundColor' => [
-                        '#9cc4e4',
-                        '#3a89c9',
-                        '#1b325f'
+        if(!auth()->user()->hasRole('common')) {
+            return [
+                'datasets' => [
+                    [
+                        'label' => 'Finalidade',
+                        'data' => [$res, $com, $tem],
+                        'backgroundColor' => [
+                            '#9cc4e4',
+                            '#3a89c9',
+                            '#1b325f'
+                        ],
+                        'hoverOffset' => 4
                     ],
-                    'hoverOffset' => 4
+    
                 ],
+                'labels' => ['Residencial', 'Comercial', 'Temporada']
+            ];
+        }
 
-            ],
-            'labels' => ['Residencial', 'Comercial', 'Temporada']
-        ];
+        return [];
+       
     }
 
     protected function getType(): string
