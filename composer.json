@@ -26,6 +26,7 @@
         "leandrocfe/filament-ptbr-form-fields": "^3.0",
         "nesbot/carbon": "^2.71",
         "spatie/laravel-permission": "^6.1",
+        "stancl/tenancy": "^3.7",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
