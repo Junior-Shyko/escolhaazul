@@ -73,7 +73,7 @@ services:
         build:
             context: "./docker/nginx"
         depends_on:
-            -   ea
+            -   php-fpm
         volumes:
             - ${NGINX_SSL_PATH}:/etc/nginx/ssl
             - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
@@ -87,7 +87,7 @@ services:
             - sail
 
 
-    ea:
+    php-fpm:
         build:
             context: "./docker/php-fpm"
         volumes:
