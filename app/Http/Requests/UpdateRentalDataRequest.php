@@ -47,7 +47,6 @@ class UpdateRentalDataRequest extends FormRequest
             'proposedValue' => 'min:5',
             'currentCondominiumValue' => 'min:5',
             'iptu' => 'min:5',
-            'ps' => 'min:5',
             'user_id' => 'numeric',
         ];
     }
@@ -62,7 +61,7 @@ class UpdateRentalDataRequest extends FormRequest
         return [
             'finality.min' => 'Escolha uma opção de finalidade',
             'proposedValue.min' => 'Preencha o valor do aluguel proposto',
-            'ps' => 'Você poderá preencher alguma informação ou observação sobre o imovel ou sua proposta'
+            // 'ps' => 'Você poderá preencher alguma informação ou observação sobre o imovel ou sua proposta'
         ];
     }
 }
