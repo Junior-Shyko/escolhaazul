@@ -39,9 +39,12 @@ class GuarantorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Guarantor $guarantor)
+    public function show($user, $object, $type)
     {
-        //
+       $gua = Guarantor::where([
+        'user_id' => $user, 'object_id' => $object, 'object_type' => $type
+       ])->orderBy('id', 'desc')->get();
+       return response()->json($gua);
     }
 
     /**
@@ -70,12 +73,14 @@ class GuarantorController extends Controller
 
     public function createOrUpdate(UpdateGuarantorRequest $request)
     {
-        $guarantor = new Guarantor;
-        ProposalService::createOrUpdate($guarantor, $request);
-        // dd($request->all());
-        $user = User::find($request->user_id);
-
+        $guarantor['name'] = $request->name;
+        $guarantor['email'] = $request->email;
+        $guarantor['object_type'] = $request->object_type;
+        $guarantor['object_id'] = $request->proposal_id;
+        $guarantor['user_id'] = $request->user_id;
         try {
+            Guarantor::create($guarantor);
+            $user = User::find($request->user_id);
             $mail = Mail::to('contato@escolhaazul.com')
                 ->send(new GuarantorMail([
                     'fromEmail' => $request->email,

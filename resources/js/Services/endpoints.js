@@ -30,7 +30,23 @@ async function getAddress(user, object, type)
     return address
 }
 
+async function getGuarantor(user, object, type)
+{
+    const guarantor = api.get('guarantor/'+user+'/'+ object +'/'+ type +'')
+    .then(res => {
+        // console.log(res)
+      
+        return res.data
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+    return guarantor
+}
+
 export default {
     getData,
-    getAddress  
+    getAddress,
+    getGuarantor
 }
