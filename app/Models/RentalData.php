@@ -72,4 +72,9 @@ class RentalData extends Model
     {
         return $this->hasMany(Property::class, 'object_id');
     }
+    public function guarantor(): HasMany
+    {
+        return $this->hasMany(Guarantor::class, 'object_id');
+    }
+
 }

@@ -32,13 +32,13 @@ class RentalDataResource extends Resource
 
     protected static ?string $navigationLabel = 'Propostas';
 
-    public ?string $rental = null; 
-   
+    public ?string $rental = null;
+
     public static function form(Form $form): Form
     {
         $rentalRepo = new RentalDataRepository;
         $userForm = RentalDataRepository::getUserToForm($form);
-        
+
         return $form
             ->schema([
                 Section::make()
@@ -52,7 +52,6 @@ class RentalDataResource extends Resource
                         ->label('Código usuário')
                             ->required()
                             ->numeric(),
-                        
                         Forms\Components\TextInput::make('refImmobile')
                         ->label('Referência do imóvel')
                             ->maxLength(200),
@@ -72,7 +71,7 @@ class RentalDataResource extends Resource
                         Forms\Components\TextInput::make('proposedValue')
                         ->label('Valor proposto')
                             ->numeric(),
-                        
+
                         Forms\Components\Textarea::make('ps')
                         ->label('Observação')
                             ->columnSpanFull(),
@@ -98,6 +97,9 @@ class RentalDataResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Proponente')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('guarantor_count')
+                    ->counts('guarantor')
+                    ->label('Fiador'),
                 Tables\Columns\TextColumn::make('status')
                     ->searchable()
                     ->badge()
