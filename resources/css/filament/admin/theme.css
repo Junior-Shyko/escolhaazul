@@ -91,3 +91,21 @@
 .session-file-rental {
     @apply bg-white border-gray-700 p-10 rounded-md mt-5
 }
+.session-guarantor-rental-infolist {
+    @apply bg-slate-50 shadow overflow-hidden sm:rounded-md max-w-lg mx-auto
+}
+.session-guarantor-name {
+    @apply leading-6 font-medium text-gray-900 
+}
+.session-guarantor-email {
+    @apply mt-1 max-w-2xl text-sm text-gray-500
+}
+.session-guarantor-btn-edit {
+    @apply font-medium text-[#2587E9] hover:text-blue-500
+}
+.session-guarantor-btn-delete {
+    @apply font-medium text-[#E44D3A] hover:text-[#FF0000]
+}
+.session-guarantor-status {
+    @apply text-[#00c292]
+}

@@ -172,4 +172,5 @@ class RentalDataRepository
 
         return $title;
     }
+
 }
