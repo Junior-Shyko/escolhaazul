@@ -7,4 +7,9 @@ use Filament\Infolists\Components\Entry;
 class rentalData extends Entry
 {
     protected string $view = 'infolists.components.rental-data';
+
+    public static function getDataRental(): string
+    {
+        return 'GET DATA RENTAL';
+    }
 }
