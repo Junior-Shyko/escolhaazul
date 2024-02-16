@@ -3,26 +3,28 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
-use App\Models\File;
 use App\Models\Term;
-use App\Models\User;
 use Filament\Tables;
 use Filament\Forms\Form;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use App\Models\RentalData;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
-use Illuminate\Support\Facades\Http;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
-use Illuminate\Database\Eloquent\Collection;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\Section as Infosection;
 use Leandrocfe\FilamentPtbrFormFields\Money;
 use App\Http\Repository\RentalDataRepository;
 use App\Filament\Resources\RentalDataResource\Pages;
-use App\Filament\Resources\RentalDataResource\RelationManagers;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ViewEntry;
+use Filament\Infolists\Components\Actions\Action as InfoAction;
+
 
 class RentalDataResource extends Resource
 {
@@ -37,8 +39,7 @@ class RentalDataResource extends Resource
     public static function form(Form $form): Form
     {
         $rentalRepo = new RentalDataRepository;
-        $userForm = RentalDataRepository::getUserToForm($form);
-
+        $prop = $form->getRecord()->user()->get();
         return $form
             ->schema([
                 Section::make()
@@ -47,39 +48,63 @@ class RentalDataResource extends Resource
                     ])
                     ->schema([
                         Placeholder::make('Proponente')
-                            ->content($userForm['nameUser']),
-                        Forms\Components\TextInput::make('user_id')
-                        ->label('Código usuário')
-                            ->required()
-                            ->numeric(),
+                            ->content($prop[0]->name),
+                        Placeholder::make('Código Proponente')
+                            ->content($prop[0]->id),
                         Forms\Components\TextInput::make('refImmobile')
-                        ->label('Referência do imóvel')
+                            ->label('Referência do imóvel')
                             ->maxLength(200),
-                        Forms\Components\TextInput::make('typeRentalUser')
-                        ->label('Tipo da proposta')
+                        Select::make('typeRentalUser')
+                            ->options([
+                                'Pessoa Física' => 'Pessoa Física',
+                                'Pessoa Jurídica' => 'Pessoa Jurídica'
+                            ])
+                            ->label('Tipo da proposta')
                             ->required()
-                            ->maxLength(50),
-                        Forms\Components\TextInput::make('finality')
-                        ->label('Finalidade')
-                            ->maxLength(50),
+                            ->native(true)
+                            ->preload(),
+                        Select::make('finality')
+                            ->options([
+                                'Comercial' => 'Comercial',
+                                'Residencial' => 'Residencial',
+                                'temporada' => 'Temporada'
+                            ])
+                            ->label('Finalidade')
+                            ->required()
+                            ->native(true)
+                            ->preload(),
                         Forms\Components\TextInput::make('term')
                         ->label('Prazo desejado')
                             ->numeric(),
-                        Forms\Components\TextInput::make('warrantyType')
-                        ->label('Tipo de garantia')
-                            ->maxLength(50),
+                        Select::make('warrantyType')
+                            ->options([
+                                'Carta Fiança' => 'Carta Fiança',
+                                'Caução' => 'Caução',
+                                'Crédito' => 'Crédito',
+                                'Fiador' => 'Fiador',
+                                'Sem garantia' => 'Sem garantia',
+                                'Seguro fiança' => 'Seguro fiança',
+                                'Outras' => 'TempOutrasorada'
+                            ])
+                            ->label('Tipo de garantia')
+                            ->required()
+                            ->native(true)
+                            ->preload(),
                         Forms\Components\TextInput::make('proposedValue')
                         ->label('Valor proposto')
                             ->numeric(),
-
                         Forms\Components\Textarea::make('ps')
                         ->label('Observação')
                             ->columnSpanFull(),
-                        Forms\Components\TextInput::make('status')
-                        ->label('Situação da proposta')
+                        Select::make('status')
+                            ->options([
+                                'incompleta' => 'Incompleta',
+                                'finalizada' => 'Finalizada'
+                            ])
+                            ->label('Situação')
                             ->required()
-                            ->maxLength(50)
-                            ->default('incompleta'),
+                            ->native(true)
+                            ->preload(),
                         Forms\Components\DateTimePicker::make('date_finish')
                         ->label('Data Finalizada'),
                     ])
@@ -243,5 +268,62 @@ class RentalDataResource extends Resource
         ];
     }
 
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        $userForm = $infolist->getRecord()->user()->get();
+        return $infolist
+            ->schema([
+                Infosection::make('Dados do contato telefônico')
+                    ->schema([
+                        TextEntry::make('user.name')
+                        ->label('Proponente:'),
+                        TextEntry::make('user.id')
+                        ->label('Código proponente:'),
+                        TextEntry::make('refImmobile')
+                        ->label('Referência do imóvel:')
+                        ->placeholder('Sem registro'),
+                        TextEntry::make('typeRentalUser')
+                        ->label('Tipo da proposta:')
+                        ->placeholder('Sem registro'),
+                        TextEntry::make('term')
+                        ->label('Prazo Desejado:')
+                        ->placeholder('Sem registro'),
+                        TextEntry::make('warrantyType')
+                        ->label('Tipo de garantia:')
+                        ->placeholder('Sem registro'),
+                        TextEntry::make('proposedValue')
+                        ->label('Valor Proposto:')
+                        ->placeholder('Sem registro'),
+                        TextEntry::make('status')
+                        ->label('Situação:')
+                        ->placeholder('Sem registro'),
+                        TextEntry::make('ps')
+                        ->label('Observação:')
+                        ->placeholder('Sem registro'),
+                        TextEntry::make('date_finish')
+                        ->label('Data Finalizada:')
+                    ])
+                ->columns(3),
+                Infosection::make('Lista de fiador da proposta')
+                    ->schema([
+                        ViewEntry::make('guarantor')
+                        ->label('Fiador(es)')
+                        ->view('infolists.components.rental-data')
+                        ->registerActions([
+                            InfoAction::make('resetStars')
+                            ->icon('heroicon-m-x-mark')
+                            ->color('danger')
+                            ->requiresConfirmation()
+                            ->action(function (RentalData $resetStars) {
+                                $resetStars();
+                            })
+                        ]),
+                        TextEntry::make('ps')
+                        ->label('Observação:')
+                    ])
+                ->columns(2)
+            ]);
+    }
 
 }
