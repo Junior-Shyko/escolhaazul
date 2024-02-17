@@ -8,6 +8,7 @@ class rentalData extends Entry
 {
     protected string $view = 'infolists.components.rental-data';
 
+    protected string $teste = 'Teste aqui';
     public static function getDataRental(): string
     {
         return 'GET DATA RENTAL';
