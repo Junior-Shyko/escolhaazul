@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Livewire\ViewGuarantor;
 use Filament\Forms;
 use App\Models\Term;
 use Filament\Tables;
@@ -24,6 +25,7 @@ use App\Filament\Resources\RentalDataResource\Pages;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
 use Filament\Infolists\Components\Actions\Action as InfoAction;
+use Filament\Infolists\Components\Livewire;
 
 
 class RentalDataResource extends Resource
@@ -307,18 +309,7 @@ class RentalDataResource extends Resource
                 ->columns(3),
                 Infosection::make('Lista de fiador da proposta')
                     ->schema([
-                        ViewEntry::make('guarantor')
-                        ->label('Fiador(es)')
-                        ->view('infolists.components.rental-data')
-                        ->registerActions([
-                            InfoAction::make('resetStars')
-                            ->icon('heroicon-m-x-mark')
-                            ->color('danger')
-                            ->requiresConfirmation()
-                            ->action(function (RentalData $resetStars) {
-                                $resetStars();
-                            })
-                        ]),
+                        Livewire::make(ViewGuarantor::class, ['infolist' => $infolist->getRecord()]),
                         TextEntry::make('ps')
                         ->label('Observação:')
                     ])
