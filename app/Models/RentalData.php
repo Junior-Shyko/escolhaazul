@@ -53,7 +53,7 @@ class RentalData extends Model
     {
         return $this->hasMany(Professional::class, 'object_id');
     }
-    public function realState(): HasMany
+    public function real(): HasMany
     {
         return $this->hasMany(RealState::class, 'object_id');
     }
