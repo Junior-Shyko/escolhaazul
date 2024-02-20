@@ -100,7 +100,7 @@ class RentalDataController extends Controller
         $phones = $user->phone()->get();
 //        dump();
 
-        $realstate = $proposal->realState()->get();
+        $real = $proposal->real()->get();
         $commercials = $proposal->commercial()->get();
         $personals = $proposal->referencePersonal()->get();
         $banks = $proposal->bank()->get();
@@ -110,14 +110,14 @@ class RentalDataController extends Controller
 
         $pdf = Pdf::loadView('proposal.analysis', compact('user',
             'titulo_page_pdf','proposal', 'phones', 'properties',
-            'realstate', 'professionals', 'personals', 'banks', 'vehicles',
+            'real', 'professionals', 'personals', 'banks', 'vehicles',
             'commercials', 'carbon'));
         return $pdf->stream('invoice.pdf');
         // dd($rentalData->id);
         // $user = User::find(119);
         // dump($user->dataPersonal()->get());
         // dump($user->propoertie()->get());
-        // dump($user->realState()->get());
+        // dump($user->real()->get());
         // dump($user->referencePersonal()->get());
     }
 }

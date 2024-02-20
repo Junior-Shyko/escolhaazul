@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-
 use Filament\Tables;
 use App\Models\Vehicle;
 use Filament\Forms\Form;

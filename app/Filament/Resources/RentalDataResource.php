@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use App\Models\RentalData;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
@@ -128,6 +129,7 @@ class RentalDataResource extends Resource
                     ->counts('guarantor')
                     ->label('Fiador'),
                 Tables\Columns\TextColumn::make('status')
+                    ->label('Situação')
                     ->searchable()
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
@@ -145,17 +147,37 @@ class RentalDataResource extends Resource
                 Tables\Columns\TextColumn::make('finality')
                     ->label('Finalidade')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('proposedValue')
-                    ->label('Aluguel Proposto')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('date_finish')
-                    ->label('Finalizada')
-                    ->dateTime('d/m/Y')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('object_type')
+                    ->label('Prop/Cadastro')
+                    ->state(function (RentalData $record): string {
+                        $type = '';
+                        switch ($record->object_type){
+                            case 'personal':
+                                $type = "Proposta";
+                                break;
+                            case 'guarantor':
+                                $type = "Cadastro";
+                                break;
+                        }
+                        return $type;
+                    })
             ])->defaultSort('id', 'desc')
             ->filters([
-                //
+                SelectFilter::make('object_type')
+                    ->options([
+                        'personal' => 'Proposta',
+                        'guarantor' => 'Cadastro'
+                    ])->label('Prop/Cadastro'),
+                SelectFilter::make('status')
+                    ->options([
+                        'finalizada' => 'Finalizada',
+                        'incompleta' => 'Incompleta'
+                    ])->label('Situação'),
+                SelectFilter::make('typeRentalUser')
+                    ->options([
+                        'Pessoa Jurídica'   => 'Pessoa Jurídica',
+                        'Pessoa Física'     => 'Pessoa Física'
+                    ])->label('Situação'),
             ])
             ->actions([
                 ActionGroup::make([
@@ -310,10 +332,8 @@ class RentalDataResource extends Resource
                 Infosection::make('Lista de fiador da proposta')
                     ->schema([
                         Livewire::make(ViewGuarantor::class, ['infolist' => $infolist->getRecord()]),
-                        TextEntry::make('ps')
-                        ->label('Observação:')
+
                     ])
-                ->columns(2)
             ]);
     }
 
