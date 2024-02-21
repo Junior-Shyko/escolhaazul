@@ -58,5 +58,6 @@ Route::get('address/{user}/{object}/{type}' , [AddressController::class, 'show']
 //Para Fiador
 Route::put('guarantor/update', [GuarantorController::class, 'createOrUpdate'] )->name('api/guarantor');
 Route::get('guarantor/{user}/{object}/{type}', [GuarantorController::class, 'show'] )->name('api/get-guarantor');
+Route::get('verify-guarantor/{email}',  [GuarantorController::class, 'verifyRequestGuarantor'] )->name('api/verify-guarantor');
 
 

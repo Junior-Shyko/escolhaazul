@@ -12,6 +12,7 @@ class Guarantor extends Model
     protected $fillable = [
        'name',
        'email',
+       'accept',
        'object_type',
        'object_id',
        'user_id'

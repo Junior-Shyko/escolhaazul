@@ -95,4 +95,27 @@ class GuarantorController extends Controller
             throw $th;
         }
     }
+
+    /**
+     * Faz uma verificação se o email foi solicitado como fiador
+     *
+     * @return void
+     */
+    public function verifyRequestGuarantor($email)
+    {
+        $guarantor = Guarantor::where('email', $email)->first();
+        //Existe o email do fiador e já aceitou ser fiador
+        if(!is_null($guarantor) && $guarantor->accept == 1) {
+            return response()->json(['accept' => 1, 'verify' => true]);
+        //Existe o email do fiador e não aceitou ser fiador
+        }elseif(!is_null($guarantor) && $guarantor->accept == 0) {
+            return response()->json(['accept' => 0, 'verify' => true]);
+        }
+        //Nao existe solicitação do email para fiador
+        elseif(is_null($guarantor))
+        {
+            return response()->json(false);
+        }
+
+    }
 }
