@@ -7,18 +7,18 @@ const props = defineProps({
   user: Object
 });
 
-const checkTerms = () => {
-  console.log(props.user)
-  api.post('../formulario/check-terms', props.user)
-  .then(res => {
-    console.log(res)
-    router.post('../formulario/proposta', props.user)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+// const checkTerms = () => {
+//   console.log(props.user)
+//   api.post('../formulario/check-terms', props.user)
+//   .then(res => {
+//     console.log(res)
+//     router.post('../formulario/proposta', props.user)
+//   })
+//   .catch(err => {
+//     console.log(err)
+//   })
 
-}
+// }
 
 </script>
 
