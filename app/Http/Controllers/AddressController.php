@@ -38,7 +38,7 @@ class AddressController extends Controller
         $address['complement'] = $request->complement;
         $address['neighborhood'] = $request->neighborhood;
         $address['city'] = $request->city;
-        $address['UF'] = $request->;
+        $address['UF'] = $request->uf;
         $address['object_id'] = $request->object_id;
         $address['object_type'] = $request->object_type;
         $address['user_id'] = $request->object_id;
