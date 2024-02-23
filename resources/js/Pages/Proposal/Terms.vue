@@ -1,4 +1,5 @@
 <script setup>
+import { ref, watch } from 'vue';
 import { Head, router } from '@inertiajs/vue3';
 import Header from "@/Components/Proposal/Header.vue";
 import api from "@/Services/server"
@@ -6,6 +7,7 @@ import termsImg from "../../../img/terms_ea.png"
 const props = defineProps({
   user: Object
 });
+const overlay = ref(false);
 
 // const checkTerms = () => {
 //   console.log(props.user)
@@ -19,6 +21,13 @@ const props = defineProps({
 //   })
 
 // }
+watch(overlay, (newValue, oldValue) => {
+    console.log('Novo valor: ' + newValue)
+    // overlay.value = true;
+    overlay && setTimeout(() => {
+        overlay.value = false;
+    }, 3000)
+});
 
 </script>
 
@@ -40,45 +49,57 @@ const props = defineProps({
               <v-card class="mx-auto">
                 <v-card-text>
                   <div class="items-center gap-4 w-full rounded-lg bg-stripes-violet text-center">
-
-                    <p class="text-h4 text--primary text-center">
-                      {{ props.user.name }}
-                    </p>
                     <v-row>
                       <v-col cols="12" class="flex justify-center mt-3 mb-3">
                         <img :src="termsImg" width="128" height="128" alt="" srcset="">
                       </v-col>
                     </v-row>
                     <v-divider></v-divider>
-                    <p class="text-center">
-                      Esse é o nosso Termo de Uso, para continuar você deve ler e se desejar, aceite para
-                      continuar.
+                    <p class="text-center font-mono text-lg">
+                      Prezado {{ props.user.name }}
                     </p>
                   </div>
                   <div class="text-blue-grey-darken-2 text-center">
                     <p>
-                      Você poderá ler nosso termos e uso da plataforma nesse 
-                      <a href="#" class="text-[#2563eb] font-bold text-lg underline md:underline">Link</a>
+                        Gostaria de informar que você foi indicado como fiador em uma proposta de locação.
+                        Sua confiança e integridade são fundamentais para essa indicação.
+                        Por isso gostariamos de saber se você deseja,
                     </p>
                     <p>
-                      Ao clicar em ACEITO, significa que você concorda com nossos termos e uso.
+                        <v-btn variant="outlined" class="block" color="primary"  @click="overlay = !overlay">
+                            Preencher o cadastro de fiador
+                        </v-btn>
+                        <v-divider></v-divider>
+                        <v-btn variant="tonal" class="block mt-3" color="primary">
+                            criar nova proposta de locação
+                        </v-btn>
+                        <v-overlay
+                            :model-value="overlay"
+                            class="align-center justify-center"
+                        >
+                            <v-progress-circular
+                                color="primary"
+                                indeterminate
+                                size="64"
+                            ></v-progress-circular>
+                        </v-overlay>
                     </p>
-                    <v-divider></v-divider>
+
 
                   </div>
-                  <v-alert type="success" variant="outlined" title="Importante" 
-                    text="Seus dados serão salvo automaticamente durante o processo do preenchimento da sua proposta.">
-                  </v-alert>
-                
+<!--                  <v-alert type="success" variant="outlined" title="Importante"-->
+<!--                    text="Seus dados serão salvo automaticamente durante o processo do preenchimento da sua proposta.">-->
+<!--                  </v-alert>-->
+
                 </v-card-text>
 
                 <v-card-actions class="flex justify-between">
-                  <v-btn variant="tonal" class="bg-blue-lighten-5 hover:bg-indigo-lighten-5">
-                    <v-icon icon="fas fa-close"></v-icon> Desistir
-                  </v-btn>
-                  <v-btn variant="outlined" class="text-center bg-primary" @click="checkTerms">
-                    Aceito <v-icon icon="fas fa-check"></v-icon>
-                  </v-btn>
+<!--                  <v-btn variant="tonal" class="bg-blue-lighten-5 hover:bg-indigo-lighten-5">-->
+<!--                    <v-icon icon="fas fa-close"></v-icon> Desistir-->
+<!--                  </v-btn>-->
+<!--                  <v-btn variant="outlined" class="text-center bg-primary" @click="checkTerms">-->
+<!--                    Aceito <v-icon icon="fas fa-check"></v-icon>-->
+<!--                  </v-btn>-->
                 </v-card-actions>
               </v-card>
             </v-row>
