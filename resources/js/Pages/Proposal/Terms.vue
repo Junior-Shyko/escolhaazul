@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref, watch} from 'vue';
+import {onMounted, ref, watch,reactive} from 'vue';
 import { Head, router } from '@inertiajs/vue3';
 import Header from "@/Components/Proposal/Header.vue";
 import api from "@/Services/server"
@@ -8,7 +8,9 @@ const props = defineProps({
   user: Object
 });
 const overlay = ref(false);
-
+const state = reactive({
+  infoPage : false
+})
 /*
 * Redirecionamento para o formulário de proposta
 * */
@@ -24,6 +26,7 @@ redirectForm = () => {
 const verifyGuarantor = () => {
     api.get('verify-guarantor/'+ props.user.email)
         .then(res => {
+          console.log({res})
             //Se já existe e ja foi confirmado o componente redireciona
             if(res.data.accept == 1){
                 redirectForm();
@@ -32,6 +35,8 @@ const verifyGuarantor = () => {
             if(!res.data){
                 redirectForm();
             }
+            state.infoPage = true;
+            // if(res.data)
         })
         .catch(err => {
             console.log({err})
@@ -69,8 +74,40 @@ const createProposal = () => {
 }
 //Veirifica solicitação assim que o componente é montado
 onMounted(() => {
+  console.log('mount');
     verifyGuarantor()
+    const handleKeyPress = (event) => {
+      if (event.key === 'F5') {
+        event.preventDefault();
+        const message = 'Você tem certeza que deseja atualizar? Até agora suas informações foram salvas, mas você será redirecionado para o início.';
+        if (!window.confirm(message)) {
+          // Cancela a atualização da página se o usuário não confirmar
+          showAlert.value = false;
+        } else {
+          window.location.href = EscolhaApp.baseURL
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
 })
+
+
+
+window.onbeforeunload = (event) => {
+
+if (showAlert.value) {
+// functions.toast('Ops!', 'Voce vai sair da página', 'error')
+const message = 'Você tem certeza que deseja sair? Até agora suas informações foram salvas, mas você será redirecionado para o início.';
+alert(message)
+state.validateImmobile = true
+state.validateFinality = true
+state.validateWarranty = true
+window.location.href = EscolhaApp.baseURL
+// event.returnValue = message;
+// return false;
+}
+};
 
 watch(overlay, (newValue, oldValue) => {
    overlay && setTimeout(() => {
@@ -83,7 +120,9 @@ watch(overlay, (newValue, oldValue) => {
 <template>
   <Head title="Termos de Uso - Escolha Azul" />
   <div
-    class="relative sm:flex min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
+    class="relative sm:flex min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white"
+      v-if="state.infoPage"
+    >
 
     <div class="max-w-7xl max-w-full w-full">
       <Header />

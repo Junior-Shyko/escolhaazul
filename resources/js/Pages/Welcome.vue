@@ -41,9 +41,11 @@ const submit = () => {
   if (state.errors.length == 0) {
     api.post(url + 'form/proposal', form)
       .then(res => {
+      
        //se o retorno for com um objeto de usuario, vai para proxima rota
         if(res.data.user !== undefined)
        {
+        console.log({res})
         router.post('formulario/termos', res, {
           preserveScroll: (res) => Object.keys(res).length,
         })

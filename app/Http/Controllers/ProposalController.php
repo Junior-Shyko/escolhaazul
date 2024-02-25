@@ -60,7 +60,7 @@ class ProposalController extends Controller
      */
     public function show()
     {
-        
+        return Inertia::render('Proposal/Redirect');
     }
 
     /**
@@ -118,14 +118,19 @@ class ProposalController extends Controller
                 );
                 session(['key' => $rentalDataId]);
                 DataPersonal::insert(['user_id' => $user->id]);
-                if ($createPhone)
+                if ($createPhone){
                     $user->proposal_id = $rentalDataId;
+                }
+                
+                // return Inertia::render('Proposal/Terms', ['user' => $user]);
+                // dump($user);
                 return response()->json(['user' => $user], 200);
             }
 
             return response()->json(['message' => 'Phone not cadastre'], 200);
         } catch (\Exception $th) {
             dump($th->getMessage());
+            // return response()->json(['message' => 'Error'], 400);
         }
     }
 
