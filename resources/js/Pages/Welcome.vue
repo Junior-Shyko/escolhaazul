@@ -130,10 +130,10 @@ const verifyField = (errors) => {
                       class="block w-full px-5 py-2 border rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:ring focus:outline-none"
                       placeholder="Telefone de contato" v-model="form.phone" v-mask-phone.br maxlength="15" />
                   </div>
-
+                  <v-checkbox label="Aceito termos e usos"></v-checkbox>
                 </div>
               </main>
-              <footer class="mt-6 p-4">
+              <footer class="mt-6 p-4">               
                 <v-btn type="submit" :loading="state.loading" color="primary" rounded="xl" size="x-large"
                   class="w-full text-xl font-semibold transition-colors">
                   Continuar
