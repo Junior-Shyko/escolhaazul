@@ -16,7 +16,7 @@ jobs:
           token: ${{ secrets.PUSH_TOKEN }}
       
       - name: Set Up Node
-        user: actions/setup-node@v1
+        run: actions/setup-node@v1
         with:
           node-version: "12.x"
 
