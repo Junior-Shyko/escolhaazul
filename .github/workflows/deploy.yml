@@ -13,8 +13,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.PUSH_TOKEN }}
-      - uses: actions/setup-node@v4
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
         with:
-          node-version: 18
-      - run: npm install
-      - run: npm run build
+          username: root
+          host: '159.223.144.245'
+          key: ${{ secrets.SSH_PASSWORD }}
+          script: cd /home/dev/escolhaazul && sh deploy.sh
