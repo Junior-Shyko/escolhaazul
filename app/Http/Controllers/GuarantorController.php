@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Guarantor;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Services\ProposalService;
 use App\Mail\Guarantor as GuarantorMail;
@@ -88,11 +90,50 @@ class GuarantorController extends Controller
                     'subject' => 'SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO',
                     'user' => $user
                 ]));
-               
+
             if ($mail)
                 return response()->json(['message' => 'Convite enviado para o fiador'], 200);
         } catch (\Throwable $th) {
             throw $th;
         }
     }
+
+    /**
+     * Faz uma verificação se o email foi solicitado como fiador
+     *
+     * @return void
+     */
+    public function verifyRequestGuarantor($email)
+    {
+        $guarantor = Guarantor::where('email', $email)->first();
+        //Existe o email do fiador e já aceitou ser fiador
+        if(!is_null($guarantor) && $guarantor->accept == 1) {
+            return response()->json(['accept' => 1, 'verify' => true]);
+        //Existe o email do fiador e não aceitou ser fiador
+        }elseif(!is_null($guarantor) && $guarantor->accept == 0) {
+            return response()->json(['accept' => 0, 'verify' => true]);
+        }
+        //Nao existe solicitação do email para fiador
+        elseif(is_null($guarantor))
+        {
+            return response()->json(false);
+        }
+
+    }
+
+    public function acceptGuarantor(Request $request): JsonResponse
+    {
+        $guarantor = Guarantor::where('email', $request->email)->first();
+        try {
+            $guarantor->update(['accept' => 1]);
+            return response()->json(['message' => 'success']);
+        }catch (\Exception $e)
+        {
+            return response()->json(['message' => 'error']);
+        }
+    }
+
+
+
+
 }

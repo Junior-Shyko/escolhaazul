@@ -34,7 +34,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('form')->group( function () {
     // Route::post('/proposal', [ProposalController::class, 'createUser'])->name('form/proposal');
-    Route::post('address', [AddressController::class, 'store'] )->name('api/form/address');    
+    Route::post('address', [AddressController::class, 'store'] )->name('api/form/address');
     Route::put('address',  [AddressController::class, 'update'] )->name('api/form/address/update');
     Route::post('upload/proposal/{id}/{type}', [FileController::class, 'store'])->name('upload');
     Route::post('phone', [PhoneController::class, 'store'])->name('phone');
@@ -58,5 +58,7 @@ Route::get('address/{user}/{object}/{type}' , [AddressController::class, 'show']
 //Para Fiador
 Route::put('guarantor/update', [GuarantorController::class, 'createOrUpdate'] )->name('api/guarantor');
 Route::get('guarantor/{user}/{object}/{type}', [GuarantorController::class, 'show'] )->name('api/get-guarantor');
+Route::get('verify-guarantor/{email}',  [GuarantorController::class, 'verifyRequestGuarantor'] )->name('api/verify-guarantor');
+Route::post('accept-guarantor',  [GuarantorController::class, 'acceptGuarantor'] )->name('api/accept-guarantor');
 
 
