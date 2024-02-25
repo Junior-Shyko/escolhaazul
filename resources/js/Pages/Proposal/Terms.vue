@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import { Head, router } from '@inertiajs/vue3';
 import Header from "@/Components/Proposal/Header.vue";
 import api from "@/Services/server"
@@ -9,24 +9,73 @@ const props = defineProps({
 });
 const overlay = ref(false);
 
-// const checkTerms = () => {
-//   console.log(props.user)
-//   api.post('../formulario/check-terms', props.user)
-//   .then(res => {
-//     console.log(res)
-//     router.post('../formulario/proposta', props.user)
-//   })
-//   .catch(err => {
-//     console.log(err)
-//   })
+/*
+* Redirecionamento para o formulário de proposta
+* */
+let redirectForm;
+redirectForm = () => {
+    router.post('../formulario/proposta', props.user)
+};
 
-// }
+/*
+* Faz uma verificação na api para saber se com esse email existe uma
+* solicitação para ser fiador
+* */
+const verifyGuarantor = () => {
+    api.get('verify-guarantor/'+ props.user.email)
+        .then(res => {
+            //Se já existe e ja foi confirmado o componente redireciona
+            if(res.data.accept == 1){
+                redirectForm();
+            }
+            //Se não existe solicitação e componente é redirecionado
+            if(!res.data){
+                redirectForm();
+            }
+        })
+        .catch(err => {
+            console.log({err})
+        })
+}
+
+/*
+* Metodo para o aceite para ser o fiador da solicitação
+* */
+const checkGuarantor = () => {
+    api.post('accept-guarantor', {email: props.user.email});
+
+}
+/*
+* Botão para recusar a solicitação de ser fiador
+*
+* */
+const redirectProposal = () => {
+    if(overlay) {
+        overlay.value = true
+        checkGuarantor()
+        redirectForm();
+    }
+}
+
+/*
+* Botão para recusar a solicitação de ser fiador
+*
+* */
+const createProposal = () => {
+    if(overlay) {
+        overlay.value = true
+        redirectForm();
+    }
+}
+//Veirifica solicitação assim que o componente é montado
+onMounted(() => {
+    verifyGuarantor()
+})
+
 watch(overlay, (newValue, oldValue) => {
-    console.log('Novo valor: ' + newValue)
-    // overlay.value = true;
-    overlay && setTimeout(() => {
+   overlay && setTimeout(() => {
         overlay.value = false;
-    }, 3000)
+   }, 3000)
 });
 
 </script>
@@ -66,11 +115,12 @@ watch(overlay, (newValue, oldValue) => {
                         Por isso gostariamos de saber se você deseja,
                     </p>
                     <p>
-                        <v-btn variant="outlined" class="block" color="primary"  @click="overlay = !overlay">
+                        <v-btn variant="outlined" class="block" color="primary"  @click="redirectProposal">
                             Preencher o cadastro de fiador
                         </v-btn>
                         <v-divider></v-divider>
-                        <v-btn variant="tonal" class="block mt-3" color="primary">
+                        <v-btn variant="tonal" class="block mt-3"
+                               color="primary" @click="createProposal">
                             criar nova proposta de locação
                         </v-btn>
                         <v-overlay
@@ -84,22 +134,9 @@ watch(overlay, (newValue, oldValue) => {
                             ></v-progress-circular>
                         </v-overlay>
                     </p>
-
-
                   </div>
-<!--                  <v-alert type="success" variant="outlined" title="Importante"-->
-<!--                    text="Seus dados serão salvo automaticamente durante o processo do preenchimento da sua proposta.">-->
-<!--                  </v-alert>-->
-
                 </v-card-text>
-
                 <v-card-actions class="flex justify-between">
-<!--                  <v-btn variant="tonal" class="bg-blue-lighten-5 hover:bg-indigo-lighten-5">-->
-<!--                    <v-icon icon="fas fa-close"></v-icon> Desistir-->
-<!--                  </v-btn>-->
-<!--                  <v-btn variant="outlined" class="text-center bg-primary" @click="checkTerms">-->
-<!--                    Aceito <v-icon icon="fas fa-check"></v-icon>-->
-<!--                  </v-btn>-->
                 </v-card-actions>
               </v-card>
             </v-row>

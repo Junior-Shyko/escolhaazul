@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Guarantor;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Services\ProposalService;
 use App\Mail\Guarantor as GuarantorMail;
@@ -88,7 +90,7 @@ class GuarantorController extends Controller
                     'subject' => 'SOLICITAÇÃO DE CADASTRO PARA LOCAÇÃO',
                     'user' => $user
                 ]));
-               
+
             if ($mail)
                 return response()->json(['message' => 'Convite enviado para o fiador'], 200);
         } catch (\Throwable $th) {
@@ -118,4 +120,20 @@ class GuarantorController extends Controller
         }
 
     }
+
+    public function acceptGuarantor(Request $request): JsonResponse
+    {
+        $guarantor = Guarantor::where('email', $request->email)->first();
+        try {
+            $guarantor->update(['accept' => 1]);
+            return response()->json(['message' => 'success']);
+        }catch (\Exception $e)
+        {
+            return response()->json(['message' => 'error']);
+        }
+    }
+
+
+
+
 }
