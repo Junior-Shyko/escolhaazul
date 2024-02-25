@@ -17,20 +17,20 @@ const closedDialog = () => {
 
 <template>
   <div>
-    <v-dialog v-model="props.dialog" activator="parent" transition="fade-transition">
-      <v-card>
-        <v-card-text>
-          <v-row>
-            <slot />
-          </v-row>
-        </v-card-text>
-        <v-card-actions  class="flex justify-between bg-blue-grey-lighten-4">
-          <v-btn class="bg-blue-grey-lighten-5 ml-5 mb-2"  @click="closedDialog">
-              Sair
-          </v-btn>
-        </v-card-actions>
-      </v-card>      
-    </v-dialog>
+    <v-dialog v-model="props.dialog" activator="parent" transition="fade-transition"  width="auto">
+        <v-card>
+          <v-card-text>
+            <v-row>
+              <slot />
+            </v-row>
+          </v-card-text>
+          <v-card-actions  class="flex justify-between bg-blue-grey-lighten-4">
+            <v-btn class="bg-blue-grey-lighten-5 ml-5 mb-2"  @click="closedDialog">
+                Continuar
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
   </div>
 </template>
 

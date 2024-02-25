@@ -38,7 +38,7 @@ class AddressController extends Controller
         $address['complement'] = $request->complement;
         $address['neighborhood'] = $request->neighborhood;
         $address['city'] = $request->city;
-        $address['UF'] = $request->state;
+        $address['UF'] = $request->uf;
         $address['object_id'] = $request->object_id;
         $address['object_type'] = $request->object_type;
         $address['user_id'] = $request->object_id;
@@ -55,7 +55,7 @@ class AddressController extends Controller
      */
     public function show($user, $object, $type)
     {
-        
+
       try {
         $address = new AddressRepository;
         return $address->getData($user, $object, $type);
@@ -78,8 +78,8 @@ class AddressController extends Controller
     public function update(UpdateAddressRequest $request )
     {
         try {
-            $address = new AddressRepository;            
-            $address->getData($request->object_id, $request->object_id, $request->object_type)->update($request->all());          
+            $address = new AddressRepository;
+            $address->getData($request->object_id, $request->object_id, $request->object_type)->update($request->all());
             return response()->json(['message' => 'success'],200);
         } catch (\Throwable $th) {
             throw $th;

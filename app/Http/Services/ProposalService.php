@@ -18,7 +18,8 @@ class ProposalService {
         {
             try {
                 $request['object_id'] = $request->proposal_id;
-                unset($request->proposal_id);
+                
+                // unset($request->proposal_id);
                 $entity->create($request->all());
 
                 return response()->json([

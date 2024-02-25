@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->float('value', 8,2)->nullable();
+            $table->float('value', 10,2)->nullable();
             $table->char('financed', 3)->nullable();
             $table->string('registration', 150)->nullable();
             $table->string('registry', 50)->nullable();

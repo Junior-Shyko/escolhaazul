@@ -1,7 +1,7 @@
 <script setup>
 import endpoint from '@/Services/endpoints'
 import api from "@/Services/server";
-
+import Guarantor from './Guarantor.vue';
 import functions from "@/Util/functions";
 import axios from 'axios';
 import DialogProposal from './DialogProposal.vue'
@@ -44,7 +44,7 @@ const saveField = (val) => {
       newValue = newValue.replace(/([0-9]{2})$/g, ".$1");
       valueInputNew.valueInput = newValue
       break;
-    
+
     default:
       valueInputNew.valueInput = val.value
       break;
@@ -66,7 +66,9 @@ const state = reactive({
   immobiles: [],
   immobilesItens: [],
   detailsImmob: [],
-  loadingSkeleton: true
+  loadingSkeleton: true,
+  terms: functions.termWanted,
+  reloadGuarantor: false
 })
 
 //Cadastro de Fiador
@@ -75,6 +77,7 @@ const form = useForm({
   name: null,
   user_id: props.user.id,
   proposal_id: props.user.proposal_id,
+  object_type: 'personal'
 })
 
 //endpoint para buscar dados
@@ -107,7 +110,7 @@ const getImmobiles = async () => {
         state.immobiles.push(el)
         state.immobilesItens.push(el.immobiles_code + ' - ' + el.immobiles_address + ', nº ' + el.immobiles_number)
       });
-      // 
+      //
     })
     .catch(err => {
       // Handle errors
@@ -127,6 +130,7 @@ const detailsImmobile = (value) => {
 onMounted(() => {
   getData()
   getImmobiles();
+  var term = functions.termWanted
 })
 
 const closeDialog = (value) => {
@@ -138,6 +142,7 @@ const submit = () => {
     .then(res => {
       //Mensagem de sucesso
       if (res.data.message !== 'Validation errors') {
+        state.reloadGuarantor = true;
         functions.toast('Sucesso', 'Fiador Cadastrado e receberá um e-mail.', 'success')
       } else {
         if (res.data && res.data.data !== undefined) {
@@ -160,6 +165,11 @@ const guarantor = (event) => {
     state.dialogGuarantor = true
   }
 }
+
+const receiveEmitguarantor = (value) => {
+  state.reloadGuarantor = value
+}
+
 </script>
 
 <template>
@@ -175,16 +185,7 @@ const guarantor = (event) => {
         </h6>
       </div>
       <v-row>
-        <v-col cols="12" md="12">
-          <div class="text-h5 text-center">
-            Informações do imóvel
-          </div>
-          <v-skeleton-loader :loading="state.loadingSkeleton" type="list-item-two-line"
-            v-if="state.detailsImmob.length === 0">
-          </v-skeleton-loader>
-        </v-col>
         <v-col cols="12">
-
           <v-sheet elevation="5" class="mx-auto p-3" rounded="rounded" v-if="state.detailsImmob.length > 0">
             <div class='text-base leading-7'>
               <p class='font-medium text-gray-800 text-sm'>{{ state.detailsImmob[0].immobiles_property_title }}</p>
@@ -195,7 +196,7 @@ const guarantor = (event) => {
                 <strong>Bairro: </strong> {{ state.detailsImmob[0].immobiles_district }},
                 <strong>Cidade: </strong>{{ state.detailsImmob[0].immobiles_city }},
                 <strong>IPTU Mensal: </strong>{{ state.detailsImmob[0].immobiles_iptu_price }},
-                <strong>Cond.: </strong>{{ state.detailsImmob[0].immobiles_condominium_price }}               
+                <strong>Cond.: </strong>{{ state.detailsImmob[0].immobiles_condominium_price }}
               </p>
             </div>
           </v-sheet>
@@ -206,13 +207,12 @@ const guarantor = (event) => {
     </v-container>
     <v-row no-gutters>
       <v-col col cols="12" sx="12" sm="12" md="4">
-        <v-select class="m-2" variant="underlined" name="refImmobile" label="Pesquisar o Imóvel"
-          :items="state.immobilesItens" @blur="saveField($event.target)" @update:modelValue="detailsImmobile($event)"
-          v-model="state.refImmobile">
-        </v-select>
+        <v-combobox variant="underlined" name="refImmobile" label="Pesquisar o Imóvel(*)" :items="state.immobilesItens"
+          @blur="saveField($event.target)" @update:modelValue="detailsImmobile($event)" v-model="state.refImmobile">
+        </v-combobox>
       </v-col>
       <v-col col cols="12" sx="12" sm="12" md="4">
-        <v-select class="m-2" variant="underlined" label="Finalidade" name="finality" @blur="saveField($event.target)"
+        <v-select class="m-2" variant="underlined" label="Finalidade(*)" name="finality" @blur="saveField($event.target)"
           :items="['Comercial', 'Residencial', 'Temporada']" v-model="state.finality"></v-select>
       </v-col>
       <v-col col cols="12" sx="12" sm="12" md="4">
@@ -223,12 +223,13 @@ const guarantor = (event) => {
     <v-row no-gutters>
 
       <v-col col cols="12" sx="12" sm="12" md="4">
-        <v-text-field class="mt-1" label="Prazo Desejado" @blur="saveField($event.target)" name="term" model-value="30"
-          suffix="meses" v-model="state.term"></v-text-field>
+        <v-select class="m-2" variant="underlined" label="Prazo Desejado em meses" name="term" suffix="meses"
+          :items="state.terms">
+        </v-select>
       </v-col>
       <v-col col cols="12" sx="12" sm="12" md="4">
-        <v-select class="m-2" variant="underlined" label="Tipo de garantia" @update:modelValue="guarantor($event)"
-          @blur="saveField($event.target)" name="warrantyType" :items="['Carta Fiança', 'Caução', 'Crédito', 'Fiador']"
+        <v-select class="m-2" variant="underlined" label="Tipo de garantia(*)" @update:modelValue="guarantor($event)"
+          @blur="saveField($event.target)" name="warrantyType" :items="functions.typeOfGuarantee"
           v-model="state.warrantyType">
         </v-select>
       </v-col>
@@ -240,9 +241,9 @@ const guarantor = (event) => {
         <v-textarea class="m-1" rows="3" variant="outlined" label="Observação" @blur="saveField($event.target)" name="ps"
           v-model="state.ps" maxlength="120" single-line></v-textarea>
       </v-col>
-      <DialogProposal :dialog="state.dialogGuarantor" @updateDialog="closeDialog">
-        <v-row>
-          <v-col cols="12">
+      <v-row>
+        <DialogProposal :dialog="state.dialogGuarantor" @updateDialog="closeDialog">
+          <v-col cols="12" sx="12" sm="12" md="4">
             <div class="rounded-lg bg-white shadow-lg">
               <p class="m-2 text-gray-500 dark:text-gray-400 py-5">
                 <v-icon icon="fas fa-circle-info"></v-icon>
@@ -250,27 +251,37 @@ const guarantor = (event) => {
                 e-mail para ele convidando a preencher um cadastro relacionado a essa sua proposta.
               </p>
             </div>
+
+          </v-col>
+          <v-col cols="12" sx="12" sm="12" md="8">
             <form @submit.prevent="submit">
               <v-card>
                 <v-card-text>
-                  <v-text-field class="m-1" label="Nome do Fiador" variant="underlined" name="proposedValue"
+                  <v-text-field class="m-1" label="Nome do Fiador" variant="underlined" name="guarantorName"
                     v-model="form.name"></v-text-field>
-                  <v-text-field class="m-1" label="E-mail do Fiador" variant="underlined" name="proposedValue"
+                  <v-text-field class="m-1" label="E-mail do Fiador" variant="underlined" name="guarantorEmail"
                     v-model="form.email"></v-text-field>
                 </v-card-text>
                 <v-card-actions>
-
                   <v-btn color="" :block="true" class="bg-primary mb-2" type="submit">
-                    Confirmar convite
+                    Confirmar Convite
                     <v-icon icon="fas fa-paper-plane" class="mb-1 ml-1" size="small"></v-icon>
                   </v-btn>
                 </v-card-actions>
               </v-card>
             </form>
+           
+            <Guarantor 
+              :proposal="props.user.proposal_id"
+              :user="props.user"
+              :guarantor="state.reloadGuarantor"
+              @loadGuarantor="receiveEmitguarantor" 
+            />
           </v-col>
+         
+        </DialogProposal>
+      </v-row>
 
-        </v-row>
-      </DialogProposal>
     </v-row>
   </div>
 </template>

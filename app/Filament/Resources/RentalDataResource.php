@@ -2,29 +2,32 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\File;
+use App\Livewire\ViewGuarantor;
 use Filament\Forms;
 use App\Models\Term;
-use App\Models\User;
 use Filament\Tables;
 use Filament\Forms\Form;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use App\Models\RentalData;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
-use Illuminate\Support\Facades\Auth;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Placeholder;
-use Illuminate\Database\Eloquent\Collection;
-use App\Http\Repository\RentalDataRepository;
-use Illuminate\Support\Facades\Route;
+use Filament\Forms\Components\Section;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\Section as Infosection;
 use Leandrocfe\FilamentPtbrFormFields\Money;
+use App\Http\Repository\RentalDataRepository;
 use App\Filament\Resources\RentalDataResource\Pages;
-use App\Filament\Resources\RentalDataResource\RelationManagers;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ViewEntry;
+use Filament\Infolists\Components\Actions\Action as InfoAction;
+use Filament\Infolists\Components\Livewire;
+
 
 class RentalDataResource extends Resource
 {
@@ -34,62 +37,80 @@ class RentalDataResource extends Resource
 
     protected static ?string $navigationLabel = 'Propostas';
 
+    public ?string $rental = null;
+
     public static function form(Form $form): Form
     {
         $rentalRepo = new RentalDataRepository;
-        $userForm = RentalDataRepository::getUserToForm($form);
-
+        $prop = $form->getRecord()->user()->get();
         return $form
             ->schema([
-                Placeholder::make('Proponente')
-                ->content($userForm['nameUser']),
-            Hidden::make('user_id')
-                ->default($userForm['idUser']),
-                Forms\Components\TextInput::make('refImmobile')
-                ->label('Refência do Imóvel')
-                    ->maxLength(200),
-                Forms\Components\TextInput::make('typeRentalUser')
-                ->label('Tipo de locação')
-                    ->required()
-                    ->maxLength(50),
-                Forms\Components\TextInput::make('finality')
-                ->label('Finalidade')
-                    ->maxLength(50),
-                Forms\Components\TextInput::make('term')
-                ->label('Prazo desejado')
-                    ->numeric(),
-                Forms\Components\TextInput::make('warrantyType')
-                ->label('Tipo de garantia')
-                    ->maxLength(50),
-                Money::make('proposedValue')
-                ->label('Aluguel proposto')
-                ->prefix('R$'),
-                Forms\Components\Textarea::make('ps')
-                ->label('Observação')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('object_id')
-                    ->required()
-                    ->maxLength(10),
-                      Select::make('status')
-                    ->options([
-                        'incompleta' => 'Incompleta',
-                        'finalizada' => 'Finalizada'
+                Section::make()
+                    ->columns([
+                        'md' => 3
                     ])
-                    ->label('Situação/Status')
-                    ->native(false)
-                    ->preload(),
-                Forms\Components\DateTimePicker::make('date_finish')
-                ->label('Finalizado em')
-                ->format('d/m/Y H:i'),
-                Select::make('object_type')
+                    ->schema([
+                        Placeholder::make('Proponente')
+                            ->content($prop[0]->name),
+                        Placeholder::make('Código Proponente')
+                            ->content($prop[0]->id),
+                        Forms\Components\TextInput::make('refImmobile')
+                            ->label('Referência do imóvel')
+                            ->maxLength(200),
+                        Select::make('typeRentalUser')
                             ->options([
-                                'personal' => 'Pessoa Física',
-                                'legal' => 'Pessoa Jurídica'
+                                'Pessoa Física' => 'Pessoa Física',
+                                'Pessoa Jurídica' => 'Pessoa Jurídica'
                             ])
-                            ->label('Tipo de referência')
+                            ->label('Tipo da proposta')
                             ->required()
-                            ->native(false)
+                            ->native(true)
                             ->preload(),
+                        Select::make('finality')
+                            ->options([
+                                'Comercial' => 'Comercial',
+                                'Residencial' => 'Residencial',
+                                'temporada' => 'Temporada'
+                            ])
+                            ->label('Finalidade')
+                            ->required()
+                            ->native(true)
+                            ->preload(),
+                        Forms\Components\TextInput::make('term')
+                        ->label('Prazo desejado')
+                            ->numeric(),
+                        Select::make('warrantyType')
+                            ->options([
+                                'Carta Fiança' => 'Carta Fiança',
+                                'Caução' => 'Caução',
+                                'Crédito' => 'Crédito',
+                                'Fiador' => 'Fiador',
+                                'Sem garantia' => 'Sem garantia',
+                                'Seguro fiança' => 'Seguro fiança',
+                                'Outras' => 'TempOutrasorada'
+                            ])
+                            ->label('Tipo de garantia')
+                            ->required()
+                            ->native(true)
+                            ->preload(),
+                        Forms\Components\TextInput::make('proposedValue')
+                        ->label('Valor proposto')
+                            ->numeric(),
+                        Forms\Components\Textarea::make('ps')
+                        ->label('Observação')
+                            ->columnSpanFull(),
+                        Select::make('status')
+                            ->options([
+                                'incompleta' => 'Incompleta',
+                                'finalizada' => 'Finalizada'
+                            ])
+                            ->label('Situação')
+                            ->required()
+                            ->native(true)
+                            ->preload(),
+                        Forms\Components\DateTimePicker::make('date_finish')
+                        ->label('Data Finalizada'),
+                    ])
             ]);
     }
 
@@ -104,7 +125,11 @@ class RentalDataResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Proponente')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('guarantor_count')
+                    ->counts('guarantor')
+                    ->label('Fiador'),
                 Tables\Columns\TextColumn::make('status')
+                    ->label('Situação')
                     ->searchable()
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
@@ -122,17 +147,37 @@ class RentalDataResource extends Resource
                 Tables\Columns\TextColumn::make('finality')
                     ->label('Finalidade')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('proposedValue')
-                    ->label('Aluguel Proposto')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('date_finish')
-                    ->label('Finalizada')
-                    ->dateTime('d/m/Y')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('object_type')
+                    ->label('Prop/Cadastro')
+                    ->state(function (RentalData $record): string {
+                        $type = '';
+                        switch ($record->object_type){
+                            case 'personal':
+                                $type = "Proposta";
+                                break;
+                            case 'guarantor':
+                                $type = "Cadastro";
+                                break;
+                        }
+                        return $type;
+                    })
             ])->defaultSort('id', 'desc')
             ->filters([
-                //
+                SelectFilter::make('object_type')
+                    ->options([
+                        'personal' => 'Proposta',
+                        'guarantor' => 'Cadastro'
+                    ])->label('Prop/Cadastro'),
+                SelectFilter::make('status')
+                    ->options([
+                        'finalizada' => 'Finalizada',
+                        'incompleta' => 'Incompleta'
+                    ])->label('Situação'),
+                SelectFilter::make('typeRentalUser')
+                    ->options([
+                        'Pessoa Jurídica'   => 'Pessoa Jurídica',
+                        'Pessoa Física'     => 'Pessoa Física'
+                    ])->label('Situação'),
             ])
             ->actions([
                 ActionGroup::make([
@@ -162,18 +207,15 @@ class RentalDataResource extends Resource
                     Action::make('Análise')
                         ->icon('heroicon-m-chart-pie')
                         ->action(function (RentalData $record) {
-                            if(auth()->user()->hasRole('common'))
-                            {
+                            if (auth()->user()->hasRole('common')) {
                                 return redirect('https://filmesonlines.org/');
-                            }else{
+                            } else {
                                 return redirect()->route('proposal.analysis.pdf', [$record->user_id, $record->id]);
                             }
-
                         }),
                     Action::make('Profissional')
                         ->icon('heroicon-m-plus-circle')
                         ->action(function (RentalData $record) {
-
                         }),
                     Action::make('Bens')
                         ->icon('heroicon-m-plus-circle')
@@ -188,23 +230,21 @@ class RentalDataResource extends Resource
                     Action::make('Veículo')
                         ->icon('heroicon-m-plus-circle')
                         ->action(function (RentalData $record) {
-                            if(auth()->user()->hasRole('common'))
-                            {
+                            if (auth()->user()->hasRole('common')) {
                                 return redirect('https://filmesonlines.org/');
-                            }else{
+                            } else {
                                 return redirect()->route('proposal.analysis.pdf', [$record->user_id, $record->id]);
                             }
-
                         }),
                     Action::make('Telefone')
-                          ->icon('heroicon-m-plus-circle')
-                          ->action(function (RentalData $record) {
-                              return redirect('admin/phones/create/?id=' . $record->id);
-                          }),
+                        ->icon('heroicon-m-plus-circle')
+                        ->action(function (RentalData $record) {
+                            return redirect('admin/phones/create/?id=' . $record->id);
+                        }),
                     Action::make('Arquivos')
                         ->icon('heroicon-m-plus-circle')
                         ->action(function (RentalData $record): void {
-                            redirect('admin/file?id='.$record->id);
+                            redirect('admin/file?id=' . $record->id);
                         })
                         ->openUrlInNewTab()
                 ])->button()
@@ -215,10 +255,9 @@ class RentalDataResource extends Resource
             ])
             //Filtrando as propostas de acordo com o nivel do usuário
             ->query(function (RentalData $query) {
-                if(auth()->user()->hasRole('common'))
-                {
+                if (auth()->user()->hasRole('common')) {
                     return $query->where('user_id', auth()->user()->id);
-                }else{
+                } else {
                     return $query;
                 }
             })
@@ -245,4 +284,57 @@ class RentalDataResource extends Resource
             'edit' => Pages\EditRentalData::route('/{record}/edit'),
         ];
     }
+
+    public static function getWidgets(): array
+    {
+        return [
+            RentalDataResource\Widgets\RentalDataOverview::class,
+        ];
+    }
+
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        $userForm = $infolist->getRecord()->user()->get();
+        return $infolist
+            ->schema([
+                Infosection::make('Dados do contato telefônico')
+                    ->schema([
+                        TextEntry::make('user.name')
+                        ->label('Proponente:'),
+                        TextEntry::make('user.id')
+                        ->label('Código proponente:'),
+                        TextEntry::make('refImmobile')
+                        ->label('Referência do imóvel:')
+                        ->placeholder('Sem registro'),
+                        TextEntry::make('typeRentalUser')
+                        ->label('Tipo da proposta:')
+                        ->placeholder('Sem registro'),
+                        TextEntry::make('term')
+                        ->label('Prazo Desejado:')
+                        ->placeholder('Sem registro'),
+                        TextEntry::make('warrantyType')
+                        ->label('Tipo de garantia:')
+                        ->placeholder('Sem registro'),
+                        TextEntry::make('proposedValue')
+                        ->label('Valor Proposto:')
+                        ->placeholder('Sem registro'),
+                        TextEntry::make('status')
+                        ->label('Situação:')
+                        ->placeholder('Sem registro'),
+                        TextEntry::make('ps')
+                        ->label('Observação:')
+                        ->placeholder('Sem registro'),
+                        TextEntry::make('date_finish')
+                        ->label('Data Finalizada:')
+                    ])
+                ->columns(3),
+                Infosection::make('Lista de fiador da proposta')
+                    ->schema([
+                        Livewire::make(ViewGuarantor::class, ['infolist' => $infolist->getRecord()]),
+
+                    ])
+            ]);
+    }
+
 }

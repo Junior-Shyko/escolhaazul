@@ -77,3 +77,35 @@
     hover:shadow-lg hover:shadow-slate-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85]
     active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none
 }
+.btn-delete {
+    @apply bg-red-500 text-zinc-50 mr-4 border rounded-lg py-1 px-2 font-sans text-sm font-bold shadow-md
+    shadow-slate-500/20 transition-all hover:shadow-lg hover:shadow-slate-500/40 focus:opacity-[0.85] focus:shadow-none
+    active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none
+}
+.btn-submit-file {
+    @apply bg-blue-600 shadow-xl hover:bg-blue-500 text-gray-50
+}
+.input-file-rental {
+    @apply block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+}
+.session-file-rental {
+    @apply bg-white border-gray-700 p-10 rounded-md mt-5
+}
+.session-guarantor-rental-infolist {
+    @apply bg-slate-50 shadow overflow-hidden sm:rounded-md
+}
+.session-guarantor-name {
+    @apply leading-6 font-medium text-gray-900
+}
+.session-guarantor-email {
+    @apply mt-1 max-w-2xl text-sm text-gray-500
+}
+.session-guarantor-btn-edit {
+    @apply font-medium text-[#2587E9] hover:text-blue-500  mr-2
+}
+.session-guarantor-btn-delete {
+    @apply font-medium text-[#E44D3A] hover:text-[#FF0000]
+}
+.session-guarantor-status {
+    @apply text-[#00c292]
+}

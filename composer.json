@@ -17,7 +17,7 @@
         "filament/notifications": "^3.0-stable",
         "filament/tables": "^3.0-stable",
         "filament/widgets": "^3.0-stable",
-        "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/guzzle": "^7.8",
         "inertiajs/inertia-laravel": "^0.6.8",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
@@ -26,10 +26,11 @@
         "leandrocfe/filament-ptbr-form-fields": "^3.0",
         "nesbot/carbon": "^2.71",
         "spatie/laravel-permission": "^6.1",
+        "stancl/tenancy": "^3.7",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.9.1",
+        "fakerphp/faker": "^1.23",
         "laravel/breeze": "^1.24",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",

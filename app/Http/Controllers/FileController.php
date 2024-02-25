@@ -28,16 +28,21 @@ class FileController extends Controller
      */
     public function store(Request $request, $proposal, $type)
     {
-        $imageFile = $request->file('file');
+        try {
+            $imageFile = $request->file('file');
+            // dump($imageFile);
         $nameImageFile = time().rand(1,100).'.'.$imageFile->extension();
-        $imageFile->move(public_path('upload'), $nameImageFile);
-
+        // $imageFile->move(public_path('storage'), $nameImageFile);
+        $request->file('file')->storeAs('public/upload', $nameImageFile);
         File::create([
             'name' => $nameImageFile,
             'object_id' => $proposal,
             'object_type' => $type
         ]);
 
+        } catch (\Throwable $th) {
+            throw $th;
+        }
         return response()->json(['messsage' => 'Upload realizado com sucesso']);
     }
 

@@ -28,10 +28,10 @@ Instalação básica do laravel versão 10 com o Docker
 	 - Rodar o comando para parar os containers `docker-compose down`
 	 - Rodar o comando para iniciar os containers `docker-compose up -d`
 
-## Create files and folders
+## Para uso da porta 80
 
-The file explorer is accessible using the button in left corner of the navigation bar. You can create a new file by clicking the **New file** button in the file explorer. You can also create folders by clicking the **New folder** button.
-$$
+Através da conexão networks do container do sail, deve acessar o ip do container, por exemplo 192.168.80.6
+
 
 > You can find more information about **LaTeX** mathematical expressions [here](http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference).
 

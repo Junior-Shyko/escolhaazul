@@ -6,6 +6,7 @@ use App\Filament\Resources\PhoneResource\Pages;
 use App\Filament\Resources\PhoneResource\RelationManagers;
 use App\Http\Repository\RentalDataRepository;
 use App\Models\Phone;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
@@ -107,6 +108,14 @@ class PhoneResource extends Resource
                 ->searchable()
 
             ])
+            ->query(function (Phone $query) {
+                if (auth()->user()->hasRole('common')) {
+                    //Busca todos os dados dessa entidade desse usuário
+                    return $query->where('object_id', '=', auth()->user()->id);
+                } else {
+                    return $query;
+                }
+            })
             ->filters([
 //                Tables\Filters\TrashedFilter::make(),
             ])

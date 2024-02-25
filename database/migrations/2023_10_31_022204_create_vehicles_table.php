@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('plate', 10)->nullable();
             $table->char('financed', 3)->nullable();
             $table->string('financial', 100)->nullable();
-            $table->float('value')->nullable();
+            $table->float('value',10,2)->nullable();
             $table->string('object_id', 50)->nullable();
             $table->string('object_type', 150)->nullable();
 

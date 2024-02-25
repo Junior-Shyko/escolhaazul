@@ -22,7 +22,7 @@ const toast = (titToast, descToast, typeToast) => {
             break;
         case 'warning':
             background = '#fec107'
-            break;    
+            break;
         default:
             background = 'default'
             break;
@@ -43,8 +43,8 @@ const toast = (titToast, descToast, typeToast) => {
 
 /**
  * Função que recebe o formato do valor monetário em Real e converte para formato USA
- * @param {string} val 
- * @returns 
+ * @param {string} val
+ * @returns
  */
 const valurMoneyUSA = (val) => {
     var newValue = 0;
@@ -70,11 +70,78 @@ const usaDatetoBr = (datestring) => {
   var dateSplitted = datestring.split('-');
   return dateSplitted[2] + '/' + dateSplitted[1] + '/' + dateSplitted[0];
 }
-
+//Prazo Desejado
+const termWanted = [12,18,24,30,36,42,48];
+//Tipo de garantia
+const typeOfGuarantee = ['Carta Fiança', 'Caução', 'Crédito', 'Fiador','Sem garantia', 'Seguro fiança', 'Outras']
+//Lista de bancos no Brasil
+const banks = [
+    'Banco do Brasil (BB)',
+    'Caixa Econômica Federal (CEF)',
+    'Banco Bradesco',
+    'Banco Itaú',
+    'Banco Santander',
+    'Banco Safra',
+    'Banco Votorantim',
+    'Banco Inter',
+    'Nubank',
+    'Banrisul (Banco do Estado do Rio Grande do Sul)',
+    'Banco do Nordeste (BNB)',
+    'Banestes (Banco do Estado do Espírito Santo)',
+    'Banco Original',
+    'Banco PAN',
+    'Banco BMG',
+    'Citibank Brasil',
+    'Banco Pine',
+    'Banco Daycoval',
+    'Banco Renner',
+    'C6 Bank'
+    ]
+//Imobiliárias
+const listImmobiles = [
+    'Imobiliária Espindola',
+    'Lopes Immobilis',
+    'A Predial',
+    'Athenas Imóveis',
+    'Alessandro Belchior',
+    'Lar Imóveis',
+    'Guia Imóveis',
+    'Heron Ibiapina',
+    'Unimóveis',
+    'Imobiliária Magno',
+    'Emcasa Imobiliária',
+    'Estarfor Negócios Imobiliários',
+    'Ary Brasil',
+    'Torres de Melo',
+    'FZ imóveis',
+    'Dimensão Imóveis',
+    'Imobiliária Diagonal',
+    'Retta Imóveis',
+    'César Rego',
+    'Futuro Imóveis',
+    'Mota da Costa',
+    'Marcelino Freitas',
+    'Fiducial Imobiliária',
+    'Amauri Gomes'
+];
+//Veiculos
+const listVehicle = [
+    'Fiat', 'Volkswagen', 'Toyota', 'Chevrolet', 'Honda', 'Hyundai',
+    'Kia','Nissan','Ford','Jeep','Renault','Nissan','Chery',
+    'BMW','Mercedes-Benz','Jac','Iveco','MITSUBISHI','RAM','Citroen'
+]
+//Lista do ano do calendario
+const listYear = [1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,]
 export default {
     toast,
     valurMoneyUSA,
     brDatetoUsa,
     formatPhone,
-    usaDatetoBr
+    usaDatetoBr,
+    termWanted,
+    typeOfGuarantee,
+    banks,
+    listImmobiles,
+    listVehicle,
+    listYear
 }

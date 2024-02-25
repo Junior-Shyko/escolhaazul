@@ -38,7 +38,7 @@ const state = reactive({
   validateImmobile: true,
   validateFinality: true,
   validateWarranty: true,
-  enabledTwo : true
+  enabledTwo : false
 });
 
 const receiveEmit = (value) => {
@@ -56,7 +56,7 @@ const receiveEmit = (value) => {
     state.validateWarranty = true;
   }
 
-  if(state.validateImmobile && state.validateFinality && state.validateWarranty)
+  if(state.validateImmobile && state.validateFinality && state.validateWarranty && state.validateImmobile)
   {
     state.enabledTwo = false
   }
