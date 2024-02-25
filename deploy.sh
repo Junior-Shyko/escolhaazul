@@ -1,5 +1,6 @@
 #!/bin/sh
 echo "Subindo docker"
+docker compose down
 docker-compose up -d
 echo "Atualizando Dependências"
 docker exec ea composer install
