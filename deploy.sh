@@ -1,10 +1,13 @@
-git pull &&
-docker-compose up -d &&
-docker-compose exec ea composer install &&
-docker-compose exec ea composer update &&
-docker-compose exec ea php artisan cache:clear &&
-docker-compose exec ea php artisan view:clear &&
-docker-compose exec ea php artisan migrate &&
-rm -R public/build/ &&
-docker-compose exec ea npm install &&
-docker-compose exec ea npm run build
+docker exec ea composer install
+docker exec ea composer update
+docker exec ea php artisan cache:clear
+docker exec ea php artisan view:clear
+docker exec ea php artisan artisan migrate
+docker exec ea npm install
+docker exec ea npm run build
+
+
+
+
+
+

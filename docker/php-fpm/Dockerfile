@@ -1,6 +1,7 @@
 # Copied from cyberduck/php-fpm-laravel
 #https://github.com/Cyber-Duck/php-fpm-laravel/blob/8.1/Dockerfile
 FROM php:8.2-fpm
+# FROM junioroliveira/escolhaazul:1.2.1
 
 MAINTAINER support@cyber-duck.co.uk
 
@@ -151,7 +152,7 @@ RUN rm -r /var/lib/apt/lists/*
 
 RUN usermod -u 1000 www-data
 
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 COPY ./docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
