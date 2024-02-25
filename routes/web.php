@@ -48,7 +48,7 @@ Route::prefix('formulario')->group(function () {
     Route::get('/proposta', [ProposalController::class, 'index'])->name('formulario/proposta');
     Route::post('/proposta', [ProposalController::class, 'index'])->name('form.proposta.post');
     Route::post('termos',  [ProposalController::class, 'terms'])->name('formulario/termos');
-    Route::get('termos',  [ProposalController::class, 'show'])->name('form.termos');
+    Route::get('termos',  [ProposalController::class, 'show'])->name('formulario/termos');
     Route::post('/finalizar', [ProposalController::class, 'alterStatus'])->name('form.finish');
     Route::post('/check-terms', [TermController::class, 'store'])->name('form.check-terms');
 });
