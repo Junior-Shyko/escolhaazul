@@ -118,27 +118,19 @@ class ProposalController extends Controller
                 );
                 session(['key' => $rentalDataId]);
                 DataPersonal::insert(['user_id' => $user->id]);
-<<<<<<< HEAD
-                if ($createPhone)
-                    $user->proposal_id = $rentalDataId;
-=======
                 if ($createPhone){
                     $user->proposal_id = $rentalDataId;
                 }
                 
                 // return Inertia::render('Proposal/Terms', ['user' => $user]);
                 // dump($user);
->>>>>>> origin/develop
                 return response()->json(['user' => $user], 200);
             }
 
             return response()->json(['message' => 'Phone not cadastre'], 200);
         } catch (\Exception $th) {
             dump($th->getMessage());
-<<<<<<< HEAD
-=======
             // return response()->json(['message' => 'Error'], 400);
->>>>>>> origin/develop
         }
     }
 
