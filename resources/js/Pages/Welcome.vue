@@ -130,7 +130,14 @@ const verifyField = (errors) => {
                       class="block w-full px-5 py-2 border rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:ring focus:outline-none"
                       placeholder="Telefone de contato" v-model="form.phone" v-mask-phone.br maxlength="15" />
                   </div>
-                  <v-checkbox label="Aceito termos e usos"></v-checkbox>
+                  <div class="text-center">
+                    <label>
+                      Ao continuar, você está de acordo com os <br/>
+                      <a href="#" class="underline underline-offset-2">Termos de Uso</a> e ciente da 
+                      <a href="http://" class="underline underline-offset-2">Política de Privacidade.</a>
+                      
+                    </label>
+                  </div>                  
                 </div>
               </main>
               <footer class="mt-6 p-4">               
