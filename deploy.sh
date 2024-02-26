@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "Puchando atualizações..."
+git pull
 echo "Buildando..."
 docker compose build --no-cache
 echo "Removendo container"
