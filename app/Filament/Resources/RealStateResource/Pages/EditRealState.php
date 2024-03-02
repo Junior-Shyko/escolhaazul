@@ -3,7 +3,9 @@
 namespace App\Filament\Resources\RealStateResource\Pages;
 
 use App\Filament\Resources\RealStateResource;
+use App\Http\Repository\Helpers;
 use Filament\Actions;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 
 class EditRealState extends EditRecord
@@ -17,5 +19,17 @@ class EditRealState extends EditRecord
         return [
             Actions\DeleteAction::make(),
         ];
+    }
+
+    protected function getSavedNotification(): ?Notification
+    {
+        return Helpers::customNotification(
+            'success',
+            'Sucesso',
+            'Dados alterado com sucesso!',
+            'heroicon-s-check-circle',
+            'success'
+        );
+
     }
 }

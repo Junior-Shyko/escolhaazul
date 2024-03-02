@@ -5,12 +5,12 @@
         </p>
         <div class="max-w-2xl mx-auto session-file-rental ">
         <form wire:submit="save">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" 
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 for="file_input">Upload de arquivos</label>
-   
-            <input type="file" 
-                wire:model="photos" 
-                name="file" 
+
+            <input type="file"
+                wire:model="photos"
+                name="file"
                 multiple
                 class="input-file-rental"
                 >
@@ -22,9 +22,9 @@
         </form>
     </div>
 
-     
+
         </div>
-       
+
 
     <div class="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
 
@@ -51,15 +51,15 @@
             </thead>
             <tbody class="bg-white dark:bg-slate-800">
             @foreach($files as $file)
-            @php
-                $ext = substr($file->name, -4);
-            @endphp
+                @php
+                    $ext = substr($file->name, -4);
+                @endphp
                 <tr class="border-b hover:bg-gray-100">
                     {{-- <td>
                         <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900
                         flex justify-center">
                             {{$file->name}}
-                           
+
                         </p>
                     </td> --}}
                     <td>
@@ -67,7 +67,7 @@
                             <a href="{{url('upload/'.$file->name)}}" download title="{{$file->name}}">
                                 <img src="{{url('storage/upload/'.$file->name)}}" alt="" srcset="" style="max-height: 200px;">
                             </a>
-                            @if($ext == '.pdf')                            
+                            @if($ext == '.pdf')
                                 <object data="{{url('storage/upload/'.$file->name)}}"  type="application/pdf">
                                     <iframe src="https://docs.google.com/viewer?url={{url('storage/upload/'.$file->name)}}&embedded=true" title="{{$file->name}}"></iframe>
                                  </object>
@@ -91,7 +91,7 @@
                         >
                             Excluir
                         </button>
-                       {{ ($this->deleteAction)(['file' => $file->id]) }}
+{{--                       {{ ($this->deleteAction)(['file' => $file->id]) }}--}}
                     </td>
                 </tr>
             @endforeach
@@ -99,7 +99,7 @@
 
 
         </table>
-            {{$this->table}}
+{{--            {{$this->table}}--}}
 
     </div>
 </div>

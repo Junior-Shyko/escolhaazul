@@ -34,7 +34,7 @@ class ProfessionalResource extends Resource
     public static function form(Form $form): Form
     {
         $idFromURL = request()->get('id');
-        $employment = new RentalDataRepository;        
+        $employment = new RentalDataRepository;
         return $form
             ->schema([
                 Section::make('Adicione seus dados profissionais')
@@ -120,13 +120,10 @@ class ProfessionalResource extends Resource
                 Tables\Columns\TextColumn::make('cnpj')
                     ->label('CNPJ')
                     ->searchable(),
-
                 Tables\Columns\TextColumn::make('admission_date')
                     ->label('Data de admissão')
                     ->dateTime('d/m/Y')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('Função')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
