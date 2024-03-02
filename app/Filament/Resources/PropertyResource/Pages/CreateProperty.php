@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\PropertyResource\Pages;
 
 use App\Filament\Resources\PropertyResource;
+use App\Http\Repository\Helpers;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Notifications\Notification;
@@ -28,10 +29,13 @@ class CreateProperty extends CreateRecord
     {
         $this->create();
         $this->redirect('../rental-datas');
-        Notification::make()
-            ->title('Saved successfully')
-            ->success()
-            ->send();
+        return Helpers::customNotification(
+            'success',
+            'Sucesso',
+            'Dados Salvo com sucesso!',
+            'heroicon-s-check-circle',
+            'success'
+        );
     }
 
 }
