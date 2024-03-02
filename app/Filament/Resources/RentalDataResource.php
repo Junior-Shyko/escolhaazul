@@ -216,6 +216,7 @@ class RentalDataResource extends Resource
                     Action::make('Profissional')
                         ->icon('heroicon-m-plus-circle')
                         ->action(function (RentalData $record) {
+                            return redirect('admin/professionals/create?id=' . $record->id);
                         }),
                     Action::make('Bens')
                         ->icon('heroicon-m-plus-circle')

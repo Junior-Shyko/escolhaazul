@@ -3,7 +3,9 @@
 namespace App\Filament\Resources\RentalDataResource\Pages;
 
 use App\Filament\Resources\RentalDataResource;
+use App\Http\Repository\Helpers;
 use Filament\Actions;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Widgets\StatsOverviewWidget;
 // use Filament\Widgets\StatsOverviewWidget as BaseWidget;
@@ -29,5 +31,16 @@ class EditRentalData extends EditRecord
     //         StatsOverviewWidget::class
     //     ];
     // }
+    protected function getSavedNotification(): ?Notification
+    {
+        return Helpers::customNotification(
+            'success',
+            'Sucesso',
+            'Dados salvo com sucesso!',
+            'heroicon-s-check-circle',
+            'success'
+        );
+
+    }
 
 }

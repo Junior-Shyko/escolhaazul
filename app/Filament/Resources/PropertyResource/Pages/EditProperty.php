@@ -3,7 +3,9 @@
 namespace App\Filament\Resources\PropertyResource\Pages;
 
 use App\Filament\Resources\PropertyResource;
+use App\Http\Repository\Helpers;
 use Filament\Actions;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 
 class EditProperty extends EditRecord
@@ -18,5 +20,17 @@ class EditProperty extends EditRecord
         return [
             Actions\DeleteAction::make(),
         ];
+    }
+
+    protected function getSavedNotification(): ?Notification
+    {
+        return Helpers::customNotification(
+            'success',
+            'Sucesso',
+            'Dados alterado com sucesso!',
+            'heroicon-s-check-circle',
+            'success'
+        );
+
     }
 }

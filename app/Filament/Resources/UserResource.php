@@ -48,17 +48,7 @@ class UserResource extends Resource
                 TextInput::make('password')
                 ->label('Senha')
                 ->password()
-                ->required(),
-                Select::make('roles')
-                ->label('Nível')
-                ->relationship(name: 'roles', titleAttribute: 'name')
-                ->disabled(
-                    function () {
-                        if (auth()->user()->hasRole('common')) {
-                            return true;
-                        }
-                    }
-                )
+                ->required()
             ]);
     }
 

@@ -7,7 +7,7 @@ use Filament\Widgets\ChartWidget;
 
 class RentalDataChart extends ChartWidget
 {
-    protected static ?string $heading = 'Mês a mês das propostas';
+    protected static ?string $heading = 'Em construção... (Feedback sobre sua proposta)';
     protected static ?string $maxHeight = '280px';
 
     protected function getData(): array
@@ -21,6 +21,9 @@ class RentalDataChart extends ChartWidget
             array_push($countMount, $rentalMonth);
         }
 
+
+    if(!auth()->user()->hasRole('common')) {
+        self::$heading = "Mês a mês das propostas";
 
         return [
             'datasets' => [
@@ -61,9 +64,25 @@ class RentalDataChart extends ChartWidget
             'labels' => ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
         ];
     }
+    return [];
+    }
 
     protected function getType(): string
     {
         return 'bar';
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'scales' => [
+                'y' => [
+                    'display' => false,
+                ],
+                'x' => [
+                    'display' => false,
+                ],
+            ],
+        ];
     }
 }

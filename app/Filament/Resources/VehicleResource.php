@@ -52,6 +52,7 @@ class VehicleResource extends Resource
                                 'nao' => 'Não'
                             ])
                             ->native(false)
+                            ->required()
                             ->preload(),
                         TextInput::make('financial')
                             ->label('Financeira'),
