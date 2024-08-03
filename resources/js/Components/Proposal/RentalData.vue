@@ -103,7 +103,7 @@ const getData = () => {
 }
 
 const getImmobiles = async () => {
-  const resp = await axios.get('https://espindolaimobiliaria.com.br/api/immobile-all')
+  const resp = await axios.get('https://espindolaimobiliaria.com.br/public/api/immobile-all')
     .then(response => {
       response.data.forEach(el => {
         // console.log({el})
@@ -270,15 +270,15 @@ const receiveEmitguarantor = (value) => {
                 </v-card-actions>
               </v-card>
             </form>
-           
-            <Guarantor 
+
+            <Guarantor
               :proposal="props.user.proposal_id"
               :user="props.user"
               :guarantor="state.reloadGuarantor"
-              @loadGuarantor="receiveEmitguarantor" 
+              @loadGuarantor="receiveEmitguarantor"
             />
           </v-col>
-         
+
         </DialogProposal>
       </v-row>
 
