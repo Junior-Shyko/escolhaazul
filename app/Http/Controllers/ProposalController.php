@@ -20,6 +20,8 @@ use App\Http\Requests\StoreProposalRequest;
 use App\Http\Requests\ProposalCreateRequest;
 use App\Http\Requests\UpdateProposalRequest;
 use App\Http\Repository\ProposalRepository;
+use function dd;
+use function dump;
 
 class ProposalController extends Controller
 {
@@ -30,6 +32,7 @@ class ProposalController extends Controller
     public function index(Request $request)
     {
         $user = $request->all();
+
         if(count($user) == 0)
         {
             $user = Auth::user();
@@ -90,7 +93,7 @@ class ProposalController extends Controller
     public function createUser(ProposalCreateRequest $request)
     {
         //Criando um usuário
-        
+
         // dump($request->phone);
         $userService = new UserService($request->name, $request->email, $request->phone);
         $user = $userService->createUser();
@@ -121,7 +124,7 @@ class ProposalController extends Controller
                 if ($createPhone){
                     $user->proposal_id = $rentalDataId;
                 }
-                
+
                 // return Inertia::render('Proposal/Terms', ['user' => $user]);
                 // dump($user);
                 return response()->json(['user' => $user], 200);
@@ -181,7 +184,7 @@ class ProposalController extends Controller
 
     public function sendGuarantor(Request $request)
     {
-        
+
     }
 
     public function accountDelete()
