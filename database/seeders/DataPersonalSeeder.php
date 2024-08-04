@@ -16,8 +16,8 @@ class DataPersonalSeeder extends Seeder
     {
         $faker = \Faker\Factory::create('pt_BR');
         $dataPersonal = [];
-        for ($i = 0; $i < 273; $i++) {
-            $userId = $faker->numberBetween(1, 273);
+        for ($i = 0; $i < 10; $i++) {
+            $userId = $faker->numberBetween(1, 10);
             $date = $faker->dateTimeThisYear('+12 months');
             $sex = $faker->randomElements(['Masculino', 'Feminino']);
             $org = $faker->randomElements(['SSP','AGU','COREN','CRAS','CREA','CRECI' ]);

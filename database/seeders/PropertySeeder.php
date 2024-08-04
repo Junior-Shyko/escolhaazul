@@ -15,9 +15,9 @@ class PropertySeeder extends Seeder
         $faker = \Faker\Factory::create('pt_BR');
         $prop = [];
 
-        for ($i = 0; $i < 250; $i++) {
+        for ($i = 0; $i < 10; $i++) {
 
-            $object_id = $faker->numberBetween(1, 273);
+            $object_id = $faker->numberBetween(1, 10);
             $type = $faker->randomElements(['personal','professional','legal']);
             $financed = $faker->randomElements(['sim','nao']);
 

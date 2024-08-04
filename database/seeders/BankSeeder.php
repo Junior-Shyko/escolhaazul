@@ -15,9 +15,9 @@ class BankSeeder extends Seeder
         $faker = \Faker\Factory::create('pt_BR');
         $bank = [];
 
-        for ($i = 0; $i < 189; $i++) {
+        for ($i = 0; $i < 10; $i++) {
 
-            $object_id = $faker->numberBetween(1, 273);
+            $object_id = $faker->numberBetween(1, 10);
             $type = $faker->randomElements(['personal','professional']);
             $date = $faker->dateTimeThisYear('+12 months');
             $namebank = $faker->randomElements([

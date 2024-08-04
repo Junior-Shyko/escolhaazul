@@ -15,11 +15,11 @@ class VehicleSeeder extends Seeder
         $faker = \Faker\Factory::create('pt_BR');
         $veih = [];
 
-        for ($i = 0; $i < 170; $i++) {
+        for ($i = 0; $i < 10; $i++) {
 
-            $object_id = $faker->numberBetween(1, 273);
+            $object_id = $faker->numberBetween(1, 10);
             $type = $faker->randomElements(['personal','professional','legal']);
-            $object_id = $faker->numberBetween(1, 273);
+            $object_id = $faker->numberBetween(1, 10);
             $financed = $faker->randomElements(['Sim','Não']);
             $veih['branch'] = $faker->name();
             $veih['model'] = $faker->word();

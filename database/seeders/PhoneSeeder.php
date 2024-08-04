@@ -16,10 +16,10 @@ class PhoneSeeder extends Seeder
         $phone = [];
 
 
-        for ($i = 0; $i < 210; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $date = $faker->dateTimeThisYear('+12 months');
-            $userId = $faker->numberBetween(1, 273);
-            $object_id = $faker->numberBetween(1, 273);
+            $userId = $faker->numberBetween(1, 10);
+            $object_id = $faker->numberBetween(1, 10);
             $type = $faker->randomElements(['personal','professional','User']);
             $phone['number'] = $faker->cellphoneNumber();
             $phone['object_id'] = $object_id;

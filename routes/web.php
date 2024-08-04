@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Permission;
+use App\Models\Role;
+use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -65,9 +68,22 @@ Route::get('proposta/analise/{id}/proposal/{proposalId}', [RentalDataController:
 
 Route::get('/finalizar/{email}', [ProposalController::class, 'finishProposal'])->name('proposal.finish');
 Route::get('conta-excluida', [ProposalController::class, 'accountDelete'])->name('conta-excluida');
-Route::get('phone', function() {
-    dump(auth()->user()->id);
-    dump(auth()->user()->phone()->get());
+Route::get('permission', function() {
+    $users = User::all();
+
+    foreach ($users as $user) {
+        $isRole = $user->assignRole('common');
+        dump($isRole);
+    }
+
+////    $user->removeRole('common');
+//    $user->assignRole('superAdmin');
+//    $role = Role::all();//todas as roles
+//    $permission = Permission::all();//a permissao access_panel
+//    $role[0]->givePermissionTo($permission);//atribuindo a permissao a role
+//    dump($permission);
+//    dump($role[0]);
+//    $user->givePermissionTo('access_admin');
     // $rental = auth()->user()->rentalData()->get();
     // foreach ($rental as $key => $value) {
     //    dump($value->id);

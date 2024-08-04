@@ -31,5 +31,6 @@ class RoleSeeder extends Seeder
             'name' => 'common',
             'guard_name' => 'web',
         ]);
+
     }
 }

@@ -22,8 +22,8 @@ class RentalData extends Seeder
         $rental = [];
 
 
-        for ($i = 0; $i < 273; $i++) {
-            $userId = $faker->numberBetween(1, 273);
+        for ($i = 0; $i < 10; $i++) {
+            $userId = $faker->numberBetween(1, 10);
             $date = $faker->dateTimeThisYear('+12 months');
             if( !($i % 5) ) {
                 $finality = 'Residencial';
