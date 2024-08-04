@@ -36,9 +36,13 @@ class ProposalController extends Controller
         if(count($user) == 0)
         {
             $user = Auth::user();
-            $user->proposal_id = $request->session()->get('key');
+            if(isset($user->proposal_id))
+            {
+                $user->proposal_id = $request->session()->get('key');
+            }else{
+                return redirect('/');
+            }
         }
-
         return Inertia::render('Proposal/Proposal', ['user' => $user]);
     }
 
