@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Hash;
 
 
 class UserService {
-    
+
     public function __construct(
-        public string $name = '', 
+        public string $name = '',
         public string $email = '',
         public string $phone = ''
     ) { }
@@ -20,7 +20,7 @@ class UserService {
      * @return User
      */
     public function createUser() : User
-    { 
+    {
         $user = User::where('email', $this->email)->first();
 
         if(is_null($user))
@@ -32,13 +32,13 @@ class UserService {
                 'email' => $this->email,
                 'password' => Hash::make($passName.$passPhone),
             ]);
-            
+
             //adicionando permissao ao usuário
-            $user->givePermissionTo('access_admin');
             $user->assignRole('common');
+            $user->givePermissionTo('access_admin');
             return $user;
         }
-       
+
         return $user;
         // event(new Registered($user));
     }
