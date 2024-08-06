@@ -64,8 +64,8 @@
                     </td> --}}
                     <td>
                         <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 flex justify-center">
-                            <a href="{{url('upload/'.$file->name)}}" download title="{{$file->name}}">
-                                <img src="{{url('storage/upload/'.$file->name)}}" alt="" srcset="" style="max-height: 200px;">
+                            <a href="{{url('storage/upload/'.$file->name)}}" download title="{{$file->name}}">
+                                <img src="{{asset('storage/upload'.$file->name)}}" alt="" srcset="" style="max-height: 200px;">
                             </a>
                             @if($ext == '.pdf')
                                 <object data="{{url('storage/upload/'.$file->name)}}"  type="application/pdf">
