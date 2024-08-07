@@ -21,8 +21,6 @@
             </p>
         </form>
     </div>
-
-
         </div>
 
 
@@ -32,11 +30,6 @@
         <table class="w-full text-center table-auto min-w-max">
             <thead>
             <tr class="" >
-                {{-- <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
-                    <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                        Nome do arquivo
-                    </p>
-                </th> --}}
                 <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
                     <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
                         Arquivo
@@ -55,27 +48,20 @@
                     $ext = substr($file->name, -4);
                 @endphp
                 <tr class="border-b hover:bg-gray-100">
-                    {{-- <td>
-                        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900
-                        flex justify-center">
-                            {{$file->name}}
-
-                        </p>
-                    </td> --}}
                     <td>
                         <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 flex justify-center">
-                            <a href="{{url('storage/upload/'.$file->name)}}" download title="{{$file->name}}">
-                                <img src="{{asset('storage/upload'.$file->name)}}" alt="" srcset="" style="max-height: 200px;">
+                            <a href="{{url('storage/'.$file->name)}}" download title="{{$file->name}}">
+                                <img src="{{asset('storage/'.$file->name)}}" alt="" srcset="" style="max-height: 200px;">
                             </a>
                             @if($ext == '.pdf')
-                                <object data="{{url('storage/upload/'.$file->name)}}"  type="application/pdf">
-                                    <iframe src="https://docs.google.com/viewer?url={{url('storage/upload/'.$file->name)}}&embedded=true" title="{{$file->name}}"></iframe>
+                                <object data="{{url('storage/'.$file->name)}}"  type="application/pdf">
+                                    <iframe src="https://docs.google.com/viewer?url={{url('storage/'.$file->name)}}&embedded=true" title="{{$file->name}}"></iframe>
                                  </object>
                             @endif
                         </p>
                     </td>
                     <td>
-                        <a href="{{url('storage/upload/'.$file->name)}}" download
+                        <a href="{{url('storage/'.$file->name)}}" download
                            class="btn-download "
                            type="button"
                            title="Baixa o arquivo para você"
@@ -91,16 +77,10 @@
                         >
                             Excluir
                         </button>
-{{--                       {{ ($this->deleteAction)(['file' => $file->id]) }}--}}
                     </td>
                 </tr>
             @endforeach
-            {{-- <x-filament-actions::modals /> --}}
-
-
         </table>
-{{--            {{$this->table}}--}}
-
     </div>
 </div>
 @section('scripts')
@@ -109,7 +89,6 @@
             $("#showEnterCodeModal").on('hidden.bs.modal', function(){
                 livewire.emit('onCloseModal');
             });
-            console.log('live')
         });
     </script>
 @endsection
