@@ -20,3 +20,4 @@ yarn-error.log
 /.vscode
 lang
 docker-data
+docker/logs

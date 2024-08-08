@@ -13,7 +13,6 @@ const state = reactive({
 })
 
 function submit() {
-    // console.log(state.userProposal.email)
     let dataFinish = {
         status  : 'finalizada',
         user_id : props.user.id,

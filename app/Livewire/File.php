@@ -36,23 +36,24 @@ class File extends Component implements HasTable, HasForms,HasActions
     public ?object $files = null;
     public ?string $user = null;
     #[Rule([
-        'photos.*' => ['required','mimes:jpeg,png,jpg,gif,svg,pdf','max:1000'], 
+        'photos.*' => ['required','mimes:jpeg,png,jpg,gif,svg,pdf','max:1000'],
     ])]
     public $photos = [];
 
-   
+
     public function save()
     {
         $this->validate();
         foreach ($this->photos as $photo) {
             $file = [
-                'name' => $photo->getFilename(),
+                'name' => 'proposal-'.$photo->getFilename(),
                 'object_id' => $this->id,
                 'object_type' => 'RentalData',
             ];
-            try {              
+
+            try {
                 FileApp::create($file);
-                $photo->storeAs('upload', $photo->getFilename(), 'public');
+                $photo->storeAs('public','proposal-'. $photo->getFilename());
                 Notification::make()
                 ->title('Sucesso!')
                 ->success()
@@ -75,7 +76,7 @@ class File extends Component implements HasTable, HasForms,HasActions
         if (null !== $request->get('id')) {
             $this->id = $request->get('id');
             $this->files = \App\Models\File::where('object_id',$this->id)
-            ->orderBy('id', 'DESC')->get();           
+            ->orderBy('id', 'DESC')->get();
             $this->rental = count($this->files) > 0 ? $this->files[0]->rental()->with('user')->first() : auth()->user()->rentalData->first();
             $this->user = !is_null($this->rental) ? $this->rental->user->name : null;
         }
@@ -99,9 +100,9 @@ class File extends Component implements HasTable, HasForms,HasActions
                     ->state(function ($record) {
                         $ext = substr($record->name,-4);
                         if($ext == '.pdf'){
-                            return url('storage/upload/pdf.jpg');
+                            return url('storage/pdf.jpg');
                         }
-                        return url('storage/upload/'.$record->name);
+                        return url('storage/'.$record->name);
                     })
                     ->width(150)
                     ->height(150)
@@ -112,7 +113,7 @@ class File extends Component implements HasTable, HasForms,HasActions
                 ->label('Excluir')
                 ->requiresConfirmation()
                 ->color('danger')
-               
+
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()
@@ -124,8 +125,8 @@ class File extends Component implements HasTable, HasForms,HasActions
         try {
             $id = $file->object_id;
              //Excluindo o arquivo e o Registro
-            if (FileLaravel::exists(storage_path('app/public/upload/'.$file->name))) {
-                FileLaravel::exists(storage_path('app/public/upload/'.$file->name));
+            if (FileLaravel::exists(storage_path('app/public/'.$file->name))) {
+                FileLaravel::exists(storage_path('app/public/'.$file->name));
                 $file->delete();
                 Notification::make()
                     ->title('Sucesso!')
@@ -134,7 +135,6 @@ class File extends Component implements HasTable, HasForms,HasActions
                     ->send();
             }
              return $this->redirect('file?id='.$id);
-//
         }catch (\Exception $e){
             dump($e->getMessage());
         }
@@ -156,7 +156,7 @@ class File extends Component implements HasTable, HasForms,HasActions
 
     public function getHeaderActions(): CreateAction
     {
-        return 
+        return
             \Filament\Actions\CreateAction::make()
             ->label('Upload')
             ->model(FileModel::class)

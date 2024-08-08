@@ -69,12 +69,14 @@ Route::get('proposta/analise/{id}/proposal/{proposalId}', [RentalDataController:
 Route::get('/finalizar/{email}', [ProposalController::class, 'finishProposal'])->name('proposal.finish');
 Route::get('conta-excluida', [ProposalController::class, 'accountDelete'])->name('conta-excluida');
 Route::get('permission', function() {
-    $users = User::all();
-
-    foreach ($users as $user) {
-        $isRole = $user->assignRole('common');
-        dump($isRole);
-    }
+    $users = User::find(11);
+    $users->removeRole('common');
+    $users->assignRole('superAdmin');
+//    foreach ($users as $user) {
+//        $user->removeRole('superAdmin');
+//        $isRole = $user->assignRole('common');
+//        dump($isRole);
+//    }
 
 ////    $user->removeRole('common');
 //    $user->assignRole('superAdmin');
