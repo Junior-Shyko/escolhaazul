@@ -107,11 +107,12 @@ class RentalDataController extends Controller
         $properties = $proposal->properties()->get();
         $vehicles = $proposal->vehicle()->get();
         $carbon = new Carbon();
+        $realstate = $proposal->realState()->get();
 
         $pdf = Pdf::loadView('proposal.analysis', compact('user',
             'titulo_page_pdf','proposal', 'phones', 'properties',
             'real', 'professionals', 'personals', 'banks', 'vehicles',
-            'commercials', 'carbon'));
+            'commercials', 'carbon', 'realstate'));
         return $pdf->stream('invoice.pdf');
         // dd($rentalData->id);
         // $user = User::find(119);
