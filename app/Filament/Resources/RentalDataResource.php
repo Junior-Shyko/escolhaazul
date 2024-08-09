@@ -121,7 +121,8 @@ class RentalDataResource extends Resource
                 Tables\Columns\TextColumn::make('id')
                     ->label('Nº')
                     ->numeric()
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Proponente')
                     ->searchable(),
