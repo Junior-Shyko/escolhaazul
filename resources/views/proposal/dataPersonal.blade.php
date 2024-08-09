@@ -41,7 +41,11 @@
             <span>{{isset($user->dataPersonal()->first()->number_dependents) ? $user->dataPersonal()->first()->number_dependents : ''}}</span>
         </td>
         {{--                    <td><strong>Tempo que reside: </strong> <span>{{ isset($user->address()->first()->neighborhood) }}</span></td>--}}
-        <td><strong> Tipo de Residência:</strong> <span>'proposal_type_residence</span></td>
+{{--        <td><strong> Tipo de Residência:</strong>--}}
+{{--            <span>--}}
+{{--                {{isset($user->dataPersonal()->first()->typeRentalUser) ? $user->dataPersonal()->first()->typeRentalUser : ''}}--}}
+{{--            </span>--}}
+{{--        </td>--}}
     </tr>
     <tr>
     </tr>
