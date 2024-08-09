@@ -1,7 +1,16 @@
 <div class="container w-full md:max-w-5xl mx-auto pt-20 px-4">
+       @if(!is_null($this->id)) :
     <div>
+
         <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-            Proposta Nº. <strong> {{$rental->id}}</strong> - Proponente: <strong>{{$user}}</strong>
+            Proposta Nº.
+            <strong>
+            @if(!is_null($rental))
+                    {{$rental->id}}
+            @else
+                {{request()->get('id')}}
+            @endif
+            </strong> - Proponente: <strong>{{$user}}</strong>
         </p>
         <div class="max-w-2xl mx-auto session-file-rental ">
         <form wire:submit="save">
@@ -82,6 +91,13 @@
             @endforeach
         </table>
     </div>
+    @else
+
+    <x-message-alert type="error" messageTitle="Ops! algo deu errado!"
+                     message="Para acessar os arquivos de una proposta, você deve indicar qual é a proposta."/>
+
+
+    @endif
 </div>
 @section('scripts')
     <script>

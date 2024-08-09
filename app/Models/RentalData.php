@@ -77,4 +77,9 @@ class RentalData extends Model
         return $this->hasMany(Guarantor::class, 'object_id');
     }
 
+    public function realState(): HasMany
+    {
+        return $this->hasMany(RealState::class, 'object_id');
+    }
+
 }

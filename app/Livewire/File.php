@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\RentalData;
 use App\Models\File as FileApp;
+use App\Models\User;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Actions\Contracts\HasActions;
@@ -24,6 +25,12 @@ use Filament\Notifications\Notification;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Rule;
 use Filament\Forms\Components\TextInput;
+use function auth;
+use function count;
+use function dd;
+use function is_null;
+use function redirect;
+use function url;
 
 
 class File extends Component implements HasTable, HasForms,HasActions
@@ -72,16 +79,25 @@ class File extends Component implements HasTable, HasForms,HasActions
     }
 
     public function mount(Request $request){
-
         if (null !== $request->get('id')) {
             $this->id = $request->get('id');
             $this->files = \App\Models\File::where('object_id',$this->id)
             ->orderBy('id', 'DESC')->get();
-            $this->rental = count($this->files) > 0 ? $this->files[0]->rental()->with('user')->first() : auth()->user()->rentalData->first();
-            $this->user = !is_null($this->rental) ? $this->rental->user->name : null;
+
+            $this->rental = count($this->files) > 0 ?
+                            $this->files[0]->rental()->with('user')->first() :
+                            auth()->user()->rentalData->first();
+            $this->user = !is_null($this->rental) ?
+                            $this->rental->user->name :
+                            $this->getUserIsRentalNull();
         }
+    }
 
-
+    public function getUserIsRentalNull()
+    {
+       $rental = RentalData::find($this->id);
+       $user = User::find($rental->user_id);
+       return $user;
     }
 
     public function render()
