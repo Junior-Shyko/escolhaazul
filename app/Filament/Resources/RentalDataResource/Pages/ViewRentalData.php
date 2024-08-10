@@ -23,7 +23,7 @@ class ViewRentalData extends ViewRecord
     protected function getHeaderWidgets(): array
     {
         return [
-            RentalDataResource\Widgets\RentalDataOverview::class,
+//            RentalDataResource\Widgets\RentalDataOverview::class,
         ];
     }
 }

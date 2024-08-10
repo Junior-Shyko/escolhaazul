@@ -290,7 +290,7 @@ class RentalDataResource extends Resource
     public static function getWidgets(): array
     {
         return [
-            RentalDataResource\Widgets\RentalDataOverview::class,
+//            RentalDataResource\Widgets\RentalDataOverview::class,
         ];
     }
 

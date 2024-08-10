@@ -84,7 +84,6 @@ class RentalDataRepository
      */
     static public function getUserDataPersonal($id)
     {
-
         $personal = DataPersonal::find($id);
         if(!is_null($personal))
         {
