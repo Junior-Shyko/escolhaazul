@@ -10,17 +10,15 @@ use App\Http\Repository\Helpers;
 use App\Http\Requests\StoreRentalDataRequest;
 use App\Http\Requests\UpdateRentalDataRequest;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
+use function array_push;
+use function dd;
+use function dump;
+use function gettype;
+use function simplexml_load_file;
 
 class RentalDataController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -32,30 +30,6 @@ class RentalDataController extends Controller
         // $proposta->terms()->delete();
         $proposta->delete();
         dump($proposta->terms());
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreRentalDataRequest $request)
-    {
-        dump($request->all());
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(RentalData $rentalData)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(RentalData $rentalData)
-    {
-        //
     }
 
     /**
@@ -120,5 +94,23 @@ class RentalDataController extends Controller
         // dump($user->propoertie()->get());
         // dump($user->real()->get());
         // dump($user->referencePersonal()->get());
+    }
+
+    public function immobileAll()
+    {
+        $xml = simplexml_load_file('https://assets.praedium.com.br/76636bSsOil7GfOk5qz/imovelweb/iw_ofertas.xml');
+        dump($xml->Imoveis);
+        $immobiles = [];
+        foreach ($xml->Imoveis->Imovel as $key => $imovel) {
+//
+//            dump($imovel->TituloImovel);
+            $immobiles['immobile'] = (string) $imovel->TituloImovel;;
+//            $immobiles['type'] = $imovel->TipoImovel;
+//            dump(gettype($imovel->TituloImovel));
+
+
+        }
+        dump($immobiles);
+//        return response()->json($immobiles);
     }
 }

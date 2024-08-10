@@ -63,6 +63,7 @@ Route::prefix('api/form')->group( function () {
     Route::post('/proposal', [ProposalController::class, 'createUser'])->name('form/proposal');
 });
 
+Route::get('todos-imoveis', [RentalDataController::class,'immobileAll']);
 Route::get('proposta', [RentalDataController::class, 'create']);
 Route::get('proposta/analise/{id}/proposal/{proposalId}', [RentalDataController::class, 'analysis'])->name('proposal.analysis.pdf');
 
