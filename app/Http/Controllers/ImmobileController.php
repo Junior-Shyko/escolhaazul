@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\app\Http\Service\ImmobileService;
 use App\Models\Immobile;
 use Illuminate\Http\Request;
+use function simplexml_load_file;
 
 class ImmobileController extends Controller
 {
@@ -28,7 +30,10 @@ class ImmobileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $filePath = 'https://assets.praedium.com.br/76636bSsOil7GfOk5qz/imovelweb/iw_ofertas.xml';
+        $xml = new ImmobileService($filePath);
+        $success = $xml->readXmlAndSaveToDatabase();
+        dump($success);
     }
 
     /**
