@@ -30,10 +30,10 @@ class ImmobileController extends Controller
      */
     public function store(Request $request)
     {
-        $filePath = 'https://assets.praedium.com.br/76636bSsOil7GfOk5qz/imovelweb/iw_ofertas.xml';
-        $xml = new ImmobileService($filePath);
-        $success = $xml->readXmlAndSaveToDatabase();
-        dump($success);
+
+        $xml = ImmobileService::retornoDoMetodo();
+//        $success = $xml->readXmlAndSaveToDatabase();
+        dump($xml);
     }
 
     /**

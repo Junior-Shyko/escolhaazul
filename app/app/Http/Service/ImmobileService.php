@@ -3,31 +3,28 @@
 namespace App\app\Http\Service;
 
 use App\Models\Immobile;
+use Exception;
+use http\Env\Response;
+use function count;
+use function dd;
 use function dump;
 use function simplexml_load_file;
 
 class ImmobileService
 {
-    protected $filePath;
     /**
      * Create a new class instance.
      */
-    public function __construct($filePath)
+    static public function readXmlAndSaveToDatabase()
     {
-        $this->filePath = (string) $filePath;
-    }
-
-    public function readXmlAndSaveToDatabase()
-    {
-        $xml = simplexml_load_file($this->filePath);
-//            dump($xml->Imoveis);
-        // Converte o XML em um array para facilitar a manipulação
-//            $data = json_decode(json_encode((array)$xml), true);
-//
-//            // Itera sobre os dados e salva no banco
+        //Endpoint xml
+        $filePath = 'https://assets.praedium.com.br/76636bSsOil7GfOk5qz/imovelweb/iw_ofertas.xml';
+        //Limpando os registros da tabela
+        self::deleteRowsTable();
+        //Lendo arquivo xml
+        $xml = simplexml_load_file($filePath);
         $allImmobiles =  [];
         foreach ($xml->Imoveis->Imovel as $immobile) {
-//            dd((string) $immobile->PrecoIptuImovel);
             $cond = (string) $immobile->PrecoCondominio;
             if($cond == "" || $cond == null){
                 $cond = 0.00;
@@ -50,18 +47,26 @@ class ImmobileService
             $allImmobiles['rentalPrice'] = (string) $immobile->PrecoLocacao;
             $allImmobiles['condominiumPrice'] = $cond;
             $allImmobiles['propertyIptPrice'] = $iptu;
-            Immobile::create($allImmobiles);
+            try {
+                Immobile::create($allImmobiles);
+            }catch (Exception $e)
+            {
+                dump($e->getMessage());
+            }
         }
+    }
 
-        try {
-            // Carrega o XML do arquivo
-
-//
-//            return true;
-
-        } catch (\Exception $e) {
-            // Lida com erros
-            return false;
+    //Excluindo todos os dados da tabela
+    public function deleteRowsTable() : void
+    {
+        $immobiles = Immobile::all();
+        if( count($immobiles) > 0 ){
+            try {
+                Immobile::getQuery()->delete();
+            }catch (Exception $e)
+            {
+                dump($e->getMessage());
+            }
         }
     }
 }
