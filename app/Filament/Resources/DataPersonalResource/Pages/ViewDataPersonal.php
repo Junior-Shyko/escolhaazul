@@ -6,7 +6,7 @@ use App\Filament\Resources\DataPersonalResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 
-class ViewRentalData extends ViewRecord
+class ViewDataPersonal extends ViewRecord
 {
     protected static string $resource = DataPersonalResource::class;
 

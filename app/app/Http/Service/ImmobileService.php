@@ -4,7 +4,7 @@ namespace App\app\Http\Service;
 
 use App\Models\Immobile;
 use Exception;
-use http\Env\Response;
+use Tests\TestCase;
 use function count;
 use function dd;
 use function dump;
@@ -15,7 +15,7 @@ class ImmobileService
     /**
      * Create a new class instance.
      */
-    static public function readXmlAndSaveToDatabase()
+    static function readXmlAndSaveToDatabase() : void
     {
         //Endpoint xml
         $filePath = 'https://assets.praedium.com.br/76636bSsOil7GfOk5qz/imovelweb/iw_ofertas.xml';
@@ -57,7 +57,7 @@ class ImmobileService
     }
 
     //Excluindo todos os dados da tabela
-    public function deleteRowsTable() : void
+    static public function deleteRowsTable() : void
     {
         $immobiles = Immobile::all();
         if( count($immobiles) > 0 ){
@@ -68,5 +68,10 @@ class ImmobileService
                 dump($e->getMessage());
             }
         }
+    }
+
+    public function returnTesting()
+    {
+        return true;
     }
 }
