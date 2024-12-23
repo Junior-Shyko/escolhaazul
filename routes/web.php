@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ImmobileController;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
@@ -63,7 +64,7 @@ Route::prefix('api/form')->group( function () {
     Route::post('/proposal', [ProposalController::class, 'createUser'])->name('form/proposal');
 });
 
-Route::get('todos-imoveis', [RentalDataController::class,'immobileAll']);
+Route::get('todos-imoveis', [ImmobileController::class,'store']);
 Route::get('proposta', [RentalDataController::class, 'create']);
 Route::get('proposta/analise/{id}/proposal/{proposalId}', [RentalDataController::class, 'analysis'])->name('proposal.analysis.pdf');
 

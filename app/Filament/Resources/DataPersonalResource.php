@@ -177,7 +177,7 @@ class DataPersonalResource extends Resource
         return [
             'index' => Pages\ListDataPersonals::route('/'),
             'create' => Pages\CreateDataPersonal::route('/create'),
-            'view' => Pages\ViewRentalData::route('/{record}'),
+            'view' => Pages\ViewDataPersonal::route('/{record}'),
             'edit' => Pages\EditDataPersonal::route('/{record}/edit'),
         ];
     }
