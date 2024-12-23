@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ImmobileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BankController;
@@ -61,4 +62,6 @@ Route::get('guarantor/{user}/{object}/{type}', [GuarantorController::class, 'sho
 Route::get('verify-guarantor/{email}',  [GuarantorController::class, 'verifyRequestGuarantor'] )->name('api/verify-guarantor');
 Route::post('accept-guarantor',  [GuarantorController::class, 'acceptGuarantor'] )->name('api/accept-guarantor');
 
+Route::post('sync', [ImmobileController::class, 'sync'] )->name('api/sync');
+Route::get('all-immobile', [ImmobileController::class, 'allImmobile'] )->name('api/all-immobile');
 

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\app\Http\Service\ImmobileService;
+use App\Http\Repository\ImmobileRepository;
+use App\Http\Services\ImmobileService;
 use App\Models\Immobile;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use function simplexml_load_file;
 
 class ImmobileController extends Controller
 {
@@ -66,5 +67,16 @@ class ImmobileController extends Controller
     public function destroy(Immobile $immobile)
     {
         //
+    }
+
+    public function sync()
+    {
+        ImmobileService::readXmlAndSaveToDatabase();
+    }
+
+    public function allImmobile(): JsonResponse
+    {
+        $allImmobile = ImmobileRepository::all();
+        return response()->json($allImmobile);
     }
 }

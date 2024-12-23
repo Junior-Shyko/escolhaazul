@@ -1,29 +1,15 @@
 <?php
 
-namespace App\app\Http\Service;
+namespace App\Http\Repository;
 
 use App\Models\Immobile;
-use Exception;
-use Tests\TestCase;
-use function count;
-use function dd;
+use http\Env\Response;
 use function dump;
-use function simplexml_load_file;
 
-class ImmobileService
+class ImmobileRepository
 {
-    /**
-     * Create a new class instance.
-     */
-    static function readXmlAndSaveToDatabase() : void
+    static public function readXmlAndSaveToDatabase($xml)
     {
-        //Endpoint xml
-        $filePath = 'https://assets.praedium.com.br/76636bSsOil7GfOk5qz/imovelweb/iw_ofertas.xml';
-        //Limpando os registros da tabela
-        self::deleteRowsTable();
-        //Lendo arquivo xml
-        $xml = simplexml_load_file($filePath);
-        $allImmobiles =  [];
         foreach ($xml->Imoveis->Imovel as $immobile) {
             $cond = (string) $immobile->PrecoCondominio;
             if($cond == "" || $cond == null){
@@ -51,27 +37,17 @@ class ImmobileService
                 Immobile::create($allImmobiles);
             }catch (Exception $e)
             {
-                dump($e->getMessage());
+                return response()->json(['message' => $e->getMessage()], 500);
             }
         }
     }
 
-    //Excluindo todos os dados da tabela
-    static public function deleteRowsTable() : void
+    /**
+     * Todos os Imóveis
+     * @return \Illuminate\Http\JsonResponse
+     */
+    static public function all()
     {
-        $immobiles = Immobile::all();
-        if( count($immobiles) > 0 ){
-            try {
-                Immobile::getQuery()->delete();
-            }catch (Exception $e)
-            {
-                dump($e->getMessage());
-            }
-        }
-    }
-
-    public function returnTesting()
-    {
-        return true;
+        return response()->json(Immobile::all());
     }
 }
