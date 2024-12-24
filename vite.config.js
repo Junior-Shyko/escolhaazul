@@ -8,10 +8,12 @@ export default defineConfig({
             input: [
                 'resources/js/app.js',
                 'resources/css/app.css',
-                'resources/css/filament/admin/theme.css'],
+                'resources/css/filament/admin/theme.css',
+                'resources/js/Pages/**'
+            ],
             refresh: [
                 ...refreshPaths,
-                'app/Livewire/**',
+                'app/Livewire/**'
             ],
         }),
         vue({
@@ -20,12 +22,15 @@ export default defineConfig({
                     base: null,
                     includeAbsolute: false,
                 },
-            },
+            }
         }),
     ],
     server: {
+        base: '/',
+        host: '0.0.0.0', // Permite conexões de fora do contêiner
         hmr: {
-            host: 'localhost',
-        },
+            host: 'localhost', // Substitua pelo domínio ou IP usado no navegador
+            port: 5173, // Porta padrão do Vite
+        }
     }
 });

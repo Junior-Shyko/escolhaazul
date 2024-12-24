@@ -103,14 +103,16 @@ const getData = () => {
 }
 
 const getImmobiles = async () => {
-  const resp = await axios.get('https://espindolaimobiliaria.com.br/public/api/immobile-all')
+  const resp = await axios.get('http://localhost/api/all-immobile')
     .then(response => {
-      response.data.forEach(el => {
-        // console.log({el})
+      console.log({response})
+      response.data.original.forEach(el => {
+        console.log({el})
         state.immobiles.push(el)
-        state.immobilesItens.push(el.immobiles_code + ' - ' + el.immobiles_address + ', nº ' + el.immobiles_number)
+        state.immobilesItens.push('Cod. ' + el.propertyCode + 
+        ' - ' + el.address + ', nº ' + el.number + ', ' + el.neighborhood)
       });
-      //
+      
     })
     .catch(err => {
       // Handle errors
