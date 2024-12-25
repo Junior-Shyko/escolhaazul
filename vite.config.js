@@ -26,11 +26,14 @@ export default defineConfig({
         }),
     ],
     server: {
-        base: '/',
-        host: '0.0.0.0', // Permite conexões de fora do contêiner
+        host: '0.0.0.0',
+        port: 5173,
         hmr: {
             host: 'localhost', // Substitua pelo domínio ou IP usado no navegador
             port: 5173, // Porta padrão do Vite
-        }
+        },
+        watch: {
+            usePolling: true,
+        },
     }
 });

@@ -1,6 +1,6 @@
 <script setup>
 import endpoint from '@/Services/endpoints'
-import api from "@/Services/server";
+import {api,urlBaseApi} from "@/Services/server";
 import Guarantor from './Guarantor.vue';
 import functions from "@/Util/functions";
 import axios from 'axios';
@@ -84,7 +84,6 @@ const form = useForm({
 const getData = () => {
   endpoint.getData('rental_datas', props.user.proposal_id, props.user.id, 'personal')
     .then(res => {
-      console.log(res)
       //Preenchendo os dados
       state.finality = res.warrantyType
       state.proposedValue = res.proposedValue
@@ -103,11 +102,9 @@ const getData = () => {
 }
 
 const getImmobiles = async () => {
-  const resp = await axios.get('http://localhost/api/all-immobile')
+  const resp = await axios.get(urlBaseApi + 'all-immobile')
     .then(response => {
-      console.log({response})
       response.data.original.forEach(el => {
-        console.log({el})
         state.immobiles.push(el)
         state.immobilesItens.push('Cod. ' + el.propertyCode + 
         ' - ' + el.address + ', nº ' + el.number + ', ' + el.neighborhood)
@@ -121,13 +118,20 @@ const getImmobiles = async () => {
 }
 
 const detailsImmobile = (value) => {
-  let code = value.substring(0, 6);
-  let detailsImmobile = state.immobiles.filter(immob => immob.immobiles_code === code);
+  const resultado = getValueBetweenDotAndHyphen(value);
+  console.log({resultado})
+  let detailsImmobile = state.immobiles.filter(immob => immob.propertyCode === resultado);
+  console.log({detailsImmobile})
   state.detailsImmob = detailsImmobile
   state.loadingSkeleton = false
 
 }
 
+// Retornando o valor que tiver entre o Cod. e o hifen Cod. xxxxxx -
+function getValueBetweenDotAndHyphen(str) {
+    const match = str.match(/\.(.*?)-/);
+    return match ? match[1].trim() : null;
+}
 
 onMounted(() => {
   getData()
@@ -190,15 +194,15 @@ const receiveEmitguarantor = (value) => {
         <v-col cols="12">
           <v-sheet elevation="5" class="mx-auto p-3" rounded="rounded" v-if="state.detailsImmob.length > 0">
             <div class='text-base leading-7'>
-              <p class='font-medium text-gray-800 text-sm'>{{ state.detailsImmob[0].immobiles_property_title }}</p>
+              <p class='font-medium text-gray-800 text-sm'>{{ state.detailsImmob[0].propertyTitle }}</p>
 
               <p class="text-gray-800/50 text-sm">
-                <strong>Logradouro:</strong> {{ state.detailsImmob[0].immobiles_address }},
-                <strong>nº: </strong> {{ state.detailsImmob[0].immobiles_number }},
-                <strong>Bairro: </strong> {{ state.detailsImmob[0].immobiles_district }},
-                <strong>Cidade: </strong>{{ state.detailsImmob[0].immobiles_city }},
-                <strong>IPTU Mensal: </strong>{{ state.detailsImmob[0].immobiles_iptu_price }},
-                <strong>Cond.: </strong>{{ state.detailsImmob[0].immobiles_condominium_price }}
+                <strong>Logradouro:</strong> {{ state.detailsImmob[0].address }},
+                <strong>nº: </strong> {{ state.detailsImmob[0].number }},
+                <strong>Bairro: </strong> {{ state.detailsImmob[0].neighborhood }},
+                <strong>Cidade: </strong>{{ state.detailsImmob[0].city }},
+                <strong>IPTU Mensal: </strong>{{ state.detailsImmob[0].propertyIptPrice }},
+                <strong>Cond.: </strong>{{ state.detailsImmob[0].condominiumPrice }}
               </p>
             </div>
           </v-sheet>

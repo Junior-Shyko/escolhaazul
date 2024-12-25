@@ -5,7 +5,7 @@
                     <nav class="mx-auto flex max-w-6xl gap-8 px-6 transition-all duration-200 ease-in-out lg:px-12">
                         <div class="relative flex items-center">
                             <a href="/">
-                                <img src="https://espindolaimobiliaria.com.br/escolhaazul/public/img/logo_espindola.png"
+                                <img src="https://cdn3.praedium.com.br/76636bSsOil7GfOk5qz/24491741625072740/nomadesite2_md.webp"
                                     loading="lazy" style="color:transparent" width="96" height="96">
                             </a>
                         </div>
@@ -22,8 +22,8 @@
                         </ul>
                         <div class="flex-grow"></div>
                         <div class="hidden items-center justify-center gap-6 md:flex">
-                            <a href="#" class="font-dm text-sm font-medium text-slate-700">(85) 98810-1166</a>
-                            <a href="#"
+                            <a href="#" class="font-dm text-sm font-medium text-slate-700">(85) 99697-6850</a>
+                            <a href="https://wa.me/5585996976850"
                                 class="rounded-md bg-gradient-to-br from-green-600 to-emerald-400 px-3 py-1.5 font-dm text-sm font-medium text-white shadow-md shadow-green-400/50 transition-transform duration-200 ease-in-out hover:scale-[1.03]">
                                 Dúvidas?
                             </a>
@@ -31,11 +31,11 @@
                         <div class="relative flex items-center justify-center md:hidden">
                             <div class="grid grid-rows-2">
                                 <div>
-                                    <a href="#" class="font-dm text-sm font-medium text-slate-700">(85) 98810-1166</a>
+                                    <a href="#" class="font-dm text-sm font-medium text-slate-700">(85) 99697-6850</a>
                                 </div>
                                 <!-- ... -->
                                 <div>
-                                    <a href="#"
+                                    <a href="https://wa.me/5585996976850"
                                         class="rounded-md bg-gradient-to-br from-green-600 to-emerald-400 px-3 py-1.5 font-dm text-sm font-medium text-white shadow-md shadow-green-400/50 transition-transform duration-200 ease-in-out hover:scale-[1.03]">
                                         Dúvidas?
                                     </a>
