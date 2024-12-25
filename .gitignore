@@ -21,3 +21,6 @@ yarn-error.log
 lang
 docker-data
 docker/logs
+/public/css/filament
+/public/js/filament
+/docker/logs

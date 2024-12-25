@@ -11,7 +11,7 @@ use function simplexml_load_file;
 
 class FeedbackOverview extends BaseWidget
 {
-    protected static ?string $heading = 'Blog Posts';
+    // protected static ?string $heading = 'Blog Posts';
     protected function getStats(): array
     {
         $user = User::all()->count();
