@@ -67,7 +67,6 @@ const state = reactive({
   immobilesItens: [],
   detailsImmob: [],
   loadingSkeleton: true,
-  terms: functions.termWanted,
   reloadGuarantor: false
 })
 
@@ -136,7 +135,7 @@ function getValueBetweenDotAndHyphen(str) {
 onMounted(() => {
   getData()
   getImmobiles();
-  var term = functions.termWanted
+  var termsList = functions.termWanted
 })
 
 const closeDialog = (value) => {
@@ -214,7 +213,8 @@ const receiveEmitguarantor = (value) => {
     <v-row no-gutters>
       <v-col col cols="12" sx="12" sm="12" md="4">
         <v-combobox variant="underlined" name="refImmobile" label="Pesquisar o Imóvel(*)" :items="state.immobilesItens"
-          @blur="saveField($event.target)" @update:modelValue="detailsImmobile($event)" v-model="state.refImmobile">
+          @blur="saveField($event.target)" @update:modelValue="detailsImmobile($event)"
+          v-model="state.refImmobile">
         </v-combobox>
       </v-col>
       <v-col col cols="12" sx="12" sm="12" md="4">
@@ -229,8 +229,10 @@ const receiveEmitguarantor = (value) => {
     <v-row no-gutters>
 
       <v-col col cols="12" sx="12" sm="12" md="4">
-        <v-select class="m-2" variant="underlined" label="Prazo Desejado em meses" name="term" suffix="meses"
-          :items="state.terms">
+        <v-select 
+          class="m-2" variant="underlined" label="Prazo Desejado em meses" 
+          name="term" suffix="meses" :items="functions.termWanted" 
+          v-model="state.term">
         </v-select>
       </v-col>
       <v-col col cols="12" sx="12" sm="12" md="4">
@@ -244,8 +246,9 @@ const receiveEmitguarantor = (value) => {
           prefix="R$" v-model="state.proposedValue" v-mask-decimal.br="2"></v-text-field>
       </v-col>
       <v-col col cols="12" sx="12" sm="12" md="12">
-        <v-textarea class="m-1" rows="3" variant="outlined" label="Observação" @blur="saveField($event.target)" name="ps"
-          v-model="state.ps" maxlength="120" single-line></v-textarea>
+        <v-textarea class="m-1" rows="3" variant="outlined" label="Observação"
+         @blur="saveField($event.target)" name="ps"
+         v-model="state.ps" maxlength="120" single-line></v-textarea>
       </v-col>
       <v-row>
         <DialogProposal :dialog="state.dialogGuarantor" @updateDialog="closeDialog">

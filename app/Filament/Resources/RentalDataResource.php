@@ -8,7 +8,6 @@ use App\Models\Term;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use App\Models\RentalData;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -20,12 +19,9 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\Section as Infosection;
-use Leandrocfe\FilamentPtbrFormFields\Money;
-use App\Http\Repository\RentalDataRepository;
 use App\Filament\Resources\RentalDataResource\Pages;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\ViewEntry;
-use Filament\Infolists\Components\Actions\Action as InfoAction;
+use Leandrocfe\FilamentPtbrFormFields\Money;
 use Filament\Infolists\Components\Livewire;
 
 
@@ -41,7 +37,6 @@ class RentalDataResource extends Resource
 
     public static function form(Form $form): Form
     {
-        $rentalRepo = new RentalDataRepository;
         $prop = $form->getRecord()->user()->get();
         return $form
             ->schema([
@@ -76,9 +71,17 @@ class RentalDataResource extends Resource
                             ->required()
                             ->native(true)
                             ->preload(),
-                        Forms\Components\TextInput::make('term')
-                        ->label('Prazo desejado')
-                            ->numeric(),
+                      
+                        Select::make('term')
+                            ->label('Prazo desejado')
+                            ->options([
+                                '12' => '12',
+                                '18' => '18',
+                                '24' => '24',
+                                '30' => '30',
+                                '36' => '36',
+                                '42' => '42',
+                            ]),
                         Select::make('warrantyType')
                             ->options([
                                 'Carta Fiança' => 'Carta Fiança',
@@ -93,9 +96,8 @@ class RentalDataResource extends Resource
                             ->required()
                             ->native(true)
                             ->preload(),
-                        Forms\Components\TextInput::make('proposedValue')
-                        ->label('Valor proposto')
-                            ->numeric(),
+                        Money::make('proposedValue')
+                            ->label('Valor proposto'),
                         Forms\Components\Textarea::make('ps')
                         ->label('Observação')
                             ->columnSpanFull(),
@@ -126,9 +128,13 @@ class RentalDataResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Proponente')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('refImmobile')
+                    ->label('Imóvel')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('guarantor_count')
                     ->counts('guarantor')
-                    ->label('Fiador'),
+                    ->label('Fiador')
+                    ->alignment('center'),
                 Tables\Columns\TextColumn::make('status')
                     ->label('Situação')
                     ->searchable()
@@ -137,31 +143,31 @@ class RentalDataResource extends Resource
                         'finalizada' => 'success',
                         'incompleta' => 'danger',
                     }),
-                Tables\Columns\TextColumn::make('typeRentalUser')
-                    ->label('Tipo de Prop.')
-                    ->searchable()
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'Pessoa Jurídica' => 'gray',
-                        'Pessoa Física' => 'success',
-                    }),
+                // Tables\Columns\TextColumn::make('typeRentalUser')
+                //     ->label('Tipo de Prop.')
+                //     ->searchable()
+                //     ->badge()
+                //     ->color(fn (string $state): string => match ($state) {
+                //         'Pessoa Jurídica' => 'gray',
+                //         'Pessoa Física' => 'success',
+                //     }),
                 Tables\Columns\TextColumn::make('finality')
                     ->label('Finalidade')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('object_type')
-                    ->label('Prop/Cadastro')
-                    ->state(function (RentalData $record): string {
-                        $type = '';
-                        switch ($record->object_type){
-                            case 'personal':
-                                $type = "Proposta";
-                                break;
-                            case 'guarantor':
-                                $type = "Cadastro";
-                                break;
-                        }
-                        return $type;
-                    })
+                // Tables\Columns\TextColumn::make('object_type')
+                //     ->label('Prop/Cadastro')
+                //     ->state(function (RentalData $record): string {
+                //         $type = '';
+                //         switch ($record->object_type){
+                //             case 'personal':
+                //                 $type = "Proposta";
+                //                 break;
+                //             case 'guarantor':
+                //                 $type = "Cadastro";
+                //                 break;
+                //         }
+                //         return $type;
+                //     })
             ])->defaultSort('id', 'desc')
             ->filters([
                 SelectFilter::make('object_type')
@@ -182,7 +188,6 @@ class RentalDataResource extends Resource
             ])
             ->actions([
                 ActionGroup::make([
-//                    Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make('delete')
                         ->requiresConfirmation()
@@ -255,7 +260,7 @@ class RentalDataResource extends Resource
 
 
             ])
-            //Filtrando as propostas de acordo com o nivel do usuário
+            // Filtrando as propostas de acordo com o nivel do usuário
             ->query(function (RentalData $query) {
                 if (auth()->user()->hasRole('common')) {
                     return $query->where('user_id', auth()->user()->id);
