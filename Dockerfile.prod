@@ -1,0 +1,31 @@
+FROM php:8.2-fpm
+
+RUN apt-get update && apt-get install -y \
+    libicu-dev \
+    libgmp-dev \
+    libzip-dev zip unzip git curl nano \
+    && docker-php-ext-install \
+    intl \
+    bcmath \
+    zip \
+    pdo_mysql
+
+# Configurar Git para aceitar o diretório como seguro
+RUN git config --global --add safe.directory /var/www/html
+
+WORKDIR /var/www/html
+
+COPY . /var/www/html
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+RUN composer install --no-dev --optimize-autoloader
+
+# Ajustar permissões
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Configuração do PHP para produção
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+EXPOSE 9000
+CMD ["php-fpm"]
