@@ -143,31 +143,9 @@ class RentalDataResource extends Resource
                         'finalizada' => 'success',
                         'incompleta' => 'danger',
                     }),
-                // Tables\Columns\TextColumn::make('typeRentalUser')
-                //     ->label('Tipo de Prop.')
-                //     ->searchable()
-                //     ->badge()
-                //     ->color(fn (string $state): string => match ($state) {
-                //         'Pessoa Jurídica' => 'gray',
-                //         'Pessoa Física' => 'success',
-                //     }),
                 Tables\Columns\TextColumn::make('finality')
                     ->label('Finalidade')
                     ->searchable(),
-                // Tables\Columns\TextColumn::make('object_type')
-                //     ->label('Prop/Cadastro')
-                //     ->state(function (RentalData $record): string {
-                //         $type = '';
-                //         switch ($record->object_type){
-                //             case 'personal':
-                //                 $type = "Proposta";
-                //                 break;
-                //             case 'guarantor':
-                //                 $type = "Cadastro";
-                //                 break;
-                //         }
-                //         return $type;
-                //     })
             ])->defaultSort('id', 'desc')
             ->filters([
                 SelectFilter::make('object_type')
@@ -189,6 +167,11 @@ class RentalDataResource extends Resource
             ->actions([
                 ActionGroup::make([
                     Tables\Actions\EditAction::make(),
+                    Action::make('Editar dados pessoais')
+                    ->icon('heroicon-o-pencil')
+                    ->action(function (RentalData $record) {
+                        return redirect('admin/data-personals/' . $record->id.'/edit');
+                    }),
                     Tables\Actions\DeleteAction::make('delete')
                         ->requiresConfirmation()
                         ->action(function (RentalData $record) {

@@ -26,5 +26,9 @@ class DataPersonal extends Model
         'number_dependents'
     ];
     
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }
