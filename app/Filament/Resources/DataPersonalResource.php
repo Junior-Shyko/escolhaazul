@@ -30,11 +30,11 @@ class DataPersonalResource extends Resource
 
     public static function form(Form $form): Form
     {
-        //Armazenará o nome do usuario
+        // Armazenará o nome do usuario
 
-        //Repositorio com várias funções util
+        // Repositorio com várias funções util
         $rentalRepo = new RentalDataRepository;
-        $userForm = RentalDataRepository::getUserToForm($form);
+        $prop = $form->getRecord()->user()->get();
 
         return $form
             ->schema([
@@ -45,9 +45,9 @@ class DataPersonalResource extends Resource
                     ])
                     ->schema([
                         Placeholder::make('Proponente')
-                            ->content($userForm['nameUser']),
+                            ->content($prop[0]->name),
                         Hidden::make('user_id')
-                            ->default($userForm['idUser']),
+                            ->default($prop[0]->id),
                         Document::make('cpf')
                             ->label('CPF')
                             ->cpf()
@@ -111,6 +111,9 @@ class DataPersonalResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('user.name')
+                ->label('Proponente')
+                ->searchable(),
                 Tables\Columns\TextColumn::make('birthDate')
                     ->date('d/m/Y')
                     ->label('Data de nasc.')
