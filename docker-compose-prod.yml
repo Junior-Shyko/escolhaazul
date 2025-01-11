@@ -58,7 +58,7 @@ services:
     php-fpm:
         build:
             context: "./docker/php-fpm"
-        container_name: ea    
+        container_name: ea_prod    
         volumes:
             - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
         networks:

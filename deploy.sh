@@ -3,21 +3,21 @@
 echo "Puchando atualizações..."
 git pull
 echo "Buildando..."
-docker compose build --no-cache
+docker compose -f docker-compose-prod.yml build --no-cache
 echo "Removendo container"
-docker compose down
+docker compose -f docker-compose-prod.yml down
 echo "Subindo..."
-docker-compose up -d
+docker compose -f docker-compose-prod.yml up -d
 echo "Atualizando Dependências"
-docker exec ea composer install
-docker exec ea composer update
+docker exec ea_prod composer install
+docker exec ea_prod composer update
 echo "Php Artisan"
-docker exec ea php artisan cache:clear
-docker exec ea php artisan view:clear
-docker exec ea php artisan migrate
-docker exec ea php artisan db:seed
-docker exec ea npm install
-docker exec ea npm run build
+docker exec ea_prod php artisan cache:clear
+docker exec ea_prod php artisan view:clear
+docker exec ea_prod php artisan migrate
+docker exec ea_prod php artisan db:seed
+docker exec ea_prod npm install
+docker exec ea_prod npm run build
 
 
 
