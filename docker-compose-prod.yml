@@ -1,14 +1,14 @@
 version: '3.1'
 services:
-  redis:
+  redis_ea:
     image: 'redis:alpine'
 
-  mysql:
+  mysql_ea:
     image: 'mysql:5.7'
     working_dir: /application
     container_name: 'ea_mysql'
     volumes:
-      - './phpdocker/mysql/data:/var/lib/mysql'
+      - './docker-data/mysql:/var/lib/mysql:rw'
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_DATABASE=${DB_DATABASE}
@@ -17,9 +17,9 @@ services:
     ports:
       - '${DB_PORT}:3306'
     networks:
-      - nginx-proxy_default
+      - ea_net
 
-  webserver:
+  webserver_ea:
     image: 'nginx:alpine'
     container_name: 'web_ea'
     working_dir: /application
@@ -33,9 +33,10 @@ services:
       - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
       - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
     networks:
+      - ea_net
       - nginx-proxy_default
 
-  php-fpm:
+  php-fpm-ea:
     build: phpdocker/php-fpm
     working_dir: /application
     container_name: phpea
@@ -44,8 +45,9 @@ services:
       - '.env:/application/.env'
       - './phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini'
     networks:
-      - nginx-proxy_default
+      - ea_net
 
 networks:
+  ea_net:
   nginx-proxy_default:
     external: true

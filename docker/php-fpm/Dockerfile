@@ -160,4 +160,4 @@ RUN ln -s /usr/local/bin/docker-entrypoint.sh /
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 9000
-CMD ["php-fpm"]
+CMD ["php-fpm-ea"]
