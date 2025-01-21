@@ -1,16 +1,22 @@
 <div class="container w-full md:max-w-5xl mx-auto pt-20 px-4">
-       @if(!is_null($this->id)) :
+       @if(!is_null($this->id))
     <div>
 
         <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-            Proposta Nº.
-            <strong>
+           <strong> Proposta Nº.</strong>
             @if(!is_null($rental))
-                    {{$rental->id}}
+                {{$rental->id}}
+                <strong>- Proponente:</strong>
+                {{$user}}
             @else
-                {{request()->get('id')}}
+                {{request()->get('id')}} -
+                <strong>- Proponente: </strong>
+                @php
+                $name = json_decode($user);
+                echo $name->name;
+                @endphp
             @endif
-            </strong> - Proponente: <strong>{{$user}}</strong>
+
         </p>
         <div class="max-w-2xl mx-auto session-file-rental ">
         <form wire:submit="save">
