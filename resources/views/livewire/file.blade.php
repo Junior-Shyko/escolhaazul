@@ -5,7 +5,7 @@
         <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
            <strong> Proposta Nº.</strong>
             @if(!is_null($rental))
-                {{$rental->id}}
+                {{$rental['id']}}
                 <strong>- Proponente:</strong>
                 {{$user}}
             @else
@@ -60,26 +60,26 @@
             <tbody class="bg-white dark:bg-slate-800">
             @foreach($files as $file)
                 @php
-                    $ext = substr($file->name, -4);
+                    $ext = substr($file['name'], -4);
                 @endphp
                 <tr class="border-b hover:bg-gray-100">
                     <td>
                         <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 flex justify-center">
-                            <a href="{{url('storage/'.$file->name)}}" download title="{{$file->name}}">
-                                <img src="{{asset('storage/'.$file->name)}}" alt="" srcset="" style="max-height: 200px;">
+                            <a href="{{url('storage/'.$file['name'])}}" download title="{{$file['name']}}">
+                                <img src="{{asset('storage/'.$file['name'])}}" alt="" srcset="" style="max-height: 200px;">
                             </a>
                             @if($ext == '.pdf')
-                                <object data="{{url('storage/'.$file->name)}}"  type="application/pdf">
-                                    <iframe src="https://docs.google.com/viewer?url={{url('storage/'.$file->name)}}&embedded=true" title="{{$file->name}}"></iframe>
-                                 </object>
+                                <object data="{{url('storage/'.$file['name'])}}" type="application/pdf">
+                                    <iframe src="https://docs.google.com/viewer?url={{url('storage/'.$file['name'] )}}&embedded=true" title="{{$file['name']}}"></iframe>
+                                </object>
                             @endif
                         </p>
                     </td>
                     <td>
-                        <a href="{{url('storage/'.$file->name)}}" download
-                           class="btn-download "
-                           type="button"
-                           title="Baixa o arquivo para você"
+                        <a href="{{url('storage/'.$file['name'])}}" download
+                        class="btn-download "
+                        type="button"
+                        title="Baixa o arquivo para você"
                         >
                             Baixar
                         </a>
@@ -87,7 +87,7 @@
                         <button
                             class="btn-delete"
                             type="button"
-                            wire:click="deletefile({{$file->id}})"
+                            wire:click="deletefile({{$file['id']}})"
                             wire:confirm="Tem certeza que deseja excluir esse arquivo?"
                         >
                             Excluir

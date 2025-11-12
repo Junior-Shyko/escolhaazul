@@ -2,35 +2,31 @@
 
 namespace App\Livewire;
 
-use App\Models\RentalData;
-use App\Models\File as FileApp;
 use App\Models\User;
+use Filament\Tables;
+use Livewire\Component;
+use File as FileLaravel;
+use App\Models\RentalData;
+use Filament\Tables\Table;
 use Filament\Actions\Action;
+use Illuminate\Http\Request;
+use App\Services\FileService;
+use Livewire\Attributes\Rule;
+use Livewire\WithFileUploads;
+use App\Models\File as FileApp;
+use App\Models\File as FileModel;
 use Filament\Actions\CreateAction;
-use Filament\Actions\Contracts\HasActions;
-use Filament\Actions\Concerns\InteractsWithActions;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Contracts\HasTable;
-use Filament\Tables\Table;
-use Filament\Tables;
-use Filament\Tables\Actions\DeleteAction;
-use Livewire\Component;
-use App\Models\File as FileModel;
-use File as FileLaravel;
-use Illuminate\Http\Request;
-use Filament\Notifications\Notification;
-use Livewire\WithFileUploads;
-use Livewire\Attributes\Rule;
 use Filament\Forms\Components\TextInput;
-use function auth;
-use function count;
-use function dd;
-use function is_null;
-use function redirect;
-use function url;
+use Filament\Notifications\Notification;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Actions\Concerns\InteractsWithActions;
+
 
 
 class File extends Component implements HasTable, HasForms,HasActions
@@ -39,14 +35,20 @@ class File extends Component implements HasTable, HasForms,HasActions
 
     public FileModel $file;
     public ?int $id = null;
-    public ?object $rental = null;
-    public ?object $files = null;
     public ?string $user = null;
+
     #[Rule([
         'photos.*' => ['required','mimes:jpeg,png,jpg,gif,svg,pdf','max:1000'],
     ])]
-    public $photos = [];
 
+    public $photos = [];
+    
+    public FileService $fileService;
+
+    public function boot(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
 
     public function save()
     {
@@ -59,7 +61,7 @@ class File extends Component implements HasTable, HasForms,HasActions
             ];
 
             try {
-                FileApp::create($file);
+                $this->fileService->createFile($file);
                 $photo->storeAs('public','proposal-'. $photo->getFilename());
                 Notification::make()
                 ->title('Sucesso!')
@@ -79,30 +81,76 @@ class File extends Component implements HasTable, HasForms,HasActions
     }
 
     public function mount(Request $request){
+        // if (null !== $request->get('id')) {
+        //     $this->id = $request->get('id');
+        //     $this->files = \App\Models\File::where('object_id',$this->id)
+        //     ->orderBy('id', 'DESC')->get();
+
+        //     $this->rental = count($this->files) > 0 ?
+        //                     $this->files[0]->rental()->with('user')->first() :
+        //                     auth()->user()->rentalData->first();
+        //     $this->user = !is_null($this->rental) ?
+        //                     $this->rental->user->name :
+        //                     $this->getUserIsRentalNull();
+        // }
         if (null !== $request->get('id')) {
             $this->id = $request->get('id');
-            $this->files = \App\Models\File::where('object_id',$this->id)
-            ->orderBy('id', 'DESC')->get();
-
-            $this->rental = count($this->files) > 0 ?
-                            $this->files[0]->rental()->with('user')->first() :
-                            auth()->user()->rentalData->first();
-            $this->user = !is_null($this->rental) ?
-                            $this->rental->user->name :
-                            $this->getUserIsRentalNull();
         }
-    }
-
-    public function getUserIsRentalNull()
-    {
-       $rental = RentalData::find($this->id);
-       $user = User::find($rental->user_id);
-       return $user;
     }
 
     public function render()
     {
-        return view('livewire.file');
+        $files = FileApp::where('object_id', $this->id)
+        ->orderBy('id', 'DESC')
+        ->get()
+        ->map(function ($file) {
+            return [
+                'id' => $file->id,
+                'name' => $file->name,
+                'object_id' => $file->object_id,
+                'object_type' => $file->object_type,
+            ];
+        });
+
+        $rental = null;
+        if ($files->isNotEmpty()) {
+            $firstFile = FileApp::find($files->first()['id']);
+            $rental = $firstFile->rental()->with('user')->first();
+            $rental = $rental ? [
+                'id' => $rental->id,
+                'user' => [
+                    'name' => $rental->user->name,
+                ],
+            ] : null;
+        }
+
+        if (!$rental) {
+            $rentalData = auth()->user()->rentalData()->first();
+            if ($rentalData) {
+                $user = $rentalData->user()->first();
+                $rental = [
+                    'id' => $rentalData->id,
+                    'user' => [
+                        'name' => $user->name,
+                    ],
+                ];
+            }
+        }
+
+        $user = $rental ? $rental['user']['name'] : $this->getUserIsRentalNull();
+
+        return view('livewire.file', [
+            'files' => $files,
+            'rental' => $rental,
+            'user' => $user,
+        ]);
+    }
+
+    public function getUserIsRentalNull()
+    {
+        $rental = RentalData::find($this->id);
+        $user = User::find($rental->user_id);
+        return $user->name;
     }
 
     public function table(Table $table): Table

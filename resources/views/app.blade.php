@@ -17,19 +17,20 @@
         </style>
         <script>
             var EscolhaApp = {};
-        
+
             EscolhaApp.assetURL = "{{ asset('') }}";
             EscolhaApp.baseURL = "{{ url('') }}/";
             EscolhaApp.baseAPI = "{{ url('') }}/api/";
           </script>
         <!-- Scripts -->
         @routes
+        @livewireStyles
         @vite(['resources/js/app.js'])
         @inertiaHead
         @filamentStyles
     </head>
     <body class="font-sans antialiased">
-        
+        @livewireScripts
         @inertia
         @filamentScripts
         @stack('scripts')

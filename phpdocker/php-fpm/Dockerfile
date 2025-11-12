@@ -1,26 +1,39 @@
-FROM phpdockerio/php:8.2-fpm
-WORKDIR "/application"
+FROM php:8.2-fpm 
+# Instala dependências do sistema via apt
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libwebp-dev \
+    libfreetype6-dev \
+    libzip-dev \
+    zip \
+    unzip \
+    libonig-dev \
+    libxml2-dev \
+    libicu-dev \
+    default-mysql-client \
+    && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install -j$(nproc) \
+        pdo \
+        pdo_mysql \
+        mysqli \
+        zip \
+        gd \
+        mbstring \
+        exif \
+        pcntl \
+        bcmath \ 
+        intl \
+        opcache
 
-# Fix debconf warnings upon build
-ARG DEBIAN_FRONTEND=noninteractive
-ARG NODE_VERSION=18
+# Instala Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Install selected extensions and other stuff
-RUN apt-get update \
-    && apt-get -y --no-install-recommends install  php8.2-mysql \
-    && apt-get -y --no-install-recommends install  php8.2-mysql \
-    && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+# Working dir
+WORKDIR /application
 
-# Install git e npm e nodejs
-RUN apt-get update \
-    && curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
-    && curl -sLS https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install -g npm \
-    && apt-get -y autoremove \
-    && apt-get clean
-
-RUN apt-get update \
-    && apt-get -y install php8.2-gd \
-    && apt-get -y install php8.2-intl \
-    && apt-get -y install php8.2-xsl
+EXPOSE 9000
+CMD ["php-fpm"]
