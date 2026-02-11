@@ -21,6 +21,7 @@ class VehicleSeeder extends Seeder
             $type = $faker->randomElements(['personal','professional','legal']);
             $object_id = $faker->numberBetween(1, 10);
             $financed = $faker->randomElements(['Sim','Não']);
+            $veih['value'] = $faker->randomFloat(2, 5000, 200000);
             $veih['branch'] = $faker->name();
             $veih['model'] = $faker->word();
             $veih['year'] =  $faker->date('Y');

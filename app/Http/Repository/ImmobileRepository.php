@@ -3,43 +3,35 @@
 namespace App\Http\Repository;
 
 use App\Models\Immobile;
-use http\Env\Response;
-use function dump;
+use Faker\Factory;
 
 class ImmobileRepository
 {
-    static public function readXmlAndSaveToDatabase($xml)
+    static public function generateFakeImmobiles(int $quantity = 10): array
     {
-        foreach ($xml->Imoveis->Imovel as $immobile) {
-            $cond = (string) $immobile->PrecoCondominio;
-            if($cond == "" || $cond == null){
-                $cond = 0.00;
-            }
-            $iptu = (string) $immobile->PrecoIptuImovel;
-            if($iptu == "" || $iptu == null){
-                $iptu = 0.00;
-            }
-            $allImmobiles['salesCentralCode'] = (string) $immobile->CodigoCentralVendas;
-            $allImmobiles['propertyCode'] = (string) $immobile->CodigoImovel;
-            $allImmobiles['propertyTitle'] = (string) $immobile->TituloImovel;
-            $allImmobiles['model'] = (string) $immobile->Modelo;
-            $allImmobiles['propertyType'] = (string) $immobile->TipoImovel;
-            $allImmobiles['state'] = (string) $immobile->UF;
-            $allImmobiles['city'] = (string) $immobile->Cidade;
-            $allImmobiles['neighborhood'] = (string) $immobile->Bairro;
-            $allImmobiles['address'] = (string) $immobile->Endereco;
-            $allImmobiles['number'] = (string) $immobile->Numero;
-            $allImmobiles['zipCode'] = (string) $immobile->CEP;
-            $allImmobiles['rentalPrice'] = (string) $immobile->PrecoLocacao;
-            $allImmobiles['condominiumPrice'] = $cond;
-            $allImmobiles['propertyIptPrice'] = $iptu;
-            try {
-                Immobile::create($allImmobiles);
-            }catch (Exception $e)
-            {
-                return response()->json(['message' => $e->getMessage()], 500);
-            }
+        $faker = Factory::create('pt_BR');
+        $allImmobiles = [];
+
+        for ($i = 0; $i < $quantity; $i++) {
+            $allImmobiles[] = [
+                'salesCentralCode' => $faker->numerify('CV####'),
+                'propertyCode' => $faker->numerify('IM####'),
+                'propertyTitle' => $faker->sentence(3),
+                'model' => $faker->randomElement(['Apartamento', 'Casa', 'Sobrado', 'Kitnet', 'Cobertura']),
+                'propertyType' => $faker->randomElement(['Residencial', 'Comercial', 'Industrial']),
+                'state' => $faker->stateAbbr(),
+                'city' => $faker->city(),
+                'neighborhood' => $faker->streetName(),
+                'address' => $faker->streetAddress(),
+                'number' => $faker->buildingNumber(),
+                'zipCode' => $faker->numerify('########'),
+                'rentalPrice' => $faker->randomFloat(2, 500, 10000),
+                'condominiumPrice' => $faker->randomFloat(2, 100, 2000),
+                'propertyIptPrice' => $faker->randomFloat(2, 50, 500),
+            ];
         }
+
+        return $allImmobiles;
     }
 
     /**

@@ -15,22 +15,11 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('roles')->insert([
-            'name' => 'superAdmin',
-            'guard_name' => 'web',
+        DB::table('roles')->insertOrIgnore([
+            ['name' => 'superAdmin', 'guard_name' => 'web'],
+            ['name' => 'admin', 'guard_name' => 'web'],
+            ['name' => 'manager', 'guard_name' => 'web'],
+            ['name' => 'common', 'guard_name' => 'web'],
         ]);
-        DB::table('roles')->insert([
-            'name' => 'admin',
-            'guard_name' => 'web',
-        ]);
-        DB::table('roles')->insert([
-            'name' => 'manager',
-            'guard_name' => 'web',
-        ]);
-        DB::table('roles')->insert([
-            'name' => 'common',
-            'guard_name' => 'web',
-        ]);
-
     }
 }
