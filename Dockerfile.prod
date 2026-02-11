@@ -1,31 +1,104 @@
+# =============================================================
+# Stage 1: Dependências PHP (Composer) - roda primeiro pois o frontend precisa do Ziggy
+# =============================================================
+FROM php:8.2-cli AS composer-deps
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+RUN apt-get update && apt-get install -y \
+    git unzip libicu-dev libzip-dev \
+    && docker-php-ext-install intl bcmath zip \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist
+
+COPY . .
+RUN composer dump-autoload --optimize
+
+# =============================================================
+# Stage 2: Build dos assets frontend (Node)
+# =============================================================
+FROM node:18-alpine AS frontend
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci
+
+COPY vite.config.js tailwind.config.js postcss.config.js ./
+COPY resources ./resources
+COPY public ./public
+COPY app/Filament ./app/Filament
+
+# Copia vendor do composer (Ziggy, Filament preset, Laravel views necessários para o build)
+COPY --from=composer-deps /app/vendor ./vendor
+
+RUN npm run build
+
+# =============================================================
+# Stage 3: Imagem final de produção (PHP-FPM)
+# =============================================================
 FROM php:8.2-fpm
 
 RUN apt-get update && apt-get install -y \
-    libicu-dev \
-    libgmp-dev \
-    libzip-dev zip unzip git curl nano \
-    && docker-php-ext-install \
-    intl \
-    bcmath \
+    curl \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libwebp-dev \
+    libfreetype6-dev \
+    libzip-dev \
     zip \
-    pdo_mysql
+    unzip \
+    libonig-dev \
+    libxml2-dev \
+    libicu-dev \
+    default-mysql-client \
+    && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install -j$(nproc) \
+        pdo \
+        pdo_mysql \
+        mysqli \
+        zip \
+        gd \
+        mbstring \
+        exif \
+        pcntl \
+        bcmath \
+        intl \
+        opcache \
+    && pecl install redis \
+    && docker-php-ext-enable redis
 
-# Configurar Git para aceitar o diretório como seguro
-RUN git config --global --add safe.directory /var/www/html
-
-WORKDIR /var/www/html
-
-COPY . /var/www/html
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-RUN composer install --no-dev --optimize-autoloader
-
-# Ajustar permissões
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-
-# Configuração do PHP para produção
+# PHP config de produção
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
+WORKDIR /application
+
+# Copia código da aplicação
+COPY . .
+
+# Copia vendor do stage composer (sem dependências de dev)
+COPY --from=composer-deps /app/vendor ./vendor
+
+# Copia assets buildados do stage frontend
+COPY --from=frontend /app/public/build ./public/build
+
+# Copia configurações PHP customizadas
+COPY phpdocker/php-fpm/php-ini-overrides.ini /usr/local/etc/php/conf.d/99-overrides.ini
+
+# Permissões do storage e cache
+RUN chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
+# Cache de configuração Laravel
+RUN php artisan config:clear \
+    && php artisan route:clear \
+    && php artisan view:clear
+
 EXPOSE 9000
-CMD ["php-fpm-ea"]
+
+CMD ["php-fpm"]

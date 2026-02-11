@@ -1,53 +1,81 @@
-version: '3.1'
 services:
-  redis_ea:
-    image: 'redis:alpine'
+    mysql:
+        image: 'mysql:5.7'
+        container_name: 'ea_mysql'
+        ports:
+            - '${FORWARD_DB_PORT:-3306}:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+        volumes:
+            - './docker-data/mysql:/var/lib/mysql:rw'
+        networks:
+            - ea_net
+        healthcheck:
+            test:
+                - CMD
+                - mysqladmin
+                - ping
+                - '-p${DB_PASSWORD}'
+            retries: 3
+            timeout: 5s
 
-  mysql_ea:
-    image: 'mysql:5.7'
-    working_dir: /application
-    container_name: 'ea_mysql'
-    volumes:
-      - './docker-data/mysql:/var/lib/mysql:rw'
-    environment:
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-      - MYSQL_DATABASE=${DB_DATABASE}
-      #- MYSQL_USER=escolha
-      - MYSQL_PASSWORD=${DB_PASSWORD}
-    ports:
-      - '${DB_PORT}:3306'
-    networks:
-      - ea_net
+    redis:
+        image: 'redis:alpine'
+        container_name: 'ea_redis'
+        networks:
+            - ea_net
+        healthcheck:
+            test:
+                - CMD
+                - redis-cli
+                - ping
+            retries: 3
+            timeout: 5s
 
-  webserver_ea:
-    image: 'nginx:alpine'
-    container_name: 'web_ea'
-    working_dir: /application
-    volumes:
-      - '.:/application'
-      - './phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf'
-    ports:
-      - '${NGINX_HOST_HTTP_PORT}:80'
-    environment:
-      - VIRTUAL_HOST=${VIRTUAL_HOST}
-      - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
-      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
-    networks:
-      - ea_net
-      - nginx-proxy_default
+    app:
+        image: listados/escolhaazul:latest
+        container_name: 'ea_prod'
+        expose:
+            - "9000"
+        volumes:
+            - './storage:/application/storage'
+            - app-public:/application/public
+            - ./.env:/application/.env:ro
+        networks:
+            - ea_net
+        depends_on:
+            mysql:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
 
-  php-fpm-ea:
-    build: phpdocker/php-fpm
-    working_dir: /application
-    container_name: phpea
-    volumes:
-      - '.:/application'
-      - '.env:/application/.env'
-      - './phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/8.2/fpm/conf.d/99-overrides.ini'
-    networks:
-      - ea_net
+    nginx:
+        image: 'nginx:alpine'
+        container_name: 'ea_nginx'
+        expose:
+          - "80"
+        environment:
+            - VIRTUAL_HOST=${VIRTUAL_HOST}
+#            - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
+#            - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+        volumes:
+            - './phpdocker/nginx/nginx-prod.conf:/etc/nginx/conf.d/default.conf'
+            - app-public:/application/public
+        networks:
+            - ea_net
+            - nginx-proxy_default
+        depends_on:
+            - app
 
 networks:
-  ea_net:
-  nginx-proxy_default:
-    external: true
+    ea_net:
+        driver: bridge
+    nginx-proxy_default:
+        external: true
+
+volumes:
+    app-public:
+        driver: local
